@@ -18,6 +18,5 @@
 
 <img src="img/Main_Page_4.png"/>
 
-
 </div>
 </details>
