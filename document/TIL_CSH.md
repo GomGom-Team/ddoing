@@ -95,3 +95,7 @@
     - 최근 본 애니메이션 영상 리스트
     - 최근 그린 그림 리스트
   - 아바타 수정 버튼
+
+# 피그마
+
+![image](https://user-images.githubusercontent.com/46869980/224270547-b6e2a87e-fee4-4964-bf0c-12cfc14c9c43.png)
