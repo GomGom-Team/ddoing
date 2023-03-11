@@ -18,5 +18,9 @@
 
 <img src="img/Main_Page_4.png"/>
 
+### Colors
+
+<img src="img/Colors.png"/>
+
 </div>
 </details>
