@@ -21,6 +21,6 @@
 ### Colors
 
 <img src="img/Colors.png"/>
-
+ 
 </div>
 </details>
