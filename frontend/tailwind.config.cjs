@@ -5,6 +5,11 @@ module.exports = {
       colors: {
         electric: '#db00ff',
         ribbon: '#0047ff',
+        yellowL: '#fbf8cc',
+        yellowM: '#fdf579',
+        yellowD: '#fff125',
+        brownL: '#cca05d',
+        brownD: '#9a7946',
       },
     },
   },
