@@ -3,7 +3,7 @@ import tw, { css, styled, theme } from 'twin.macro'
 interface ButtonProps {
   variant?: 'primary' | 'secondary'
   isSmall?: boolean
-}
+} 
 
 const Button = styled.button(({ variant, isSmall }: ButtonProps) => [
   // The common button styles
