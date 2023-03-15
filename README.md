@@ -3,17 +3,18 @@
 ### 어린이 영어 학습 서비스
 
 ---
+
 ### 메인 기능
 
 - 애니메이션 스크립트를 이용한 발음 평가
 - 그림 그리기를 통한 영어 단어 학습
 
-
-
 [요구사항 명세서](https://spot-chill-154.notion.site/32d9daaaf675419ebc7c52ba81ebdc8c)
 
+[Figma](https://www.figma.com/file/bhMk9aT7PpLnaGvSOKUGk6/GomGom?node-id=64%3A11&t=IlFEDqcaPTMvHHpr-1)
+
 <details>
-<summary><b>Figma</b></summary>
+<summary><b>와이어프레임</b></summary>
 <div markdown="1">
 
 <br/>
