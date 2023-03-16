@@ -1,6 +1,8 @@
 import React from 'react'
 import tw from 'twin.macro'
 import { Container, Button, Logo } from './components/common'
+import { RouterProvider } from "react-router-dom";
+import routes from "./router/routes";
 
 const styles = {
   // Move long class sets out of jsx to keep it scannable
@@ -21,6 +23,7 @@ const App = () => (
       </div>
       <Logo />
     </div>
+    <RouterProvider router={router} />
   </Container>
 )
 
