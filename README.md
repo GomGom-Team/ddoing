@@ -21,21 +21,21 @@
 
 ### Main Page
 
-<img src="img/Main_Page_1.png"/>
+![image](https://user-images.githubusercontent.com/97906125/225556749-862385ff-4ecf-4289-83cc-bc569d89ed4d.png)
 
-<img src="img/Main_Page_2.png"/>
+![image](https://user-images.githubusercontent.com/97906125/225556849-58b3dd4c-1d00-44ce-9dcc-9fdc2ab79ae8.png)
 
-<img src="img/Main_Page_3.png"/>
+![image](https://user-images.githubusercontent.com/97906125/225556922-61a0b946-dcb1-445e-a3b2-72c04f1a21f7.png)
 
-<img src="img/Main_Page_4.png"/>
+![image](https://user-images.githubusercontent.com/97906125/225557009-19e0f20a-aa80-43b9-bc89-8f19a800675a.png)
 
 ### My Page
 
-<img src="img/My_Page_1.png"/>
+![image](https://user-images.githubusercontent.com/97906125/225557199-3dcd3863-dacf-4012-8550-010749c4dd04.png)
 
 ### Colors
 
-<img src="img/Colors.png"/>
- 
+![image](https://user-images.githubusercontent.com/97906125/225557318-179510a1-926a-4536-8293-02903402cde8.png)
+
 </div>
 </details>
