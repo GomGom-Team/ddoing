@@ -10,8 +10,10 @@ module.exports = {
         yellowD: '#fff125',
         brownL: '#cca05d',
         brownD: '#9a7946',
+        blueC: '#9FDDFF',
+        greenC: '#CCF486',
       },
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
 }

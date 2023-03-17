@@ -5,6 +5,16 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <MainPage/>,
+    // children: [
+    //   {
+    //     path: "dashboard",
+    //     element: <Dashboard />,
+    //   },
+    //   {
+    //     path: "about",
+    //     element: <About />,
+    //   },
+    // ],
   },
 ]);
 
