@@ -1,6 +1,6 @@
 package backend.user;
 
-import backend.BaseEntity;
+import backend.common.BaseEntity;
 import backend.animation.AnimationBestScoreEntity;
 import backend.animation.AnimationScoreEntity;
 import backend.draw.DrawingScoreEntity;

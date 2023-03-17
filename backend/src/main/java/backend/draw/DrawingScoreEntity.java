@@ -1,6 +1,6 @@
 package backend.draw;
 
-import backend.BaseEntity;
+import backend.common.BaseEntity;
 import backend.user.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
