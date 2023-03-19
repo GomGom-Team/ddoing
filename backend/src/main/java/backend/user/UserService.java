@@ -9,7 +9,7 @@ public interface UserService {
 
     boolean isExistByEmail(String email);
 
-    UserEntity createUser(SignUpDTO signUpDTO);
+    UserEntity createUser(UserDTO signUpDTO);
 
 
 }

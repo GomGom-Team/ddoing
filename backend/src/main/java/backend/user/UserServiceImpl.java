@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserEntity createUser(SignUpDTO signUpDTO) {
+    public UserEntity createUser(UserDTO signUpDTO) {
 
         UserEntity userEntity = UserEntity.builder()
                 .id(signUpDTO.getId())

@@ -14,7 +14,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity insertUser(@RequestBody SignUpDTO signUpDTO){
+    public ResponseEntity insertUser(@RequestBody UserDTO signUpDTO){
         UserEntity result = userService.createUser(signUpDTO);
         if(result==null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Message("회원가입에 실패하였습니다."));
