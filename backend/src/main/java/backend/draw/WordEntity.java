@@ -20,10 +20,10 @@ public class WordEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "word")
+    @Column(name = "word", length = 15)
     private String word;
 
-    @Column(name = "mean")
+    @Column(name = "mean", length = 15)
     private String mean;
 
     @OneToMany(mappedBy = "wordEntity", cascade = CascadeType.REMOVE)
