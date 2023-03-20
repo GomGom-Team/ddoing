@@ -3,6 +3,7 @@ import tw, { css, styled, theme } from 'twin.macro'
 const Header = () => {
   // if (window.location.pathname === '/' | '/') return null;
   return (
+  <StickyHeader>
     <CustomedNav>
       <NavWrapper>
         <NavWrapperContents>
@@ -18,15 +19,18 @@ const Header = () => {
         </NavWrapperContents>
       </NavWrapper>
     </CustomedNav>
+  </StickyHeader>
   );
 };
 
 // style
+const StickyHeader = styled.header(
+  tw`fixed top-0 z-10 w-full`
+)
+
 const CustomedNav = styled.nav(
   tw`
-    sticky 
-    top-0 
-    z-10 
+    h-16
     bg-white 
     backdrop-filter 
     backdrop-blur-lg 
@@ -37,7 +41,7 @@ const CustomedNav = styled.nav(
 )
 
 const NavWrapper = styled.div(
-  tw`max-w-5xl mx-auto px-4`
+  tw`ml-0 mr-0 px-6`
 )
 
 const NavWrapperContents = styled.div(
@@ -49,7 +53,7 @@ const MainLogo = styled.span(
 )
 
 const NavigateContents = styled.div(
-  tw`flex space-x-4 text-gray-900`
+  tw`flex space-x-4 text-xl text-gray-900`
 )
 
 const Profile = styled.div(

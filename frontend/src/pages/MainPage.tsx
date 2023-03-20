@@ -1,97 +1,34 @@
 import React, { useState, useEffect } from 'react'
 import tw, { css, styled, theme } from 'twin.macro'
-import { NewContent, Animation, Drawing } from '../components/carousel/index'
+import { NewContent, Animation, Drawing, HallofFame, Banner } from '../components/carousel/index'
 import { Container, Header, Footer } from '../components/common/index'
 
 
 
-
-
+const items = [
+  <NewContent/>,
+  <Animation/>,
+  <Drawing/>,
+];
 
 
 const MainPage = () => {
-  // // State
-  // const [currentIndex, setCurrentIndex] = useState(0);
-  // let count = 0
-
-  // // Logic
-  // const handleOnNextClick = () => {
-  //   count = (count + 1) % featuredImages.length;
-  //   setCurrentIndex(count);
-  // };
-
-  // const handleOnPrevClick = () => {
-  //   const productsLength = featuredImages.length;
-  //   count = (currentIndex + productsLength - 1) % productsLength;
-  //   setCurrentIndex(count);
-  // }
-  // // 캐러셀 자동으로 넘기는 로직
-  // useEffect(() => {
-  //   startSlider();
-  // }, []);
-
-  // const startSlider = () => {
-  //   setInterval(() => {
-  //     handleOnNextClick();
-  //   }, 3000);
-  // };
-
-  // Popular Content 
-// State
-let sliderContainer = document.getElementById('sliderContainer');
-let slider = document.getElementById('slider');
-let cards = slider?.getElementsByTagName('li');
-
-// Logic
-let SliderContainerWidth = sliderContainer?.clientWidth;
-let elementsToShow = 3;
-if (SliderContainerWidth){
-  let cardWidth = SliderContainerWidth/elementsToShow;
-  if(slider&&cards){
-    slider.style.width = cards.length*cardWidth + 'px';
-    for (let index = 0; index < cards.length; index++) {
-      const element = cards[index]
-      element.style.width = cardWidth+'px';
-    }
-  }
-}
-
-    // 뒤로가기 함수
-  function prev() {
-    if(slider) {
-      slider.style.marginLeft = ((+slider.style.marginLeft.slice(0,2))-cardWidth) + 'px'
-    }
-  }
-  // 앞으로 넘기기 함수
-  function next() {
-    if(slider) {
-      slider.style.marginLeft = ((+slider.style.marginLeft.slice(0,2))+cardWidth) + 'px'
-    }
-  }
 
   return (
     <Container isOverflowed>
     {/* Header */}
       <Header/>
-    {/* // Banner */}
-      <div id="1" className="max-w-screen-xl m-auto">
-        <div className="w-full relative select-none">
-          <div className="bg-greenC w-full">
-            HI
-          </div>
-          <div className="absolute w-full top-1/2 transform -translate-y-1/2 flex justify-between items-start px-3">
-            <button className='btn btn-circle'>❮</button>
-            <button className='btn btn-circle'>❯</button>
-          </div>
-          <img src="src/assets/img/img1.jpg" alt="" />
-        </div>
-      </div>
+      <DummuDiv></DummuDiv>
+
+    {/* Banner */}
+    <Banner></Banner>
+    
     {/* // Popular Contents */}
       <section>
         <PopularContentsWrapper>
           <ArrowDiv>
             <PrevDiv>
-              <ArrowButton onClick={prev()}>
+              <ArrowButton>
                 ❮
               </ArrowButton>
             </PrevDiv>
@@ -126,13 +63,16 @@ if (SliderContainerWidth){
           </SliderDiv>
           <ArrowDiv>
             <NextDiv>
-              <ArrowButton onClick={next()}>
+              <ArrowButton>
                 ❯
               </ArrowButton>
             </NextDiv>
           </ArrowDiv>
         </PopularContentsWrapper>
       </section>
+      {/* 명예의 전당 */}
+      {/* <HallofFame></HallofFame> */}
+
     {/* Footer  */}
       <Footer/>
     </Container>
@@ -140,6 +80,10 @@ if (SliderContainerWidth){
 }
 
 // style
+const DummuDiv = styled.div(
+  tw`h-16`
+)
+
 
 // Popular Items
 const PopularContentsWrapper = styled.div(
@@ -159,7 +103,7 @@ const NextDiv = styled.div(
 )
 
 const ArrowButton = styled.button(
-  tw`btn-circle bg-yellowL text-brownL border-black shadow-lg`
+  tw`btn-circle bg-yellowL text-brownL border-black shadow-lg`,
 )
 
 const SliderDiv = styled.div(
@@ -167,7 +111,7 @@ const SliderDiv = styled.div(
 )
 
 const Slider = styled.ul(
-  tw`flex w-full transition-[margin] duration-700 border border-red-500`
+  tw`flex w-full transition-[margin] duration-700`
 )
 
 const SliderItems = styled.li(

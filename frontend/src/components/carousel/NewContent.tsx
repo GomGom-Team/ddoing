@@ -1,5 +1,5 @@
 import React from "react";
-import tw, { styled } from "twin.macro";
+import tw, { css, styled, theme } from "twin.macro";
 
 // interface
 
@@ -10,33 +10,14 @@ const NewContent = () => {
 
 // HTML
   return (
-    <CarouselSlide id="slide1">
-      <CarouselDiv>
-
-      </CarouselDiv>
-      <TanslateDiv>
-        <NextCarousel href="#slide4">❮</NextCarousel> 
-        <NextCarousel href="#slide2">❯</NextCarousel>
-      </TanslateDiv>
-    </CarouselSlide> 
+    <BackgroundDiv>
+      뉴컨텐츠
+    </BackgroundDiv>
   );
 }
 
-// styles
-const CarouselSlide = styled.div(
-  tw`carousel-item relative w-full`
-)
-
-const CarouselDiv = styled.div(
-  tw`bg-greenC w-full`
-)
-
-const TanslateDiv = styled.div(
-  tw`absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2`
-)
-
-const NextCarousel = styled.a(
-  tw``
+const BackgroundDiv = styled.div(
+  tw`bg-yellowD w-full h-96`
 )
 
 

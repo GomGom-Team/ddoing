@@ -1,4 +1,5 @@
 import React from "react";
+import tw, { css, styled, theme } from "twin.macro";
 
 // interface
 
@@ -8,7 +9,16 @@ const Drawing = () => {
 // Logic
 
 // HTML
-  return (<div>드로잉</div>);
+  return (
+  <BackgroundDiv>
+    드로잉
+  </BackgroundDiv>
+  );
 }
+
+// style
+const BackgroundDiv = styled.div(
+  tw`bg-greenC w-full h-96`
+)
 
 export default Drawing
