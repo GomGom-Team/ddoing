@@ -22,7 +22,7 @@ public class ScriptEntity extends BaseEntity {
     @JoinColumn(name = "animation_id")
     private Long animationId;
 
-    @Column(name = "role", nullable = false)
+    @Column(name = "role", nullable = false, length = 15)
     private String role;
 
     @Column(name = "last_script")

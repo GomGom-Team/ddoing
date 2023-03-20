@@ -21,18 +21,19 @@ import java.util.List;
 public class UserEntity extends BaseEntity {
 
     @Id
+    @Column(length = 10)
     private String id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, length = 10)
     private String name;
 
-    @Column(name = "nick_name", unique = true)
+    @Column(name = "nick_name", unique = true, length = 15)
     private String nickName;
 
-    @Column(name = "pw")
+    @Column(name = "pw", length = 20)
     private String password;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 40)
     private String email;
 
     @Column(name = "exp")
