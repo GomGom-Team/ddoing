@@ -1,12 +1,14 @@
 package backend.auth;
 
 import backend.user.UserDTO;
-import backend.user.UserEntity;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,10 +16,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Key;
-import java.util.ArrayDeque;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -28,34 +27,35 @@ public class JwtTokenProvider {
     private static Long ACCESSTOKEN_EXPIRATION_PERIOD;
     private static Long REFRESHTOKEN_EXPIRATION_PERIOD;
 
+    @Autowired
     public JwtTokenProvider(
             @Value("${jwt.secret}") String secretKey,
             @Value("${jwt.access_time}") long access_time,
-            @Value("${jwt.refresh_time") long refresh_time) {
+            @Value("${jwt.refresh_time}") long refresh_time) {
         ACCESSTOKEN_EXPIRATION_PERIOD = access_time;
         REFRESHTOKEN_EXPIRATION_PERIOD = refresh_time;
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-        KEY = Keys.hmacShaKeyFor(keyBytes);
+//        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+        KEY = Keys.hmacShaKeyFor(secretKey.getBytes());
     }
-
-    public TokenDTO makeToken(Authentication authentication){
+/*
+    public static TokenDTO makeToken(Authentication authentication){
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
         long now = (new Date()).getTime();
         // Access Token 생성
-        Date accessTokenExpiresIn = new Date(now + 86400000);
+        Date accessTokenExpiresIn = new Date(now + ACCESSTOKEN_EXPIRATION_PERIOD);
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
-                .claim("auth", authorities)
+                .claim("id", authorities)
                 .setExpiration(accessTokenExpiresIn)
                 .signWith(KEY, SignatureAlgorithm.HS256)
                 .compact();
 
         // Refresh Token 생성
         String refreshToken = Jwts.builder()
-                .setExpiration(new Date(now + 86400000))
+                .setExpiration(new Date(now + REFRESHTOKEN_EXPIRATION_PERIOD))
                 .signWith(KEY, SignatureAlgorithm.HS256)
                 .compact();
 
@@ -65,9 +65,32 @@ public class JwtTokenProvider {
                 .refreshToken(refreshToken)
                 .build();
     }
+ */
+
+    public static String makeAccessToken(UserDTO userDTO){
+        long now = (new Date()).getTime();
+        return Jwts.builder()
+                .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
+                .setExpiration(new Date(now + ACCESSTOKEN_EXPIRATION_PERIOD))
+                .claim("id", userDTO.getId())
+                .claim("email", userDTO.getEmail())
+                .claim("nickName", userDTO.getNickName())
+                .signWith(KEY,SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    public static String makeRefreshToken(String id){
+        long now = (new Date()).getTime();
+        return Jwts.builder()
+                .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
+                .setExpiration(new Date(now + REFRESHTOKEN_EXPIRATION_PERIOD))
+                .claim("id", id)
+                .signWith(KEY,SignatureAlgorithm.HS256)
+                .compact();
+    }
 
     // JWT 토큰을 복호화하여 토큰에 들어있는 정보를 꺼내는 메서드
-    public Authentication getAuthentication(String accessToken) {
+    public static Authentication getAuthentication(String accessToken) {
         // 토큰 복호화
         Claims claims = parseClaims(accessToken);
 
@@ -88,25 +111,32 @@ public class JwtTokenProvider {
         return new UsernamePasswordAuthenticationToken(principal, "", new ArrayList<>());
     }
 
-    public boolean validateToken(String token) {
+    public static boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(KEY).build().parseClaimsJws(token);
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
             log.info("Invalid JWT Token", e);
+            throw new JwtException("유효하지 않은 토큰입니다.", HttpStatus.UNAUTHORIZED);
         } catch (ExpiredJwtException e) {
             log.info("Expired JWT Token", e);
+            throw new JwtException("만료된 토큰입니다.", HttpStatus.REQUEST_TIMEOUT);
         } catch (UnsupportedJwtException e) {
             log.info("Unsupported JWT Token", e);
+            throw new JwtException("지원하지 않는 토큰입니다.",HttpStatus.FORBIDDEN);
         } catch (IllegalArgumentException e) {
             log.info("JWT claims string is empty.", e);
+            throw new JwtException("토큰의 클레임이 비어있습니다",HttpStatus.PRECONDITION_FAILED);
         }
-        return false;
     }
 
     public static String getIdByAccessToken(HttpServletRequest request){
         String accessToken = request.getHeader("Authorization").substring(7);
         return (String) parseClaims(accessToken).get("id");
+    }
+
+    public static String getIdByRefreshToken(String refreshToken){
+        return (String) parseClaims(refreshToken).get("id");
     }
 
     public static Claims parseClaims(String accessToken) {

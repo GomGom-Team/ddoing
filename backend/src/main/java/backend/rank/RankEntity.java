@@ -8,6 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Builder
+@Table(name="rank")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor

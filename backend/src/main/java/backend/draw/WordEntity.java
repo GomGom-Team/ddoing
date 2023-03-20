@@ -10,6 +10,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name="word")
 @Builder
 @Getter
 @NoArgsConstructor

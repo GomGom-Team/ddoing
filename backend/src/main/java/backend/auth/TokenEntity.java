@@ -1,4 +1,4 @@
-package backend.draw;
+package backend.auth;
 
 import backend.common.BaseEntity;
 import backend.user.UserEntity;
@@ -12,19 +12,24 @@ import javax.persistence.*;
 @Entity
 @Builder
 @Getter
-@Table(name="drawing_score")
+@Table(name="token")
 @NoArgsConstructor
 @AllArgsConstructor
-public class DrawingScoreEntity extends BaseEntity {
+public class TokenEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(targetEntity = UserEntity.class, fetch = FetchType.LAZY)
+    @Column(name = "user_id", insertable = false, updatable = false)
+    private String userId;
+
+    @Column(name="refresh_token", nullable = false)
+    private String refreshToken;
+
+    @OneToOne(targetEntity = UserEntity.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
-    @Column(name = "score")
-    private Long score;
+
 }

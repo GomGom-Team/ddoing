@@ -1,5 +1,6 @@
 package backend.user;
 
+import backend.auth.TokenEntity;
 import backend.common.BaseEntity;
 import backend.animation.AnimationBestScoreEntity;
 import backend.animation.AnimationScoreEntity;
@@ -60,4 +61,14 @@ public class UserEntity extends BaseEntity {
 
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.REMOVE)
     private List<AnimationBestScoreEntity> animationBestScoreEntities;
+
+    public UserDTO toUserDTO(){
+        UserDTO user = UserDTO.builder()
+                .id(this.id)
+                .email(this.email)
+                .name(this.name)
+                .nickName(this.nickName)
+                .build();
+        return user;
+    }
 }

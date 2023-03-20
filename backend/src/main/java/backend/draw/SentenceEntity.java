@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
+@Table(name="sentence")
 @Builder
 @Getter
 @NoArgsConstructor
