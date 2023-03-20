@@ -1,23 +1,15 @@
-package backend.user;
+package backend.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
 @Builder
-@AllArgsConstructor
+@Getter
 @NoArgsConstructor
-public class SignUpDTO {
-
+@AllArgsConstructor
+public class LoginDTO {
     private String id;
-
-    private String name;
-
-    private String nickName;
-
     private String password;
-
-    private String email;
 }
