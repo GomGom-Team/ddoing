@@ -18,7 +18,7 @@ const MainPage = () => {
     <Container isOverflowed>
     {/* Header */}
       <Header/>
-      <DummuDiv></DummuDiv>
+      <DummyDiv></DummyDiv>
 
     {/* Banner */}
       <Banner></Banner>
@@ -36,7 +36,7 @@ const MainPage = () => {
 }
 
 // style
-const DummuDiv = styled.div(
+const DummyDiv = styled.div(
   tw`h-16`
 )
 

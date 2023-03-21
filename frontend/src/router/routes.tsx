@@ -1,10 +1,13 @@
 import { createBrowserRouter } from "react-router-dom";
 import MainPage from "../pages/MainPage";
-
+import DrawingPage from "../pages/DrawingPage"
 const router = createBrowserRouter([
   {
     path: "",
     element: <MainPage/>,
+    children: [
+      
+    ]
     // children: [
     //   {
     //     path: "dashboard",
@@ -22,7 +25,7 @@ const router = createBrowserRouter([
   },
   {
     path: "drawing",
-    element: <div>빈페이지 입니다.</div>,
+    element: <DrawingPage/>,
   },
   {
     path: "ranking",
