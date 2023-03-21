@@ -27,7 +27,7 @@ public class ScriptEntity extends BaseEntity {
     private String role;
 
     @Column(name = "last_script")
-    private boolean last_script;
+    private Long lastScript;
 
     @Column(name = "start_time", nullable = false)
     private Long startTime;
@@ -35,11 +35,10 @@ public class ScriptEntity extends BaseEntity {
     @Column(name = "end_time", nullable = false)
     private Long endTime;
 
-    @Column(name = "end_sentence", nullable = false)
+    @Column(name = "eng_sentence", nullable = false, length = 1000)
     private String engSentence;
 
-    @Column(name = "ko_sentence", nullable = false)
+    @Column(name = "ko_sentence", nullable = false, length = 1000)
     private String koSentence;
-
 
 }
