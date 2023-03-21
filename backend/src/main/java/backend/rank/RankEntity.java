@@ -8,6 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Builder
+@Table(name="ranks")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,7 +18,7 @@ public class RankEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id", nullable = false, insertable = false, updatable = false)
+    @Column(name = "user_id", nullable = false, insertable = false, updatable = false, length = 10)
     private String userId;
 
     @ManyToOne(targetEntity = UserEntity.class, fetch = FetchType.LAZY)

@@ -1,6 +1,7 @@
-package backend.user;
+package backend.auth;
 
 import backend.common.BaseEntity;
+import backend.user.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Entity
 @Builder
 @Getter
+@Table(name="tokens")
 @NoArgsConstructor
 @AllArgsConstructor
 public class TokenEntity extends BaseEntity {
@@ -19,7 +21,7 @@ public class TokenEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id", insertable = false, updatable = false)
+    @Column(name = "user_id", insertable = false, updatable = false, length = 10)
     private String userId;
 
     @Column(name="refresh_token", nullable = false)

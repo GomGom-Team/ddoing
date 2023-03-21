@@ -11,6 +11,7 @@ import javax.persistence.*;
 
 @Entity
 @Builder
+@Table(name="animation_best_scores")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
