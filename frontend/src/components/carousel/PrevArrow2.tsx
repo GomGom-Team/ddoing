@@ -7,11 +7,11 @@ interface PrevArrowProps {
 }
 // 타입스크립트를 사용하기 때문에 onClick 이벤트를 props로 받아준다.
 // className을 받아줄 수 도 있다. 그리고 부모 컴포넌트에서 설정해 줘도 된다.
-function PrevArrow({ onClick }: PrevArrowProps) {
+function PrevArrow2({ onClick }: PrevArrowProps) {
   return <ArrowButton onClick={onClick}>❮</ArrowButton>;
 }
 
-export default PrevArrow
+export default PrevArrow2
 
 // style
 
@@ -21,11 +21,11 @@ export default PrevArrow
 
 const ArrowButton = styled.button`
   z-index: 999;
-  left: 20px;
+  left:-30px;
   color:black;
   font-size: 40px;
   line-height: 0;
-  position: absolute;
+  position: flex;
   top: 50%;
   width: 4rem;
   height: 4rem;
@@ -36,6 +36,7 @@ const ArrowButton = styled.button`
   outline: none;
   background: transparent;
   transition: 200ms ease-in-out;
+  margin-top: 3rem;
 
   &:before {
       line-height: 1;

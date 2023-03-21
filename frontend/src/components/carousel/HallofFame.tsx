@@ -1,154 +1,101 @@
-import React, { useCallback, useRef } from 'react';
-import Slick from 'react-slick';
-import styled, { css } from 'styled-components';
+import React from "react";
+import tw, { css, styled, theme } from "twin.macro";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import NextArrow2 from "./NextArrow2";
+import PrevArrow2 from "./PrevArrow2"
 
-const Wrap = styled.div`
-    position: relative;
-    padding-bottom: 70px;
-    overflow: hidden;
-	
-    // 1. Global style 추가했던 것을 슬라이드 상단에 Wrap을 만들어 여기서 선언했습니다.
-    .slick-slide {
-        display: inline-block;
-    }
-	
-    // 2. 제가 추가한 커스텀 클래스입니다.
-    // pagination 부분입니다.
-    .slick-dots.slick-thumb {
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        padding: 0;
-        margin: 0;
-        list-style: none;
-        transform: translate(-50%);
 
-        li {
-            position: relative;
-            display: inline-block;
-			
-            &.slick-active {
-                span {
-                    filter: none;
-                }
-            }
-        }
-    }  
-`;
-
-const SlickItems = styled.div`
-    width: 100%;    
-    height: 400px;
-    text-align: center;
-
-    img {
-        max-width: 100%;
-        height: 100%;
-        vertical-align: top;
-    }
-`;
-
-const defaultButtonStyle = css`
-    position: absolute;
-    top: calc(50% - 50px);
-    padding: 0;
-    width: 30px;
-    height: 30px;
-    line-height: 1;
-    border: none;
-    border-radius: 50%;
-    background: none;
-    outline: none;
-    cursor: pointer;
-`;
-
-const PrevButton = styled.button`
-    ${defaultButtonStyle}
-    left: 0;
-`;
-
-const NextButton = styled.button`
-    ${defaultButtonStyle}
-    right: 0;
-`;
-
-;
-// 4. 샘플이미지
-const images = [
-    {
-        src: "https://www.artinsight.co.kr/data/tmp/1910/20191029212614_fawslbwd.jpg",
-        title: "1"
-    },
-    {
-        src: "https://www.artinsight.co.kr/data/tmp/1910/20191029212649_esiekzxf.jpg",
-        title: "2"
-    },
-    {
-        src: "https://www.artinsight.co.kr/data/tmp/1910/20191029212707_zcrkccgp.jpg",
-        title: "3"
-    },
-    {
-        src: "https://www.artinsight.co.kr/data/tmp/1910/20191029212724_pacwfbiz.jpg",
-        title: "4"
-    },
-];
-
-const Slide = () => {
-	
-    // 5. custom arrows를 만들어 ref를 통해 제어합니다.
-    const slickRef = useRef(null);
-
-	// 6. slick에 추가할 세팅입니다.
-    const settings = {
-        dots: true,
-        
-        // 2. 제가 추가한 커스텀 클래스입니다. (pagination)
-        dotsClass: "slick-dots slick-thumb",
-        
-        // 5. custom arrows를 만들기 위해 기본 arrows옵션을 false로 합니다.
-        arrows: false,
+function HallofFame() {
+	const settings = {
+    	dots: false,
         infinite: true,
-        slidesToShow: 1,
+        speed: 500,
+        slidesToShow: 4,
         slidesToScroll: 1,
-        
-    };
-    
-	// 5. custom arrows 동작 함수를 만듭니다.
-    const previous = useCallback(() => slickRef.current.slickPrev(), []);
-    const next = useCallback(() => slickRef.current.slickNext(), []);
+        autoplay: true,
+        autoplaySpeed: 4000,
+        nextArrow: <NextArrow2 />,
+        prevArrow: <PrevArrow2 />,
+    }
 
-    return (
-        <Wrap>
-			
-			// 5.6.
-            // custom arrows를 위해 ref를 설정합니다.
-            // 세팅을 넣어줍니다. (공식문서 docs참고)
-			<Slick ref={slickRef} {...settings}>
-            	
-                // 4. 샘플이미지로 반복문을 돌려 슬라이드 아이템을 렌더합니다.
-                {images.map((v, i) => {
-                    return (
-                        <SlickItems key={`${v.title}_${i}`}>
-                            <img src={v.src} />
-                        </SlickItems>
-                    )
-                })}
-            </Slick>
-			
-            // 5. custom arrows입니다.
-            <>
-                <PrevButton onClick={previous}>
-                    Prev
-                    <span className="hidden">이전</span>
-                </PrevButton>
+    return(
+      <SectionWrapper>
+      <CustomedSection className="page-carousel">
+        <Slider  tw="flex w-10/12 overflow-hidden justify-center items-center" {...settings}>
 
-                <NextButton onClick={next}>
-                    Next
-                    <span className="hidden">다음</span>
-                </NextButton>
-            </>
-        </Wrap>
-    );
-};
+          <SliderItems>
+              <SliderItemsWrapper>
+                  <ThumbNail></ThumbNail>
+              </SliderItemsWrapper>
+          </SliderItems>
 
-export default Slide;
+          <SliderItems>
+              <SliderItemsWrapper>
+                  <ThumbNail></ThumbNail>
+              </SliderItemsWrapper>
+          </SliderItems>
+
+          <SliderItems>
+              <SliderItemsWrapper>
+                  <ThumbNail></ThumbNail>
+              </SliderItemsWrapper>
+          </SliderItems>
+
+          <SliderItems>
+              <SliderItemsWrapper>
+                  <ThumbNail></ThumbNail>
+              </SliderItemsWrapper>
+          </SliderItems>
+
+          <SliderItems>
+              <SliderItemsWrapper>
+                  <ThumbNail></ThumbNail>
+              </SliderItemsWrapper>
+          </SliderItems>
+
+          <SliderItems>
+              <SliderItemsWrapper>
+                  <ThumbNail></ThumbNail>
+              </SliderItemsWrapper>
+          </SliderItems>
+
+          <SliderItems>
+              <SliderItemsWrapper>
+                  <ThumbNail></ThumbNail>
+              </SliderItemsWrapper>
+          </SliderItems>
+
+          <SliderItems>
+              <SliderItemsWrapper>
+                  <ThumbNail></ThumbNail>
+              </SliderItemsWrapper>
+          </SliderItems>
+        </Slider>
+      </CustomedSection>
+      </SectionWrapper>
+    )
+}
+
+export default HallofFame;
+
+const CustomedSection = styled.section(
+    tw`flex justify-center w-full items-center`
+)
+
+const SectionWrapper = styled.div(
+    tw`flex justify-center w-full pb-24 items-center`
+)
+
+const SliderItems = styled.li(
+  tw`w-96 p-5`,
+)
+
+const SliderItemsWrapper = styled.div(
+  tw`flex justify-center rounded-lg p-5 h-full`
+)
+
+const ThumbNail = styled.img(
+    tw`h-56 w-56 object-cover rounded-md bg-slate-500`
+  )

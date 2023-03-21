@@ -8,7 +8,7 @@ import PrevArrow from "./PrevArrow"
 import { NewContent, Animation, Drawing } from './index'
 
 
-function Carousel() {
+function Banner() {
 	const settings = {
     	dots: true,
         infinite: true,
@@ -48,7 +48,7 @@ function Carousel() {
     )
 }
 
-export default Carousel;
+export default Banner;
 
 const CustomedSection = styled.section(
   tw`w-full`

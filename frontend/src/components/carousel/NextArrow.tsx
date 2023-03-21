@@ -1,7 +1,6 @@
 import React from "react";
 import tw, { css, styled, theme } from "twin.macro";
 
-
 interface NextArrowProps {
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
@@ -14,18 +13,16 @@ function NextArrow({ onClick }: NextArrowProps) {
 export default NextArrow
 
 // style
-
 const ArrowButton = styled.button`
   z-index: 999;
   right: 20px;
   color:black;
-  font-size: 20px;
+  font-size: 40px;
   line-height: 0;
   position: absolute;
   top: 50%;
-  display: flex;
-  width: 20px;
-  height: 20px;
+  width: 4rem;
+  height: 4rem;
   padding: 0;
   transform: translate(0, -50%);
   cursor: pointer;

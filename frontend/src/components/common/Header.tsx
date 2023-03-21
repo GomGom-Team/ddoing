@@ -1,6 +1,13 @@
 import React from 'react';
 import tw, { css, styled, theme } from 'twin.macro'
+import { useNavigate } from 'react-router-dom';
+
 const Header = () => {
+  // State
+  const navigate = useNavigate();
+
+  // Logic
+
   // if (window.location.pathname === '/' | '/') return null;
   return (
   <StickyHeader>
@@ -9,12 +16,12 @@ const Header = () => {
         <NavWrapperContents>
           <MainLogo>또잉</MainLogo>
           <NavigateContents>
-            <a href="/animation">Animation</a>
-            <a href="/drawing">Drawing</a>
-            <a href="/ranking">Ranking</a>
+            <button onClick={()=>navigate("animation")}>Animation</button>
+            <button onClick={()=>navigate("drawing")}>Drawing</button>
+            <button onClick={()=>navigate("ranking")}>Ranking</button>
           </NavigateContents>
           <Profile>
-            프로필
+            <button onClick={()=>navigate("mypage")}>프로필</button>
           </Profile>
         </NavWrapperContents>
       </NavWrapper>

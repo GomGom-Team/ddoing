@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import tw, { css, styled, theme } from 'twin.macro'
-import { NewContent, Animation, Drawing, HallofFame, Banner } from '../components/carousel/index'
+import { NewContent, Animation, Drawing, HallofFame, Banner, PopularContents } from '../components/carousel/index'
 import { Container, Header, Footer } from '../components/common/index'
 
 
@@ -21,57 +21,13 @@ const MainPage = () => {
       <DummuDiv></DummuDiv>
 
     {/* Banner */}
-    <Banner></Banner>
-    
+      <Banner></Banner>
     {/* // Popular Contents */}
-      <section>
-        <PopularContentsWrapper>
-          <ArrowDiv>
-            <PrevDiv>
-              <ArrowButton>
-                ❮
-              </ArrowButton>
-            </PrevDiv>
-          </ArrowDiv>
-          <SliderDiv id="sliderContainer">
-            <Slider id="slider">
-              <SliderItems>
-                <SliderItemsWrapper>
-                  <ThumbNail></ThumbNail>
-                  <ThumbNailTitle>썸네일 제목</ThumbNailTitle>
-                  <ThumbNailDescription>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis explicabo ab consequatur a quibusdam, et quasi consequuntur incidunt alias ut fugit repudiandae inventore quo impedit, ad vel minima beatae excepturi.</ThumbNailDescription>
-                  <PopularContentsButton>컨텐츠 구경하기</PopularContentsButton>
-                </SliderItemsWrapper>
-              </SliderItems>
-              <SliderItems>
-                <SliderItemsWrapper>
-                  <ThumbNail></ThumbNail>
-                  <ThumbNailTitle>썸네일 제목</ThumbNailTitle>
-                  <ThumbNailDescription>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis explicabo ab consequatur a quibusdam, et quasi consequuntur incidunt alias ut fugit repudiandae inventore quo impedit, ad vel minima beatae excepturi.</ThumbNailDescription>
-                  <PopularContentsButton>컨텐츠 구경하기</PopularContentsButton>
-                </SliderItemsWrapper>
-              </SliderItems>
-              <SliderItems>
-                <SliderItemsWrapper>
-                  <ThumbNail></ThumbNail>
-                  <ThumbNailTitle>썸네일 제목</ThumbNailTitle>
-                    <ThumbNailDescription>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis explicabo ab consequatur a quibusda.</ThumbNailDescription>
-                    <PopularContentsButton>컨텐츠 구경하기</PopularContentsButton>
-                </SliderItemsWrapper>
-              </SliderItems>
-            </Slider>
-          </SliderDiv>
-          <ArrowDiv>
-            <NextDiv>
-              <ArrowButton>
-                ❯
-              </ArrowButton>
-            </NextDiv>
-          </ArrowDiv>
-        </PopularContentsWrapper>
-      </section>
-      {/* 명예의 전당 */}
-      {/* <HallofFame></HallofFame> */}
+      <PopularContents></PopularContents>
+
+    {/* 명예의 전당 */}
+      <HallofFame></HallofFame>
+    {/* <HallofFame></HallofFame> */}
 
     {/* Footer  */}
       <Footer/>
