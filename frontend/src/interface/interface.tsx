@@ -1,5 +1,4 @@
 
-
 interface ButtonProps {
   variant?: 'primary' | 'secondary'
   isSmall?: boolean

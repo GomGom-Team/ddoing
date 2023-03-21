@@ -1,7 +1,7 @@
 import tw, { css, styled, theme } from 'twin.macro'
 
 interface ButtonProps {
-  variant?: 'primary' | 'secondary'
+  variant?: 'primary' | 'secondary' | 'third'
   isSmall?: boolean
 }
 
@@ -13,7 +13,7 @@ const Button = styled.button(({ variant, isSmall }: ButtonProps) => [
   tw`hocus:(scale-105 text-yellow-400)`,
 
   // Use props to conditionally style your components
-  variant === 'primary' && tw`bg-black text-white border-black`,
+  variant === 'primary' && tw`bg-black text-white border-black w-60 h-12`,
 
   // Combine regular css with tailwind classes within backticks
   variant === 'secondary' && [
@@ -22,7 +22,7 @@ const Button = styled.button(({ variant, isSmall }: ButtonProps) => [
     `,
     tw`border-2 border-yellow-600`,
   ],
-
+  variant === 'third' && tw`bg-none w-60 h-12`,
   // Conditional props can be added
   isSmall ? tw`text-sm` : tw`text-lg`,
 

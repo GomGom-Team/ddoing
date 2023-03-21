@@ -13,7 +13,13 @@ module.exports = {
         blueC: '#9FDDFF',
         greenC: '#CCF486',
       },
+      transitionProperty: {
+        'spacing': 'margin, padding'
+      }
     },
   },
-  plugins: [require("daisyui")],
+  plugins: [
+    require("daisyui"),
+    require("@tailwindcss/aspect-ratio"),
+  ],
 }
