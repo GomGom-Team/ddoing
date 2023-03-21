@@ -21,7 +21,7 @@ public class TokenEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id", insertable = false, updatable = false)
+    @Column(name = "user_id", insertable = false, updatable = false, length = 10)
     private String userId;
 
     @Column(name="refresh_token", nullable = false)
