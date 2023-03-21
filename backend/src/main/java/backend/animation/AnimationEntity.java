@@ -11,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Builder
+@Table(name="animations")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor

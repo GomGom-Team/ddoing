@@ -10,6 +10,7 @@ import javax.persistence.*;
 
 @Entity
 @Builder
+@Table(name="scripts")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
