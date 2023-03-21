@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @Builder
 @Getter
-@Table(name="drawing_score")
+@Table(name="drawing_scores")
 @NoArgsConstructor
 @AllArgsConstructor
 public class DrawingScoreEntity extends BaseEntity {

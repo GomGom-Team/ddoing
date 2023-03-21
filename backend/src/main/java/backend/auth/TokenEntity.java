@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @Builder
 @Getter
-@Table(name="token")
+@Table(name="tokens")
 @NoArgsConstructor
 @AllArgsConstructor
 public class TokenEntity extends BaseEntity {
