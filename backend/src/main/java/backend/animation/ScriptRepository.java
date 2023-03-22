@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface ScriptRepository extends JpaRepository<ScriptEntity, Long> {
 
+    List<ScriptEntity> findAllByAnimationId(Long animationId);
+
     @Query("select s.role from ScriptEntity s where s.animationId = :animationId")
     List<String> findRoleByAnimationId(Long animationId);
 }
