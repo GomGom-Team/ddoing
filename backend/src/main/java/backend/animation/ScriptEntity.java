@@ -14,13 +14,12 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ScriptEntity extends BaseEntity {
+public class ScriptEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(targetEntity = AnimationEntity.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "animation_id")
+    @Column(name = "animation_id", nullable = false, insertable = false, updatable = false)
     private Long animationId;
 
     @Column(name = "role", nullable = false, length = 15)
@@ -40,5 +39,7 @@ public class ScriptEntity extends BaseEntity {
 
     @Column(name = "ko_sentence", nullable = false, length = 1000)
     private String koSentence;
-
+    @ManyToOne(targetEntity = AnimationEntity.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "animation_id")
+    private AnimationEntity animationEntity;
 }
