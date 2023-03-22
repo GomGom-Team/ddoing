@@ -21,6 +21,15 @@ public class AnimationBestScoreEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "user_id", nullable = false, insertable = false, updatable = false, length = 10)
+    private String userId;
+
+    @Column(name = "animation_id", nullable = false, insertable = false, updatable = false)
+    private Long animationId;
+
+    @Column(name = "best_score")
+    private Long bestScore;
+
     @ManyToOne(targetEntity = UserEntity.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
@@ -29,6 +38,5 @@ public class AnimationBestScoreEntity extends BaseEntity {
     @JoinColumn(name = "animation_id")
     private AnimationEntity animationEntity;
 
-    @Column(name = "best_score")
-    private Long bestScore;
+
 }
