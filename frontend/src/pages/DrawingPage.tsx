@@ -1,12 +1,12 @@
 import React, { useRef, useState, useCallback, useEffect } from 'react';
 import tw, { css, styled, theme } from 'twin.macro'
-import { Container, Header } from '../components/common/index'
-
+import { Container, Header, Button } from '../components/common/index'
+import { ModalBasic } from '../components/drawing/index';
 interface CanvasProps {
   width: number;
   height: number;
 }
-
+ 
 interface Coordinate {
   x: number;
   y: number;
@@ -18,7 +18,9 @@ const DrawingPage = ({ width, height }: CanvasProps) => {
   // state
   const [mousePosition, setMousePosition] = useState<Coordinate | undefined>(undefined);
   const [isPainting, setIsPainting] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
+  // Logic
   // 좌표 얻는 함수
   const getCoordinates = (event: MouseEvent): Coordinate | undefined => {
     if (!canvasRef.current) {
@@ -102,15 +104,33 @@ const DrawingPage = ({ width, height }: CanvasProps) => {
       canvas.removeEventListener('mouseleave', exitPaint);
     };
   }, [startPaint, paint, exitPaint]);
-  
+  // Canvas 지우기
+  const clearCanvas = () => {
+    if (!canvasRef.current) {
+      return;
+    }
+
+    const canvas: HTMLCanvasElement = canvasRef.current;
+    canvas.getContext('2d')!!.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
+  // 모달
+  const showModal = () => {
+    setModalOpen(true);
+  };
 
   return (
     <Container>
       <Header/>
       <DummyDiv></DummyDiv>
       <StyledDiv>
-        <StyledCanvas ref={canvasRef} height={height} width={width} className="canvas"/>
+        <div>
+          <StyledCanvas ref={canvasRef} height={height} width={width} className="canvas"/>
+        </div>
       </StyledDiv>
+      <Button variant = "primary" onClick={()=>clearCanvas()}>CLEAR</Button>
+      <Button variant = "primary" onClick={showModal}>모달짱</Button>
+      {/* {modalOpen && <ModalBasic setModalOpen={setModalOpen} />} */}
     </Container>
   );
 };
@@ -123,17 +143,23 @@ DrawingPage.defaultProps = {
 export default DrawingPage;
 
 const StyledDiv = styled.div(
-  tw`flex justify-center text-center w-full h-full`,
+  tw`flex justify-center text-center`,
   css`
     background-image:url('src/assets/img/background.jpg');
     background-repeat:no-repeat;
-    background-size:contain;
+    background-size: 100%;
+    width:100%;
+    height:100%;
     background-position:center;
   `
 )
 
 const StyledCanvas = styled.canvas(
-  tw`rounded-2xl bg-stone-400 bg-opacity-20`
+  tw`rounded-2xl bg-stone-400 bg-opacity-20`,
+  css`
+    width: 800px;
+    height: 600px;
+  `
 )
 
 const DummyDiv = styled.div(

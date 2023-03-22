@@ -14,14 +14,14 @@ const Header = () => {
     <CustomedNav>
       <NavWrapper>
         <NavWrapperContents>
-          <MainLogo>또잉</MainLogo>
+          <MainLogo onClick={()=>navigate("/")}>또잉</MainLogo>
           <NavigateContents>
-            <button onClick={()=>navigate("animation")}>Animation</button>
-            <button onClick={()=>navigate("drawing")}>Drawing</button>
-            <button onClick={()=>navigate("ranking")}>Ranking</button>
+            <button onClick={()=>navigate("/animation")}>Animation</button>
+            <button onClick={()=>navigate("/drawing")}>Drawing</button>
+            <button onClick={()=>navigate("/ranking")}>Ranking</button>
           </NavigateContents>
           <Profile>
-            <button onClick={()=>navigate("mypage")}>프로필</button>
+            <button onClick={()=>navigate("/mypage")}>프로필</button>
           </Profile>
         </NavWrapperContents>
       </NavWrapper>
@@ -55,7 +55,7 @@ const NavWrapperContents = styled.div(
   tw`flex items-center justify-between h-16`
 )
 
-const MainLogo = styled.span(
+const MainLogo = styled.button(
   tw`text-2xl text-gray-900 font-semibold`
 )
 
