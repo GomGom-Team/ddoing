@@ -1,15 +1,11 @@
 package backend.animation;
 
-import backend.user.UserDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -45,6 +41,20 @@ public class AnimationServiceImpl implements AnimationService {
     }
 
     @Override
+    public AnimationResponseDTO getAnimation(Long animationId, String userId) {
+        Optional<AnimationEntity> animation = animationRepository.findById(animationId);
+        AnimationResponseDTO result = AnimationResponseDTO.builder()
+                .id(animationId)
+                .title(animation.get().getTitle())
+                .runningTime(animation.get().getRunningTime())
+                .pathUrl(animation.get().getPathUrl())
+                .bestScore(getBestScore(animationId, userId))
+                .roles(getRoles(animationId))
+                .build();
+        return result;
+    }
+
+    @Override
     public Long getBestScore(Long animationId, String userId) {
         return animationBestScoreRepository.findBestScoreByAnimationIdAndUserId(animationId, userId);
     }
@@ -52,5 +62,28 @@ public class AnimationServiceImpl implements AnimationService {
     @Override
     public Set<String> getRoles(Long animationId) {
         return new HashSet<>(scriptRepository.findRoleByAnimationId(animationId));
+    }
+
+    @Override
+    public List<ScriptDTO> getScripts(Long animationId) {
+        System.out.println("animationId = " + animationId);
+        List<ScriptEntity> scripts = scriptRepository.findAllByAnimationId(animationId);
+        List<ScriptDTO> results = new ArrayList<>();
+
+        for (ScriptEntity script : scripts) {
+            ScriptDTO result = ScriptDTO.builder()
+                    .id(script.getId())
+                    .animationId(script.getAnimationId())
+                    .role(script.getRole())
+                    .lastScript(script.getLastScript())
+                    .startTime(script.getStartTime())
+                    .endTime(script.getEndTime())
+                    .engSentence(script.getEngSentence())
+                    .koSentence(script.getKoSentence())
+                    .build();
+
+            results.add(result);
+        }
+        return results;
     }
 }

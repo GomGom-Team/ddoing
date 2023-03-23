@@ -27,10 +27,16 @@ public class AnimationController {
     }
     
     // 영상 상세
-//    @GetMapping("/{id}")
-//    public ResponseEntity selectOneAnimation(@RequestBody Long animationId){
-//
-//    }
+    @GetMapping("/{id}")
+    public ResponseEntity selectOneAnimation(@PathVariable Long id, @RequestBody UserDTO userDTO){
+        return ResponseEntity.ok(animationService.getAnimation(id, userDTO.getId()));
+    }
+    
+    // 스크립트 정보 불러오기
+    @GetMapping("/script/{id}")
+    public ResponseEntity getScripts(@PathVariable Long id){
+        return ResponseEntity.ok(animationService.getScripts(id));
+    }
 
     // 점수 갱신
     // userId, animationId, score, exp, level (AnimationRequestDTO)
