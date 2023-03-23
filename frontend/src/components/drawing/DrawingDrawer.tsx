@@ -2,6 +2,7 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
+import ResultPage from "./ResultPage"
 
 
 type Anchor = "top" | "left" | "bottom" | "right";
@@ -31,7 +32,7 @@ const DrawingDrawer = () => {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      HIHIHIHI
+      <ResultPage/>
     </Box>
   );
 
