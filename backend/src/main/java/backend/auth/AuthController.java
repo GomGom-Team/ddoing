@@ -30,10 +30,11 @@ public class AuthController {
     @PostMapping("/refresh")
     public ResponseEntity refresh(HttpServletRequest request){
         String id = JwtTokenProvider.getIdByAccessToken(request);
-
-        String refreshTokenBefore = userService.getToken(id);
-        if(!JwtTokenProvider.validateToken(refreshTokenBefore)){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Message("refreshToken이 만료되었습니다."));
+        if(id!=null) {
+            String refreshTokenBefore = userService.getToken(id);
+            if (!JwtTokenProvider.validateToken(refreshTokenBefore)) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Message("refreshToken이 만료되었습니다."));
+            }
         }
         String refreshToken = JwtTokenProvider.makeRefreshToken(id);
 
