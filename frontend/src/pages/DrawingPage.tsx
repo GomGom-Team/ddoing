@@ -1,7 +1,7 @@
 import React, { useRef, useState, useCallback, useEffect } from 'react';
 import tw, { css, styled, theme } from 'twin.macro'
 import { Container, Header, Button } from '../components/common/index'
-import { ModalBasic } from '../components/drawing/index';
+import { DrawingDrawer } from '../components/drawing/index';
 interface CanvasProps {
   width: number;
   height: number;
@@ -131,6 +131,7 @@ const DrawingPage = ({ width, height }: CanvasProps) => {
       <Button variant = "primary" onClick={()=>clearCanvas()}>CLEAR</Button>
       <Button variant = "primary" onClick={showModal}>모달짱</Button>
       {/* {modalOpen && <ModalBasic setModalOpen={setModalOpen} />} */}
+      <DrawingDrawer />
     </Container>
   );
 };
