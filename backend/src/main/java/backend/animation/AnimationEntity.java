@@ -33,5 +33,4 @@ public class AnimationEntity {
 
     @OneToMany(mappedBy = "animationEntity", cascade = CascadeType.REMOVE)
     private List<AnimationScoreEntity> animationScoreEntities;
-
 }

@@ -24,7 +24,6 @@ public class AnimationServiceImpl implements AnimationService {
         List<AnimationResponseDTO> results = new ArrayList<>();
 
         for (AnimationEntity animation : animations) {
-
             // animationId, title, runningTime, pathUrl, bestScore, roles
             AnimationResponseDTO result = AnimationResponseDTO.builder()
                     .id(animation.getId())
@@ -66,23 +65,11 @@ public class AnimationServiceImpl implements AnimationService {
 
     @Override
     public List<ScriptDTO> getScripts(Long animationId) {
-        System.out.println("animationId = " + animationId);
         List<ScriptEntity> scripts = scriptRepository.findAllByAnimationId(animationId);
         List<ScriptDTO> results = new ArrayList<>();
 
         for (ScriptEntity script : scripts) {
-            ScriptDTO result = ScriptDTO.builder()
-                    .id(script.getId())
-                    .animationId(script.getAnimationId())
-                    .role(script.getRole())
-                    .lastScript(script.getLastScript())
-                    .startTime(script.getStartTime())
-                    .endTime(script.getEndTime())
-                    .engSentence(script.getEngSentence())
-                    .koSentence(script.getKoSentence())
-                    .build();
-
-            results.add(result);
+            results.add(script.toScriptDTO());
         }
         return results;
     }
