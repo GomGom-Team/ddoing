@@ -1,7 +1,7 @@
 import React from "react";
 
-const VideoDetailPage = () => {
+const VideoListPage = () => {
   return <div></div>;
 };
 
-export default VideoDetailPage;
+export default VideoListPage;
