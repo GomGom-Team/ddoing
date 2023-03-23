@@ -1,13 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 import MainPage from "../pages/MainPage";
-import DrawingPage from "../pages/DrawingPage"
+import DrawingPage from "../pages/DrawingPage";
+import LoginPage from "../components/user/LoginPage";
+
 const router = createBrowserRouter([
   {
     path: "",
-    element: <MainPage/>,
-    children: [
-      
-    ]
+    element: <MainPage />,
     // children: [
     //   {
     //     path: "dashboard",
@@ -20,12 +19,16 @@ const router = createBrowserRouter([
     // ],
   },
   {
+    path: "login",
+    element: <LoginPage />,
+  },
+  {
     path: "animation",
     element: <div>빈페이지 입니다.</div>,
   },
   {
     path: "drawing",
-    element: <DrawingPage/>,
+    element: <DrawingPage />,
   },
   {
     path: "ranking",
@@ -37,4 +40,4 @@ const router = createBrowserRouter([
   },
 ]);
 
-export default router
+export default router;
