@@ -14,8 +14,6 @@ function HallofFame() {
         speed: 500,
         slidesToShow: 4,
         slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 4000,
         nextArrow: <NextArrow2 />,
         prevArrow: <PrevArrow2 />,
     }

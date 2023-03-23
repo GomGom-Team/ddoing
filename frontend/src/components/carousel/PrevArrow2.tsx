@@ -15,10 +15,6 @@ export default PrevArrow2
 
 // style
 
-  // tw`!btn-circle !bg-white !text-brownL !border-black !shadow-lg text-center bg-opacity-40
-  // backdrop-filter 
-  // backdrop-blur-lg`,
-
 const ArrowButton = styled.button`
   z-index: 999;
   left:-30px;
