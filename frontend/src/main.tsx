@@ -3,12 +3,16 @@ import { createRoot } from "react-dom/client";
 import GlobalStyles from "./styles/GlobalStyles";
 import App from "./App";
 import "./fonts/font.css";
+import store from "./redux/configStore";
+import { Provider } from "react-redux";
 
 const container = document.getElementById("root");
 const root = createRoot(container!);
 root.render(
-  <React.StrictMode>
-    <GlobalStyles />
-    <App />
-  </React.StrictMode>
+  <Provider store={store}>
+    <React.StrictMode>
+      <GlobalStyles />
+      <App />
+    </React.StrictMode>
+  </Provider>
 );
