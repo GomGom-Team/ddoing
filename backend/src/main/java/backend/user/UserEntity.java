@@ -25,16 +25,16 @@ public class UserEntity extends BaseEntity {
     @Column(length = 10)
     private String id;
 
-    @Column(name = "name", nullable = false, length = 10)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "nick_name", unique = true, length = 15)
+    @Column(name = "nick_name", unique = true)
     private String nickName;
 
-    @Column(name = "pw", length = 20)
+    @Column(name = "pw")
     private String password;
 
-    @Column(nullable = false, unique = true, length = 40)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(name = "exp")
