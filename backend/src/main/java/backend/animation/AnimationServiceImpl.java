@@ -114,11 +114,12 @@ public class AnimationServiceImpl implements AnimationService {
         Long animationId = animationRequestDTO.getAnimationId();
         String userId = animationRequestDTO.getUserId();
 
-        Long bestScore = getBestScore(animationId, userId);;
+        Long bestScore = getBestScore(animationId, userId);
+        ;
         Long newScore = animationRequestDTO.getScore();
 
         AnimationBestScoreEntity animationBestScoreEntity = animationBestScoreRepository.findByAnimationIdAndUserId(animationId, userId);
-        if(animationBestScoreEntity != null){
+        if (animationBestScoreEntity != null) {
             AnimationBestScoreEntity result = AnimationBestScoreEntity.builder()
                     .id(animationBestScoreEntity.getId())
                     .animationId(animationId)
@@ -129,7 +130,7 @@ public class AnimationServiceImpl implements AnimationService {
                     .build();
 
             animationBestScoreRepository.save(result);
-        }else{
+        } else {
             createBestScore(animationRequestDTO);
         }
         return true;
@@ -177,5 +178,27 @@ public class AnimationServiceImpl implements AnimationService {
                 .build();
 
         return animationResponseDTO;
+    }
+
+    // 영상 제목별 검색 리스트
+    @Override
+    public List<AnimationResponseDTO> searchAnimations(String keyword, String userId) {
+        List<AnimationEntity> animations = animationRepository.findByTitleContainingIgnoreCase(keyword);
+        List<AnimationResponseDTO> results = new ArrayList<>();
+
+        for (AnimationEntity animation : animations) {
+            // animationId, title, runningTime, pathUrl, bestScore, roles
+            AnimationResponseDTO result = AnimationResponseDTO.builder()
+                    .id(animation.getId())
+                    .title(animation.getTitle())
+                    .runningTime(animation.getRunningTime())
+                    .pathUrl(animation.getPathUrl())
+                    .bestScore(getBestScore(animation.getId(), userId))
+                    .roles(getRoles(animation.getId()))
+                    .build();
+
+            results.add(result);
+        }
+        return results;
     }
 }

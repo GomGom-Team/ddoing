@@ -1,6 +1,7 @@
 package backend.animation;
 
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -29,4 +30,6 @@ public interface AnimationService {
     // 갱신 점수 반환
     UserScoreResponseDTO getUserScores(AnimationRequestDTO animationRequestDTO);
 
+    // 영상 검색
+    List<AnimationResponseDTO> searchAnimations(String keyword, String userId);
 }
