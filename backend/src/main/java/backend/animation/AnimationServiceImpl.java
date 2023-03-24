@@ -59,7 +59,7 @@ public class AnimationServiceImpl implements AnimationService {
 
     @Override
     public Long getBestScore(Long animationId, String userId) {
-        return animationBestScoreRepository.findByAnimationIdAndUserId(animationId, userId).getBestScore();
+        return animationBestScoreRepository.findBestScoreByAnimationIdAndUserId(animationId, userId);
     }
 
     @Override
