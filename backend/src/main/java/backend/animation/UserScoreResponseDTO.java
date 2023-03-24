@@ -5,12 +5,14 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Builder
-public class AnimationRequestDTO {
-    private Long animationId;
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserScoreResponseDTO {
     private String userId;
-    private Long score;
+    private Long animationId;
+    private Long bestScore;
+    private Long exp;
+    private Long level;
 }

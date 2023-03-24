@@ -19,9 +19,4 @@ public class AnimationResponseDTO {
     private String pathUrl;
     private Long bestScore;
     private Set<String> roles;
-
-    private String userId;
-    private Long score;
-    private Long exp;
-    private Long level;
 }
