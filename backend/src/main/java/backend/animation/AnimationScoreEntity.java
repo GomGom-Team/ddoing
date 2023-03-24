@@ -38,4 +38,15 @@ public class AnimationScoreEntity extends BaseEntity {
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
+    @Override
+    public String toString() {
+        return "AnimationScoreEntity{" +
+                "id=" + id +
+                ", userId='" + userId + '\'' +
+                ", animationId=" + animationId +
+                ", score=" + score +
+                ", animationEntity=" + animationEntity +
+                ", userEntity=" + userEntity +
+                '}';
+    }
 }

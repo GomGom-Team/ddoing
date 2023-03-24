@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Builder
-@Table(name="animations")
+@Table(name = "animations")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor

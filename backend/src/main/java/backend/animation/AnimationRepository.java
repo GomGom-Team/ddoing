@@ -8,5 +8,4 @@ import java.util.Optional;
 
 @Repository
 public interface AnimationRepository extends JpaRepository<AnimationEntity, Long> {
-//    List<AnimationEntity> findAll();
 }

@@ -1,13 +1,12 @@
 package backend.animation;
 
+import backend.common.Message;
 import backend.user.UserDTO;
-import backend.user.UserEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @RequestMapping("/animations")
 @RestController
@@ -25,11 +24,11 @@ public class AnimationController {
             return ResponseEntity.ok(animationService.getAnimations(userDto.getId()));
         }
     }
-    
+
     // 영상 상세
-    @GetMapping("/{id}")
-    public ResponseEntity selectOneAnimation(@PathVariable Long id, @RequestBody UserDTO userDTO){
-        return ResponseEntity.ok(animationService.getAnimation(id, userDTO.getId()));
+    @GetMapping("/{id}/{userId}")
+    public ResponseEntity selectOneAnimation(@PathVariable Long id, @PathVariable String userId){
+        return ResponseEntity.ok(animationService.getAnimation(id, userId));
     }
     
     // 스크립트 정보 불러오기
@@ -38,11 +37,12 @@ public class AnimationController {
         return ResponseEntity.ok(animationService.getScripts(id));
     }
 
-    // 점수 갱신
-    // userId, animationId, score, exp, level (AnimationRequestDTO)
-//    @PostMapping("/{animationId}/{userId}")
-//    public ResponseEntity updateAnimationScore(@RequestBody AnimationRequestDTO animationRequestDTO){
-//
-//    }
-
+    // 애니메이션 점수 갱신
+    @PostMapping("/score")
+    public ResponseEntity insertAnimationScore(@RequestBody AnimationRequestDTO animationRequestDTO){
+        if(!animationService.createScore(animationRequestDTO)){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Message("점수 저장 실패"));
+        }
+        return ResponseEntity.ok(animationService.getUserScores(animationRequestDTO));
+    }
 }
