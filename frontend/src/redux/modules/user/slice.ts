@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { UserStateType } from "../../../../types/user/userStateType";
 import {
+  signupAction,
   signinAction,
   setUserWithTokenAction,
   refreshTokenAction,
@@ -33,6 +34,21 @@ const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(signupAction.pending, (state) => {
+        state.signup.loading = true;
+        state.signup.data = null;
+        state.signup.error = null;
+      })
+      .addCase(signupAction.fulfilled, (state, { payload }) => {
+        state.signup.loading = false;
+        state.signup.data = payload;
+        state.signup.error = null;
+      })
+      .addCase(signupAction.rejected, (state, { payload }) => {
+        state.signup.loading = false;
+        state.signup.data = null;
+        state.signup.error = payload;
+      })
       .addCase(signinAction.pending, (state) => {
         state.signin.loading = true;
         state.signin.data = null;

@@ -1,9 +1,25 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { SigninType } from "../../../../types/user/signinType";
+import { SignupType } from "../../../../types/user/signupType";
 import { UserType } from "../../../../types/user/userType";
 import { getToken, setToken, removeToken } from "./token";
 import { UpdateUserType } from "../../../../types/user/updateUserType";
 import { axiosInitializer } from "../../util/https";
+
+// 회원가입
+export const signupAction = createAsyncThunk(
+  "SIGNUP",
+  async (userData: SignupType, { rejectWithValue }) => {
+    try {
+      const axios = axiosInitializer();
+      await axios.post("/api/users", userData);
+      alert("회원가입 완료");
+    } catch (e: any) {
+      alert(e.response.data.message);
+      return rejectWithValue(e);
+    }
+  }
+);
 
 // 로그인
 export const signinAction = createAsyncThunk(
@@ -42,10 +58,11 @@ export const setUserWithTokenAction = createAsyncThunk(
           Authorization: "Baerer " + getToken(),
         },
       });
+      console.log(getToken());
       return data;
     } catch (e) {
       // 토큰 refresh
-      //   dispatch(refreshTokenAction());
+      dispatch(refreshTokenAction());
       return rejectWithValue(e);
     }
   }
@@ -56,7 +73,7 @@ export const refreshTokenAction = createAsyncThunk(
   "REFRESH_TOKEN",
   async (_, { dispatch, rejectWithValue }) => {
     try {
-      const req = { reqRefreshToken: getToken() };
+      const req = { accessToken: getToken() };
 
       const axios = axiosInitializer();
       await axios
