@@ -84,7 +84,9 @@ public class UserServiceImpl implements UserService{
         if(passwordEncoder.matches(passwordEncoder.encode(loginDTO.getPassword()), findUser.getPassword())){
             throw new CustomException(HttpStatus.BAD_REQUEST, "잘못된 비밀번호입니다.");
         }
-
+        if(tokenRepository.existsByUserId(loginDTO.getId())){
+            tokenRepository.deleteByUserId(loginDTO.getId());
+        }
         String accessToken = JwtTokenProvider.makeAccessToken(findUser.toUserDTO());
         String refreshToken = JwtTokenProvider.makeRefreshToken(findUser.getId());
 

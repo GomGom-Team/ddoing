@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,8 +29,9 @@ public class AuthController {
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity refresh(HttpServletRequest request){
-        String id = JwtTokenProvider.getIdByAccessToken(request);
+    public ResponseEntity refresh(@RequestBody Map<String, String> tokenMap){
+//        엑세스 토큰 validate확인 아니면 재발급
+        String id = JwtTokenProvider.getIdByAccessTokenToString(tokenMap.get("accessToken"));
         if(id!=null) {
             String refreshTokenBefore = userService.getToken(id);
             if (!JwtTokenProvider.validateToken(refreshTokenBefore)) {

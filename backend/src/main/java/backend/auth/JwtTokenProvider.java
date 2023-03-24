@@ -135,8 +135,8 @@ public class JwtTokenProvider {
         return (String) parseClaims(accessToken).get("id");
     }
 
-    public static String getIdByRefreshToken(String refreshToken){
-        return (String) parseClaims(refreshToken).get("id");
+    public static String getIdByAccessTokenToString(String accessToken){
+        return (String) parseClaims(accessToken).get("id");
     }
 
     public static Claims parseClaims(String accessToken) {
