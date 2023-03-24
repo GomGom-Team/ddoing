@@ -45,4 +45,14 @@ public class AnimationController {
         }
         return ResponseEntity.ok(animationService.getUserScores(animationRequestDTO));
     }
+
+    // 영상 검색 (제목별)
+    @GetMapping("/search/{keyword}/{userId}")
+    public ResponseEntity selectAllAnimations(@PathVariable String keyword, @PathVariable String userId) {
+        if (animationService.searchAnimations(keyword, userId).size() < 1) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(animationService.searchAnimations(keyword, userId));
+        }
+    }
 }
