@@ -38,5 +38,4 @@ public class AnimationBestScoreEntity extends BaseEntity {
     @JoinColumn(name = "animation_id")
     private AnimationEntity animationEntity;
 
-
 }

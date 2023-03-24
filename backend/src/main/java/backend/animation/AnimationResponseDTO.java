@@ -13,10 +13,15 @@ import java.util.Set;
 @Getter
 @Builder
 public class AnimationResponseDTO {
-    private Long id;
+    private Long id;    // animationId
     private String title;
     private Long runningTime;
     private String pathUrl;
     private Long bestScore;
     private Set<String> roles;
+
+    private String userId;
+    private Long score;
+    private Long exp;
+    private Long level;
 }

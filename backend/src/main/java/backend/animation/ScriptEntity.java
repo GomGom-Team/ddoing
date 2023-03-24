@@ -1,6 +1,5 @@
 package backend.animation;
 
-import backend.common.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,4 +41,17 @@ public class ScriptEntity {
     @ManyToOne(targetEntity = AnimationEntity.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "animation_id")
     private AnimationEntity animationEntity;
+    public ScriptDTO toScriptDTO(){
+        ScriptDTO script = ScriptDTO.builder()
+                .id(this.getId())
+                .animationId(this.getAnimationId())
+                .role(this.getRole())
+                .lastScript(this.getLastScript())
+                .startTime(this.getStartTime())
+                .endTime(this.getEndTime())
+                .engSentence(this.getEngSentence())
+                .koSentence(this.getKoSentence())
+                .build();
+        return script;
+    }
 }
