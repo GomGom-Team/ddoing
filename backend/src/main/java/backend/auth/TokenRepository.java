@@ -7,4 +7,6 @@ public interface TokenRepository extends JpaRepository <TokenEntity, Long> {
     TokenEntity findByUserId(String userId);
 
     void deleteByUserId(String userId);
+
+    boolean existsByUserId(String userId);
 }
