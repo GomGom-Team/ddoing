@@ -32,7 +32,7 @@ const DrawingDrawer = () => {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <ResultPage/>
+      <ResultPage toggleDrawer={toggleDrawer}/>
     </Box>
   );
 
@@ -55,3 +55,4 @@ const DrawingDrawer = () => {
 }
 
 export default DrawingDrawer
+

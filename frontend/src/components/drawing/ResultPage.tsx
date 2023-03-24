@@ -1,12 +1,15 @@
 import React from 'react';
 import tw, { css, styled, theme } from 'twin.macro'
 
-// type Props = {
-//   toggleDrawer  (anchor: Anchor, open: boolean) => void
-// }
+type Anchor = "top" | "left" | "bottom" | "right";
+
+type ResultPageProps = {
+  toggleDrawer: (anchor: Anchor, open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => void;
+};
 
 
-const ResultPage = () => {
+
+const ResultPage = ({ toggleDrawer }: ResultPageProps) => {
   return (
     <StyledDrawer>
       <StyledDiv> 
@@ -28,7 +31,7 @@ const ResultPage = () => {
           </DrawerBody2>
 
         <DrawerEnd>
-          <button>NEXT</button>
+          {/* <button onClick={toggleDrawer(anchor, false)}>NEXT</button> */}
         </DrawerEnd>
       </StyledDiv>
     </StyledDrawer>
