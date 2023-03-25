@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { SigninType } from "../../../../types/user/signinType";
+import { SignInType } from "../../../../types/user/signinType";
 import { UserType } from "../../../../types/user/userType";
 import { getToken, setToken, removeToken } from "./token";
 import { UpdateUserType } from "../../../../types/user/updateUserType";
@@ -8,7 +8,7 @@ import { axiosInitializer } from "../../util/https";
 // 로그인
 export const signinAction = createAsyncThunk(
   "SIGNIN",
-  async (userData: SigninType, { dispatch, rejectWithValue }) => {
+  async (userData: SignInType, { dispatch, rejectWithValue }) => {
     try {
       const axios = axiosInitializer();
       await axios
