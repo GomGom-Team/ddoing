@@ -16,12 +16,12 @@ public class AnimationController {
     private final AnimationServiceImpl animationService;
 
     // 영상 전체 리스트
-    @GetMapping
-    public ResponseEntity selectAllAnimations(@RequestBody UserDTO userDto){
-        if(animationService.getAnimations(userDto.getId()).size() < 1){
+    @GetMapping("/{userId}")
+    public ResponseEntity selectAllAnimations(@PathVariable String userId){
+        if(animationService.getAnimations(userId).size() < 1){
                 return ResponseEntity.noContent().build();
         }else{
-            return ResponseEntity.ok(animationService.getAnimations(userDto.getId()));
+            return ResponseEntity.ok(animationService.getAnimations(userId));
         }
     }
 
