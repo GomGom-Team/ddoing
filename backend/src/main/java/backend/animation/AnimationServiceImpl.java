@@ -115,7 +115,6 @@ public class AnimationServiceImpl implements AnimationService {
         String userId = animationRequestDTO.getUserId();
 
         Long bestScore = getBestScore(animationId, userId);
-        ;
         Long newScore = animationRequestDTO.getScore();
 
         AnimationBestScoreEntity animationBestScoreEntity = animationBestScoreRepository.findByAnimationIdAndUserId(animationId, userId);
@@ -201,4 +200,27 @@ public class AnimationServiceImpl implements AnimationService {
         }
         return results;
     }
+
+    // 영상 필터링 (최고점)
+    @Override
+    public List<AnimationResponseDTO> filterAnimationsByBestScore(String userId) {
+        List<AnimationBestScoreEntity> animationBestScoreEntity = animationBestScoreRepository.findAllByUserIdOrderByBestScoreDesc(userId);
+        List<AnimationResponseDTO> results = new ArrayList<>();
+
+        for (AnimationBestScoreEntity bestScoreEntity : animationBestScoreEntity) {
+            AnimationResponseDTO result = AnimationResponseDTO.builder()
+                    .id(bestScoreEntity.getAnimationId())
+                    .title(animationRepository.findById(bestScoreEntity.getAnimationId()).orElseThrow().getTitle())
+                    .runningTime(animationRepository.findById(bestScoreEntity.getAnimationId()).orElseThrow().getRunningTime())
+                    .pathUrl(animationRepository.findById(bestScoreEntity.getAnimationId()).orElseThrow().getPathUrl())
+                    .bestScore(bestScoreEntity.getBestScore())
+                    .roles(getRoles(bestScoreEntity.getAnimationId()))
+                    .build();
+
+            results.add(result);
+        }
+
+        return results;
+    }
+
 }

@@ -32,4 +32,6 @@ public interface AnimationService {
 
     // 영상 검색
     List<AnimationResponseDTO> searchAnimations(String keyword, String userId);
+
+    List<AnimationResponseDTO> filterAnimationsByBestScore(String userId);
 }

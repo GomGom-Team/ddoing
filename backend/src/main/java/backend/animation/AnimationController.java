@@ -55,4 +55,14 @@ public class AnimationController {
             return ResponseEntity.ok(animationService.searchAnimations(keyword, userId));
         }
     }
+
+    // 영상 필터링
+    @GetMapping("/filter/bestScore/{userId}")
+    public ResponseEntity filterByBestScores(@PathVariable String userId){
+        if (animationService.filterAnimationsByBestScore(userId).size() < 1) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(animationService.filterAnimationsByBestScore(userId));
+        }
+    }
 }
