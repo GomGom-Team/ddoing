@@ -3,18 +3,12 @@ import { axiosInitializer } from "../../util/https";
 
 const axios = axiosInitializer();
 
-// 영상 리스트 GET(수정중)
+// 영상 리스트 GET
 export const animationListGetAction = createAsyncThunk(
   "GET_ANIMATION_LIST",
-  async (_, { rejectWithValue }) => {
+  async (userId: string, { rejectWithValue }) => {
     try {
-      console.log("in?");
-      const { data } = await axios.get(`/api/animations`, {
-        params: { id: "userA" },
-        // headers: {
-        //   "Content-Type": "application/json",
-        // },
-      });
+      const { data } = await axios.get(`/api/animations/${userId}`);
       return data;
     } catch (e: any) {
       alert(e.response.data.message);
