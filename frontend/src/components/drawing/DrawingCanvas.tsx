@@ -2,17 +2,12 @@ import React, { useRef, useState, useCallback, useEffect } from 'react';
 import tw, { css, styled, theme } from 'twin.macro'
 import { Button } from '../common/index'
 
-interface CanvasProps {
-  width: any;
-  height: any;
-}
- 
 interface Coordinate {
   x: number;
   y: number;
 };
 
-const DrawingCanvas = ({ width, height }: CanvasProps) => {
+const DrawingCanvas = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   
   // state
@@ -116,7 +111,7 @@ const DrawingCanvas = ({ width, height }: CanvasProps) => {
 
   return (
     <div>
-      <StyledCanvas ref={canvasRef} height={700} width={900} className="canvas"/>
+      <StyledCanvas ref={canvasRef} width={1280} height={960} className="canvas"/>
       <Button variant = "primary" onClick={()=>clearCanvas()}>CLEAR</Button>
     </div>
   );
@@ -126,5 +121,5 @@ const DrawingCanvas = ({ width, height }: CanvasProps) => {
 export default DrawingCanvas;
 
 const StyledCanvas = styled.canvas(
-  tw`rounded-2xl bg-stone-400 bg-opacity-20`,
+  tw`rounded-2xl bg-stone-400 bg-opacity-20`
 )

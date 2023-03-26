@@ -3,13 +3,14 @@ import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
 import ResultPage from "./ResultPage"
+import WordDrawer from "./WordDrawer"
 
 
-type Anchor = "top" | "left" | "bottom" | "right";
+type Anchor = "top";
 
 const DrawingDrawer = () => {
   const [state, setState] = React.useState({
-    top: false
+    top: false,
   });
 
   const toggleDrawer = (anchor: Anchor, open: boolean) => (
@@ -29,10 +30,10 @@ const DrawingDrawer = () => {
   const list = (anchor: Anchor) => (
     <Box
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
+      // onClick={toggleDrawer(anchor, false)}
+      // onKeyDown={toggleDrawer(anchor, false)}
     >
-      <ResultPage toggleDrawer={toggleDrawer}/>
+      <WordDrawer toggleDrawer={toggleDrawer} anchor={anchor}/>
     </Box>
   );
 

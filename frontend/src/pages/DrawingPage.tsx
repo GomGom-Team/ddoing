@@ -1,7 +1,7 @@
 import React, { useRef, useState, useCallback, useEffect } from 'react';
 import tw, { css, styled, theme } from 'twin.macro'
 import { Header, Button } from '../components/common/index'
-import { DrawingDrawer, DrawingCanvas } from '../components/drawing/index';
+import { DrawingDrawer, DrawingCanvas, ResultModal } from '../components/drawing/index';
 
 const DrawingPage = () => {
 
@@ -11,18 +11,15 @@ const DrawingPage = () => {
       <Header/>
       <DummyDiv></DummyDiv> 
       <StyledDiv>
-        <DrawingCanvas width={800} height={600}/>
+        <DrawingCanvas/>
       </StyledDiv>
-      {/* <DrawingDrawer /> */}
+      <DrawingDrawer/>
+      <ResultModal/>
 
     </BackgroundDiv>
   );
 };
 
-DrawingPage.defaultProps = {
-  width: 800,
-  height: 600,
-};
 
 export default DrawingPage;
 
