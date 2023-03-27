@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class AnimationController {
 
     private final AnimationServiceImpl animationService;
+    private String userId;
 
     // 영상 전체 리스트
     @GetMapping("/{userId}")
@@ -58,24 +59,23 @@ public class AnimationController {
     }
 
     // 영상 필터링
-    @GetMapping("/filter/bestScore/{userId}")
-    public ResponseEntity filterByBestScores(@PathVariable String userId){
-        if (animationService.filterAnimationsByBestScore(userId).size() < 1) {
+    @GetMapping("/filter/star/{userId}/{star}")
+    public ResponseEntity filterByScores1(@PathVariable String userId, @PathVariable int star){
+        if (animationService.filterAnimationsByScores(userId, star).size() < 1) {
             return ResponseEntity.noContent().build();
         } else {
-            return ResponseEntity.ok(animationService.filterAnimationsByBestScore(userId));
+            return ResponseEntity.ok(animationService.filterAnimationsByScores(userId, star));
         }
     }
 
     // 영상 필터링 (수강유무)
-    @GetMapping("/filter/{userId}")
-    public ResponseEntity filterByAlreadyDone(@PathVariable String userId){
-        if (animationService.filterAnimationsAlreadyDone(userId).size() < 1) {
+    @GetMapping("/filter/{userId}/{done}")
+    public ResponseEntity filterByAlreadyDone(@PathVariable String userId, @PathVariable int done){
+        if (animationService.filterAnimationsAlreadyDone(userId, done).size() < 1) {
             return ResponseEntity.noContent().build();
         } else {
-            return ResponseEntity.ok(animationService.filterAnimationsAlreadyDone(userId));
+            return ResponseEntity.ok(animationService.filterAnimationsAlreadyDone(userId, done));
         }
-
     }
 
     // 발음 평가

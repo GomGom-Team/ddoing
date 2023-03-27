@@ -35,9 +35,9 @@ public interface AnimationService {
     // 영상 검색
     List<AnimationResponseDTO> searchAnimations(String keyword, String userId);
 
-    List<AnimationResponseDTO> filterAnimationsByBestScore(String userId);
+    List<AnimationResponseDTO> filterAnimationsByScores(String userId, int score);
 
-    List<AnimationResponseDTO> filterAnimationsAlreadyDone(String userId);
+    List<AnimationResponseDTO> filterAnimationsAlreadyDone(String userId, int done);
 
     int evaluateScript(String script, MultipartFile multipartFile);
 }
