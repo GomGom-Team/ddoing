@@ -12,11 +12,13 @@ public interface AnimationBestScoreRepository extends JpaRepository<AnimationBes
 
     AnimationBestScoreEntity findByAnimationIdAndUserId(Long animationId, String userId);
 
-    List<AnimationBestScoreEntity> findAllByUserIdOrderByBestScoreDesc(String userId);
-
     @Query("select ani from AnimationEntity ani \n" +
             "where ani.id in \n" +
             "(select a.animationId from AnimationBestScoreEntity a where a.userId = :userId) \n" +
             "order by ani.title")
-    List<AnimationEntity> findAllByUserId(String userId);
+    List<AnimationEntity> findAllByUserIdDone(String userId);
+
+    @Query("select a from AnimationEntity  a left outer join AnimationBestScoreEntity b\n" +
+            "on a.id = b.animationId where b.bestScore is null")
+    List<AnimationEntity> findAllByUserIdLeft(String userId);
 }

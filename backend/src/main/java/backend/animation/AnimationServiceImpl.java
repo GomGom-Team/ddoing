@@ -214,32 +214,43 @@ public class AnimationServiceImpl implements AnimationService {
         return results;
     }
 
-    // 영상 필터링 (최고점)
+    // 영상 필터링 (점수별)
     @Override
-    public List<AnimationResponseDTO> filterAnimationsByBestScore(String userId) {
-        List<AnimationBestScoreEntity> animationBestScoreEntity = animationBestScoreRepository.findAllByUserIdOrderByBestScoreDesc(userId);
+    public List<AnimationResponseDTO> filterAnimationsByScores(String userId, int score) {
+        List<AnimationEntity> animationBestScoreEntities = animationBestScoreRepository.findAllByUserIdDone(userId);
         List<AnimationResponseDTO> results = new ArrayList<>();
 
-        for (AnimationBestScoreEntity bestScoreEntity : animationBestScoreEntity) {
+        for (AnimationEntity bestScoreEntity : animationBestScoreEntities) {
+            Long bestScore = getBestScore(bestScoreEntity.getId(), userId);
+
             AnimationResponseDTO result = AnimationResponseDTO.builder()
-                    .id(bestScoreEntity.getAnimationId())
-                    .title(animationRepository.findById(bestScoreEntity.getAnimationId()).orElseThrow().getTitle())
-                    .runningTime(animationRepository.findById(bestScoreEntity.getAnimationId()).orElseThrow().getRunningTime())
-                    .pathUrl(animationRepository.findById(bestScoreEntity.getAnimationId()).orElseThrow().getPathUrl())
-                    .bestScore(bestScoreEntity.getBestScore())
-                    .roles(getRoles(bestScoreEntity.getAnimationId()))
+                    .id(bestScoreEntity.getId())
+                    .title(animationRepository.findById(bestScoreEntity.getId()).orElseThrow().getTitle())
+                    .runningTime(animationRepository.findById(bestScoreEntity.getId()).orElseThrow().getRunningTime())
+                    .pathUrl(animationRepository.findById(bestScoreEntity.getId()).orElseThrow().getPathUrl())
+                    .bestScore(bestScore)
+                    .roles(getRoles(bestScoreEntity.getId()))
                     .build();
 
-            results.add(result);
+            if (score == 1 && bestScore > 0 && bestScore <= 30 || score == 2 && bestScore > 30 && bestScore <= 70 || score == 3 && bestScore > 70 && bestScore <= 100) {
+                results.add(result);
+            }
         }
-
         return results;
     }
 
     @Override
-    public List<AnimationResponseDTO> filterAnimationsAlreadyDone(String userId) {
+    public List<AnimationResponseDTO> filterAnimationsAlreadyDone(String userId, int done) {
 
-        List<AnimationEntity> animationEntities = animationBestScoreRepository.findAllByUserId(userId);
+        List<AnimationEntity> animationEntities;
+
+        // 수강유무
+        if(done == 1){  // 수강 완료
+            animationEntities  = animationBestScoreRepository.findAllByUserIdDone(userId);
+        }else{  // 수강 미완료
+            animationEntities  = animationBestScoreRepository.findAllByUserIdLeft(userId);
+        }
+        
         List<AnimationResponseDTO> results = new ArrayList<>();
 
         for (AnimationEntity animation : animationEntities) {
@@ -315,7 +326,7 @@ public class AnimationServiceImpl implements AnimationService {
             String return_object = jsonObject.get("return_object").toString();
             JSONObject jsonObject1 = (JSONObject) parser.parse(return_object);
 
-            score = (int)(Float.parseFloat(jsonObject1.get("score").toString()) * 20);
+            score = (int) (Float.parseFloat(jsonObject1.get("score").toString()) * 20);
 
             // System.out.println("score-------: " + score);
 
