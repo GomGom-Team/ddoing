@@ -26,7 +26,10 @@ def mapk(actual, predicted, k=3):
 # Source: https://github.com/benhamner/Metrics/blob/master/Python/ml_metrics/average_precision.py
 	return np.mean([apk(a, p, k) for a,p in zip(actual, predicted)])
 
-def preds2catids(predictions):
+def preds2catids(predictions, mode='submisson'):
+	if mode != 'submisson':
+		return np.argsort(-predictions, axis=1)[:, :3]
+
 	return pd.DataFrame(
 		np.argsort(-predictions, axis=1)[:, :3], columns=['a', 'b', 'c'])
 
