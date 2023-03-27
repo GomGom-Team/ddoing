@@ -1,6 +1,8 @@
 package backend.animation;
 
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -36,4 +38,6 @@ public interface AnimationService {
     List<AnimationResponseDTO> filterAnimationsByBestScore(String userId);
 
     List<AnimationResponseDTO> filterAnimationsAlreadyDone(String userId);
+
+    int evaluateScript(String script, MultipartFile multipartFile);
 }
