@@ -34,4 +34,6 @@ public interface AnimationService {
     List<AnimationResponseDTO> searchAnimations(String keyword, String userId);
 
     List<AnimationResponseDTO> filterAnimationsByBestScore(String userId);
+
+    List<AnimationResponseDTO> filterAnimationsAlreadyDone(String userId);
 }

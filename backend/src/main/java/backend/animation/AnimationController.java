@@ -65,4 +65,15 @@ public class AnimationController {
             return ResponseEntity.ok(animationService.filterAnimationsByBestScore(userId));
         }
     }
+
+    // 영상 필터링 (수강유무)
+    @GetMapping("/filter/{userId}")
+    public ResponseEntity filterByAlreadyDone(@PathVariable String userId){
+        if (animationService.filterAnimationsAlreadyDone(userId).size() < 1) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(animationService.filterAnimationsAlreadyDone(userId));
+        }
+
+    }
 }
