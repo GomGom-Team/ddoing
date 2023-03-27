@@ -30,3 +30,20 @@ export const scriptGetAction = createAsyncThunk(
     }
   }
 );
+
+// 음성 녹음 데이터 POST
+export const recordSendAction = createAsyncThunk(
+  "RECORD_SEND",
+  async (formData: FormData, { rejectWithValue }) => {
+    try {
+      const axios = axiosInitializer();
+      await axios.post("/api/animations/evaluate", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+    } catch (e) {
+      return rejectWithValue(e);
+    }
+  }
+);

@@ -1,10 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AnimationStateType } from "../../../../types/animation/animationStateType";
-import { scriptGetAction, animationListGetAction } from "./thunk";
+import {
+  scriptGetAction,
+  animationListGetAction,
+  recordSendAction,
+} from "./thunk";
 
 const initialState: AnimationStateType = {
   getAnimationList: { loading: false, data: null, error: null },
   getScript: { loading: false, data: null, error: null },
+  sendRecord: { loading: false, data: null, error: null },
 };
 
 const animationSlice = createSlice({
@@ -42,6 +47,21 @@ const animationSlice = createSlice({
         state.getScript.loading = false;
         state.getScript.data = null;
         state.getScript.error = payload;
+      })
+      .addCase(recordSendAction.pending, (state) => {
+        state.sendRecord.loading = true;
+        state.sendRecord.data = null;
+        state.sendRecord.error = null;
+      })
+      .addCase(recordSendAction.fulfilled, (state, { payload }) => {
+        state.sendRecord.loading = false;
+        state.sendRecord.data = payload;
+        state.sendRecord.error = null;
+      })
+      .addCase(recordSendAction.rejected, (state, { payload }) => {
+        state.sendRecord.loading = false;
+        state.sendRecord.data = null;
+        state.sendRecord.error = payload;
       });
   },
 });
