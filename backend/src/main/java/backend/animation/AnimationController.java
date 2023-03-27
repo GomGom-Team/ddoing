@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @RequestMapping("/animations")
@@ -75,5 +76,12 @@ public class AnimationController {
             return ResponseEntity.ok(animationService.filterAnimationsAlreadyDone(userId));
         }
 
+    }
+
+    // 발음 평가
+    @PostMapping("/evaluate")
+    public ResponseEntity PronunciationEvaluation(@RequestParam String script, @RequestPart MultipartFile multipartFile){
+        int result =  animationService.evaluateScript(script, multipartFile);
+        return ResponseEntity.ok(result);
     }
 }
