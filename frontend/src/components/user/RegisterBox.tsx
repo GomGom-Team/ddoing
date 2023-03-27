@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { useAppDispatch } from "../../redux/configStore.hooks";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../redux/configStore.hooks";
 import {
   signupAction,
   checkIdAction,
@@ -22,6 +23,10 @@ import InputWithLabel from "./InputWithLabel";
 
 const RegisterBox = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const checkId = useAppSelector((state) => state.user.checkId);
+  const checkNickName = useAppSelector((state) => state.user.checkNickName);
+  const checkEmail = useAppSelector((state) => state.user.checkEmail);
 
   const [uid, setUid] = useState<string>("");
   const [pw, setPw] = useState<string>("");
@@ -69,6 +74,12 @@ const RegisterBox = () => {
 
   const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
+    const regex = /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+    if (!regex.test(e.target.value)) {
+      setEmailCheck("RegexFail");
+    } else {
+      setEmailCheck("PleaseCheckEmail");
+    }
   };
 
   const onChangeNickName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,6 +94,7 @@ const RegisterBox = () => {
     setName(e.target.value);
   };
 
+  // 중복체크
   const onCheckID = () => {
     dispatch(checkIdAction(uid));
   };
@@ -95,6 +107,7 @@ const RegisterBox = () => {
     dispatch(checkEmailAction(email));
   };
 
+  // 비밀번호 보였다 안보였다
   const handleClickShowPw = () => {
     setShowPw((prev) => !prev);
   };
@@ -102,6 +115,7 @@ const RegisterBox = () => {
     e.preventDefault();
   };
 
+  // 회원가입 버튼 눌렀을 때
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (idCheck && pwCheck && rePwCheck && nickName && emailCheck) {
@@ -113,10 +127,43 @@ const RegisterBox = () => {
           nickName: nickName,
           name: name,
         })
-      );
+      ).then(() => {
+        navigate("/login");
+      });
     }
-    console.log("회원가입 완뇨^^");
   };
+
+  useEffect(() => {
+    if (pw === rePw) {
+      setRePwCheck(true);
+    } else {
+      setRePwCheck(false);
+    }
+  }, [pw, rePw]);
+
+  useEffect(() => {
+    if (checkId.error) {
+      setIdCheck("UnAvailable");
+    } else if (checkId.data) {
+      setIdCheck("Available");
+    }
+  }, [checkId]);
+
+  useEffect(() => {
+    if (checkNickName.error) {
+      setNickNameCheck("UnAvailable");
+    } else if (checkNickName.data) {
+      setNickNameCheck("Available");
+    }
+  }, [checkNickName]);
+
+  useEffect(() => {
+    if (checkEmail.error) {
+      setEmailCheck("UnAvailable");
+    } else if (checkEmail.data) {
+      setEmailCheck("Available");
+    }
+  }, [checkEmail]);
 
   return (
     <Box
@@ -149,7 +196,7 @@ const RegisterBox = () => {
               ) : idCheck === "PleaseCheckId" ? (
                 <span>아이디 중복 검사를 해주세요</span>
               ) : idCheck === "RegexFail" ? (
-                <span>영문자또는 숫자 4~12자</span>
+                <span>영문자 또는 숫자 4~12자</span>
               ) : (
                 <span>이미 사용중인 ID입니다</span>
               ))}
@@ -216,17 +263,17 @@ const RegisterBox = () => {
             value={name}
             onChange={onChangeName}
             required
-            error={name === "" ? true : false}
+            error={name && name === "" ? true : false}
           />
         </FormControl>
         <FormControl variant="standard">
-          <InputLabel htmlFor="nickName">nickName *</InputLabel>
+          <InputLabel htmlFor="nickName">nickName</InputLabel>
           <Input
             id="nickName"
             value={nickName}
             onChange={onChangeNickName}
             required
-            error={nickName === "" ? true : false}
+            error={nickName && nickName === "" ? true : false}
           />
           <FormHelperText id="nick-helper-text">
             {nickName &&
@@ -314,5 +361,6 @@ const boxStyle = {
 const boxStyle2 = {
   position: "absolute",
   left: "50%",
+  top: "20%",
   transform: "translateX(-50%)",
 };

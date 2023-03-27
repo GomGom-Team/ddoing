@@ -24,26 +24,26 @@ export const signupAction = createAsyncThunk(
 // 아이디 중복 체크
 export const checkIdAction = createAsyncThunk(
   "CHECK_ID",
-  async (id: string, {rejectWithValue}) => {
-    try{
+  async (id: string, { rejectWithValue }) => {
+    try {
       const axios = axiosInitializer();
-      const {data} = await axios.get(`/api/users/id/${id}`);
+      const { data } = await axios.get(`/api/users/id/${id}`);
       return data;
-    } catch(e) {
+    } catch (e) {
       return rejectWithValue(e);
     }
   }
-)
+);
 
 // 닉네임 중복 체크
 export const checkNickNameAction = createAsyncThunk(
   "CHECK_NICKNAME",
-  async (nickName: string, {rejectWithValue}) => {
-    try{
+  async (nickName: string, { rejectWithValue }) => {
+    try {
       const axios = axiosInitializer();
-      const {data} = await axios.get(`/api/users/nickName/${nickName}`);
+      const { data } = await axios.get(`/api/users/nickName/${nickName}`);
       return data;
-    } catch(e) {
+    } catch (e) {
       return rejectWithValue(e);
     }
   }
@@ -52,16 +52,16 @@ export const checkNickNameAction = createAsyncThunk(
 // 이메일 중복 체크
 export const checkEmailAction = createAsyncThunk(
   "CHECK_EMAIL",
-  async (email: string, {rejectWithValue}) => {
-    try{
+  async (email: string, { rejectWithValue }) => {
+    try {
       const axios = axiosInitializer();
-      const {data} = await axios.get(`/api/users/email/${email}`);
+      const { data } = await axios.get(`/api/users/email/${email}`);
       return data;
-    } catch(e) {
+    } catch (e) {
       return rejectWithValue(e);
     }
   }
-)
+);
 
 // 로그인
 export const signinAction = createAsyncThunk(
@@ -130,6 +130,29 @@ export const refreshTokenAction = createAsyncThunk(
     } catch (e) {
       // 로그아웃
       removeToken();
+      alert("세션이 만료되어 로그아웃 되었습니다.");
+      return rejectWithValue(e);
+    }
+  }
+);
+
+export const logoutAction = createAsyncThunk(
+  "LOGOUT",
+  async (_, { rejectWithValue }) => {
+    try {
+      const axios = axiosInitializer();
+      await axios
+        .delete("api/auth/logout", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Baerer " + getToken(),
+          },
+        })
+        .then(() => {
+          removeToken();
+          alert("로그아웃 되었습니다.");
+        });
+    } catch (e) {
       return rejectWithValue(e);
     }
   }
