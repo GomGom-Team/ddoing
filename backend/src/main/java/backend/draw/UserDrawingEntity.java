@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name="user_drawing")
+@Table(name = "user_drawing")
 @Builder
 @Getter
 @NoArgsConstructor
@@ -20,6 +20,11 @@ public class UserDrawingEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "user_id", nullable = false, insertable = false, updatable = false)
+    private String userId;
+    @Column(name = "word_id", nullable = false, insertable = false, updatable = false)
+    private Long wordId;
 
     @ManyToOne(targetEntity = UserEntity.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -34,5 +39,17 @@ public class UserDrawingEntity extends BaseEntity {
 
     @Column(name = "percentage")
     private Float percentage;
+
+    UserDrawingDTO toUserDrawingDto() {
+        UserDrawingDTO userDrawing = UserDrawingDTO.builder()
+                .id(this.getId())
+                .userId(this.getUserId())
+                .wordId(this.getWordId())
+                .drawingPath(this.getDrawingPath())
+                .percentage(this.getPercentage())
+                .build();
+
+        return userDrawing;
+    }
 
 }
