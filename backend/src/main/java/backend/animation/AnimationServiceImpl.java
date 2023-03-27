@@ -223,4 +223,25 @@ public class AnimationServiceImpl implements AnimationService {
         return results;
     }
 
+    @Override
+    public List<AnimationResponseDTO> filterAnimationsAlreadyDone(String userId) {
+
+        List<AnimationEntity> animationEntities = animationBestScoreRepository.findAllByUserId(userId);
+        List<AnimationResponseDTO> results = new ArrayList<>();
+
+        for (AnimationEntity animation : animationEntities) {
+            AnimationResponseDTO result = AnimationResponseDTO.builder()
+                    .id(animation.getId())
+                    .title(animationRepository.findById(animation.getId()).orElseThrow().getTitle())
+                    .runningTime(animationRepository.findById(animation.getId()).orElseThrow().getRunningTime())
+                    .pathUrl(animationRepository.findById(animation.getId()).orElseThrow().getPathUrl())
+                    .bestScore(getBestScore(animation.getId(), userId))
+                    .roles(getRoles(animation.getId()))
+                    .build();
+
+            results.add(result);
+        }
+        return results;
+    }
+
 }
