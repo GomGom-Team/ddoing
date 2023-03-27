@@ -7,13 +7,15 @@ type Anchor = "top";
 type ResultPageProps = {
   anchor: Anchor
   toggleDrawer: (anchor: Anchor, open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => void;
+  index: number
+  maxStage: number
 };
 
-const ResultPage = ({ anchor, toggleDrawer }: ResultPageProps) => {
+const ResultPage = ({ anchor, toggleDrawer,index, maxStage }: ResultPageProps) => {
   return (
     <StyledDrawer>
       <WordHeader>
-        현재 문제 수 / 전체 문제 수
+        {index} / {maxStage}
       </WordHeader>
       <StyledWrapper>
         <StyledDiv> 

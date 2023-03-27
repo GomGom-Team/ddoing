@@ -4,17 +4,14 @@ import { Button } from '../common/index'
 interface landingProps {
   landingHandler(): void
   anchor: Anchor
-  toggleDrawer: (anchor: Anchor, open: boolean) => void;
+  toggleDrawer: (anchor: Anchor, open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => void;
   // toggleDrawer: (anchor: Anchor, open: boolean)  => void;
 }                                                                                                                         
 
 type Anchor = "top";
 
-const DrawingLanding = ( { landingHandler, toggleDrawer, anchor } : landingProps) => {
+const DrawingLanding = ( { toggleDrawer, anchor } : landingProps) => {
 
-function startDraw(anchor: Anchor){
-  toggleDrawer(anchor, true)
-}
 
   return (
     <StyledDiv>
@@ -24,9 +21,7 @@ function startDraw(anchor: Anchor){
           <Title>제목</Title>
           <Description>낙서를 통해 배우는 영어!</Description>
           <Button variant='secondary'
-            onClick={() => {
-              startDraw(anchor)
-            }}
+            onClick={toggleDrawer(anchor, true)}
           >그림 그리기</Button>
         </FlexDiv>
       </StyledBox>

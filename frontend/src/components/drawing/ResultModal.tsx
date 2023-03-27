@@ -6,20 +6,40 @@ import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import tw, { css, styled, theme } from 'twin.macro'
 
+
+interface wordListType {
+  wordEng: string
+  wordKor: string
+  sentenceEng: string
+  sentenceKor: string
+}
 interface modalProps {
   answer : boolean
   modalOpen : boolean 
   modalHandleOpen() : void
   modalHandleClose() : void
+  wordList : wordListType[]
+  index: number
+  stageHandler() : void
 }
 
 
-export default function TransitionsModal({answer, modalOpen, modalHandleOpen, modalHandleClose} : modalProps) {
-  // const [modalOpen, setmodalOpen] = React.useState(false);
-  // const handleOpen = () => setmodalOpen(true);
-  // const handleClose = () => setmodalOpen(false);
-  // const [answer, setAnswer] = React.useState(true);
+export default function TransitionsModal({ answer, modalOpen, modalHandleOpen, modalHandleClose, wordList, index, stageHandler } : modalProps) {
 
+  // const closeModal = async ()=>{
+  //   return modalHandleClose();
+  // }
+
+  // const nextStage = async ()=>{
+  //     await closeModal().then(() => {
+  //       stageHandler()
+  //     })
+  //     // setTimeout(() => stageHandler(), 500);
+  // }
+  const nextStage = () =>{
+    modalHandleClose()
+    setTimeout(() => stageHandler(), 500);
+  }
   // 정답일 경우 띄울 모달 페이지
   if (answer) {
     return (
@@ -45,8 +65,8 @@ export default function TransitionsModal({answer, modalOpen, modalHandleOpen, mo
   
                     <DrawerBody1>
                       <WordDiv>
-                        <WordEnglish>Apple</WordEnglish>
-                        <WordKorean>사과</WordKorean>
+                        <WordEnglish>{ wordList[index].wordEng }</WordEnglish>
+                        <WordKorean>{ wordList[index].wordKor }</WordKorean>
                       </WordDiv>
                       <ImgWrapper>
                         <CustomedImage></CustomedImage>
@@ -54,12 +74,12 @@ export default function TransitionsModal({answer, modalOpen, modalHandleOpen, mo
                     </DrawerBody1>
   
                     <DrawerBody2>
-                      <ExampleEnglish>Apple is delicious</ExampleEnglish>
-                      <ExampleKorean>사과는 맛있어~</ExampleKorean>
+                      <ExampleEnglish>{ wordList[index].sentenceEng }</ExampleEnglish>
+                      <ExampleKorean>{ wordList[index].sentenceKor }</ExampleKorean>
                     </DrawerBody2>
   
                   <DrawerEnd>
-                    {/* <button onClick={toggleDrawer(anchor, false)}>NEXT</button> */}
+                    <button onClick={nextStage}>다음문제</button>
                   </DrawerEnd>
                 </StyledDiv>
               </StyledDrawer>
@@ -93,8 +113,8 @@ export default function TransitionsModal({answer, modalOpen, modalHandleOpen, mo
 
                   <DrawerBody1>
                     <WordDiv>
-                      <WordEnglish>Apple</WordEnglish>
-                      <WordKorean>사과</WordKorean>
+                      <WordEnglish>{ wordList[index].wordEng }</WordEnglish>
+                      <WordKorean>{ wordList[index].wordKor }</WordKorean>
                     </WordDiv>
                     <ImgWrapper>
                       <CustomedImage></CustomedImage>
@@ -102,12 +122,12 @@ export default function TransitionsModal({answer, modalOpen, modalHandleOpen, mo
                   </DrawerBody1>
 
                   <DrawerBody2>
-                    <ExampleEnglish>Apple is delicious</ExampleEnglish>
-                    <ExampleKorean>사과는 맛있어~</ExampleKorean>
+                    <ExampleEnglish>{ wordList[index].sentenceEng }</ExampleEnglish>
+                    <ExampleKorean>{ wordList[index].sentenceKor }</ExampleKorean>
                   </DrawerBody2>
 
                 <DrawerEnd>
-                  {/* <button onClick={toggleDrawer(anchor, false)}>NEXT</button> */}
+                  <button onClick ={nextStage}>다음문제</button>
                 </DrawerEnd>
               </StyledDiv>
             </StyledDrawer>

@@ -6,16 +6,24 @@ import ResultPage from "./ResultPage"
 import WordDrawer from "./WordDrawer"
 
 type Anchor = "top";
-
+interface wordListType {
+  wordEng: string
+  wordKor: string
+  sentenceEng: string
+  sentenceKor: string
+}
 interface ResultPageProps {
   anchor: Anchor
   toggleDrawer: (anchor: Anchor, open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => void;
   state: {
     top: boolean
   }
+  wordList: wordListType[]
+  index: number
+  maxStage: number
 };
 
-const DrawingDrawer = ({ toggleDrawer, state }: ResultPageProps) => {
+const DrawingDrawer = ({ toggleDrawer, state, index, maxStage }: ResultPageProps) => {
 
   const list = (anchor: Anchor) => (
     <Box
@@ -23,7 +31,7 @@ const DrawingDrawer = ({ toggleDrawer, state }: ResultPageProps) => {
     // onClick={toggleDrawer(anchor, false)}
     // onKeyDown={toggleDrawer(anchor, false)}
     >
-      <WordDrawer toggleDrawer={toggleDrawer} anchor={anchor} />
+      <WordDrawer toggleDrawer={toggleDrawer} anchor={anchor} index= {index} maxStage={maxStage} />
     </Box>
   );
 
