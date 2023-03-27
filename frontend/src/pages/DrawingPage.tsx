@@ -1,23 +1,81 @@
 import React, { useRef, useState, useCallback, useEffect } from 'react';
 import tw, { css, styled, theme } from 'twin.macro'
 import { Header, Button } from '../components/common/index'
-import { DrawingDrawer, DrawingCanvas, ResultModal } from '../components/drawing/index';
+import { DrawingDrawer, DrawingCanvas, ResultModal, DrawingLanding } from '../components/drawing/index';
+
+type Anchor = "top";
 
 const DrawingPage = () => {
+  // state
+  const [landing, setLanding] = useState(true)
+  const [modalOpen, setmodalOpen] = useState(false);
+  const [answer, setAnswer] = useState(true);
+  const [state, setState] = useState({
+    top: false,
+  });
 
+  // logic
+  const landingHandler = () => {
+    setLanding(false)
+  };
+  
+  const modalHandleOpen = () => setmodalOpen(true);
+  const modalHandleClose = () => setmodalOpen(false);
 
+  const toggleDrawer = (anchor: Anchor, open: boolean) => (
+    event: React.KeyboardEvent | React.MouseEvent
+  ) => {
+    
+    if (
+      event.type === "keydown" &&
+      ((event as React.KeyboardEvent).key === "Tab" ||
+        (event as React.KeyboardEvent).key === "Shift")
+    ) {
+      return;
+    }
+    console.log('toggle')
+    setState({ ...state, [anchor]: open });
+  };
+
+  if (!landing) {
+    return (
+      <BackgroundDiv>
+        <Header/>
+        <DummyDiv></DummyDiv> 
+        <StyledDiv>
+          <DrawingCanvas/>
+        </StyledDiv>
+        {/* Drawer */}
+        <DrawingDrawer
+          toggleDrawer = {toggleDrawer}
+          state = {{...state}}
+          anchor = {"top"}
+        />
+        {/* Modal */}
+        <ResultModal 
+          modalHandleOpen = {modalHandleOpen}
+          modalHandleClose = {modalHandleClose} 
+          answer={answer}
+          modalOpen = {modalOpen}
+        />
+      </BackgroundDiv>
+    );
+  }
   return (
-    <BackgroundDiv>
-      <Header/>
-      <DummyDiv></DummyDiv> 
-      <StyledDiv>
-        <DrawingCanvas/>
-      </StyledDiv>
-      <DrawingDrawer/>
-      <ResultModal/>
-
-    </BackgroundDiv>
-  );
+    <div>
+      <Header/> 
+      <DrawingLanding 
+        landingHandler={landingHandler}
+        toggleDrawer = {toggleDrawer}
+        anchor = {"top"}
+      />
+      <DrawingDrawer
+        toggleDrawer = {toggleDrawer}
+        state = {{...state}}
+        anchor = {"top"}
+      />
+    </div>
+  )
 };
 
 

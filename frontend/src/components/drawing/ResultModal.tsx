@@ -6,33 +6,28 @@ import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import tw, { css, styled, theme } from 'twin.macro'
 
+interface modalProps {
+  answer : boolean
+  modalOpen : boolean 
+  modalHandleOpen() : void
+  modalHandleClose() : void
+}
 
-const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 600,
-  bgcolor: '#FBF8CC',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
 
-export default function TransitionsModal() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const [answer, setAnswer] = React.useState(true);
+export default function TransitionsModal({answer, modalOpen, modalHandleOpen, modalHandleClose} : modalProps) {
+  // const [modalOpen, setmodalOpen] = React.useState(false);
+  // const handleOpen = () => setmodalOpen(true);
+  // const handleClose = () => setmodalOpen(false);
+  // const [answer, setAnswer] = React.useState(true);
 
   // 정답일 경우 띄울 모달 페이지
   if (answer) {
     return (
       <div>
-        <Button onClick={handleOpen}>Open modal</Button>
+        <Button onClick={modalHandleOpen}>Open modal</Button>
         <Modal
-          open={open}
-          onClose={handleClose}
+          open={modalOpen}
+          onClose={modalHandleClose}
           closeAfterTransition
           slots={{ backdrop: Backdrop }}
           slotProps={{
@@ -41,7 +36,7 @@ export default function TransitionsModal() {
             },
           }}
         >
-          <Fade in={open}>
+          <Fade in={modalOpen}>
             <Box sx={style}>
               {/* 결과 화면을 띄워줄 곳 */}
               <StyledDrawer>
@@ -77,10 +72,10 @@ export default function TransitionsModal() {
   }
   return(
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
+      <Button onClick={modalHandleOpen}>Open modal</Button>
       <Modal
-        open={open}
-        onClose={handleClose}
+        open={modalOpen}
+        onClose={modalHandleClose}
         closeAfterTransition
         slots={{ backdrop: Backdrop }}
         slotProps={{
@@ -89,7 +84,7 @@ export default function TransitionsModal() {
           },
         }}
       >
-        <Fade in={open}>
+        <Fade in={modalOpen}>
           <Box sx={style}>
             {/* 결과 화면을 띄워줄 곳 */}
             <StyledDrawer>
@@ -126,6 +121,18 @@ export default function TransitionsModal() {
 
 
 // style
+
+const style = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 600,
+  bgcolor: '#FBF8CC',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
 const StyledDrawer = styled.div(
   tw`flex justify-center items-center`

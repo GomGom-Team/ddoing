@@ -5,35 +5,25 @@ import Button from "@mui/material/Button";
 import ResultPage from "./ResultPage"
 import WordDrawer from "./WordDrawer"
 
-
 type Anchor = "top";
 
-const DrawingDrawer = () => {
-  const [state, setState] = React.useState({
-    top: false,
-  });
+interface ResultPageProps {
+  anchor: Anchor
+  toggleDrawer: (anchor: Anchor, open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => void;
+  state: {
+    top: boolean
+  }
+};
 
-  const toggleDrawer = (anchor: Anchor, open: boolean) => (
-    event: React.KeyboardEvent | React.MouseEvent
-  ) => {
-    if (
-      event.type === "keydown" &&
-      ((event as React.KeyboardEvent).key === "Tab" ||
-        (event as React.KeyboardEvent).key === "Shift")
-    ) {
-      return;
-    }
-
-    setState({ ...state, [anchor]: open });
-  };
+const DrawingDrawer = ({ toggleDrawer, state }: ResultPageProps) => {
 
   const list = (anchor: Anchor) => (
     <Box
       role="presentation"
-      // onClick={toggleDrawer(anchor, false)}
-      // onKeyDown={toggleDrawer(anchor, false)}
+    // onClick={toggleDrawer(anchor, false)}
+    // onKeyDown={toggleDrawer(anchor, false)}
     >
-      <WordDrawer toggleDrawer={toggleDrawer} anchor={anchor}/>
+      <WordDrawer toggleDrawer={toggleDrawer} anchor={anchor} />
     </Box>
   );
 
