@@ -1,11 +1,11 @@
 import React, { ChangeEvent } from "react";
 import styled from "styled-components";
 import { InputProps } from "../../../types/user/inputPropsType";
-import { FormControl } from "@mui/material";
+import { FormControl, InputLabel, Input, TextField } from "@mui/material";
 
 const InputWithLabel = ({ label, ...rest }: InputProps) => (
   <FormControl variant="standard">
-    <Label>{label}</Label>
+    <InputLabel>{label}</InputLabel>
     <Input {...rest} />
   </FormControl>
 );
@@ -18,7 +18,7 @@ const Label = styled.div`
   margin-bottom: 0.25rem;
 `;
 
-const Input = styled.input`
+const InputComponent = styled.input`
   width: 100%;
   border: 1px solid gray;
   outline: none;

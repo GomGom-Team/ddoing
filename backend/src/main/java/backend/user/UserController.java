@@ -18,7 +18,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/signup")
+    @PostMapping()
     public ResponseEntity insertUser(@RequestBody UserDTO signUpDTO){
         UserEntity result = userService.createUser(signUpDTO);
         if(result==null){

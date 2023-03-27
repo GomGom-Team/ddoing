@@ -4,9 +4,9 @@ import { UserType } from "./userType";
 export type UserStateType = {
   userData: UserType;
   signup: ReduxStateType;
-  checkDupId: ReduxStateType;
-  checkDupNickName: ReduxStateType;
-  checkDupEmail: ReduxStateType;
+  checkId: ReduxStateType;
+  checkNickName: ReduxStateType;
+  checkEmail: ReduxStateType;
   signin: ReduxStateType;
   getMe: ReduxStateType;
   updateUser: ReduxStateType;
