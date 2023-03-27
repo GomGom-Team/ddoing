@@ -5,35 +5,33 @@ import Button from "@mui/material/Button";
 import ResultPage from "./ResultPage"
 import WordDrawer from "./WordDrawer"
 
-
 type Anchor = "top";
+interface wordListType {
+  wordEng: string
+  wordKor: string
+  sentenceEng: string
+  sentenceKor: string
+}
+interface ResultPageProps {
+  anchor: Anchor
+  toggleDrawer: (anchor: Anchor, open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => void;
+  state: {
+    top: boolean
+  }
+  wordList: wordListType[]
+  index: number
+  maxStage: number
+};
 
-const DrawingDrawer = () => {
-  const [state, setState] = React.useState({
-    top: false,
-  });
-
-  const toggleDrawer = (anchor: Anchor, open: boolean) => (
-    event: React.KeyboardEvent | React.MouseEvent
-  ) => {
-    if (
-      event.type === "keydown" &&
-      ((event as React.KeyboardEvent).key === "Tab" ||
-        (event as React.KeyboardEvent).key === "Shift")
-    ) {
-      return;
-    }
-
-    setState({ ...state, [anchor]: open });
-  };
+const DrawingDrawer = ({ toggleDrawer, state, index, maxStage }: ResultPageProps) => {
 
   const list = (anchor: Anchor) => (
     <Box
       role="presentation"
-      // onClick={toggleDrawer(anchor, false)}
-      // onKeyDown={toggleDrawer(anchor, false)}
+    // onClick={toggleDrawer(anchor, false)}
+    // onKeyDown={toggleDrawer(anchor, false)}
     >
-      <WordDrawer toggleDrawer={toggleDrawer} anchor={anchor}/>
+      <WordDrawer toggleDrawer={toggleDrawer} anchor={anchor} index= {index} maxStage={maxStage} />
     </Box>
   );
 
