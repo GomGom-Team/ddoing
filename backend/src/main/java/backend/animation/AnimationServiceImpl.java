@@ -3,8 +3,6 @@ package backend.animation;
 import backend.user.UserEntity;
 import backend.user.UserRepository;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.sun.istack.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -324,18 +322,20 @@ public class AnimationServiceImpl implements AnimationService {
             JSONParser parser = new JSONParser();
             JSONObject jsonObject = (JSONObject) parser.parse(responBody);
             String return_object = jsonObject.get("return_object").toString();
+            System.out.println("return_object-------: " + return_object);
+
             JSONObject jsonObject1 = (JSONObject) parser.parse(return_object);
 
             score = (int) (Float.parseFloat(jsonObject1.get("score").toString()) * 20);
 
-            // System.out.println("score-------: " + score);
-
-            // System.out.println("[responseCode] " + responseCode);
-            // System.out.println(responBody);
-
         } catch (MalformedURLException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        }
+        // score에 string 값이 들어갈 때 발생하는 에러 처리
+        catch (NumberFormatException e) {
+            score = 0;
+        }
+        catch (IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {
             throw new RuntimeException(e);
@@ -372,7 +372,7 @@ public class AnimationServiceImpl implements AnimationService {
             try {
                 //핵심 코드
                 //core code
-                System.out.println("Success");
+                // System.out.println("Success");
                 return (formatWavToRaw(changeFormat(file, FORMAT)));
 
             } catch (IOException e) {
