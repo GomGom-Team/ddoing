@@ -56,7 +56,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public boolean updateUser(UserDTO userDTO, String id) {
+    public boolean updateUser(UserDTO userDTO) {
+        String id = userDTO.getId();
         UserEntity user = userRepository.findById(id).orElseThrow();
         UserEntity newUser = UserEntity.builder()
                 .id(id)
@@ -71,6 +72,16 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public boolean checkPassword(String id, String password) {
+        UserEntity findUser = userRepository.findById(id).orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "사용자를 찾을 수 없습니다."));
+
+        if(passwordEncoder.matches(passwordEncoder.encode(password), findUser.getPassword())){
+            throw new CustomException(HttpStatus.BAD_REQUEST, "잘못된 비밀번호입니다.");
+        }
+        return true;
+    }
+
+    @Override
     public void deleteUser(String id) {
         userRepository.deleteById(id);
     }
@@ -78,9 +89,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public TokenDTO loginUser(LoginDTO loginDTO) {
         UserEntity findUser = userRepository.findById(loginDTO.getId()).orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "사용자를 찾을 수 없습니다."));
-        log.info("id"+findUser.getId());
-        log.info("userpw"+findUser.getPassword());
-        log.info("dtopw"+loginDTO.getPassword());
+
         if(passwordEncoder.matches(passwordEncoder.encode(loginDTO.getPassword()), findUser.getPassword())){
             throw new CustomException(HttpStatus.BAD_REQUEST, "잘못된 비밀번호입니다.");
         }

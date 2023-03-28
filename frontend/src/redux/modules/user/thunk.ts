@@ -129,13 +129,15 @@ export const refreshTokenAction = createAsyncThunk(
         });
     } catch (e) {
       // 로그아웃
-      removeToken();
+      dispatch(logoutAction());
+      // removeToken();
       alert("세션이 만료되어 로그아웃 되었습니다.");
       return rejectWithValue(e);
     }
   }
 );
 
+// 로그아웃
 export const logoutAction = createAsyncThunk(
   "LOGOUT",
   async (_, { rejectWithValue }) => {
@@ -158,4 +160,50 @@ export const logoutAction = createAsyncThunk(
   }
 );
 
-// export default { signinAction, setUserWithTokenAction, refreshTokenAction };
+// 비밀번호 변경
+export const changePwAction = createAsyncThunk(
+  "CHANGE_PW",
+  async (userData: UpdateUserType, { rejectWithValue }) => {
+    try {
+      const axios = axiosInitializer();
+      await axios.put("api/users/password", userData);
+    } catch (e) {
+      return rejectWithValue(e);
+    }
+  }
+);
+
+// 닉네임 변경
+export const changeNickAction = createAsyncThunk(
+  "CHANGE_NICKNAME",
+  async (userData: UpdateUserType, { rejectWithValue }) => {
+    try {
+      const axios = axiosInitializer();
+      await axios.put("api/users/nickName", userData);
+    } catch (e) {
+      return rejectWithValue(e);
+    }
+  }
+);
+
+// 회원 탈퇴
+export const deleteUserAction = createAsyncThunk(
+  "DELETE_USER",
+  async (_, { rejectWithValue }) => {
+    try {
+      const axios = axiosInitializer();
+      await axios
+        .delete("api/users", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Baerer" + getToken(),
+          },
+        })
+        .then(() => {
+          removeToken();
+        });
+    } catch (e) {
+      return rejectWithValue(e);
+    }
+  }
+);
