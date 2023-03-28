@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInitializer } from "../../util/https";
+import { setScore } from "./score";
 
 const axios = axiosInitializer();
 
@@ -36,12 +37,15 @@ export const recordSendAction = createAsyncThunk(
   "RECORD_SEND",
   async (formData: FormData, { rejectWithValue }) => {
     try {
-      const axios = axiosInitializer();
-      await axios.post("/api/animations/evaluate", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      await axios
+        .post("api/animations/evaluate", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then(({ data }: any) => {
+          setScore(data);
+        });
     } catch (e) {
       return rejectWithValue(e);
     }
