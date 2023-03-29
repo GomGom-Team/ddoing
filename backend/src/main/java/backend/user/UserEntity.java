@@ -43,7 +43,7 @@ public class UserEntity extends BaseEntity {
 
     @Column(name = "level")
     @ColumnDefault("1")
-    private  Long level;
+    private Long level;
 
     @OneToOne(mappedBy = "userEntity", cascade = CascadeType.REMOVE)
     private TokenEntity tokenEntity;
