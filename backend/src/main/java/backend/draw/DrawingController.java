@@ -19,4 +19,10 @@ public class DrawingController {
         drawingService.saveFile(multipartFile, userDrawingDTO);
         return ResponseEntity.ok(new Message("이미지 업로드 성공"));
     }
+
+    // 단어 + 예문 조회
+    @GetMapping("/words")
+    public ResponseEntity selectDrawingWords() {
+        return ResponseEntity.ok(drawingService.getDrawingWords());
+    }
 }
