@@ -83,7 +83,7 @@ const DrawingPage = () => {
     setLanding(false)
   };
 
-  const drawerHandler= () => {
+  const drawerHandler = () => {
     if (state.top === false) {
       setState({"top": true});
     } else {
@@ -109,7 +109,7 @@ const DrawingPage = () => {
     setIndex(0)
     console.log("하이하이")
   }
-    const modalHandleOpen = () => setmodalOpen(true);
+  const modalHandleOpen = () => setmodalOpen(true);
   const modalHandleClose = () => setmodalOpen(false);
 
   const toggleDrawer = (anchor: Anchor, open: boolean) => (
@@ -142,8 +142,10 @@ const DrawingPage = () => {
   const isDoneHandler = () => {
     if (isDone === false) {
       setIsDone(true)
+      console.log("게임 끝")
     } else {
       setIsDone(false)
+      console.log("게임 초기화")
     }
   }
 
@@ -160,9 +162,11 @@ const DrawingPage = () => {
   }, [index])
 
   useEffect(() => {
-    if (isDone === true) {
-      drawerHandler()
-    }
+    // if (isDone === true) {
+    //   drawerHandler()
+    // }
+    // isDone이 바뀌는 시간이 0.5초 걸려서 조건문 사용 실패
+    drawerHandler()
   },[isDone])
 
   // 렌더링

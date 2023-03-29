@@ -37,9 +37,51 @@ const ResultPage = ({ isDone, anchor, toggleDrawer,index, maxStage, wordList, re
 
   if (isDone) {
     return(
-      <div>
-        <button onClick={reStart}>HIHIIHI</button>
-      </div>
+      <StyledDrawer>
+
+      <StyledWrapper>
+        <ResultDiv> 
+          <DrawerHead> 잘 그리셨어요! </DrawerHead>
+
+          <ImgWrapper>
+            <ItemWrapper>
+              <CustomedImage></CustomedImage>
+              <h2>{ wordList[0].wordEng }</h2>
+            </ItemWrapper>
+
+            <ItemWrapper>
+              <CustomedImage></CustomedImage>
+              <h2>{ wordList[1].wordEng }</h2>
+            </ItemWrapper>
+
+            <ItemWrapper>
+              <CustomedImage></CustomedImage>
+              <h2>{ wordList[2].wordEng }</h2>
+            </ItemWrapper>
+
+            <ItemWrapper>
+              <CustomedImage></CustomedImage>
+              <h2>{ wordList[3].wordEng }</h2>
+            </ItemWrapper>
+
+            <ItemWrapper>
+              <CustomedImage></CustomedImage>
+              <h2>{ wordList[4].wordEng }</h2>
+            </ItemWrapper>
+
+            <ItemWrapper>
+              <CustomedImage></CustomedImage>
+              <h2>{ wordList[5].wordEng }</h2>
+            </ItemWrapper>
+
+          </ImgWrapper>
+
+          <DrawerEnd>
+            <Button variant='secondary' onClick={reStart}>다시하기</Button>
+          </DrawerEnd>
+        </ResultDiv>
+      </StyledWrapper>
+    </StyledDrawer>
     )
   }
 
@@ -87,7 +129,7 @@ const WordHeader = styled.div(
 )
 
 const StyledDiv = styled.div(
-  tw`block`,
+  tw`flex flex-col`,
   css`
     width: 50rem;
     height: 30rem;
@@ -113,4 +155,28 @@ const WordEnglish = styled.h1(
 
 const DrawerEnd = styled.div(
   tw`flex justify-center`
+)
+
+const ResultDiv = styled.div(
+  tw`flex flex-col`,
+  css`
+    width: 50rem;
+    height: 44rem;
+  `
+)
+
+const ImgWrapper = styled.div(
+  tw`grid grid-cols-3 gap-8 `
+)
+
+const CustomedImage = styled.img(
+  tw`object-cover rounded-md bg-slate-500`,
+  css`
+    height: 9rem;
+    width: 16rem;
+  `
+)
+
+const ItemWrapper = styled.div(
+  tw`flex flex-col gap-4 items-center`
 )
