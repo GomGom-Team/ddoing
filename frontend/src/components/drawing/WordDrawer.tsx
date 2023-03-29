@@ -4,25 +4,57 @@ import { Button } from '../common/index'
 
 type Anchor = "top";
 
-type ResultPageProps = {
+interface wordListType {
+  wordEng: string
+  wordKor: string
+  sentenceEng: string
+  sentenceKor: string
+}
+
+interface ResultPageProps {
   anchor: Anchor
   toggleDrawer: (anchor: Anchor, open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => void;
   index: number
   maxStage: number
+  wordList: wordListType[]
+  isDone : boolean
+  restartHandler(): void
 };
 
-const ResultPage = ({ anchor, toggleDrawer,index, maxStage }: ResultPageProps) => {
+const ResultPage = ({ isDone, anchor, toggleDrawer,index, maxStage, wordList, restartHandler }: ResultPageProps) => {
+  React.useEffect(() => {
+    console.log("mounted",isDone)
+  },[])
+
+  React.useEffect(() => {
+    console.log("updated", isDone)
+  },[isDone])
+
+  const reStart = () => {
+    restartHandler()
+    console.log("재시작")
+  }
+
+  if (isDone) {
+    return(
+      <div>
+        <button onClick={reStart}>HIHIIHI</button>
+      </div>
+    )
+  }
+
+
   return (
     <StyledDrawer>
       <WordHeader>
-        {index} / {maxStage}
+        {index + 1} / {maxStage}
       </WordHeader>
       <StyledWrapper>
         <StyledDiv> 
           <DrawerHead> 다음을 그려보세요 </DrawerHead>
             <DrawerBody1>
               <WordDiv>
-                <WordEnglish>Apple</WordEnglish>
+                <WordEnglish>{ wordList[index].wordEng }</WordEnglish>
               </WordDiv>
             </DrawerBody1>
 

@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback, useEffect } from 'react';
+import React, { useRef, useState, useCallback, useEffect, createRef } from 'react';
 import tw, { css, styled, theme } from 'twin.macro'
 import { Header } from '../components/common/index'
 import { DrawingDrawer, DrawingCanvas, ResultModal, DrawingLanding } from '../components/drawing/index';
@@ -60,20 +60,44 @@ const DrawingPage = () => {
   const [landing, setLanding] = useState(true)
   const [modalOpen, setmodalOpen] = useState(false);
   const [answer, setAnswer] = useState(false);
+  const [isDone, setIsDone] = useState(false);
   const [state, setState] = useState({
     top: false,
   });
-  const [index, setIndex] = useState(0)
+  const [index, setIndex] = useState(4)
+
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  // canvas 지우기
+  const clearCanvas = () => {
+    if (!canvasRef.current) {
+      return;
+    }
+
+    const canvas: HTMLCanvasElement = canvasRef.current;
+    canvas.getContext('2d')!!.clearRect(0, 0, canvas.width, canvas.height);
+  }
 
   // logic
   const landingHandler = () => {
     setLanding(false)
   };
 
+  const drawerHandler= () => {
+    if (state.top === false) {
+      setState({"top": true});
+    } else {
+      setState({"top": false})
+    }
+  }
+
   const stageHandler = () => {
     if (index < 5) {
       setIndex(index + 1)
-      console.log("몇스테이지?",index)
+      setTimeout(() => console.log("몇스테이지?",index), 1000);
+    }
+    else{
+      setIsDone(true)
     }
   }
 
@@ -81,7 +105,11 @@ const DrawingPage = () => {
     setAnswer(false)
   }
 
-  const modalHandleOpen = () => setmodalOpen(true);
+  const restartHandler = () => {
+    setIndex(0)
+    console.log("하이하이")
+  }
+    const modalHandleOpen = () => setmodalOpen(true);
   const modalHandleClose = () => setmodalOpen(false);
 
   const toggleDrawer = (anchor: Anchor, open: boolean) => (
@@ -96,16 +124,46 @@ const DrawingPage = () => {
       return;
     }
     console.log('toggle')
-    setState({ ...state, [anchor]: open });
+    modalHandleClose();
+    const val = {[anchor]: open}
+    console.log(val)
+    setState(val);
   };
 
   // useEffect
   useEffect(() => {
     if (state.top === true) {
       setTimeout(() => landingHandler(), 500);
+      clearCanvas()
+      // console.log(state)
     }
   }, [state]);
 
+  const isDoneHandler = () => {
+    if (isDone === false) {
+      setIsDone(true)
+    } else {
+      setIsDone(false)
+    }
+  }
+
+  useEffect(() => {
+    if (index > 0) {
+      drawerHandler()
+    }
+    else {
+      // 재시작시 새로 요청
+      drawerHandler()
+      setTimeout(() => isDoneHandler(), 500);
+      setTimeout(() => drawerHandler(), 500);
+    }
+  }, [index])
+
+  useEffect(() => {
+    if (isDone === true) {
+      drawerHandler()
+    }
+  },[isDone])
 
   // 렌더링
   if (!landing) {
@@ -114,7 +172,7 @@ const DrawingPage = () => {
         <Header/>
         <DummyDiv></DummyDiv> 
         <StyledDiv>
-          <DrawingCanvas/>
+          <DrawingCanvas canvasRef={canvasRef}/>
         </StyledDiv>
         {/* Drawer */}
         <DrawingDrawer
@@ -124,6 +182,8 @@ const DrawingPage = () => {
           wordList = {wordList}
           index = {index}
           maxStage = {maxStage}
+          isDone ={isDone}
+          restartHandler={restartHandler}
         />
         {/* Modal */}
         <ResultModal 
@@ -134,6 +194,8 @@ const DrawingPage = () => {
           wordList = {wordList}
           index = {index}
           stageHandler = {stageHandler}
+          anchor = {"top"}
+          drawerHandler = {drawerHandler}
         />
       </BackgroundDiv>
     );
@@ -153,6 +215,8 @@ const DrawingPage = () => {
         wordList = {wordList}
         index = {index}
         maxStage = {maxStage}
+        isDone = {isDone}
+        restartHandler={restartHandler}
       />
     </div>
   )
@@ -170,7 +234,8 @@ const DummyDiv = styled.div(
 )
 
 const BackgroundDiv = styled.div`
-  background-image:url('src/assets/img/background.jpg');
+  background-image:url('assets/img/background.jpg');
+  /* background-image:${new URL('../assets/img/background.jpg', import.meta.url).href}; */
   background-repeat:no-repeat;
   background-size: 100%;
   width:100%;

@@ -6,7 +6,7 @@ import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import tw, { css, styled, theme } from 'twin.macro'
 
-
+type Anchor = "top";
 interface wordListType {
   wordEng: string
   wordKor: string
@@ -21,10 +21,12 @@ interface modalProps {
   wordList : wordListType[]
   index: number
   stageHandler() : void
+  anchor: Anchor
+  drawerHandler() : void
 }
 
 
-export default function TransitionsModal({ answer, modalOpen, modalHandleOpen, modalHandleClose, wordList, index, stageHandler } : modalProps) {
+export default function TransitionsModal({ drawerHandler, anchor, answer, modalOpen, modalHandleOpen, modalHandleClose, wordList, index, stageHandler } : modalProps) {
 
   // const closeModal = async ()=>{
   //   return modalHandleClose();
