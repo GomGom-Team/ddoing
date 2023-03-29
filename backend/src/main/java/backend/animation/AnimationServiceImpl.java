@@ -153,8 +153,8 @@ public class AnimationServiceImpl implements AnimationService {
         Long newExp = userEntity.getExp() + animationRequestDTO.getScore();
         Long Level = userEntity.getLevel();
 
-        if (newExp >= 300) {
-            newExp -= 300;
+        if (newExp >= 200) {
+            newExp -= 200;
             Level += 1;
         }
 
