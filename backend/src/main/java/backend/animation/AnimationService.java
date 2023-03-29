@@ -40,4 +40,7 @@ public interface AnimationService {
     List<AnimationResponseDTO> filterAnimationsAlreadyDone(String userId, int done);
 
     int evaluateScript(String script, MultipartFile multipartFile);
+
+    // 인기리스트
+    List<AnimationResponseDTO> getAnimationsTop6List(String userId);
 }

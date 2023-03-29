@@ -21,4 +21,8 @@ public interface AnimationBestScoreRepository extends JpaRepository<AnimationBes
     @Query("select a from AnimationEntity  a left outer join AnimationBestScoreEntity b\n" +
             "on a.id = b.animationId where b.bestScore is null")
     List<AnimationEntity> findAllByUserIdLeft(String userId);
+
+    // db추가 후 limit 6 추가
+    @Query("select a.animationId from AnimationBestScoreEntity a group by a.animationId order by count(a.animationId) desc")
+    List<Long> findTop6ByAnimationId(String userId);
 }
