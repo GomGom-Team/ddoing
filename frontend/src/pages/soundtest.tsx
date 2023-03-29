@@ -3,11 +3,6 @@ import AudioAnalyser from "react-audio-analyser";
 import { useAppDispatch } from "../redux/configStore.hooks";
 import { recordSendAction } from "../redux/modules/animation";
 import { getScore } from "../redux/modules/animation/score";
-// import AllScore from "./allScore";
-
-type Lists = {
-  score: number;
-};
 
 const getAverage = (numbers: any) => {
   console.log("numbers is ", numbers);
@@ -23,60 +18,12 @@ const AudioRecorder = () => {
   const [audioSrc, setAudioSrc] = useState("");
   const [audioType, setAudioType] = useState("audio/wav");
   const [myScore, setMyScore] = useState(0);
-  // const [list, setList] = useState<Lists[]>([]);
-  // const arr = [0];
 
   const controlAudio = (status: any) => {
     setStatus(status);
   };
 
-  /////////////////////////////////////////////
-  // const [inputValue, setInputValue] = useState("");
-  // const [todo, setTodo] = useState(() => {
-  //   if (typeof window !== "undefined") {
-  //     const saved = window.localStorage.getItem("todoKey");
-  //     if (saved !== null) {
-  //       return JSON.parse(saved);
-  //     } else {
-  //       return [""];
-  //     }
-  //   }
-  // });
-  // const [newTodo, setNewTodo] = useState(0);
-
-  // const inputChg = (e) => {
-  //   setInputValue(e.target.value);
-  // };
-
-  // const onSubmit = (e) => {
-  //   e.preventDefault();
-  //   setTodo([...todo, newTodo]);
-  //   // setInputValue("");
-  // };
-
-  // useEffect(() => {
-  //   setNewTodo(myScore);
-  // }, [myScore]);
-
-  // useEffect(() => {
-  //   localStorage.setItem("todoKey", JSON.stringify(todo));
-  // }, [todo]);
-
-  // const todosMap = todo.map((item: any, i: number) => <li key={i}>{item}</li>);
-  ////////////////////////
-
   const [list, setList]: any = useState([]);
-  // const [number, setNumber] = useState("");
-
-  // const onChange = (e) => {
-  //   setNumber(e.target.value);
-  // };
-  const onInsert = () => {
-    if (myScore !== 0) {
-      const nextList = list.concat(myScore);
-      setList(nextList);
-    }
-  };
 
   const avg = useMemo(() => getAverage(list), [list]);
 
@@ -90,7 +37,6 @@ const AudioRecorder = () => {
       const formData = new FormData();
       formData.append("multipartFile", e);
       formData.append("script", "Have a nice day");
-      console.log("is in?");
       dispatch(recordSendAction(formData)).then(() =>
         setMyScore(Number(getScore()))
       );
@@ -104,6 +50,13 @@ const AudioRecorder = () => {
     },
   };
 
+  useEffect(() => {
+    if (myScore !== 0) {
+      const nextList = list.concat(myScore);
+      setList(nextList);
+    }
+  }, [myScore]);
+
   return (
     <div>
       <AudioAnalyser {...audioProps}>
@@ -115,23 +68,11 @@ const AudioRecorder = () => {
           <button className="btn" onClick={() => controlAudio("inactive")}>
             Stop
           </button>
-          <button onClick={onInsert}>끝</button>
         </div>
       </AudioAnalyser>
       <div>Score is {myScore}</div>
-      {/* {status === "inactive" && <AllScore nowScore={myScore} />} */}
-
-      {/* <div className="parent">
-        name: <div className="todosMap">{todosMap}</div>
-        <form onSubmit={onSubmit}>
-          <input value={inputValue} onChange={inputChg}></input>
-          <button>저장</button>
-        </form>
-      </div> */}
 
       <div>
-        {/* <input value={number} onChange={onChange} /> */}
-        {/* <button onClick={onInsert}>등록</button> */}
         <ul>
           {list.map((value: number, index: number) => (
             <li key={index}>{value}</li>
