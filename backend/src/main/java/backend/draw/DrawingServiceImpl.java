@@ -1,5 +1,8 @@
 package backend.draw;
 
+import backend.animation.AnimationRequestDTO;
+import backend.animation.UserScoreResponseDTO;
+import backend.user.UserEntity;
 import backend.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -19,7 +24,12 @@ import java.util.UUID;
 public class DrawingServiceImpl implements DrawingService {
     private final UserRepository userRepository;
     private final WordRepository wordRepository;
+    private final SentenceRepository sentenceRepository;
     private final UserDrawingRepository userDrawingRepository;
+    private final DrawingScoreRepository drawingScoreRepository;
+
+    private final long LEVELUP_STANDARD = 200L;
+    private final int ONE_DRAWING_SCORE = 5;
 
     @Value("${part.upload.path}")   // application.properties 에서 ec2 path 로 변경
     private String userDrawingPath;
@@ -86,4 +96,116 @@ public class DrawingServiceImpl implements DrawingService {
         int pos = originalFileName.lastIndexOf(".");
         return originalFileName.substring(pos + 1);
     }
+
+    // 단어 + 예문 리스트 조회
+    @Override
+    public List<DrawingResponseDTO> getDrawingWords(){
+
+        List<WordEntity> words = wordRepository.findWordsByRand();
+        List<DrawingResponseDTO> results = new ArrayList<>();
+
+        // 단어 6개
+        for(WordEntity word : words) {
+            SentenceEntity sentence =  sentenceRepository.findSentenceByWordId(word.getId());
+            // id, word, mean, eng_sentence, ko_sentence, word_id
+            DrawingResponseDTO result = DrawingResponseDTO.builder()
+                    .id(word.getId())
+                    .word(word.getWord())
+                    .mean(word.getMean())
+                    .picturePath(word.getPicturePath())
+                    .engSentence(sentence.getEngSentence())
+                    .koSentence(sentence.getKoSentence())
+                    .build();
+
+            results.add(result);
+        }
+        return results;
+    }
+
+    // 그림 평가 점수 저장
+    @Override
+    public boolean createDrawingScore(DrawingScoreRequestDTO drawingScoreRequestDTO){
+
+        DrawingScoreEntity drawingScoreEntity = DrawingScoreEntity.builder()
+                .userEntity(userRepository.findById(drawingScoreRequestDTO.getUserId()).orElseThrow())
+                .score(drawingScoreRequestDTO.getScore() * ONE_DRAWING_SCORE)
+                .build();
+
+        drawingScoreRepository.save(drawingScoreEntity);
+        return true;
+    }
+
+
+
+    // 유저 경험치,레벨 업데이트
+    @Override
+    public boolean updateUserExpAndLevel(DrawingScoreRequestDTO drawingScoreRequestDTO) {
+        UserEntity userEntity = userRepository.findById(drawingScoreRequestDTO.getUserId()).orElseThrow();
+
+        Long newExp = userEntity.getExp() + drawingScoreRequestDTO.getScore() * ONE_DRAWING_SCORE;
+        Long Level = userEntity.getLevel();
+
+        if (newExp >= LEVELUP_STANDARD) {
+            newExp -= LEVELUP_STANDARD;
+            Level += 1;
+        }
+
+        UserEntity result = UserEntity.builder()
+                .id(userEntity.getId())
+                .name(userEntity.getName())
+                .email(userEntity.getEmail())
+                .nickName(userEntity.getNickName())
+                .exp(newExp)
+                .level(Level)
+                .build();
+
+        userRepository.save(result);    // update
+        return true;
+    }
+
+
+    // 갱신 점수 반환
+    // userId, animationId, bestScore, exp, level
+    @Override
+    public DrawingScoreResponseDTO getUserScores(DrawingScoreRequestDTO drawingScoreRequestDTO) {
+        updateUserExpAndLevel(drawingScoreRequestDTO);
+
+        UserEntity userEntity = userRepository.findById(drawingScoreRequestDTO.getUserId()).orElseThrow();
+        DrawingScoreResponseDTO drawingScoreResponseDTO = DrawingScoreResponseDTO.builder()
+                .userId(drawingScoreRequestDTO.getUserId())
+                .exp(userEntity.getExp())
+                .level(userEntity.getLevel())
+                .build();
+
+        return drawingScoreResponseDTO;
+    }
+
+    // 명예의 전당
+    @Override
+    public List<UserDrawingResponseDTO> selectUserDrawingGallery() {
+        List<UserDrawingEntity> userDrawingEntityList = userDrawingRepository.findByPercentage();
+        List<UserDrawingResponseDTO> results = new ArrayList<>();
+
+        for(UserDrawingEntity userDrawingEntity : userDrawingEntityList){
+            WordEntity wordEntity = wordRepository.findById(userDrawingEntity.getWordId()).orElseThrow();
+            // userId, drawingPath, percentage, word
+            UserDrawingResponseDTO userDrawingResponseDTO = UserDrawingResponseDTO.builder()
+                    .userId(userDrawingEntity.getUserId())
+                    .drawingPath(userDrawingEntity.getDrawingPath())
+                    .percentage(userDrawingEntity.getPercentage())
+                    .word(wordEntity.getWord())
+                    .mean(wordEntity.getMean())
+                    .build();
+
+            results.add(userDrawingResponseDTO);
+        }
+
+        if(results.size() > 6){
+            results = results.subList(0, 6);
+        }
+
+        return results;
+    }
+
+
 }

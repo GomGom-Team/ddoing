@@ -6,12 +6,13 @@ import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import tw, { css, styled, theme } from 'twin.macro'
 
-
+type Anchor = "top";
 interface wordListType {
-  wordEng: string
-  wordKor: string
-  sentenceEng: string
-  sentenceKor: string
+  id : number
+  word: string
+  mean: string
+  engSentence: string
+  koSentence: string
 }
 interface modalProps {
   answer : boolean
@@ -21,10 +22,12 @@ interface modalProps {
   wordList : wordListType[]
   index: number
   stageHandler() : void
+  anchor: Anchor
+  drawerHandler() : void
 }
 
 
-export default function TransitionsModal({ answer, modalOpen, modalHandleOpen, modalHandleClose, wordList, index, stageHandler } : modalProps) {
+export default function TransitionsModal({ drawerHandler, anchor, answer, modalOpen, modalHandleOpen, modalHandleClose, wordList, index, stageHandler } : modalProps) {
 
   // const closeModal = async ()=>{
   //   return modalHandleClose();
@@ -65,8 +68,8 @@ export default function TransitionsModal({ answer, modalOpen, modalHandleOpen, m
   
                     <DrawerBody1>
                       <WordDiv>
-                        <WordEnglish>{ wordList[index].wordEng }</WordEnglish>
-                        <WordKorean>{ wordList[index].wordKor }</WordKorean>
+                        <WordEnglish>{ wordList[index].word }</WordEnglish>
+                        <WordKorean>{ wordList[index].mean }</WordKorean>
                       </WordDiv>
                       <ImgWrapper>
                         <CustomedImage></CustomedImage>
@@ -74,8 +77,8 @@ export default function TransitionsModal({ answer, modalOpen, modalHandleOpen, m
                     </DrawerBody1>
   
                     <DrawerBody2>
-                      <ExampleEnglish>{ wordList[index].sentenceEng }</ExampleEnglish>
-                      <ExampleKorean>{ wordList[index].sentenceKor }</ExampleKorean>
+                      <ExampleEnglish>{ wordList[index].engSentence }</ExampleEnglish>
+                      <ExampleKorean>{ wordList[index].koSentence }</ExampleKorean>
                     </DrawerBody2>
   
                   <DrawerEnd>
@@ -113,18 +116,18 @@ export default function TransitionsModal({ answer, modalOpen, modalHandleOpen, m
 
                   <DrawerBody1>
                     <WordDiv>
-                      <WordEnglish>{ wordList[index].wordEng }</WordEnglish>
-                      <WordKorean>{ wordList[index].wordKor }</WordKorean>
+                      <WordEnglish>{ wordList[index].word }</WordEnglish>
+                      <WordKorean>{ wordList[index].mean }</WordKorean>
                     </WordDiv>
                     <ImgWrapper>
                       <CustomedImage></CustomedImage>
                     </ImgWrapper>
                   </DrawerBody1>
-
+{/* 
                   <DrawerBody2>
-                    <ExampleEnglish>{ wordList[index].sentenceEng }</ExampleEnglish>
-                    <ExampleKorean>{ wordList[index].sentenceKor }</ExampleKorean>
-                  </DrawerBody2>
+                    <ExampleEnglish>{ wordList[index].engSentence }</ExampleEnglish>
+                    <ExampleKorean>{ wordList[index].koSentence }</ExampleKorean>
+                  </DrawerBody2> */}
 
                 <DrawerEnd>
                   <button onClick ={nextStage}>다음문제</button>

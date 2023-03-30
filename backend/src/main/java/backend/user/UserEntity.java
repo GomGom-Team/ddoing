@@ -43,7 +43,7 @@ public class UserEntity extends BaseEntity {
 
     @Column(name = "level")
     @ColumnDefault("1")
-    private  Long level;
+    private Long level;
 
     @OneToOne(mappedBy = "userEntity", cascade = CascadeType.REMOVE)
     private TokenEntity tokenEntity;
@@ -69,6 +69,8 @@ public class UserEntity extends BaseEntity {
                 .email(this.email)
                 .name(this.name)
                 .nickName(this.nickName)
+                .level(this.level)
+                .exp(this.exp)
                 .build();
         return user;
     }

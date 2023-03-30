@@ -14,7 +14,7 @@ const Header = () => {
   const onLogout = (e: React.MouseEvent<HTMLButtonElement>) => {
     dispatch(logoutAction());
     setLoginCheck(false);
-    // location.reload();
+    navigate("/");
   };
 
   useEffect(() => {

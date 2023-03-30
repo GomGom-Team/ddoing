@@ -5,23 +5,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
 @Builder
-@AllArgsConstructor
+@Getter
 @NoArgsConstructor
-public class UserDTO {
+@AllArgsConstructor
+public class UserUpdateDTO {
 
     private String id;
 
-    private String name;
-
-    private String nickName;
-
     private String password;
 
-    private String email;
-
-    private Long level;
-
-    private Long exp;
+    private String newPassword;
 }

@@ -4,4 +4,6 @@ export type SignupType = {
   email: string;
   password: string;
   nickName: string;
+  level?: number;
+  exp?: number;
 };
