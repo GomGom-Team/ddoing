@@ -1,7 +1,8 @@
 import cv2
 import numpy as np
 import tensorflow as tf
-from fastapi import FastAPI, File, UploadFile
+from typing_extensions import Annotated
+from fastapi import FastAPI, File, Body
 from tensorflow.keras.applications import EfficientNetV2B0
 
 app = FastAPI()
@@ -17,16 +18,21 @@ async def root():
 	return return_dict
 
 @app.post("/inference")
-async def inference(file : UploadFile):
-	encode_to_int = np.fromstring(file.file.read(), dtype=np.uint8)
+async def inference(stage : Annotated[int, Body()] ,file : bytes = File()):
+	encode_to_int = np.fromstring(file, dtype=np.uint8)
 	img = cv2.imdecode(encode_to_int, cv2.IMREAD_COLOR)
 	img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 	img = cv2.resize(img, (64, 64))
 	img = np.reshape(img, (64, 64, 1))
 	cv2.imwrite('test.PNG', img)
 	result = model.predict(np.reshape(img, (1, 64, 64, 1)))
-	result = np.argsort(-result, axis=1)[:, :3]
-	return dict(result=np.squeeze(result).tolist())
+	labels = np.argsort(-result, axis=1)[:, :3]
+	return_dict = dict()
+	for label in np.squeeze(labels).tolist():
+		print(label, result[:, label])
+		return_dict[label] = result[:, label].item()
+	print(return_dict)
+	return return_dict
 
 
 @app.on_event("startup")
