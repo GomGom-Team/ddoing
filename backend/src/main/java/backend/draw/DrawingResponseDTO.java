@@ -9,12 +9,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 @Builder
-public class DrawingRequestDTO {
+public class DrawingResponseDTO {
     private Long id;
 
     private String word;
 
     private String mean;
+
+    private String picturePath;
 
     private String engSentence;
 

@@ -25,6 +25,10 @@ public class DrawingScoreEntity extends BaseEntity {
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
+    @Column(name = "user_id", insertable = false, updatable = false, nullable = false, length = 10)
+    private String userId;
+
+
     @Column(name = "score")
     private Long score;
 }
