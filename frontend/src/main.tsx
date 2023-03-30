@@ -15,10 +15,10 @@ const root = createRoot(container!);
 root.render(
   <Provider store={store}>
     <PersistGate persistor={persistor}>
-      <React.StrictMode>
+      {/* <React.StrictMode> */}
         <GlobalStyles />
         <App />
-      </React.StrictMode>
+      {/* </React.StrictMode> */}
     </PersistGate>
   </Provider>
 );
