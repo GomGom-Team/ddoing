@@ -9,6 +9,6 @@ public interface UserDrawingRepository extends JpaRepository<UserDrawingEntity, 
     @Query("select d from UserDrawingEntity d where d.userId= :userId and d.wordId = :wordId")
     UserDrawingEntity findByUserIdAndWordId(String userId, Long wordId);
 
-    @Query(value = "select * from user_drawing order by percentage desc limit 6", nativeQuery = true)
+    @Query(value = "select * from user_drawing order by percentage desc", nativeQuery = true)
     List<UserDrawingEntity> findByPercentage();
 }

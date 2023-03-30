@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RequestMapping("/drawing")
 @RestController
@@ -45,6 +46,10 @@ public class DrawingController {
     // 명예의 전당
     @GetMapping("/gallery")
     public ResponseEntity getUserDrawingGallery(){
-        return ResponseEntity.ok(drawingService.selectUserDrawingGallery());
+        List<UserDrawingResponseDTO> result = drawingService.selectUserDrawingGallery();
+        if(result.size() <= 0) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new Message("그림 점수가 존재하지 않음"));
+        }
+        return ResponseEntity.ok(result);
     }
 }

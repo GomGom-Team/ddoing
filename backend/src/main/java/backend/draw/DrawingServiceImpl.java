@@ -200,6 +200,10 @@ public class DrawingServiceImpl implements DrawingService {
             results.add(userDrawingResponseDTO);
         }
 
+        if(results.size() > 6){
+            results = results.subList(0, 6);
+        }
+
         return results;
     }
 
