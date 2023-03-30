@@ -27,6 +27,9 @@ public class WordEntity extends BaseEntity {
     @Column(name = "mean", length = 15)
     private String mean;
 
+    @Column(name = "picture_path")
+    private String picturePath;
+
     @OneToMany(mappedBy = "wordEntity", cascade = CascadeType.REMOVE)
     private List<SentenceEntity> sentenceEntities;
 

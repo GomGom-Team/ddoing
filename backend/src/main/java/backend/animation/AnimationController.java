@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 
 @RequestMapping("/animations")
 @RestController
@@ -92,6 +94,16 @@ public class AnimationController {
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.ok(animationService.getAnimationsTop6List(userId));
+        }
+    }
+
+    // 마이페이지 학습 영상 top4
+    @GetMapping("/myStudy/{userId}")
+    public ResponseEntity getAnimationsStudyRecent(@PathVariable String userId) {
+        if (animationService.getAnimationsStudyRecent(userId).size() < 1) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(animationService.getAnimationsStudyRecent(userId));
         }
     }
 }

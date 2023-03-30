@@ -423,7 +423,38 @@ public class AnimationServiceImpl implements AnimationService {
 
             results.add(result);
 
+            if (results.size() > 6) {
+                results = results.subList(0, 6);
+            }
+
+
         }
+        return results;
+    }
+
+    @Override
+    public List<AnimationResponseDTO> getAnimationsStudyRecent(String userId) {
+        List<Long> animationScoreIds = animationScoreRepository.findTop4ByUserId(userId);
+        List<AnimationResponseDTO> results = new ArrayList<>();
+
+        for (Long list : animationScoreIds) {
+            AnimationEntity animation = animationRepository.findById(list).orElseThrow();
+            AnimationResponseDTO result = AnimationResponseDTO.builder()
+                    .id(animation.getId())
+                    .title(animation.getTitle())
+                    .runningTime(animation.getRunningTime())
+                    .pathUrl(animation.getPathUrl())
+                    .bestScore(getBestScore(animation.getId(), userId))
+                    .roles(getRoles(animation.getId()))
+                    .build();
+
+            results.add(result);
+        }
+
+        if (results.size() > 4) {
+            results = results.subList(0, 4);
+        }
+
         return results;
     }
 }
