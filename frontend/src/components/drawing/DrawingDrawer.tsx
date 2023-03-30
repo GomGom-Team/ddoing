@@ -7,10 +7,11 @@ import WordDrawer from "./WordDrawer"
 
 type Anchor = "top";
 interface wordListType {
-  wordEng: string
-  wordKor: string
-  sentenceEng: string
-  sentenceKor: string
+  id : number
+  word: string
+  mean: string
+  engSentence: string
+  koSentence: string
 }
 interface ResultPageProps {
   anchor: Anchor
@@ -21,9 +22,11 @@ interface ResultPageProps {
   wordList: wordListType[]
   index: number
   maxStage: number
+  isDone : boolean
+  restartHandler(): void
 };
 
-const DrawingDrawer = ({ toggleDrawer, state, index, maxStage }: ResultPageProps) => {
+const DrawingDrawer = ({isDone, toggleDrawer, state, index, maxStage, wordList, restartHandler }: ResultPageProps) => {
 
   const list = (anchor: Anchor) => (
     <Box
@@ -31,7 +34,15 @@ const DrawingDrawer = ({ toggleDrawer, state, index, maxStage }: ResultPageProps
     // onClick={toggleDrawer(anchor, false)}
     // onKeyDown={toggleDrawer(anchor, false)}
     >
-      <WordDrawer toggleDrawer={toggleDrawer} anchor={anchor} index= {index} maxStage={maxStage} />
+      <WordDrawer 
+        toggleDrawer={toggleDrawer} 
+        anchor={anchor} 
+        index= {index} 
+        maxStage={maxStage} 
+        wordList={wordList}
+        isDone={isDone}
+        restartHandler={restartHandler}
+      />
     </Box>
   );
 

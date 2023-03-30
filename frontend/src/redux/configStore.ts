@@ -3,6 +3,7 @@ import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 import user from "./modules/user";
 import animation from "./modules/animation";
+import drawing from "./modules/drawing";
 // import { composeWithDevTools } from "@reduxjs/toolkit/dist/devtoolsExtension";
 import { composeWithDevTools } from "redux-devtools-extension";
 // import persistReducer from "redux-persist/es/persistReducer";
@@ -18,6 +19,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   user,
   animation,
+  drawing,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -9,13 +9,16 @@ interface Coordinate {
   y: number;
 };
 
+interface CanvasPropsType {
+  canvasRef: React.RefObject<HTMLCanvasElement>
+}
 
-const DrawingCanvas = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  
+
+const DrawingCanvas = ({canvasRef} : CanvasPropsType) => {
   // state
   const [mousePosition, setMousePosition] = useState<Coordinate | undefined>(undefined);
   const [isPainting, setIsPainting] = useState(false);
+
 
   // Logic
   // 좌표 얻는 함수

@@ -4,25 +4,100 @@ import { Button } from '../common/index'
 
 type Anchor = "top";
 
-type ResultPageProps = {
+interface wordListType {
+  id : number
+  word: string
+  mean: string
+  engSentence: string
+  koSentence: string
+}
+
+interface ResultPageProps {
   anchor: Anchor
   toggleDrawer: (anchor: Anchor, open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => void;
   index: number
   maxStage: number
+  wordList: wordListType[]
+  isDone : boolean
+  restartHandler(): void
 };
 
-const ResultPage = ({ anchor, toggleDrawer,index, maxStage }: ResultPageProps) => {
+const ResultPage = ({ isDone, anchor, toggleDrawer,index, maxStage, wordList, restartHandler }: ResultPageProps) => {
+  React.useEffect(() => {
+    console.log("mounted",isDone)
+  },[])
+
+  React.useEffect(() => {
+    console.log("updated", isDone)
+  },[isDone])
+
+  const reStart = () => {
+    restartHandler()
+    console.log("재시작")
+  }
+
+  if (isDone) {
+    return(
+      <StyledDrawer>
+
+      <StyledWrapper>
+        <ResultDiv> 
+          <DrawerHead> 잘 그리셨어요! </DrawerHead>
+
+          <ImgWrapper>
+            <ItemWrapper>
+              <CustomedImage></CustomedImage>
+              <h2>{ wordList[0].word }</h2>
+            </ItemWrapper>
+
+            <ItemWrapper>
+              <CustomedImage></CustomedImage>
+              <h2>{ wordList[1].word }</h2>
+            </ItemWrapper>
+
+            <ItemWrapper>
+              <CustomedImage></CustomedImage>
+              <h2>{ wordList[2].word }</h2>
+            </ItemWrapper>
+
+            <ItemWrapper>
+              <CustomedImage></CustomedImage>
+              <h2>{ wordList[3].word }</h2>
+            </ItemWrapper>
+
+            <ItemWrapper>
+              <CustomedImage></CustomedImage>
+              <h2>{ wordList[4].word }</h2>
+            </ItemWrapper>
+
+            <ItemWrapper>
+              <CustomedImage></CustomedImage>
+              <h2>{ wordList[5].word }</h2>
+            </ItemWrapper>
+
+          </ImgWrapper>
+
+          <DrawerEnd>
+            <Button variant='secondary' onClick={reStart}>다시하기</Button>
+          </DrawerEnd>
+        </ResultDiv>
+      </StyledWrapper>
+    </StyledDrawer>
+    )
+  }
+
+
   return (
     <StyledDrawer>
       <WordHeader>
-        {index} / {maxStage}
+        {index + 1} / {maxStage}
       </WordHeader>
       <StyledWrapper>
         <StyledDiv> 
           <DrawerHead> 다음을 그려보세요 </DrawerHead>
             <DrawerBody1>
               <WordDiv>
-                <WordEnglish>Apple</WordEnglish>
+                <WordEnglish>{ wordList[index]?.word }</WordEnglish>
               </WordDiv>
             </DrawerBody1>
 
@@ -55,7 +130,7 @@ const WordHeader = styled.div(
 )
 
 const StyledDiv = styled.div(
-  tw`block`,
+  tw`flex flex-col`,
   css`
     width: 50rem;
     height: 30rem;
@@ -81,4 +156,28 @@ const WordEnglish = styled.h1(
 
 const DrawerEnd = styled.div(
   tw`flex justify-center`
+)
+
+const ResultDiv = styled.div(
+  tw`flex flex-col`,
+  css`
+    width: 50rem;
+    height: 44rem;
+  `
+)
+
+const ImgWrapper = styled.div(
+  tw`grid grid-cols-3 gap-8 `
+)
+
+const CustomedImage = styled.img(
+  tw`object-cover rounded-md bg-slate-500`,
+  css`
+    height: 9rem;
+    width: 16rem;
+  `
+)
+
+const ItemWrapper = styled.div(
+  tw`flex flex-col gap-4 items-center`
 )
