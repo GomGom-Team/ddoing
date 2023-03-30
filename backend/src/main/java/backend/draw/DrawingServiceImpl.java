@@ -172,13 +172,36 @@ public class DrawingServiceImpl implements DrawingService {
 
         UserEntity userEntity = userRepository.findById(drawingScoreRequestDTO.getUserId()).orElseThrow();
         DrawingScoreResponseDTO drawingScoreResponseDTO = DrawingScoreResponseDTO.builder()
-                .userId(drawingScoreRequestDTO.getUserId()).exp(userEntity.getExp())
+                .userId(drawingScoreRequestDTO.getUserId())
+                .exp(userEntity.getExp())
                 .level(userEntity.getLevel())
                 .build();
 
         return drawingScoreResponseDTO;
     }
 
+    // 명예의 전당
+    @Override
+    public List<UserDrawingResponseDTO> selectUserDrawingGallery() {
+        List<UserDrawingEntity> userDrawingEntityList = userDrawingRepository.findByPercentage();
+        List<UserDrawingResponseDTO> results = new ArrayList<>();
+
+        for(UserDrawingEntity userDrawingEntity : userDrawingEntityList){
+            WordEntity wordEntity = wordRepository.findById(userDrawingEntity.getWordId()).orElseThrow();
+            // userId, drawingPath, percentage, word
+            UserDrawingResponseDTO userDrawingResponseDTO = UserDrawingResponseDTO.builder()
+                    .userId(userDrawingEntity.getUserId())
+                    .drawingPath(userDrawingEntity.getDrawingPath())
+                    .percentage(userDrawingEntity.getPercentage())
+                    .word(wordEntity.getWord())
+                    .mean(wordEntity.getMean())
+                    .build();
+
+            results.add(userDrawingResponseDTO);
+        }
+
+        return results;
+    }
 
 
 }

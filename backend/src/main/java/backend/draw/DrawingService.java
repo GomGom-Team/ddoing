@@ -18,4 +18,6 @@ public interface DrawingService {
     boolean updateUserExpAndLevel(DrawingScoreRequestDTO drawingScoreRequestDTO);
     // 갱신 점수 반환
     DrawingScoreResponseDTO getUserScores(DrawingScoreRequestDTO drawingScoreRequestDTO);
+    // 명예의 전당
+    List<UserDrawingResponseDTO> selectUserDrawingGallery();
 }

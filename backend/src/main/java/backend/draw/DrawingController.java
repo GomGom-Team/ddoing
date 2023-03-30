@@ -41,4 +41,10 @@ public class DrawingController {
         // 갱신된 경험치, 레벨 리턴
         return ResponseEntity.ok(drawingService.getUserScores(drawingScoreRequestDTO));
     }
+
+    // 명예의 전당
+    @GetMapping("/gallery")
+    public ResponseEntity getUserDrawingGallery(){
+        return ResponseEntity.ok(drawingService.selectUserDrawingGallery());
+    }
 }
