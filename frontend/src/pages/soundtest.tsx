@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
+import tw, { css, styled, theme } from "twin.macro";
 import AudioAnalyser from "react-audio-analyser";
 import { useAppDispatch } from "../redux/configStore.hooks";
 import { recordSendAction } from "../redux/modules/animation";
@@ -24,7 +25,6 @@ const AudioRecorder = () => {
   };
 
   const [list, setList]: any = useState([]);
-
   const avg = useMemo(() => getAverage(list), [list]);
 
   const audioProps = {
@@ -57,8 +57,15 @@ const AudioRecorder = () => {
     }
   }, [myScore]);
 
+  useEffect(() => {
+    if (myScore !== 0) {
+      const nextList = list.concat(myScore);
+      setList(nextList);
+    }
+  }, [myScore]);
+
   return (
-    <div>
+    <AllWrapperDiv>
       <AudioAnalyser {...audioProps}>
         <div className="btn-box">
           <div>{status}</div>
@@ -81,9 +88,22 @@ const AudioRecorder = () => {
         <div>
           <b>평균 값:</b> {avg}
         </div>
+        <button>닫기</button>
       </div>
-    </div>
+    </AllWrapperDiv>
   );
 };
 
 export default AudioRecorder;
+
+const AllWrapperDiv = styled.div`
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: absolute;
+  z-index: 999;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+`;

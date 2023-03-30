@@ -17,6 +17,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   user,
+  animation,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
