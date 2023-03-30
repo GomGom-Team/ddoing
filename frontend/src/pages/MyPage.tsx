@@ -4,9 +4,26 @@ import VerticalTabs from "../components/user/LeftVerticalTab";
 import { Container, Header, Footer } from "../components/common/index";
 import { Box } from "@mui/material";
 import { useAppSelector } from "../redux/configStore.hooks";
+import MultiColorProgressBar from "../components/user/LevelBar";
+import user from "../redux/modules/user";
+
+interface Reading {
+  name: string;
+  value: number;
+  color: string;
+}
+
+// const [level, setLevel] = useState<number>(users.level);
+// const [exp, setExp] = useState<number>(users.exp);
+
+// useEffect(() => {
+//   setLevel(users.level);
+//   setExp(users.exp);
+// }, [users]);
 
 const MyPage = () => {
-  const user = useAppSelector((state) => state.user.userData);
+  const users = useAppSelector((state) => state.user.userData);
+  console.log(users.level);
   return (
     <Container>
       {/* Header */}
@@ -14,11 +31,13 @@ const MyPage = () => {
       <DummyDiv></DummyDiv>
       <Profile>
         <CustomedImage />
-        <ProfileName>{user.id}</ProfileName>
+        <ProfileName>{users.nickName}</ProfileName>
       </Profile>
       <LevelArea>
-        <LevelStyle>Level {user.level}</LevelStyle>
-        <CustomedBar />
+        <LevelStyle>Level {users.level}</LevelStyle>
+        <div id="root"></div>
+        <MultiColorProgressBar readings={readings} />
+        {/* <CustomedBar /> */}
       </LevelArea>
       <Box sx={TabStyle}>
         <VerticalTabs></VerticalTabs>
@@ -58,7 +77,8 @@ const Profile = styled.div`
 
 const ProfileName = styled.span`
   display: block;
-  margin-left: 38%;
+  text-align: center;
+  /* margin-left: 40%; */
   margin-top: 120%;
   border-radius: 70%;
 `;
@@ -92,3 +112,26 @@ const LevelArea = styled.div`
   padding-left: 350px;
   margin-top: 10%;
 `;
+
+let readings: Reading[] = [
+  {
+    name: "EXP",
+    value: 60,
+    color: "#eb4d4b",
+  },
+  {
+    name: "Blueberries",
+    value: 30,
+    color: "#22a6b3",
+  },
+  // {
+  //   name: "Guavas",
+  //   value: 23,
+  //   color: "#6ab04c",
+  // },
+  // {
+  //   name: "Grapes",
+  //   value: 10,
+  //   color: "#e056fd",
+  // },
+];

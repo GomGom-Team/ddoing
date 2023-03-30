@@ -27,8 +27,10 @@ function PasswordModal({ open, setOpen }: any): JSX.Element {
   const [newPw, setNewPw] = useState("");
   const [rePw, setRePw] = useState<string>("");
   const [showPw, setShowPw] = useState<boolean>(false);
-  const [isEditPW, setIsEditPW] = useState<boolean>(false);
-  const [pwCheck, setPwCheck] = useState<boolean>(false);
+  const [isEditPw, setIsEditPw] = useState<boolean>(false);
+  const [isEditNewPw, setIsEditNewPw] = useState<boolean>(false);
+  const [showNewPw, setShowNewPw] = useState<boolean>(false);
+  const [newPwCheck, setNewPwCheck] = useState<boolean>(false);
   const [rePwCheck, setRePwCheck] = useState<boolean>(false);
 
   const onReSetPW = () => {
@@ -37,21 +39,25 @@ function PasswordModal({ open, setOpen }: any): JSX.Element {
   };
 
   const onChangePw = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!isEditPw) {
+      setIsEditPw(true);
+      // setRePw("");
+    }
     setPw(e.target.value);
   };
   const onChangeNewPw = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!isEditPW) {
-      setIsEditPW(true);
+    if (!isEditNewPw) {
+      setIsEditNewPw(true);
       setRePw("");
     }
-    setPw(e.target.value);
+    setNewPw(e.target.value);
 
     const regex =
       /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
     if (regex.test(e.target.value)) {
-      setPwCheck(true);
+      setNewPwCheck(true);
     } else {
-      setPwCheck(false);
+      setNewPwCheck(false);
     }
   };
   const onChangeRePw = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,13 +71,20 @@ function PasswordModal({ open, setOpen }: any): JSX.Element {
     e.preventDefault();
   };
 
+  const handleClickShowNewPw = () => {
+    setShowNewPw((prev) => !prev);
+  };
+  const handleMouseDownNewPw = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+  };
+
   const onCloseModal = () => {
     setOpen((prev: boolean) => !prev);
   };
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!isEditPW || (isEditPW && pwCheck && rePwCheck)) {
+    if (!isEditNewPw || (isEditPw && isEditNewPw && newPwCheck && rePwCheck)) {
       dispatch(
         changePwAction({
           id: user.id,
@@ -93,7 +106,7 @@ function PasswordModal({ open, setOpen }: any): JSX.Element {
     } else {
       setRePwCheck(false);
     }
-  }, [pw, rePw]);
+  }, [newPw, rePw]);
 
   return (
     <BasicModal open={open} setOpen={setOpen}>
@@ -110,7 +123,29 @@ function PasswordModal({ open, setOpen }: any): JSX.Element {
         <div>
           <FormControl variant="standard">
             <InputLabel htmlFor="pw">현재 비밀번호</InputLabel>
-            <Input id="pw" value={pw} onChange={onChangePw} />
+            <Input
+              id="pw"
+              value={pw}
+              onChange={onChangePw}
+              // onFocus={onReSetPW}
+              type={showPw ? "text" : "password"}
+              required
+              error={isEditPw && newPw && !rePwCheck ? true : false}
+              aria-describedby="pw-helper-text"
+              endAdornment={
+                <InputAdornment position="end">
+                  {isEditPw && (
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPw}
+                      onMouseDown={handleMouseDownPw}
+                    >
+                      {showPw ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  )}
+                </InputAdornment>
+              }
+            />
           </FormControl>
         </div>
         <FormControl variant="standard">
@@ -119,27 +154,27 @@ function PasswordModal({ open, setOpen }: any): JSX.Element {
             id="newPw"
             value={newPw}
             onChange={onChangeNewPw}
-            onFocus={onReSetPW}
-            type={showPw ? "text" : "password"}
+            // onFocus={onReSetPW}
+            type={showNewPw ? "text" : "password"}
             required
-            error={isEditPW && newPw && !pwCheck ? true : false}
+            error={isEditNewPw && newPw && !rePwCheck ? true : false}
             aria-describedby="pw-helper-text"
             endAdornment={
               <InputAdornment position="end">
-                {isEditPW && (
+                {isEditNewPw && (
                   <IconButton
                     aria-label="toggle password visibility"
-                    onClick={handleClickShowPw}
-                    onMouseDown={handleMouseDownPw}
+                    onClick={handleClickShowNewPw}
+                    onMouseDown={handleMouseDownNewPw}
                   >
-                    {showPw ? <VisibilityOff /> : <Visibility />}
+                    {showNewPw ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
                 )}
               </InputAdornment>
             }
           />
           <FormHelperText id="pw-helper-text">
-            {isEditPW && !pwCheck && (
+            {isEditNewPw && !rePwCheck && (
               <span>영문, 숫자, 특수문자 포함, 8~16자</span>
             )}
           </FormHelperText>
@@ -156,10 +191,10 @@ function PasswordModal({ open, setOpen }: any): JSX.Element {
             aria-describedby="repw-helper-text"
             endAdornment={
               <InputAdornment position="end">
-                {isEditPW && rePw && rePwCheck && <CheckRounded />}
+                {isEditNewPw && rePw && rePwCheck && <CheckRounded />}
               </InputAdornment>
             }
-            disabled={!isEditPW}
+            disabled={!isEditNewPw}
           />
           <FormHelperText id="repw-helper-text">
             {rePw && !rePwCheck && <span>비밀번호가 일치하지 않습니다</span>}

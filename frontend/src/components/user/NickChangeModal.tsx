@@ -54,6 +54,7 @@ function NickChangeModal({ open, setOpen }: any): JSX.Element {
           nickName,
         })
       ).then(() => {
+        setNickName(nickName);
         onCloseModal();
       });
     }

@@ -4,7 +4,7 @@ import tw, { css, styled, theme } from "twin.macro";
 import InputWithLabel from "./InputWithLabel";
 import { signinAction } from "../../redux/modules/user";
 import { Box, Button, FormControl } from "@mui/material";
-import { useAppDispatch } from "../../redux/configStore.hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/configStore.hooks";
 
 const LoginBox = () => {
   const dispatch = useAppDispatch();
@@ -12,6 +12,7 @@ const LoginBox = () => {
   const [uid, setUid] = useState<string>("");
   const [pw, setPw] = useState<string>("");
   const [showPw, setShowPw] = useState<boolean>(false);
+  const users = useAppSelector((state) => state.user.userData);
 
   const onChangeId = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUid(e.target.value);
@@ -29,6 +30,7 @@ const LoginBox = () => {
         password: pw,
       })
     ).then(() => {
+      console.log(users.id);
       navigate("/");
     });
   };

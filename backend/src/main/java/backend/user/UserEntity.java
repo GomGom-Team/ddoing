@@ -69,6 +69,8 @@ public class UserEntity extends BaseEntity {
                 .email(this.email)
                 .name(this.name)
                 .nickName(this.nickName)
+                .level(this.level)
+                .exp(this.exp)
                 .build();
         return user;
     }

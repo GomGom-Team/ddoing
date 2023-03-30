@@ -88,10 +88,10 @@ export const signinAction = createAsyncThunk(
   }
 );
 
-// 로그인 정보 state에 저장
+// 로그인 정보 가져와서 state에 저장
 export const setUserWithTokenAction = createAsyncThunk(
   "GET_ME",
-  async (token, { dispatch, rejectWithValue }) => {
+  async (_, { dispatch, rejectWithValue }) => {
     try {
       const axios = axiosInitializer();
       const { data } = await axios.get("/api/users", {
@@ -104,7 +104,7 @@ export const setUserWithTokenAction = createAsyncThunk(
       return data;
     } catch (e) {
       // 토큰 refresh
-      dispatch(refreshTokenAction());
+      // dispatch(refreshTokenAction());
       return rejectWithValue(e);
     }
   }
@@ -176,10 +176,12 @@ export const changePwAction = createAsyncThunk(
 // 닉네임 변경
 export const changeNickAction = createAsyncThunk(
   "CHANGE_NICKNAME",
-  async (userData: UpdateUserType, { rejectWithValue }) => {
+  async (userData: UpdateUserType, { dispatch, rejectWithValue }) => {
     try {
       const axios = axiosInitializer();
-      await axios.put("api/users/nickName", userData);
+      await axios.put("api/users/nickName", userData).then(() => {
+        dispatch(setUserWithTokenAction());
+      });
     } catch (e) {
       return rejectWithValue(e);
     }
