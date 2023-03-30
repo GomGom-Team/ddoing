@@ -7,10 +7,11 @@ import WordDrawer from "./WordDrawer"
 
 type Anchor = "top";
 interface wordListType {
-  wordEng: string
-  wordKor: string
-  sentenceEng: string
-  sentenceKor: string
+  id : number
+  word: string
+  mean: string
+  engSentence: string
+  koSentence: string
 }
 interface ResultPageProps {
   anchor: Anchor

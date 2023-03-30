@@ -5,10 +5,11 @@ import { Button } from '../common/index'
 type Anchor = "top";
 
 interface wordListType {
-  wordEng: string
-  wordKor: string
-  sentenceEng: string
-  sentenceKor: string
+  id : number
+  word: string
+  mean: string
+  engSentence: string
+  koSentence: string
 }
 
 interface ResultPageProps {
@@ -46,32 +47,32 @@ const ResultPage = ({ isDone, anchor, toggleDrawer,index, maxStage, wordList, re
           <ImgWrapper>
             <ItemWrapper>
               <CustomedImage></CustomedImage>
-              <h2>{ wordList[0].wordEng }</h2>
+              <h2>{ wordList[0].word }</h2>
             </ItemWrapper>
 
             <ItemWrapper>
               <CustomedImage></CustomedImage>
-              <h2>{ wordList[1].wordEng }</h2>
+              <h2>{ wordList[1].word }</h2>
             </ItemWrapper>
 
             <ItemWrapper>
               <CustomedImage></CustomedImage>
-              <h2>{ wordList[2].wordEng }</h2>
+              <h2>{ wordList[2].word }</h2>
             </ItemWrapper>
 
             <ItemWrapper>
               <CustomedImage></CustomedImage>
-              <h2>{ wordList[3].wordEng }</h2>
+              <h2>{ wordList[3].word }</h2>
             </ItemWrapper>
 
             <ItemWrapper>
               <CustomedImage></CustomedImage>
-              <h2>{ wordList[4].wordEng }</h2>
+              <h2>{ wordList[4].word }</h2>
             </ItemWrapper>
 
             <ItemWrapper>
               <CustomedImage></CustomedImage>
-              <h2>{ wordList[5].wordEng }</h2>
+              <h2>{ wordList[5].word }</h2>
             </ItemWrapper>
 
           </ImgWrapper>
@@ -96,7 +97,7 @@ const ResultPage = ({ isDone, anchor, toggleDrawer,index, maxStage, wordList, re
           <DrawerHead> 다음을 그려보세요 </DrawerHead>
             <DrawerBody1>
               <WordDiv>
-                <WordEnglish>{ wordList[index].wordEng }</WordEnglish>
+                <WordEnglish>{ wordList[index]?.word }</WordEnglish>
               </WordDiv>
             </DrawerBody1>
 

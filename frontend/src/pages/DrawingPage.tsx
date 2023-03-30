@@ -1,70 +1,160 @@
-import React, { useRef, useState, useCallback, useEffect, createRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import tw, { css, styled, theme } from 'twin.macro'
 import { Header } from '../components/common/index'
 import { DrawingDrawer, DrawingCanvas, ResultModal, DrawingLanding } from '../components/drawing/index';
+import { useAppDispatch, useAppSelector } from "../redux/configStore.hooks";
+import { getWordListAction } from "../redux/modules/drawing";
+import useDidMountEffect from '../components/common/useDidMountEffect';
 
 type Anchor = "top";
 
 interface wordListType {
-  wordEng: string
-  wordKor: string
-  sentenceEng: string
-  sentenceKor: string
+  id : number
+  word: string
+  mean: string
+  engSentence: string
+  koSentence: string
 }
 
 const DrawingPage = () => {
   // Data
   // 단어 목록
-  const wordList : wordListType[] = [
-    {
-      wordEng: "apple",
-      wordKor: "사과",
-      sentenceEng: "apple is delicious",
-      sentenceKor: "사과는 맛있당"
-    },
-    {
-      wordEng: "bear",
-      wordKor: "곰돌이",
-      sentenceEng: "Cute Bear~",
-      sentenceKor: "귀여운 곰돌이~"
-    },
-    {
-      wordEng: "cat",
-      wordKor: "야옹이",
-      sentenceEng: "The cat is sleeping",
-      sentenceKor: "냐옹이가 자고있어요~"
-    },
-    {
-      wordEng: "dog",
-      wordKor: "갱얼쥐",
-      sentenceEng: "The dog is hungry",
-      sentenceKor: "갱얼쥐 배고파"
-    },
-    {
-      wordEng: "english",
-      wordKor: "영어",
-      sentenceEng: "I hate English",
-      sentenceKor: "영어 싫어"
-    },
-    {
-      wordEng: "fire",
-      wordKor: "불",
-      sentenceEng: "Fire~~~~~~~~",
-      sentenceKor: "싹다 불타올라~~~ 야야야"
-    },
-  ]
   // 스테이지 index
   const maxStage: number = 6
 
-  // state
+  // dispatch
+  const dispatch = useAppDispatch()
+
+
+  // landing
   const [landing, setLanding] = useState(true)
+
+  const landingHandler = () => {
+    setLanding(false)
+  };
+
+  // Timer
+  const [time, setTime] = useState(20)
+
+  const startTimer = () => {
+    const timer = setInterval(() => {
+      setTime(time - 1);
+    }, 1000);
+    console.log(time)
+    if (time > 0){
+      return () => clearInterval(timer);
+    }
+    else {
+      setTime(20)
+    }
+  }
+
+
+  // Modal
   const [modalOpen, setmodalOpen] = useState(false);
+
+  const modalHandleOpen = () => setmodalOpen(true);
+  const modalHandleClose = () => setmodalOpen(false);
+
+
+  // Answer
   const [answer, setAnswer] = useState(false);
+
+  const answerHandler = () => {
+    setAnswer(false)
+  }
+
+  // WordList
+  const [wordList, setWordList] = useState<wordListType[]>([])
+
+  const wordListHandler = () => {
+    // const words = useAppSelector((state) => 
+    // state.drawing.getWordList.data
+    dispatch(getWordListAction()).then((res)=>{
+      // console.log(res.payload)
+      setWordList(res.payload)
+    })
+  }
+
+  useEffect(() => {
+    wordListHandler()
+  }, [])
+
+
+  // isDone
   const [isDone, setIsDone] = useState(false);
+
+  const isDoneHandler = () => {
+    if (isDone === false) {
+      setIsDone(true)
+      console.log("게임 끝")
+    } else {
+      setIsDone(false)
+      console.log("게임 초기화")
+    }
+  }
+
+  useDidMountEffect(() => {
+    // if (isDone === true) {
+    //   drawerHandler()
+    // }
+    // isDone이 바뀌는 시간이 0.5초 걸려서 조건문 사용 실패
+    drawerHandler()
+  },[isDone])
+
+  // state
   const [state, setState] = useState({
     top: false,
   });
-  const [index, setIndex] = useState(4)
+
+  const drawerHandler = () => {
+    if (state.top === false) {
+      setState({"top": true});
+    } else {
+      setState({"top": false})
+    }
+  }
+
+  useDidMountEffect(() => {
+    if (state.top === true) {
+      setTimeout(() => landingHandler(), 500);
+      clearCanvas()
+      // console.log(state)
+    }
+  }, [state]);
+
+
+  // index
+  const [index, setIndex] = useState(0)
+
+  const stageHandler = () => {
+    if (index < 5) {
+      setIndex(index + 1)
+      setTimeout(() => console.log("몇스테이지?",index), 1000);
+    }
+    else{
+      setIsDone(true)
+    }
+  }
+
+  const restartHandler = () => {
+    setIndex(0)
+    console.log("하이하이")
+  }
+
+  useDidMountEffect(() => {
+    if (index > 0) {
+      drawerHandler()
+    }
+    else {
+      // 재시작시 새로 요청
+      drawerHandler()  
+      setTimeout(() => isDoneHandler(), 500);
+      // // API wordlis 새로 요청
+      setTimeout(() => wordListHandler(), 500);
+      setTimeout(() => drawerHandler(), 500);
+    }
+  }, [index])
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -78,39 +168,7 @@ const DrawingPage = () => {
     canvas.getContext('2d')!!.clearRect(0, 0, canvas.width, canvas.height);
   }
 
-  // logic
-  const landingHandler = () => {
-    setLanding(false)
-  };
 
-  const drawerHandler = () => {
-    if (state.top === false) {
-      setState({"top": true});
-    } else {
-      setState({"top": false})
-    }
-  }
-
-  const stageHandler = () => {
-    if (index < 5) {
-      setIndex(index + 1)
-      setTimeout(() => console.log("몇스테이지?",index), 1000);
-    }
-    else{
-      setIsDone(true)
-    }
-  }
-
-  const answerHandler = () => {
-    setAnswer(false)
-  }
-
-  const restartHandler = () => {
-    setIndex(0)
-    console.log("하이하이")
-  }
-  const modalHandleOpen = () => setmodalOpen(true);
-  const modalHandleClose = () => setmodalOpen(false);
 
   const toggleDrawer = (anchor: Anchor, open: boolean) => (
     event: React.KeyboardEvent | React.MouseEvent
@@ -130,51 +188,15 @@ const DrawingPage = () => {
     setState(val);
   };
 
-  // useEffect
-  useEffect(() => {
-    if (state.top === true) {
-      setTimeout(() => landingHandler(), 500);
-      clearCanvas()
-      // console.log(state)
-    }
-  }, [state]);
 
-  const isDoneHandler = () => {
-    if (isDone === false) {
-      setIsDone(true)
-      console.log("게임 끝")
-    } else {
-      setIsDone(false)
-      console.log("게임 초기화")
-    }
-  }
-
-  useEffect(() => {
-    if (index > 0) {
-      drawerHandler()
-    }
-    else {
-      // 재시작시 새로 요청
-      drawerHandler()
-      setTimeout(() => isDoneHandler(), 500);
-      setTimeout(() => drawerHandler(), 500);
-    }
-  }, [index])
-
-  useEffect(() => {
-    // if (isDone === true) {
-    //   drawerHandler()
-    // }
-    // isDone이 바뀌는 시간이 0.5초 걸려서 조건문 사용 실패
-    drawerHandler()
-  },[isDone])
-
-  // 렌더링
   if (!landing) {
     return (
       <BackgroundDiv>
         <Header/>
         <DummyDiv></DummyDiv> 
+        <TimerWrapper>
+          <Timer>{time}</Timer>
+        </TimerWrapper>
         <StyledDiv>
           <DrawingCanvas canvasRef={canvasRef}/>
         </StyledDiv>
@@ -247,3 +269,11 @@ const BackgroundDiv = styled.div`
   background-position:center;
   
 `
+
+const TimerWrapper = styled.div(
+  tw`flex items-center justify-center`
+)
+
+const Timer = styled.div(
+  tw`rounded border-yellowD border-4 bg-none text-blue-800 text-2xl px-2`
+)

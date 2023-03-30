@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import user from "./modules/user";
+import drawing from "./modules/drawing";
 const store = configureStore({
   reducer: {
     user,
+    drawing
   },
 });
 
