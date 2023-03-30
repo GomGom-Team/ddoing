@@ -8,6 +8,7 @@ import {
   signinAction,
   setUserWithTokenAction,
   refreshTokenAction,
+  logoutAction,
 } from "./thunk";
 
 const initialState: UserStateType = {
@@ -16,7 +17,7 @@ const initialState: UserStateType = {
     name: "",
     nickName: "",
     email: "",
-    level: 0,
+    level: 1,
     exp: 0,
     isLoggedIn: false,
   },
@@ -122,7 +123,7 @@ const userSlice = createSlice({
         state.getMe.data = payload;
         state.getMe.error = null;
 
-        state.userData.id = payload.userId;
+        state.userData.id = payload.id;
         state.userData.email = payload.email;
         state.userData.name = payload.name;
         state.userData.nickName = payload.nickName;
@@ -149,6 +150,15 @@ const userSlice = createSlice({
         state.refreshToken.loading = false;
         state.refreshToken.data = null;
         state.refreshToken.error = payload;
+      })
+      .addCase(logoutAction.fulfilled, (state, { payload }) => {
+        state.userData.id = "";
+        state.userData.nickName = "";
+        state.userData.email = "";
+        state.userData.name = "";
+        state.userData.level = 0;
+        state.userData.exp = 0;
+        state.userData.isLoggedIn = false;
       });
   },
 });

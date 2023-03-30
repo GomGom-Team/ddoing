@@ -60,13 +60,33 @@ public class UserController {
         return ResponseEntity.ok(userService.readUser(id).toUserDTO());
     }
 
-    @PutMapping()
-    public ResponseEntity updateUser(@RequestBody UserDTO userDTO, HttpServletRequest request){
-        String id = JwtTokenProvider.getIdByAccessToken(request);
+    @PutMapping("/password")
+    public ResponseEntity updatePassword(@RequestBody UserUpdateDTO updateDTO){
+        String id = updateDTO.getId();
         if(!userService.isExistById(id)){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Message("존재하지 않는 사용자 입니다."));
         }
-        boolean result = userService.updateUser(userDTO, id);
+        if(!userService.checkPassword(id, updateDTO.getPassword())){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Message("비밀번호가 일치하지 않습니다."));
+        }
+        UserDTO newUser = UserDTO.builder()
+                .id(id)
+                .password(updateDTO.getNewPassword())
+                .build();
+        if(!userService.updateUser(newUser)){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Message("수정 실패했습니다."));
+        }
+        return ResponseEntity.ok(new Message("비밀번호 수정 성공"));
+    }
+
+    @PutMapping("/nickName")
+    public ResponseEntity updateUser(@RequestBody UserDTO userDTO){
+//        String id = JwtTokenProvider.getIdByAccessToken(request);
+        String id = userDTO.getId();
+        if(!userService.isExistById(id)){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Message("존재하지 않는 사용자 입니다."));
+        }
+        boolean result = userService.updateUser(userDTO);
         if(!result){
             return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(new Message("수정 실패했습니다."));
         }

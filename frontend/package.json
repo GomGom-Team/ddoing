@@ -33,6 +33,8 @@
     "react-router-dom": "^6.9.0",
     "react-slick": "^0.29.0",
     "react-youtube": "^10.1.0",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-persist": "^6.0.0",
     "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.8",
     "three": "^0.150.1"
@@ -41,6 +43,7 @@
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@types/react-slick": "^0.23.10",
+    "@types/redux-persist": "^4.3.1",
     "@types/styled-components": "^5.1.26",
     "@vitejs/plugin-react": "^3.1.0",
     "babel-plugin-macros": "^3.1.0",

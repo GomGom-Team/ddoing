@@ -126,6 +126,8 @@ const RegisterBox = () => {
           email: email,
           nickName: nickName,
           name: name,
+          level: 1,
+          exp: 0,
         })
       ).then(() => {
         navigate("/login");

@@ -3,6 +3,7 @@ import MainPage from "../pages/MainPage";
 import DrawingPage from "../pages/DrawingPage";
 import LoginBox from "../components/user/LoginBox";
 import RegisterBox from "../components/user/RegisterBox";
+import MyPage from "../pages/MyPage";
 import Soundtest from "../pages/soundtest";
 
 const router = createBrowserRouter([
@@ -42,7 +43,7 @@ const router = createBrowserRouter([
   },
   {
     path: "mypage",
-    element: <div>빈페이지 입니다.</div>,
+    element: <MyPage />,
   },
   {
     path: "sound",
