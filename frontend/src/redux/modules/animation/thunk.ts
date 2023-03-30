@@ -38,7 +38,7 @@ export const recordSendAction = createAsyncThunk(
   async (formData: FormData, { rejectWithValue }) => {
     try {
       await axios
-        .post("api/animations/evaluate", formData, {
+        .post("/api/animations/evaluate", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },

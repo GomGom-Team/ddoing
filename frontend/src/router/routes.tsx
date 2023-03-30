@@ -3,8 +3,8 @@ import MainPage from "../pages/MainPage";
 import DrawingPage from "../pages/DrawingPage";
 import LoginBox from "../components/user/LoginBox";
 import RegisterBox from "../components/user/RegisterBox";
-import Sound from "../pages/SoundPage";
 import MyPage from "../pages/MyPage";
+import Soundtest from "../pages/soundtest";
 
 const router = createBrowserRouter([
   {
@@ -47,7 +47,7 @@ const router = createBrowserRouter([
   },
   {
     path: "sound",
-    element: <Sound />,
+    element: <Soundtest />,
   },
 ]);
 
