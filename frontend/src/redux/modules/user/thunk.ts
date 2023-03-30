@@ -7,7 +7,7 @@ import { UpdateUserType } from "../../../../types/user/updateUserType";
 import { axiosInitializer } from "../../util/https";
 
 // 회원가입
-export const signupAction = createAsyncThunk(
+export const signupAction: any = createAsyncThunk(
   "SIGNUP",
   async (userData: SignupType, { rejectWithValue }) => {
     try {
@@ -22,7 +22,7 @@ export const signupAction = createAsyncThunk(
 );
 
 // 아이디 중복 체크
-export const checkIdAction = createAsyncThunk(
+export const checkIdAction: any = createAsyncThunk(
   "CHECK_ID",
   async (id: string, { rejectWithValue }) => {
     try {
@@ -36,7 +36,7 @@ export const checkIdAction = createAsyncThunk(
 );
 
 // 닉네임 중복 체크
-export const checkNickNameAction = createAsyncThunk(
+export const checkNickNameAction: any = createAsyncThunk(
   "CHECK_NICKNAME",
   async (nickName: string, { rejectWithValue }) => {
     try {
@@ -50,7 +50,7 @@ export const checkNickNameAction = createAsyncThunk(
 );
 
 // 이메일 중복 체크
-export const checkEmailAction = createAsyncThunk(
+export const checkEmailAction: any = createAsyncThunk(
   "CHECK_EMAIL",
   async (email: string, { rejectWithValue }) => {
     try {
@@ -64,7 +64,7 @@ export const checkEmailAction = createAsyncThunk(
 );
 
 // 로그인
-export const signinAction = createAsyncThunk(
+export const signinAction: any = createAsyncThunk(
   "SIGNIN",
   async (userData: SigninType, { dispatch, rejectWithValue }) => {
     try {
@@ -88,10 +88,10 @@ export const signinAction = createAsyncThunk(
   }
 );
 
-// 로그인 정보 state에 저장
-export const setUserWithTokenAction = createAsyncThunk(
+// 로그인 정보 가져와서 state에 저장
+export const setUserWithTokenAction: any = createAsyncThunk(
   "GET_ME",
-  async (token, { dispatch, rejectWithValue }) => {
+  async (_, { dispatch, rejectWithValue }) => {
     try {
       const axios = axiosInitializer();
       const { data } = await axios.get("/api/users", {
@@ -104,14 +104,14 @@ export const setUserWithTokenAction = createAsyncThunk(
       return data;
     } catch (e) {
       // 토큰 refresh
-      dispatch(refreshTokenAction());
+      // dispatch(refreshTokenAction());
       return rejectWithValue(e);
     }
   }
 );
 
 // 토큰 refresh
-export const refreshTokenAction = createAsyncThunk(
+export const refreshTokenAction: any = createAsyncThunk(
   "REFRESH_TOKEN",
   async (_, { dispatch, rejectWithValue }) => {
     try {
@@ -129,14 +129,16 @@ export const refreshTokenAction = createAsyncThunk(
         });
     } catch (e) {
       // 로그아웃
-      removeToken();
+      dispatch(logoutAction());
+      // removeToken();
       alert("세션이 만료되어 로그아웃 되었습니다.");
       return rejectWithValue(e);
     }
   }
 );
 
-export const logoutAction = createAsyncThunk(
+// 로그아웃
+export const logoutAction: any = createAsyncThunk(
   "LOGOUT",
   async (_, { rejectWithValue }) => {
     try {
@@ -158,4 +160,52 @@ export const logoutAction = createAsyncThunk(
   }
 );
 
-// export default { signinAction, setUserWithTokenAction, refreshTokenAction };
+// 비밀번호 변경
+export const changePwAction: any = createAsyncThunk(
+  "CHANGE_PW",
+  async (userData: UpdateUserType, { rejectWithValue }) => {
+    try {
+      const axios = axiosInitializer();
+      await axios.put("api/users/password", userData);
+    } catch (e) {
+      return rejectWithValue(e);
+    }
+  }
+);
+
+// 닉네임 변경
+export const changeNickAction: any = createAsyncThunk(
+  "CHANGE_NICKNAME",
+  async (userData: UpdateUserType, { dispatch, rejectWithValue }) => {
+    try {
+      const axios = axiosInitializer();
+      await axios.put("api/users/nickName", userData).then(() => {
+        dispatch(setUserWithTokenAction());
+      });
+    } catch (e) {
+      return rejectWithValue(e);
+    }
+  }
+);
+
+// 회원 탈퇴
+export const deleteUserAction: any = createAsyncThunk(
+  "DELETE_USER",
+  async (_, { rejectWithValue }) => {
+    try {
+      const axios = axiosInitializer();
+      await axios
+        .delete("api/users", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Baerer" + getToken(),
+          },
+        })
+        .then(() => {
+          removeToken();
+        });
+    } catch (e) {
+      return rejectWithValue(e);
+    }
+  }
+);

@@ -10,6 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -19,6 +21,7 @@ import java.util.UUID;
 public class DrawingServiceImpl implements DrawingService {
     private final UserRepository userRepository;
     private final WordRepository wordRepository;
+    private final SentenceRepository sentenceRepository;
     private final UserDrawingRepository userDrawingRepository;
 
     @Value("${part.upload.path}")   // application.properties 에서 ec2 path 로 변경
@@ -85,5 +88,29 @@ public class DrawingServiceImpl implements DrawingService {
     private String extractExt(String originalFileName) {
         int pos = originalFileName.lastIndexOf(".");
         return originalFileName.substring(pos + 1);
+    }
+
+    // 단어 + 예문 리스트 조회
+    @Override
+    public List<DrawingRequestDTO> getDrawingWords(){
+
+        List<WordEntity> words = wordRepository.findWordsByRand();
+        List<DrawingRequestDTO> results = new ArrayList<>();
+
+        // 단어 6개
+        for(WordEntity word : words) {
+            SentenceEntity sentence =  sentenceRepository.findSentenceByWordId(word.getId());
+            // id, word, mean, eng_sentence, ko_sentence, word_id
+            DrawingRequestDTO result = DrawingRequestDTO.builder()
+                    .id(word.getId())
+                    .word(word.getWord())
+                    .mean(word.getMean())
+                    .engSentence(sentence.getEngSentence())
+                    .koSentence(sentence.getKoSentence())
+                    .build();
+
+            results.add(result);
+        }
+        return results;
     }
 }

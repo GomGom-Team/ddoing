@@ -42,9 +42,11 @@ public class UserServiceImpl implements UserService{
         UserEntity userEntity = UserEntity.builder()
                 .id(signUpDTO.getId())
                 .name(signUpDTO.getName())
-                .password(passwordEncoder.encode("{noop}"+signUpDTO.getPassword()))
+                .password(passwordEncoder.encode(signUpDTO.getPassword()))
                 .email(signUpDTO.getEmail())
                 .nickName(signUpDTO.getNickName())
+                .level(1L)
+                .exp(0L)
                 .build();
 
         return userRepository.save(userEntity);
@@ -56,17 +58,28 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public boolean updateUser(UserDTO userDTO, String id) {
+    public boolean updateUser(UserDTO userDTO) {
+        String id = userDTO.getId();
         UserEntity user = userRepository.findById(id).orElseThrow();
         UserEntity newUser = UserEntity.builder()
                 .id(id)
                 .nickName(userDTO.getNickName()==null?user.getNickName():userDTO.getNickName())
                 .email(user.getEmail())
-                .password(userDTO.getPassword()==null? "{noop}"+user.getPassword():passwordEncoder.encode("{noop}"+userDTO.getPassword()))
+                .password(userDTO.getPassword()==null? user.getPassword():passwordEncoder.encode(userDTO.getPassword()))
                 .name(user.getName())
                 .build();
         UserEntity result = userRepository.save(newUser);
         if(result==null) return false;
+        return true;
+    }
+
+    @Override
+    public boolean checkPassword(String id, String password) {
+        UserEntity findUser = userRepository.findById(id).orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "사용자를 찾을 수 없습니다."));
+
+        if(passwordEncoder.matches(passwordEncoder.encode(password), findUser.getPassword())){
+            throw new CustomException(HttpStatus.BAD_REQUEST, "잘못된 비밀번호입니다.");
+        }
         return true;
     }
 
@@ -78,10 +91,8 @@ public class UserServiceImpl implements UserService{
     @Override
     public TokenDTO loginUser(LoginDTO loginDTO) {
         UserEntity findUser = userRepository.findById(loginDTO.getId()).orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "사용자를 찾을 수 없습니다."));
-        log.info("id"+findUser.getId());
-        log.info("userpw"+findUser.getPassword());
-        log.info("dtopw"+loginDTO.getPassword());
-        if(passwordEncoder.matches(passwordEncoder.encode(loginDTO.getPassword()), findUser.getPassword())){
+
+        if(!passwordEncoder.matches(loginDTO.getPassword(),findUser.getPassword())){
             throw new CustomException(HttpStatus.BAD_REQUEST, "잘못된 비밀번호입니다.");
         }
         if(tokenRepository.existsByUserId(loginDTO.getId())){

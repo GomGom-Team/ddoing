@@ -153,8 +153,8 @@ public class AnimationServiceImpl implements AnimationService {
         Long newExp = userEntity.getExp() + animationRequestDTO.getScore();
         Long Level = userEntity.getLevel();
 
-        if (newExp >= 300) {
-            newExp -= 300;
+        if (newExp >= 200) {
+            newExp -= 200;
             Level += 1;
         }
 
@@ -243,12 +243,12 @@ public class AnimationServiceImpl implements AnimationService {
         List<AnimationEntity> animationEntities;
 
         // 수강유무
-        if(done == 1){  // 수강 완료
-            animationEntities  = animationBestScoreRepository.findAllByUserIdDone(userId);
-        }else{  // 수강 미완료
-            animationEntities  = animationBestScoreRepository.findAllByUserIdLeft(userId);
+        if (done == 1) {  // 수강 완료
+            animationEntities = animationBestScoreRepository.findAllByUserIdDone(userId);
+        } else {  // 수강 미완료
+            animationEntities = animationBestScoreRepository.findAllByUserIdLeft(userId);
         }
-        
+
         List<AnimationResponseDTO> results = new ArrayList<>();
 
         for (AnimationEntity animation : animationEntities) {
@@ -334,8 +334,7 @@ public class AnimationServiceImpl implements AnimationService {
         // score에 string 값이 들어갈 때 발생하는 에러 처리
         catch (NumberFormatException e) {
             score = 0;
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {
             throw new RuntimeException(e);
@@ -404,6 +403,27 @@ public class AnimationServiceImpl implements AnimationService {
             }
         }
 
+    }
 
+    @Override
+    public List<AnimationResponseDTO> getAnimationsTop6List(String userId) {
+        List<Long> top6List = animationBestScoreRepository.findTop6ByAnimationId(userId);
+        List<AnimationResponseDTO> results = new ArrayList<>();
+
+        for (Long list : top6List) {
+            AnimationEntity animation = animationRepository.findById(list).orElseThrow();
+            AnimationResponseDTO result = AnimationResponseDTO.builder()
+                    .id(animation.getId())
+                    .title(animation.getTitle())
+                    .runningTime(animation.getRunningTime())
+                    .pathUrl(animation.getPathUrl())
+                    .bestScore(getBestScore(animation.getId(), userId))
+                    .roles(getRoles(animation.getId()))
+                    .build();
+
+            results.add(result);
+
+        }
+        return results;
     }
 }

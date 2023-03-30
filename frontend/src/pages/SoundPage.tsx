@@ -59,18 +59,9 @@ function Sound() {
           <button onClick={stopRecording}>녹음 끝내기</button>
         </div>
       )}
-      {/* <video src={mediaBlobUrl} controls autoPlay loop /> */}
-      {/* <a href={mediaBlobUrl} download="my-audio-file.wav">
-        Download
-      </a>
-      <br /> */}
       <button onClick={onSubmitAudioFile}>base64</button>
-      {/* <button onClick={}></button> */}
-      {/* <button onClick={myClick}>닫기</button> */}
     </div>
   );
 }
 
 export default Sound;
-
-// const styledBtn = styled.button((isRecord : ))
