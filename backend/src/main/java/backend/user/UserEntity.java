@@ -2,10 +2,10 @@ package backend.user;
 
 import backend.auth.TokenEntity;
 import backend.common.BaseEntity;
-import backend.animation.AnimationBestScoreEntity;
-import backend.animation.AnimationScoreEntity;
-import backend.draw.DrawingScoreEntity;
-import backend.draw.UserDrawingEntity;
+import backend.animation.domain.AnimationBestScoreEntity;
+import backend.animation.domain.AnimationScoreEntity;
+import backend.draw.domain.DrawingScoreEntity;
+import backend.draw.domain.UserDrawingEntity;
 import backend.rank.RankEntity;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
