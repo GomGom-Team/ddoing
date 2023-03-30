@@ -1,6 +1,5 @@
 package backend.animation;
 
-import backend.user.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -22,7 +21,6 @@ public interface AnimationBestScoreRepository extends JpaRepository<AnimationBes
             "(select a.animationId from AnimationBestScoreEntity as a where a.userId = :userId)")
     List<AnimationEntity> findAllByUserIdLeft(String userId);
 
-    // db추가 후 limit 6 추가
     @Query("select a.animationId from AnimationBestScoreEntity a group by a.animationId order by count(a.animationId) desc")
     List<Long> findTop6ByAnimationId(String userId);
 }

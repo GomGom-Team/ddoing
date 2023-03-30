@@ -21,7 +21,7 @@ public class UserDrawingEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id", nullable = false, insertable = false, updatable = false)
+    @Column(name = "user_id", nullable = false, insertable = false, updatable = false, length = 10)
     private String userId;
     @Column(name = "word_id", nullable = false, insertable = false, updatable = false)
     private Long wordId;

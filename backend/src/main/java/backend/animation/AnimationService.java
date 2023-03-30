@@ -43,4 +43,7 @@ public interface AnimationService {
 
     // 인기리스트
     List<AnimationResponseDTO> getAnimationsTop6List(String userId);
+
+    // mypage - 최근 공부한 영상 조회
+    List<AnimationResponseDTO> getAnimationsStudyRecent(String userId);
 }
