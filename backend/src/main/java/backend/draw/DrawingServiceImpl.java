@@ -1,5 +1,8 @@
 package backend.draw;
 
+import backend.animation.AnimationRequestDTO;
+import backend.animation.UserScoreResponseDTO;
+import backend.user.UserEntity;
 import backend.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +26,10 @@ public class DrawingServiceImpl implements DrawingService {
     private final WordRepository wordRepository;
     private final SentenceRepository sentenceRepository;
     private final UserDrawingRepository userDrawingRepository;
+    private final DrawingScoreRepository drawingScoreRepository;
+
+    private final long LEVELUP_STANDARD = 200L;
+    private final int ONE_DRAWING_SCORE = 5;
 
     @Value("${part.upload.path}")   // application.properties 에서 ec2 path 로 변경
     private String userDrawingPath;
@@ -92,16 +99,16 @@ public class DrawingServiceImpl implements DrawingService {
 
     // 단어 + 예문 리스트 조회
     @Override
-    public List<DrawingRequestDTO> getDrawingWords(){
+    public List<DrawingResponseDTO> getDrawingWords(){
 
         List<WordEntity> words = wordRepository.findWordsByRand();
-        List<DrawingRequestDTO> results = new ArrayList<>();
+        List<DrawingResponseDTO> results = new ArrayList<>();
 
         // 단어 6개
         for(WordEntity word : words) {
             SentenceEntity sentence =  sentenceRepository.findSentenceByWordId(word.getId());
             // id, word, mean, eng_sentence, ko_sentence, word_id
-            DrawingRequestDTO result = DrawingRequestDTO.builder()
+            DrawingResponseDTO result = DrawingResponseDTO.builder()
                     .id(word.getId())
                     .word(word.getWord())
                     .mean(word.getMean())
@@ -113,4 +120,64 @@ public class DrawingServiceImpl implements DrawingService {
         }
         return results;
     }
+
+    // 그림 평가 점수 저장
+    @Override
+    public boolean createDrawingScore(DrawingScoreRequestDTO drawingScoreRequestDTO){
+
+        DrawingScoreEntity drawingScoreEntity = DrawingScoreEntity.builder()
+                .userEntity(userRepository.findById(drawingScoreRequestDTO.getUserId()).orElseThrow())
+                .score(drawingScoreRequestDTO.getScore() * ONE_DRAWING_SCORE)
+                .build();
+
+        drawingScoreRepository.save(drawingScoreEntity);
+        return true;
+    }
+
+
+
+    // 유저 경험치,레벨 업데이트
+    @Override
+    public boolean updateUserExpAndLevel(DrawingScoreRequestDTO drawingScoreRequestDTO) {
+        UserEntity userEntity = userRepository.findById(drawingScoreRequestDTO.getUserId()).orElseThrow();
+
+        Long newExp = userEntity.getExp() + drawingScoreRequestDTO.getScore() * ONE_DRAWING_SCORE;
+        Long Level = userEntity.getLevel();
+
+        if (newExp >= LEVELUP_STANDARD) {
+            newExp -= LEVELUP_STANDARD;
+            Level += 1;
+        }
+
+        UserEntity result = UserEntity.builder()
+                .id(userEntity.getId())
+                .name(userEntity.getName())
+                .email(userEntity.getEmail())
+                .nickName(userEntity.getNickName())
+                .exp(newExp)
+                .level(Level)
+                .build();
+
+        userRepository.save(result);    // update
+        return true;
+    }
+
+
+    // 갱신 점수 반환
+    // userId, animationId, bestScore, exp, level
+    @Override
+    public DrawingScoreResponseDTO getUserScores(DrawingScoreRequestDTO drawingScoreRequestDTO) {
+        updateUserExpAndLevel(drawingScoreRequestDTO);
+
+        UserEntity userEntity = userRepository.findById(drawingScoreRequestDTO.getUserId()).orElseThrow();
+        DrawingScoreResponseDTO drawingScoreResponseDTO = DrawingScoreResponseDTO.builder()
+                .userId(drawingScoreRequestDTO.getUserId()).exp(userEntity.getExp())
+                .level(userEntity.getLevel())
+                .build();
+
+        return drawingScoreResponseDTO;
+    }
+
+
+
 }

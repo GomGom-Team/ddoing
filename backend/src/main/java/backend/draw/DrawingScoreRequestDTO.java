@@ -9,14 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 @Builder
-public class DrawingRequestDTO {
+public class DrawingScoreRequestDTO {
     private Long id;
-
-    private String word;
-
-    private String mean;
-
-    private String engSentence;
-
-    private String koSentence;
+    private String userId;
+    private Long score;
 }
