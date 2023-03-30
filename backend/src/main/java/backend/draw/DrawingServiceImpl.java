@@ -112,6 +112,7 @@ public class DrawingServiceImpl implements DrawingService {
                     .id(word.getId())
                     .word(word.getWord())
                     .mean(word.getMean())
+                    .picturePath(word.getPicturePath())
                     .engSentence(sentence.getEngSentence())
                     .koSentence(sentence.getKoSentence())
                     .build();

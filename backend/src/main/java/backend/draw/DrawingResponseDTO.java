@@ -16,6 +16,8 @@ public class DrawingResponseDTO {
 
     private String mean;
 
+    private String picturePath;
+
     private String engSentence;
 
     private String koSentence;
