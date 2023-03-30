@@ -1,8 +1,24 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { AnimationScoreType } from "../../../../types/animation/animationScoreType";
 import { axiosInitializer } from "../../util/https";
 import { setScore } from "./score";
 
 const axios = axiosInitializer();
+
+interface Ani {
+  userId: string;
+  animationId: number;
+}
+
+interface SearchAni {
+  keyword: string;
+  userId: string;
+}
+
+interface StarAni {
+  userId: string;
+  star: number;
+}
 
 // 영상 리스트 GET
 export const animationListGetAction: any = createAsyncThunk(
@@ -12,7 +28,59 @@ export const animationListGetAction: any = createAsyncThunk(
       const { data } = await axios.get(`/api/animations/${userId}`);
       return data;
     } catch (e: any) {
-      alert(e.response.data.message);
+      return rejectWithValue(e);
+    }
+  }
+);
+
+// 영상 GET
+export const animationGetAction: any = createAsyncThunk(
+  "GET_ANIMATION",
+  async ({ userId, animationId }: Ani, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(
+        `/api/animations/${animationId}/${userId}`
+      );
+      return data;
+    } catch (e: any) {
+      return rejectWithValue(e);
+    }
+  }
+);
+
+// 영상 검색 결과 GET
+export const animationSearchGetAction: any = createAsyncThunk(
+  "GET_ANIMATION_SEARCH",
+  async ({ keyword, userId }: SearchAni, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(
+        `/api/animations/search/${keyword}/${userId}`
+      );
+      if (data.length === 0) {
+        return new Array();
+      } else {
+        return data;
+      }
+    } catch (e: any) {
+      return rejectWithValue(e);
+    }
+  }
+);
+
+// 영상 별 필터링 결과 GET
+export const animationStarGetAction: any = createAsyncThunk(
+  "GET_ANIMATION_STAR",
+  async ({ userId, star }: StarAni, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(
+        `/api/animations/filter/${userId}/${star}`
+      );
+      if (data.length === 0) {
+        return new Array();
+      } else {
+        return data;
+      }
+    } catch (e: any) {
       return rejectWithValue(e);
     }
   }
@@ -34,11 +102,12 @@ export const scriptGetAction: any = createAsyncThunk(
 
 // 음성 녹음 데이터 POST
 export const recordSendAction: any = createAsyncThunk(
-  "RECORD_SEND",
+  "SEND_RECORD",
   async (formData: FormData, { rejectWithValue }) => {
     try {
+      const axios = axiosInitializer();
       await axios
-        .post("/api/animations/evaluate", formData, {
+        .post("api/animations/evaluate", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -46,6 +115,23 @@ export const recordSendAction: any = createAsyncThunk(
         .then(({ data }: any) => {
           setScore(data);
         });
+    } catch (e) {
+      return rejectWithValue(e);
+    }
+  }
+);
+
+// 발음 평가 결과 POST
+export const recordResultSendAction: any = createAsyncThunk(
+  "SEND_RECORD_RESULT",
+  async (scoreData: AnimationScoreType, { rejectWithValue }) => {
+    try {
+      const axios = axiosInitializer();
+      await axios.post("api/animations/score", scoreData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
     } catch (e) {
       return rejectWithValue(e);
     }
