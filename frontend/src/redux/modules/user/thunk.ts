@@ -7,7 +7,7 @@ import { UpdateUserType } from "../../../../types/user/updateUserType";
 import { axiosInitializer } from "../../util/https";
 
 // 회원가입
-export const signupAction = createAsyncThunk(
+export const signupAction: any = createAsyncThunk(
   "SIGNUP",
   async (userData: SignupType, { rejectWithValue }) => {
     try {
@@ -22,7 +22,7 @@ export const signupAction = createAsyncThunk(
 );
 
 // 아이디 중복 체크
-export const checkIdAction = createAsyncThunk(
+export const checkIdAction: any = createAsyncThunk(
   "CHECK_ID",
   async (id: string, { rejectWithValue }) => {
     try {
@@ -36,7 +36,7 @@ export const checkIdAction = createAsyncThunk(
 );
 
 // 닉네임 중복 체크
-export const checkNickNameAction = createAsyncThunk(
+export const checkNickNameAction: any = createAsyncThunk(
   "CHECK_NICKNAME",
   async (nickName: string, { rejectWithValue }) => {
     try {
@@ -50,7 +50,7 @@ export const checkNickNameAction = createAsyncThunk(
 );
 
 // 이메일 중복 체크
-export const checkEmailAction = createAsyncThunk(
+export const checkEmailAction: any = createAsyncThunk(
   "CHECK_EMAIL",
   async (email: string, { rejectWithValue }) => {
     try {
@@ -64,7 +64,7 @@ export const checkEmailAction = createAsyncThunk(
 );
 
 // 로그인
-export const signinAction = createAsyncThunk(
+export const signinAction: any = createAsyncThunk(
   "SIGNIN",
   async (userData: SigninType, { dispatch, rejectWithValue }) => {
     try {
@@ -89,7 +89,7 @@ export const signinAction = createAsyncThunk(
 );
 
 // 로그인 정보 가져와서 state에 저장
-export const setUserWithTokenAction = createAsyncThunk(
+export const setUserWithTokenAction: any = createAsyncThunk(
   "GET_ME",
   async (_, { dispatch, rejectWithValue }) => {
     try {
@@ -111,7 +111,7 @@ export const setUserWithTokenAction = createAsyncThunk(
 );
 
 // 토큰 refresh
-export const refreshTokenAction = createAsyncThunk(
+export const refreshTokenAction: any = createAsyncThunk(
   "REFRESH_TOKEN",
   async (_, { dispatch, rejectWithValue }) => {
     try {
@@ -138,7 +138,7 @@ export const refreshTokenAction = createAsyncThunk(
 );
 
 // 로그아웃
-export const logoutAction = createAsyncThunk(
+export const logoutAction: any = createAsyncThunk(
   "LOGOUT",
   async (_, { rejectWithValue }) => {
     try {
@@ -161,7 +161,7 @@ export const logoutAction = createAsyncThunk(
 );
 
 // 비밀번호 변경
-export const changePwAction = createAsyncThunk(
+export const changePwAction: any = createAsyncThunk(
   "CHANGE_PW",
   async (userData: UpdateUserType, { rejectWithValue }) => {
     try {
@@ -174,7 +174,7 @@ export const changePwAction = createAsyncThunk(
 );
 
 // 닉네임 변경
-export const changeNickAction = createAsyncThunk(
+export const changeNickAction: any = createAsyncThunk(
   "CHANGE_NICKNAME",
   async (userData: UpdateUserType, { dispatch, rejectWithValue }) => {
     try {
@@ -189,7 +189,7 @@ export const changeNickAction = createAsyncThunk(
 );
 
 // 회원 탈퇴
-export const deleteUserAction = createAsyncThunk(
+export const deleteUserAction: any = createAsyncThunk(
   "DELETE_USER",
   async (_, { rejectWithValue }) => {
     try {

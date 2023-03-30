@@ -87,10 +87,10 @@ class MultiColorProgressBar extends Component<MultiColorProgressBarProps> {
     return (
       <MultiStlye>
         <div className="multicolor-bar">
-          <div className="values">{values === "" ? "" : values}</div>
+          {/* <div className="values">{values === "" ? "" : values}</div>
           <div className="scale">{calibrations === "" ? "" : calibrations}</div>
           <div className="bars">{bars === "" ? "" : bars}</div>
-          <div className="legends">{legends === "" ? "" : legends}</div>
+          <div className="legends">{legends === "" ? "" : legends}</div> */}
         </div>
       </MultiStlye>
     );

@@ -5,7 +5,7 @@ import { setScore } from "./score";
 const axios = axiosInitializer();
 
 // 영상 리스트 GET
-export const animationListGetAction = createAsyncThunk(
+export const animationListGetAction: any = createAsyncThunk(
   "GET_ANIMATION_LIST",
   async (userId: string, { rejectWithValue }) => {
     try {
@@ -19,7 +19,7 @@ export const animationListGetAction = createAsyncThunk(
 );
 
 // 스크립트 GET
-export const scriptGetAction = createAsyncThunk(
+export const scriptGetAction: any = createAsyncThunk(
   "GET_SCRIPT",
   async (animationId: number, { rejectWithValue }) => {
     try {
@@ -33,7 +33,7 @@ export const scriptGetAction = createAsyncThunk(
 );
 
 // 음성 녹음 데이터 POST
-export const recordSendAction = createAsyncThunk(
+export const recordSendAction: any = createAsyncThunk(
   "RECORD_SEND",
   async (formData: FormData, { rejectWithValue }) => {
     try {
