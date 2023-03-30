@@ -3,7 +3,7 @@ import { axiosInitializer } from "../../util/https";
 
 const axios = axiosInitializer();
 
-export const getWordListAction = createAsyncThunk(
+export const getWordListAction:any = createAsyncThunk(
   "GET_WORD_LIST",
   async (_, { rejectWithValue }) => {
     try {

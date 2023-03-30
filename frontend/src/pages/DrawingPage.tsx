@@ -70,7 +70,7 @@ const DrawingPage = () => {
   const wordListHandler = () => {
     // const words = useAppSelector((state) => 
     // state.drawing.getWordList.data
-    dispatch(getWordListAction()).then((res)=>{
+    dispatch(getWordListAction()).then((res:any)=>{
       // console.log(res.payload)
       setWordList(res.payload)
     })
