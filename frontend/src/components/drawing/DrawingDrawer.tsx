@@ -50,7 +50,7 @@ const DrawingDrawer = ({isDone, toggleDrawer, state, index, maxStage, wordList, 
     <div>
       {(["top"] as const).map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
+          {/* <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button> */}
           <Drawer
             anchor={anchor}
             open={state[anchor]}

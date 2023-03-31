@@ -8,7 +8,7 @@ import MainPage from './pages/MainPage';
 
 const App = () => (
   <Container isOverflowed>
-    <RouterProvider router={router} />
+    <RouterProvider router={router}/>
   </Container>
 )
 

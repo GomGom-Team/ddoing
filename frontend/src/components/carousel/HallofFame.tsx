@@ -25,49 +25,49 @@ function HallofFame() {
 
           <SliderItems>
               <SliderItemsWrapper>
+                <CustomedFigure>
                   <ThumbNail></ThumbNail>
+                </CustomedFigure>
               </SliderItemsWrapper>
           </SliderItems>
 
           <SliderItems>
               <SliderItemsWrapper>
+                <CustomedFigure>
                   <ThumbNail></ThumbNail>
+                </CustomedFigure>
               </SliderItemsWrapper>
           </SliderItems>
 
           <SliderItems>
               <SliderItemsWrapper>
+                <CustomedFigure>
                   <ThumbNail></ThumbNail>
+                </CustomedFigure>
               </SliderItemsWrapper>
           </SliderItems>
 
           <SliderItems>
               <SliderItemsWrapper>
+                <CustomedFigure>
                   <ThumbNail></ThumbNail>
+                </CustomedFigure>
               </SliderItemsWrapper>
           </SliderItems>
 
           <SliderItems>
               <SliderItemsWrapper>
+                <CustomedFigure>
                   <ThumbNail></ThumbNail>
+                </CustomedFigure>
               </SliderItemsWrapper>
           </SliderItems>
 
           <SliderItems>
               <SliderItemsWrapper>
+                <CustomedFigure>
                   <ThumbNail></ThumbNail>
-              </SliderItemsWrapper>
-          </SliderItems>
-
-          <SliderItems>
-              <SliderItemsWrapper>
-                  <ThumbNail></ThumbNail>
-              </SliderItemsWrapper>
-          </SliderItems>
-
-          <SliderItems>
-              <SliderItemsWrapper>
-                  <ThumbNail></ThumbNail>
+                </CustomedFigure>
               </SliderItemsWrapper>
           </SliderItems>
         </Slider>
@@ -95,5 +95,36 @@ const SliderItemsWrapper = styled.div(
 )
 
 const ThumbNail = styled.img(
-    tw`h-56 w-56 object-cover rounded-md bg-slate-500`
+    tw`h-56 w-56 object-cover bg-slate-500 border-4`
   )
+
+const CustomedFigure = styled.figure`
+  animation: swing ease-in-out 1s infinite alternate;
+  transform-origin: center -20px;
+  float:left;
+  box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
+  &:after{
+  content: '';
+  position: absolute;  
+  width: 20px; height: 20px;  
+  border: 1px solid #999;
+  top: -10px; left: 50%;
+  z-index: 0;
+  border-bottom: none;
+  border-right: none;
+  transform: rotate(45deg);
+  }
+  &:before{
+  content: '';
+  position: absolute;
+  width: 5px; height: 5px;
+  top: -14px;left: 54%;
+  z-index: 5;
+  border-radius: 50% 50%;
+  background: #000;
+  }
+  @keyframes swing {
+    0% { transform: rotate(3deg); }
+    100% { transform: rotate(-3deg); }
+  }
+  `

@@ -29,9 +29,9 @@ const Header = () => {
           <NavWrapperContents>
             <MainLogo onClick={() => navigate("/")}>또잉</MainLogo>
             <NavigateContents>
-              <button onClick={() => navigate("/animation")}>Animation</button>
-              <button onClick={() => navigate("/drawing")}>Drawing</button>
-              <button onClick={() => navigate("/ranking")}>Ranking</button>
+              <StyledButton onClick={() => navigate("/animation")}>A n i m a t i o n</StyledButton>
+              <StyledButton onClick={() => navigate("/drawing")}>D r a w i n g</StyledButton>
+              <StyledButton onClick={() => navigate("/ranking")}>R a n k i n g</StyledButton>
             </NavigateContents>
             <Profile>
               {loginCheck ? (
@@ -67,7 +67,11 @@ const CustomedNav = styled.nav(
     bg-opacity-30
     border-b
     border-gray-200
+  `,
+  css`
+    font-family: 'insungitCutelivelyjisu';
   `
+
 );
 
 const NavWrapper = styled.div(tw`ml-0 mr-0 px-6`);
@@ -81,5 +85,9 @@ const MainLogo = styled.button(tw`text-2xl text-gray-900 font-semibold`);
 const NavigateContents = styled.div(tw`flex space-x-4 text-xl text-gray-900`);
 
 const Profile = styled.div(tw`text-2xl`);
+
+const StyledButton = styled.button(
+  tw`px-5`
+)
 
 export default Header;

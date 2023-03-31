@@ -114,19 +114,33 @@ const DrawingCanvas = ({canvasRef} : CanvasPropsType) => {
     canvas.getContext('2d')!!.clearRect(0, 0, canvas.width, canvas.height);
   }
   const test = () => {
-
     if (!canvasRef.current) {
       return;
     } else {
       const canvas: HTMLCanvasElement = canvasRef.current;
       const context = canvas.getContext('2d');
       const canvasImg = context?.getImageData(0,0,1000,600)
+      const formData = new FormData()
+
+      const getBase64StringFromDataURL = (dataURL:string) =>
+      dataURL.replace('data:', '').replace(/^.+,/, '');
+
+      const dataUrl = canvas.toDataURL();
+      const base64 = getBase64StringFromDataURL(dataUrl)
+
+      formData.append('file', base64)
+
+
+
       
       // axios test
       const config = {
-        headers: { 'content-type': 'multipart/form-data' }
+        headers: { 
+          'content-type': 'multipart/form-data',
+          charset: 'utf-8'
+        },
        }
-      axios.post('####', canvasImg, config)
+      axios.post('http://70.12.130.101:19999/inference?stage=5', formData, config)
       .then(res => {
       console.log(res.data + 'this is data after api call');
       })

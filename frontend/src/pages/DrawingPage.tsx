@@ -34,26 +34,38 @@ const DrawingPage = () => {
   };
 
   // Timer
-  const [time, setTime] = useState(20)
+  const [timer, setTimer] = useState(20);
+  const id = useRef(0);
 
-  const startTimer = () => {
-    const timer = setInterval(() => {
-      setTime(time - 1);
-    }, 1000);
-    console.log(time)
-    if (time > 0){
-      return () => clearInterval(timer);
-    }
-    else {
-      setTime(20)
-    }
+  const clear=()=>{
+    window.clearInterval(id.current)
   }
+
+  const countDown = () => {
+    id.current=window.setInterval(()=>{
+      setTimer((time)=>time-1)
+    },1000)
+    return ()=>clear();
+  }
+
+
+
+  useDidMountEffect(()=>{
+    if(timer <= 0){
+      setTimeout(() => setTimer(20), 1000);
+      modalHandleOpen()
+    }
+  },[timer])
 
 
   // Modal
   const [modalOpen, setmodalOpen] = useState(false);
 
-  const modalHandleOpen = () => setmodalOpen(true);
+  const modalHandleOpen = () => {
+    setmodalOpen(true);
+    // 모달이 열렸을때 타이머 멈추기 
+    clear()
+  }
   const modalHandleClose = () => setmodalOpen(false);
 
 
@@ -119,7 +131,10 @@ const DrawingPage = () => {
     if (state.top === true) {
       setTimeout(() => landingHandler(), 500);
       clearCanvas()
-      // console.log(state)
+      clear()
+      setTimeout(() => setTimer(20), 500);
+    } else {
+      setTimeout(() => countDown(), 500);
     }
   }, [state]);
 
@@ -195,7 +210,8 @@ const DrawingPage = () => {
         <Header/>
         <DummyDiv></DummyDiv> 
         <TimerWrapper>
-          <Timer>{time}</Timer>
+          <Timer>{timer}</Timer>
+          <button onClick={countDown}>씨짞</button>
         </TimerWrapper>
         <StyledDiv>
           <DrawingCanvas canvasRef={canvasRef}/>
