@@ -45,6 +45,9 @@ public class UserEntity extends BaseEntity {
     @ColumnDefault("1")
     private Long level;
 
+    @Column(name = "profile", length = 20)
+    private String profile;
+
     @OneToOne(mappedBy = "userEntity", cascade = CascadeType.REMOVE)
     private TokenEntity tokenEntity;
 
