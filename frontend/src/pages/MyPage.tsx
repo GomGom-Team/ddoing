@@ -23,14 +23,14 @@ interface Reading {
 
 const MyPage = () => {
   const users = useAppSelector((state) => state.user.userData);
-  console.log(users.level);
+  const level = 0;
   return (
     <Container>
       {/* Header */}
       <Header />
       <DummyDiv></DummyDiv>
       <Profile>
-        <CustomedImage />
+        <CustomedImage src={`assets/img/ddio${level}.png`} />
         <ProfileName>{users.nickName}</ProfileName>
       </Profile>
       <LevelArea>
@@ -54,18 +54,16 @@ const DummyDiv = styled.div(tw`h-16`);
 export default MyPage;
 
 //프로필사진
-const CustomedImage = styled.img(
-  tw`h-52 object-cover rounded-md bg-slate-500`,
-  css`
-    width: 10rem;
-    height: 10rem;
-    display: block;
-    float: left;
-    margin-left: 5%;
-    margin-top: 4%;
-    border-radius: 70%;
-  `
-);
+// tw`h-52 object-cover rounded-md bg-slate-500`,
+const CustomedImage = styled.img`
+  width: 10rem;
+  height: 10rem;
+  display: block;
+  float: left;
+  margin-left: 5%;
+  margin-top: 4%;
+  border-radius: 70%;
+`;
 
 const Profile = styled.div`
   display: block;

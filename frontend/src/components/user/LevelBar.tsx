@@ -19,7 +19,7 @@ class MultiColorProgressBar extends Component<MultiColorProgressBarProps> {
   render() {
     const parent = this.props;
 
-    let values =
+    const values: any =
       parent.readings &&
       parent.readings.length &&
       parent.readings.map(function (item, i) {
@@ -36,7 +36,7 @@ class MultiColorProgressBar extends Component<MultiColorProgressBarProps> {
         }
       }, this);
 
-    let calibrations =
+    const calibrations: any =
       parent.readings &&
       parent.readings.length &&
       parent.readings.map(function (item, i) {
@@ -53,7 +53,7 @@ class MultiColorProgressBar extends Component<MultiColorProgressBarProps> {
         }
       }, this);
 
-    let bars =
+    const bars: any =
       parent.readings &&
       parent.readings.length &&
       parent.readings.map(function (item, i) {
@@ -68,7 +68,7 @@ class MultiColorProgressBar extends Component<MultiColorProgressBarProps> {
         }
       }, this);
 
-    let legends =
+    const legends: any =
       parent.readings &&
       parent.readings.length &&
       parent.readings.map(function (item, i) {
@@ -87,10 +87,10 @@ class MultiColorProgressBar extends Component<MultiColorProgressBarProps> {
     return (
       <MultiStlye>
         <div className="multicolor-bar">
-          {/* <div className="values">{values === "" ? "" : values}</div>
+          <div className="values">{values === "" ? "" : values}</div>
           <div className="scale">{calibrations === "" ? "" : calibrations}</div>
           <div className="bars">{bars === "" ? "" : bars}</div>
-          <div className="legends">{legends === "" ? "" : legends}</div> */}
+          {/* <div className="legends">{legends === "" ? "" : legends}</div> */}
         </div>
       </MultiStlye>
     );
