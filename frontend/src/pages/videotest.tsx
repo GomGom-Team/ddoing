@@ -41,7 +41,7 @@ const videotest = () => {
   return (
     <WrapperDiv>
       <div>
-        {isOpen === true && (
+        {isOpen === true ? (
           <MyActDiv>
             <ChoiceDiv>What character do you want to play?</ChoiceDiv>
             <BtnWrapperDiv>
@@ -59,6 +59,8 @@ const videotest = () => {
               })}
             </BtnWrapperDiv>
           </MyActDiv>
+        ) : (
+          <MyActDiv2></MyActDiv2>
         )}
         <VideoDiv>
           <MyVideo myAct={act} isVideoStart={isStart} videoIdx={videoIdx} />
@@ -80,6 +82,20 @@ const MyActDiv = styled.div`
   align-items: center;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.5);
+  font-family: "insungitCutelivelyjisu";
+  font-size: 40px;
+  color: white;
+`;
+
+const MyActDiv2 = styled.div`
+  position: absolute;
+  display: grid;
+  width: 1000px;
+  height: 500px;
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+  background-color: none;
   font-family: "insungitCutelivelyjisu";
   font-size: 40px;
   color: white;
