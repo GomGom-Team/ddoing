@@ -73,7 +73,7 @@ const myvideo = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
       setAudioSrc(window.URL.createObjectURL(e));
       const formData = new FormData();
       formData.append("multipartFile", e);
-      formData.append("script", test[nowMy]?.engSentence);
+      formData.append("script", test[nowMy - 1]?.engSentence);
       console.log("What's now Script ? ", test[nowMy - 1]?.engSentence);
       dispatch(recordSendAction(formData)).then(() =>
         setMyScore(Number(getScore()))
