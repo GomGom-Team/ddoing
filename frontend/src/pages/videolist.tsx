@@ -6,6 +6,7 @@ import {
   animationListGetAction,
   animationSearchGetAction,
   animationStarGetAction,
+  animationDoneGetAction,
 } from "../redux/modules/animation";
 
 const videolist = () => {
@@ -13,7 +14,10 @@ const videolist = () => {
   const navigate = useNavigate();
   const [inputData, setInputData] = useState("");
   const starList = ["선택", 1, 2, 3];
-  const [selected, setSelected] = useState("선택");
+  const [selectedStar, setSelectedStar] = useState("선택");
+  const [selectedDone, setSelectedDone] = useState("선택");
+  const [isNow, setIsNow] = useState("");
+  // const [testArray, setTestArray] = useState([]);
   // const [videoSearchList, setVideoSearchList]: any = useState([]);
   const changeInputData = (e: any) => {
     setInputData(e.target.value);
@@ -33,32 +37,59 @@ const videolist = () => {
   const videoSearchList = useAppSelector(
     (state) => state.animation.getAnimationSearch
   );
-  const handleSelect = (e: any) => {
-    setSelected(e.target.value);
+  const handleSelectStar = (e: any) => {
+    setSelectedStar(e.target.value);
   };
 
-  console.log("select ", selected);
+  // console.log("select ", selected);
   useEffect(() => {
-    if (selected !== "선택") {
-      dispatch(animationStarGetAction({ userId: "userB", star: selected }));
+    if (selectedStar !== "선택") {
+      dispatch(animationStarGetAction({ userId: "userB", star: selectedStar }));
     }
-  }, [selected]);
+  }, [selectedStar]);
+
+  useEffect(() => {
+    if (selectedDone !== "선택") {
+      dispatch(
+        animationDoneGetAction({
+          userId: "userB",
+          done: selectedDone === "Done" ? 1 : 0,
+        })
+      );
+    }
+  }, [selectedDone]);
 
   const videoStarList = useAppSelector(
     (state) => state.animation.getAnimationStar
+  );
+
+  const videoDoneList = useAppSelector(
+    (state) => state.animation.getAnimationDone
   );
 
   return (
     <AllWrapperDiv>
       <div>
         <div>별 개수 필터링</div>
-        <select onChange={handleSelect} value={selected}>
+        <select onChange={handleSelectStar} value={selectedStar}>
           {starList.map((item) => (
             <option value={item} key={item}>
               {item}
             </option>
           ))}
         </select>
+      </div>
+      <div>
+        <div>수강여부</div>
+        <button onClick={() => setSelectedDone("Done")}>Done</button>
+        <button onClick={() => setSelectedDone("NotDone")}>Not Done</button>
+        {/* <select onChange={handleSelectDone} value={selectedDone}>
+          {doneList.map((item) => (
+            <option value={item} key={item}>
+              {item}
+            </option>
+          ))}
+        </select> */}
       </div>
       <div>
         <input
@@ -113,6 +144,7 @@ const videolist = () => {
           );
         })}
       </SearchWrapperDiv>
+
       <StarWrapperDiv>
         <div>여기부터 별결과</div>
         {videoStarList?.data?.map((item: any, index: number) => {
@@ -135,6 +167,29 @@ const videolist = () => {
           );
         })}
       </StarWrapperDiv>
+
+      <DoneWrapperDiv>
+        <div>여기부터 수강여부결과</div>
+        {videoDoneList?.data?.map((item: any, index: number) => {
+          return (
+            <div key={index} onClick={() => navigate(`/video/${item.id}`)}>
+              <img src={`https://img.youtube.com/vi/${item.pathUrl}/0.jpg`} />
+              <div>{item.id}</div>
+              <div>{item.title}</div>
+              <div>{item.runningTime}</div>
+              <div>{item.pathUrl}</div>
+              <div>{item.bestScore}</div>
+              {item.roles.map((item: any, index: number) => {
+                return (
+                  <div key={index}>
+                    <div>{item}</div>
+                  </div>
+                );
+              })}
+            </div>
+          );
+        })}
+      </DoneWrapperDiv>
     </AllWrapperDiv>
   );
 };
@@ -154,5 +209,9 @@ const SearchWrapperDiv = styled.div`
 `;
 
 const StarWrapperDiv = styled.div`
+  display: grid;
+`;
+
+const DoneWrapperDiv = styled.div`
   display: grid;
 `;
