@@ -20,6 +20,11 @@ interface StarAni {
   star: number;
 }
 
+interface DoneAni {
+  userId: string;
+  done: number;
+}
+
 // 영상 리스트 GET
 export const animationListGetAction: any = createAsyncThunk(
   "GET_ANIMATION_LIST",
@@ -73,7 +78,26 @@ export const animationStarGetAction: any = createAsyncThunk(
   async ({ userId, star }: StarAni, { rejectWithValue }) => {
     try {
       const { data } = await axios.get(
-        `/api/animations/filter/${userId}/${star}`
+        `/api/animations/filter/star/${userId}/${star}`
+      );
+      if (data.length === 0) {
+        return new Array();
+      } else {
+        return data;
+      }
+    } catch (e: any) {
+      return rejectWithValue(e);
+    }
+  }
+);
+
+// 영상 수강여부 필터링 결과 GET
+export const animationDoneGetAction: any = createAsyncThunk(
+  "GET_ANIMATION_DONE",
+  async ({ userId, done }: DoneAni, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(
+        `/api/animations/filter/${userId}/${done}`
       );
       if (data.length === 0) {
         return new Array();

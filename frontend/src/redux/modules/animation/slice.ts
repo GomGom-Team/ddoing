@@ -5,6 +5,7 @@ import {
   animationGetAction,
   animationSearchGetAction,
   animationStarGetAction,
+  animationDoneGetAction,
   scriptGetAction,
   recordSendAction,
   recordResultSendAction,
@@ -15,6 +16,7 @@ const initialState: AnimationStateType = {
   getAnimation: { loading: false, data: null, error: null },
   getAnimationSearch: { loading: false, data: null, error: null },
   getAnimationStar: { loading: false, data: null, error: null },
+  getAnimationDone: { loading: false, data: null, error: null },
   getScript: { loading: false, data: null, error: null },
   sendRecord: { loading: false, data: null, error: null },
   sendRecordResult: { loading: false, data: null, error: null },
@@ -85,6 +87,21 @@ const animationSlice = createSlice({
         state.getAnimationStar.loading = false;
         state.getAnimationStar.data = null;
         state.getAnimationStar.error = payload;
+      })
+      .addCase(animationDoneGetAction.pending, (state) => {
+        state.getAnimationDone.loading = true;
+        state.getAnimationDone.data = null;
+        state.getAnimationDone.error = null;
+      })
+      .addCase(animationDoneGetAction.fulfilled, (state, { payload }) => {
+        state.getAnimationDone.loading = false;
+        state.getAnimationDone.data = payload;
+        state.getAnimationDone.error = null;
+      })
+      .addCase(animationDoneGetAction.rejected, (state, { payload }) => {
+        state.getAnimationDone.loading = false;
+        state.getAnimationDone.data = null;
+        state.getAnimationDone.error = payload;
       })
       .addCase(scriptGetAction.pending, (state) => {
         state.getScript.loading = true;
