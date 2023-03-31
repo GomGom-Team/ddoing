@@ -13,6 +13,7 @@ const videotest = () => {
   const [isStart, setIsStart] = useState(false);
   const [videoIdx, setVideoIdx] = useState(0);
   const location = useLocation();
+  const user = useAppSelector((state) => state.user.userData);
 
   const selectAct = (role: string) => {
     setAct(role);
@@ -31,7 +32,7 @@ const videotest = () => {
   useEffect(() => {
     if (videoIdx > 0) {
       console.log("HelloHello " + videoIdx);
-      dispatch(animationGetAction({ userId: "userB", animationId: videoIdx }));
+      dispatch(animationGetAction({ userId: user.id, animationId: videoIdx }));
     }
   }, [videoIdx]);
 
