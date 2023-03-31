@@ -48,11 +48,12 @@ const DrawingPage = () => {
     return ()=>clear();
   }
 
+
+
   useDidMountEffect(()=>{
-    if(timer===0){
-      clear()
+    if(timer <= 0){
       setTimeout(() => setTimer(20), 1000);
-      stageHandler()
+      modalHandleOpen()
     }
   },[timer])
 
@@ -60,7 +61,11 @@ const DrawingPage = () => {
   // Modal
   const [modalOpen, setmodalOpen] = useState(false);
 
-  const modalHandleOpen = () => setmodalOpen(true);
+  const modalHandleOpen = () => {
+    setmodalOpen(true);
+    // 모달이 열렸을때 타이머 멈추기 
+    clear()
+  }
   const modalHandleClose = () => setmodalOpen(false);
 
 
@@ -126,7 +131,8 @@ const DrawingPage = () => {
     if (state.top === true) {
       setTimeout(() => landingHandler(), 500);
       clearCanvas()
-      setTimer(20)
+      clear()
+      setTimeout(() => setTimer(20), 500);
     } else {
       setTimeout(() => countDown(), 500);
     }

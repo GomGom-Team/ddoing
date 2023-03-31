@@ -115,7 +115,10 @@ export default ResultPage;
 // style
 
 const StyledDrawer = styled.div(
-  tw`bg-yellowL`
+  tw`bg-yellowL`,
+  css`
+    font-family: 'insungitCutelivelyjisu';
+  `
 )
 
 const StyledWrapper = styled.div(

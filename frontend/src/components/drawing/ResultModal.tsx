@@ -47,10 +47,9 @@ export default function TransitionsModal({ drawerHandler, anchor, answer, modalO
   if (answer) {
     return (
       <div>
-        <Button onClick={modalHandleOpen}>Open modal</Button>
+        {/* <Button onClick={modalHandleOpen}>Open modal</Button> */}
         <Modal
           open={modalOpen}
-          onClose={modalHandleClose}
           closeAfterTransition
           slots={{ backdrop: Backdrop }}
           slotProps={{
@@ -95,10 +94,9 @@ export default function TransitionsModal({ drawerHandler, anchor, answer, modalO
   }
   return(
     <div>
-      <Button onClick={modalHandleOpen}>Open modal</Button>
+      {/* <Button onClick={modalHandleOpen}>Open modal</Button> */}
       <Modal
         open={modalOpen}
-        onClose={modalHandleClose}
         closeAfterTransition
         slots={{ backdrop: Backdrop }}
         slotProps={{
