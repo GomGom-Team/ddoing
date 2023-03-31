@@ -66,7 +66,10 @@ public class UserServiceImpl implements UserService{
                 .nickName(userDTO.getNickName()==null?user.getNickName():userDTO.getNickName())
                 .email(user.getEmail())
                 .password(userDTO.getPassword()==null? user.getPassword():passwordEncoder.encode(userDTO.getPassword()))
+                .profile(userDTO.getProfile()==null? user.getProfile(): userDTO.getProfile())
                 .name(user.getName())
+                .exp(user.getExp())
+                .level(user.getLevel())
                 .build();
         UserEntity result = userRepository.save(newUser);
         if(result==null) return false;
