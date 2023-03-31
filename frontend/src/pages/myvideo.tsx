@@ -34,6 +34,7 @@ const myvideo = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const player = React.useRef<ReactPlayer | null>(null);
+  const user = useAppSelector((state) => state.user.userData);
 
   const playerWrap = React.useRef(null);
 
@@ -91,7 +92,7 @@ const myvideo = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
   const resultSubmit = () => {
     dispatch(
       recordResultSendAction({
-        userId: "userB",
+        userId: user.id,
         animationId: videoIdx,
         score: avg,
       })
@@ -107,7 +108,7 @@ const myvideo = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
 
   useEffect(() => {
     if (videoIdx > 0) {
-      dispatch(animationGetAction({ userId: "userB", animationId: videoIdx }));
+      dispatch(animationGetAction({ userId: user.id, animationId: videoIdx }));
       dispatch(scriptGetAction(videoIdx));
     }
   }, [videoIdx]);

@@ -17,6 +17,7 @@ const videolist = () => {
   const [selectedStar, setSelectedStar] = useState("선택");
   const [selectedDone, setSelectedDone] = useState("선택");
   const [isNow, setIsNow] = useState("");
+  const user = useAppSelector((state) => state.user.userData);
   // const [testArray, setTestArray] = useState([]);
   // const [videoSearchList, setVideoSearchList]: any = useState([]);
   const changeInputData = (e: any) => {
@@ -24,13 +25,13 @@ const videolist = () => {
   };
   const videoList = useAppSelector((state) => state.animation.getAnimationList);
   useEffect(() => {
-    dispatch(animationListGetAction("userB"));
+    dispatch(animationListGetAction(user.id));
   }, []);
 
   const handleKeyPress = (e: any) => {
     if (e.key === "Enter" && inputData !== "") {
       dispatch(
-        animationSearchGetAction({ keyword: inputData, userId: "userB" })
+        animationSearchGetAction({ keyword: inputData, userId: user.id })
       );
     }
   };
@@ -44,7 +45,7 @@ const videolist = () => {
   // console.log("select ", selected);
   useEffect(() => {
     if (selectedStar !== "선택") {
-      dispatch(animationStarGetAction({ userId: "userB", star: selectedStar }));
+      dispatch(animationStarGetAction({ userId: user.id, star: selectedStar }));
     }
   }, [selectedStar]);
 
@@ -52,7 +53,7 @@ const videolist = () => {
     if (selectedDone !== "선택") {
       dispatch(
         animationDoneGetAction({
-          userId: "userB",
+          userId: user.id,
           done: selectedDone === "Done" ? 1 : 0,
         })
       );
