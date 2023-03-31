@@ -3,4 +3,5 @@ export type UpdateUserType = {
   password?: string;
   newPassword?: string;
   nickName?: string;
+  profile?: string;
 };

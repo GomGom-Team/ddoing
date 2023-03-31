@@ -24,4 +24,6 @@ public class UserDTO {
     private Long level;
 
     private Long exp;
+
+    private String profile;
 }

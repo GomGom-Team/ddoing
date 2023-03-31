@@ -79,7 +79,7 @@ public class UserController {
         return ResponseEntity.ok(new Message("비밀번호 수정 성공"));
     }
 
-    @PutMapping("/nickName")
+    @PutMapping()
     public ResponseEntity updateUser(@RequestBody UserDTO userDTO){
 //        String id = JwtTokenProvider.getIdByAccessToken(request);
         String id = userDTO.getId();
