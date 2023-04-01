@@ -6,6 +6,8 @@ import {
   animationSearchGetAction,
   animationStarGetAction,
   animationDoneGetAction,
+  animationTop6GetAction,
+  animationRemindGetAction,
   scriptGetAction,
   recordSendAction,
   recordResultSendAction,
@@ -17,6 +19,8 @@ const initialState: AnimationStateType = {
   getAnimationSearch: { loading: false, data: null, error: null },
   getAnimationStar: { loading: false, data: null, error: null },
   getAnimationDone: { loading: false, data: null, error: null },
+  getAnimationTop6: { loading: false, data: null, error: null },
+  getAnimationRemind: { loading: false, data: null, error: null },
   getScript: { loading: false, data: null, error: null },
   sendRecord: { loading: false, data: null, error: null },
   sendRecordResult: { loading: false, data: null, error: null },
@@ -102,6 +106,36 @@ const animationSlice = createSlice({
         state.getAnimationDone.loading = false;
         state.getAnimationDone.data = null;
         state.getAnimationDone.error = payload;
+      })
+      .addCase(animationTop6GetAction.pending, (state) => {
+        state.getAnimationTop6.loading = true;
+        state.getAnimationTop6.data = null;
+        state.getAnimationTop6.error = null;
+      })
+      .addCase(animationTop6GetAction.fulfilled, (state, { payload }) => {
+        state.getAnimationTop6.loading = false;
+        state.getAnimationTop6.data = payload;
+        state.getAnimationTop6.error = null;
+      })
+      .addCase(animationTop6GetAction.rejected, (state, { payload }) => {
+        state.getAnimationTop6.loading = false;
+        state.getAnimationTop6.data = null;
+        state.getAnimationTop6.error = payload;
+      })
+      .addCase(animationRemindGetAction.pending, (state) => {
+        state.getAnimationRemind.loading = true;
+        state.getAnimationRemind.data = null;
+        state.getAnimationRemind.error = null;
+      })
+      .addCase(animationRemindGetAction.fulfilled, (state, { payload }) => {
+        state.getAnimationRemind.loading = false;
+        state.getAnimationRemind.data = payload;
+        state.getAnimationRemind.error = null;
+      })
+      .addCase(animationRemindGetAction.rejected, (state, { payload }) => {
+        state.getAnimationRemind.loading = false;
+        state.getAnimationRemind.data = null;
+        state.getAnimationRemind.error = payload;
       })
       .addCase(scriptGetAction.pending, (state) => {
         state.getScript.loading = true;

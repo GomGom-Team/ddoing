@@ -189,13 +189,13 @@ public class DrawingServiceImpl implements DrawingService {
 
     // 명예의 전당
     @Override
-    public List<UserDrawingResponseDTO> selectUserDrawingGallery() {
+    public List<UserDrawingResponseDTO> selectDrawingGallery() {
         List<UserDrawingEntity> userDrawingEntityList = userDrawingRepository.findByPercentage();
         List<UserDrawingResponseDTO> results = new ArrayList<>();
 
         for(UserDrawingEntity userDrawingEntity : userDrawingEntityList){
             WordEntity wordEntity = wordRepository.findById(userDrawingEntity.getWordId()).orElseThrow();
-            // userId, drawingPath, percentage, word
+            // userId, drawingPath, percentage, word, mean
             UserDrawingResponseDTO userDrawingResponseDTO = UserDrawingResponseDTO.builder()
                     .userId(userDrawingEntity.getUserId())
                     .drawingPath(userDrawingEntity.getDrawingPath())
@@ -205,6 +205,34 @@ public class DrawingServiceImpl implements DrawingService {
                     .build();
 
             results.add(userDrawingResponseDTO);
+        }
+
+        if(results.size() > 6){
+            results = results.subList(0, 6);
+        }
+
+        return results;
+    }
+
+    // 사용자가 최근에 그린 그림 조회
+    @Override
+    public List<UserDrawingResponseDTO> selectUserRecentDrawing(String UserId) {
+        List<UserDrawingEntity> userDrawingEntityList = userDrawingRepository.findById(UserId);
+        List<UserDrawingResponseDTO> results = new ArrayList<>();
+
+        for(UserDrawingEntity userDrawingEntity : userDrawingEntityList){
+            WordEntity wordEntity = wordRepository.findById(userDrawingEntity.getWordId()).orElseThrow();
+            // userId, drawingPath, percentage, word, mean
+            UserDrawingResponseDTO userDrawingResponseDTO = UserDrawingResponseDTO.builder()
+                    .userId(userDrawingEntity.getUserId())
+                    .drawingPath(userDrawingEntity.getDrawingPath())
+                    .percentage(userDrawingEntity.getPercentage())
+                    .word(wordEntity.getWord())
+                    .mean(wordEntity.getMean())
+                    .build();
+
+            results.add(userDrawingResponseDTO);
+
         }
 
         if(results.size() > 6){
