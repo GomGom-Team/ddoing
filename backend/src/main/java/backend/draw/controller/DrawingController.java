@@ -5,6 +5,7 @@ import backend.draw.dto.DrawingScoreRequestDTO;
 import backend.draw.service.DrawingServiceImpl;
 import backend.draw.dto.UserDrawingDTO;
 import backend.draw.dto.UserDrawingResponseDTO;
+import backend.user.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DrawingController {
     private final DrawingServiceImpl drawingService;
+    private final UserServiceImpl userService;
 
     @PostMapping("/file/upload")
     public ResponseEntity drawingUpload(@RequestPart MultipartFile multipartFile, @RequestPart("dto") UserDrawingDTO userDrawingDTO) throws IOException {
@@ -50,7 +52,23 @@ public class DrawingController {
     // 명예의 전당
     @GetMapping("/gallery")
     public ResponseEntity getUserDrawingGallery(){
-        List<UserDrawingResponseDTO> result = drawingService.selectUserDrawingGallery();
+        List<UserDrawingResponseDTO> result = drawingService.selectDrawingGallery();
+        if(result.size() <= 0) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new Message("그림 점수가 존재하지 않음"));
+        }
+        return ResponseEntity.ok(result);
+    }
+
+    // 마이페이지 - 내가 그린 그림
+    @GetMapping("/myRecent/{id}")
+    public ResponseEntity getMyRecentDrawing(@PathVariable String id){
+
+        if(!userService.isExistById(id)){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Message("존재하지 않는 사용자 입니다."));
+        }
+
+        List<UserDrawingResponseDTO> result = drawingService.selectUserRecentDrawing(id);
+
         if(result.size() <= 0) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new Message("그림 점수가 존재하지 않음"));
         }
