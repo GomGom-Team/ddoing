@@ -115,12 +115,8 @@ export const animationTop6GetAction: any = createAsyncThunk(
   "GET_ANIMATION_TOP6",
   async (userId: string, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`/api/animations/top6/${userId}`);
-      if (data.length === 0) {
-        return new Array();
-      } else {
-        return data;
-      }
+      const { data } = await axios.get(`/api/animations/top6`);
+      return data;
     } catch (e: any) {
       return rejectWithValue(e);
     }
