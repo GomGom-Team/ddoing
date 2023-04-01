@@ -19,9 +19,11 @@ function PopularContents() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.user.userData);
-  useEffect(() => {
-    dispatch(animationTop6GetAction(user.id));
-  }, []);
+  if (user !== null) {
+    useEffect(() => {
+      dispatch(animationTop6GetAction(user.id));
+    }, [user]);
+  }
   const topVideoList = useAppSelector(
     (state) => state.animation.getAnimationTop6
   );
@@ -44,8 +46,10 @@ function PopularContents() {
         >
           {topVideoList?.data?.map((item: any, index: number) => {
             return (
-              <SliderItems>
-                <SliderItemsWrapper key={index}>
+              <SliderItems key={index}>
+                <SliderItemsWrapper
+                  onClick={() => navigate(`/video/${item.id}`)}
+                >
                   <img
                     src={`https://img.youtube.com/vi/${item.pathUrl}/0.jpg`}
                   />
@@ -71,7 +75,7 @@ const SectionWrapper = styled.div(
 
 const SliderItems = styled.li(tw`w-96 p-5`);
 
-const SliderItemsWrapper = styled.div(tw`border rounded-lg p-5 h-full`);
+const SliderItemsWrapper = styled.button(tw`border rounded-lg p-5 h-full`);
 
 const ThumbNail = styled.img(
   tw`h-44 w-full object-cover rounded-md bg-slate-500`
