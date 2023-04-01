@@ -18,5 +18,7 @@ public interface DrawingService {
     // 갱신 점수 반환
     DrawingScoreResponseDTO getUserScores(DrawingScoreRequestDTO drawingScoreRequestDTO);
     // 명예의 전당
-    List<UserDrawingResponseDTO> selectUserDrawingGallery();
+    List<UserDrawingResponseDTO> selectDrawingGallery();
+    // 사용자가 최근 그린 그림
+    List<UserDrawingResponseDTO> selectUserRecentDrawing(String UserId);
 }
