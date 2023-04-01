@@ -70,7 +70,7 @@ public class DrawingController {
         List<UserDrawingResponseDTO> result = drawingService.selectUserRecentDrawing(id);
 
         if(result.size() <= 0) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new Message("그림 점수가 존재하지 않음"));
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new Message("사용자가 그린 그림이 존재하지 않음"));
         }
         return ResponseEntity.ok(result);
     }
