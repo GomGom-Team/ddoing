@@ -42,11 +42,12 @@ public interface AnimationService {
 
     List<AnimationResponseDTO> filterAnimationsAlreadyDone(String userId, int done);
 
-    int evaluateScript(String script, MultipartFile multipartFile);
-
     // 인기리스트
-    List<AnimationResponseDTO> getAnimationsTop6List(String userId);
+    List<AnimationResponseDTO> getAnimationsTop6List();
 
     // mypage - 최근 공부한 영상 조회
     List<AnimationResponseDTO> getAnimationsStudyRecent(String userId);
+
+    int evaluateScript(String script, MultipartFile multipartFile);
+
 }
