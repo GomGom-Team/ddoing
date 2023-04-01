@@ -6,6 +6,7 @@ export type AnimationStateType = {
   getAnimationSearch: ReduxStateType;
   getAnimationStar: ReduxStateType;
   getAnimationDone: ReduxStateType;
+  getAnimationTop6: ReduxStateType;
   getScript: ReduxStateType;
   sendRecord: ReduxStateType;
   sendRecordResult: ReduxStateType;
