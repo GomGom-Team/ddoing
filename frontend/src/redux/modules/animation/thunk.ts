@@ -110,6 +110,23 @@ export const animationDoneGetAction: any = createAsyncThunk(
   }
 );
 
+// 영상 Top6 리스트 GET
+export const animationTop6GetAction: any = createAsyncThunk(
+  "GET_ANIMATION_TOP6",
+  async (userId: string, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`/api/animations/top6/${userId}`);
+      if (data.length === 0) {
+        return new Array();
+      } else {
+        return data;
+      }
+    } catch (e: any) {
+      return rejectWithValue(e);
+    }
+  }
+);
+
 // 스크립트 GET
 export const scriptGetAction: any = createAsyncThunk(
   "GET_SCRIPT",
