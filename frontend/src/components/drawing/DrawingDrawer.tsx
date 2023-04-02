@@ -30,9 +30,7 @@ const DrawingDrawer = ({isDone, toggleDrawer, state, index, maxStage, wordList, 
 
   const list = (anchor: Anchor) => (
     <Box
-      role="presentation"
-    // onClick={toggleDrawer(anchor, false)}
-    // onKeyDown={toggleDrawer(anchor, false)}
+      role="presentation"  
     >
       <WordDrawer 
         toggleDrawer={toggleDrawer} 

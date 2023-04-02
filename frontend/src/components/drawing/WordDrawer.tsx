@@ -1,6 +1,8 @@
 import React from 'react';
+import { useNavigate } from "react-router-dom";
 import tw, { css, styled, theme } from 'twin.macro'
 import { Button } from '../common/index'
+import { DrawingCard } from '../carousel/index'
 
 type Anchor = "top";
 
@@ -36,46 +38,21 @@ const ResultPage = ({ isDone, anchor, toggleDrawer,index, maxStage, wordList, re
     console.log("재시작")
   }
 
+  const navigate = useNavigate();
+
   if (isDone) {
     return(
       <StyledDrawer>
 
       <StyledWrapper>
+        <ExitButton onClick={() => navigate("/")}>X</ExitButton>
         <ResultDiv> 
-          <DrawerHead> 잘 그리셨어요! </DrawerHead>
+          <ResultHead> 잘 그리셨어요! </ResultHead>
 
-          <ImgWrapper>
-            <ItemWrapper>
-              <CustomedImage></CustomedImage>
-              <h2>{ wordList[0].word }</h2>
-            </ItemWrapper>
-
-            <ItemWrapper>
-              <CustomedImage></CustomedImage>
-              <h2>{ wordList[1].word }</h2>
-            </ItemWrapper>
-
-            <ItemWrapper>
-              <CustomedImage></CustomedImage>
-              <h2>{ wordList[2].word }</h2>
-            </ItemWrapper>
-
-            <ItemWrapper>
-              <CustomedImage></CustomedImage>
-              <h2>{ wordList[3].word }</h2>
-            </ItemWrapper>
-
-            <ItemWrapper>
-              <CustomedImage></CustomedImage>
-              <h2>{ wordList[4].word }</h2>
-            </ItemWrapper>
-
-            <ItemWrapper>
-              <CustomedImage></CustomedImage>
-              <h2>{ wordList[5].word }</h2>
-            </ItemWrapper>
-
-          </ImgWrapper>
+          <DrawingCard
+            wordList={wordList}
+            index={index}
+          />
 
           <DrawerEnd>
             <Button variant='secondary' onClick={reStart}>다시하기</Button>
@@ -89,11 +66,11 @@ const ResultPage = ({ isDone, anchor, toggleDrawer,index, maxStage, wordList, re
 
   return (
     <StyledDrawer>
-      <WordHeader>
-        {index + 1} / {maxStage}
-      </WordHeader>
       <StyledWrapper>
         <StyledDiv> 
+            <WordHeader>
+              {index + 1} / {maxStage}
+            </WordHeader>
           <DrawerHead> 다음을 그려보세요 </DrawerHead>
             <DrawerBody1>
               <WordDiv>
@@ -122,20 +99,20 @@ const StyledDrawer = styled.div(
 )
 
 const StyledWrapper = styled.div(
-  tw`w-screen h-screen flex justify-center items-center`
+  tw`h-screen flex justify-center items-center`,
 )
 
 const WordHeader = styled.div(
-  tw`text-lg text-center top-10 text-gray-400`,
+  tw`text-lg text-center mb-16 text-gray-400`,
   css`
     position: relative;
   `
 )
 
 const StyledDiv = styled.div(
-  tw`flex flex-col`,
+  tw`flex flex-col justify-center`,
   css`
-    width: 50rem;
+    width: 45rem;
     height: 30rem;
   `
 )
@@ -146,7 +123,7 @@ const DrawerHead = styled.h1(
 
 
 const DrawerBody1 = styled.div(
-  tw`flex justify-evenly my-16`
+  tw`flex justify-evenly mb-16`
 )
 
 const WordDiv = styled.div(
@@ -169,18 +146,22 @@ const ResultDiv = styled.div(
   `
 )
 
-const ImgWrapper = styled.div(
-  tw`grid grid-cols-3 gap-8 `
+const ResultHead = styled.h1(
+  tw`flex justify-center text-4xl p-5 mb-16`
 )
 
-const CustomedImage = styled.img(
-  tw`object-cover rounded-md bg-slate-500`,
+const ExitButton = styled.button(
+  tw`absolute 
+  top-4 right-4 
+  border-2 border-yellowL bg-brownL
+  px-3 pt-2 pb-1 rounded transform duration-75
+  hocus:(scale-105 text-yellow-400)
+  `,
   css`
-    height: 9rem;
-    width: 16rem;
-  `
-)
+    font-family: "insungitCutelivelyjisu";
+    font-size: 18px;
+    box-shadow: 0 0.1em 0 0.1em rgba(0, 0, 0, 0.25);
+    color: ${theme`colors.white`};
+  `,
 
-const ItemWrapper = styled.div(
-  tw`flex flex-col gap-4 items-center`
 )
