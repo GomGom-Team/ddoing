@@ -1,0 +1,62 @@
+[
+  {
+    "level": 1,
+    "name": "Basic"
+  },
+  {
+    "level": 2,
+    "name": "Spot"
+  },
+  {
+    "level": 3,
+    "name": "Robo"
+  },
+  {
+    "level": 4,
+    "name": "Komainu"
+  },
+  {
+    "level": 5,
+    "name": "Constellation"
+  },
+  {
+    "level": 6,
+    "name": "Pyjama"
+  },
+  {
+    "level": 7,
+    "name": "Blue"
+  },
+  {
+    "level": 8,
+    "name": "Deadpool"
+  },
+  {
+    "level": 9,
+    "name": "Bodyguard"
+  },
+  {
+    "level": 10,
+    "name": "Paint"
+  },
+  {
+    "level": 11,
+    "name": "Black"
+  },
+  {
+    "level": 12,
+    "name": "Hippie"
+  },
+  {
+    "level": 13,
+    "name": "Mars"
+  },
+  {
+    "level": 14,
+    "name": "HarryPotter"
+  },
+  {
+    "level": 15,
+    "name": "House"
+  }
+]
