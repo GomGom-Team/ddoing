@@ -12,7 +12,6 @@ import backend.animation.repository.AnimationBestScoreRepository;
 import backend.animation.repository.AnimationRepository;
 import backend.animation.repository.AnimationScoreRepository;
 import backend.animation.repository.ScriptRepository;
-import backend.animation.service.AnimationService;
 import backend.user.UserEntity;
 import backend.user.UserRepository;
 import com.google.gson.Gson;
@@ -45,6 +44,18 @@ public class AnimationServiceImpl implements AnimationService {
     private final ScriptRepository scriptRepository;
     private final UserRepository userRepository;
 
+    public AnimationResponseDTO toAnimationResponseDto(AnimationEntity animation, String userId) {
+        AnimationResponseDTO result = AnimationResponseDTO.builder()
+                .id(animation.getId())
+                .title(animation.getTitle())
+                .runningTime(animation.getRunningTime())
+                .pathUrl(animation.getPathUrl())
+                .bestScore(getBestScore(animation.getId(), userId))
+                .roles(getRoles(animation.getId()))
+                .build();
+        return result;
+    }
+
     @Override
     public List<AnimationResponseDTO> getAnimations(String userId) {
 
@@ -53,15 +64,7 @@ public class AnimationServiceImpl implements AnimationService {
 
         for (AnimationEntity animation : animations) {
             // animationId, title, runningTime, pathUrl, bestScore, roles
-            AnimationResponseDTO result = AnimationResponseDTO.builder()
-                    .id(animation.getId())
-                    .title(animation.getTitle())
-                    .runningTime(animation.getRunningTime())
-                    .pathUrl(animation.getPathUrl())
-                    .bestScore(getBestScore(animation.getId(), userId))
-                    .roles(getRoles(animation.getId()))
-                    .build();
-
+            AnimationResponseDTO result = toAnimationResponseDto(animation, userId);
             results.add(result);
         }
         return results;
@@ -70,14 +73,7 @@ public class AnimationServiceImpl implements AnimationService {
     @Override
     public AnimationResponseDTO getAnimation(Long animationId, String userId) {
         AnimationEntity animation = animationRepository.findById(animationId).orElseThrow();
-        AnimationResponseDTO result = AnimationResponseDTO.builder()
-                .id(animationId)
-                .title(animation.getTitle())
-                .runningTime(animation.getRunningTime())
-                .pathUrl(animation.getPathUrl())
-                .bestScore(getBestScore(animationId, userId))
-                .roles(getRoles(animationId))
-                .build();
+        AnimationResponseDTO result = toAnimationResponseDto(animation, userId);
         return result;
     }
 
@@ -104,7 +100,6 @@ public class AnimationServiceImpl implements AnimationService {
     // 점수 넣기
     @Override
     public boolean createScore(AnimationRequestDTO animationRequestDTO) {
-
         AnimationScoreEntity animationScoreEntity = AnimationScoreEntity.builder()
                 .userId(animationRequestDTO.getUserId())
                 .animationId(animationRequestDTO.getAnimationId())
@@ -114,6 +109,10 @@ public class AnimationServiceImpl implements AnimationService {
                 .build();
 
         animationScoreRepository.save(animationScoreEntity);
+
+        // best score update
+        updateBestScore(animationRequestDTO);
+        updateUserExpAndLevel(animationRequestDTO);
         return true;
     }
 
@@ -174,6 +173,7 @@ public class AnimationServiceImpl implements AnimationService {
         UserEntity result = UserEntity.builder()
                 .id(userEntity.getId())
                 .name(userEntity.getName())
+                .password(userEntity.getPassword())
                 .email(userEntity.getEmail())
                 .nickName(userEntity.getNickName())
                 .exp(newExp)
@@ -188,9 +188,6 @@ public class AnimationServiceImpl implements AnimationService {
     // userId, animationId, bestScore, exp, level
     @Override
     public UserScoreResponseDTO getUserScores(AnimationRequestDTO animationRequestDTO) {
-        updateBestScore(animationRequestDTO);
-        updateUserExpAndLevel(animationRequestDTO);
-
         UserEntity userEntity = userRepository.findById(animationRequestDTO.getUserId()).orElseThrow();
         UserScoreResponseDTO animationResponseDTO = UserScoreResponseDTO.builder()
                 .userId(animationRequestDTO.getUserId())
@@ -211,14 +208,7 @@ public class AnimationServiceImpl implements AnimationService {
 
         for (AnimationEntity animation : animations) {
             // animationId, title, runningTime, pathUrl, bestScore, roles
-            AnimationResponseDTO result = AnimationResponseDTO.builder()
-                    .id(animation.getId())
-                    .title(animation.getTitle())
-                    .runningTime(animation.getRunningTime())
-                    .pathUrl(animation.getPathUrl())
-                    .bestScore(getBestScore(animation.getId(), userId))
-                    .roles(getRoles(animation.getId()))
-                    .build();
+            AnimationResponseDTO result = toAnimationResponseDto(animation, userId);
 
             results.add(result);
         }
@@ -232,18 +222,18 @@ public class AnimationServiceImpl implements AnimationService {
         List<AnimationResponseDTO> results = new ArrayList<>();
 
         for (AnimationEntity bestScoreEntity : animationBestScoreEntities) {
+            AnimationEntity animationEntity = animationRepository.findById(bestScoreEntity.getId()).orElseThrow();
             Long bestScore = getBestScore(bestScoreEntity.getId(), userId);
-
             AnimationResponseDTO result = AnimationResponseDTO.builder()
                     .id(bestScoreEntity.getId())
-                    .title(animationRepository.findById(bestScoreEntity.getId()).orElseThrow().getTitle())
-                    .runningTime(animationRepository.findById(bestScoreEntity.getId()).orElseThrow().getRunningTime())
-                    .pathUrl(animationRepository.findById(bestScoreEntity.getId()).orElseThrow().getPathUrl())
+                    .title(animationEntity.getTitle())
+                    .runningTime(animationEntity.getRunningTime())
+                    .pathUrl(animationEntity.getPathUrl())
                     .bestScore(bestScore)
                     .roles(getRoles(bestScoreEntity.getId()))
                     .build();
 
-            if (score == 1 && bestScore > 0 && bestScore <= 30 || score == 2 && bestScore > 30 && bestScore <= 70 || score == 3 && bestScore > 70 && bestScore <= 100) {
+            if (score == 1 && bestScore > 19 && bestScore <= 40 || score == 2 && bestScore > 40 && bestScore <= 75 || score == 3 && bestScore > 75 && bestScore <= 100) {
                 results.add(result);
             }
         }
@@ -265,17 +255,61 @@ public class AnimationServiceImpl implements AnimationService {
         List<AnimationResponseDTO> results = new ArrayList<>();
 
         for (AnimationEntity animation : animationEntities) {
+            AnimationEntity animationEntity = animationRepository.findById(animation.getId()).orElseThrow();
             AnimationResponseDTO result = AnimationResponseDTO.builder()
                     .id(animation.getId())
-                    .title(animationRepository.findById(animation.getId()).orElseThrow().getTitle())
-                    .runningTime(animationRepository.findById(animation.getId()).orElseThrow().getRunningTime())
-                    .pathUrl(animationRepository.findById(animation.getId()).orElseThrow().getPathUrl())
+                    .title(animationEntity.getTitle())
+                    .runningTime(animationEntity.getRunningTime())
+                    .pathUrl(animationEntity.getPathUrl())
                     .bestScore(getBestScore(animation.getId(), userId))
                     .roles(getRoles(animation.getId()))
                     .build();
 
             results.add(result);
         }
+        return results;
+    }
+
+    @Override
+    public List<AnimationResponseDTO> getAnimationsTop6List() {
+        List<Long> top6List = animationBestScoreRepository.findTop6ByAnimationId();
+        List<AnimationResponseDTO> results = new ArrayList<>();
+
+        for (Long list : top6List) {
+            AnimationEntity animation = animationRepository.findById(list).orElseThrow();
+            AnimationResponseDTO result = AnimationResponseDTO.builder()
+                    .id(animation.getId())
+                    .title(animation.getTitle())
+                    .runningTime(animation.getRunningTime())
+                    .pathUrl(animation.getPathUrl())
+                    .roles(getRoles(animation.getId()))
+                    .build();
+
+            results.add(result);
+
+            if (results.size() > 6) {
+                results = results.subList(0, 6);
+            }
+        }
+        return results;
+    }
+
+    @Override
+    public List<AnimationResponseDTO> getAnimationsStudyRecent(String userId) {
+        List<Long> animationScoreIds = animationScoreRepository.findTop4ByUserId(userId);
+        List<AnimationResponseDTO> results = new ArrayList<>();
+
+        for (Long list : animationScoreIds) {
+            AnimationEntity animation = animationRepository.findById(list).orElseThrow();
+            AnimationResponseDTO result = toAnimationResponseDto(animation, userId);
+
+            results.add(result);
+        }
+
+        if (results.size() > 4) {
+            results = results.subList(0, 4);
+        }
+
         return results;
     }
 
@@ -416,58 +450,5 @@ public class AnimationServiceImpl implements AnimationService {
             }
         }
 
-    }
-
-    @Override
-    public List<AnimationResponseDTO> getAnimationsTop6List(String userId) {
-        List<Long> top6List = animationBestScoreRepository.findTop6ByAnimationId(userId);
-        List<AnimationResponseDTO> results = new ArrayList<>();
-
-        for (Long list : top6List) {
-            AnimationEntity animation = animationRepository.findById(list).orElseThrow();
-            AnimationResponseDTO result = AnimationResponseDTO.builder()
-                    .id(animation.getId())
-                    .title(animation.getTitle())
-                    .runningTime(animation.getRunningTime())
-                    .pathUrl(animation.getPathUrl())
-                    .bestScore(getBestScore(animation.getId(), userId))
-                    .roles(getRoles(animation.getId()))
-                    .build();
-
-            results.add(result);
-
-            if (results.size() > 6) {
-                results = results.subList(0, 6);
-            }
-
-
-        }
-        return results;
-    }
-
-    @Override
-    public List<AnimationResponseDTO> getAnimationsStudyRecent(String userId) {
-        List<Long> animationScoreIds = animationScoreRepository.findTop4ByUserId(userId);
-        List<AnimationResponseDTO> results = new ArrayList<>();
-
-        for (Long list : animationScoreIds) {
-            AnimationEntity animation = animationRepository.findById(list).orElseThrow();
-            AnimationResponseDTO result = AnimationResponseDTO.builder()
-                    .id(animation.getId())
-                    .title(animation.getTitle())
-                    .runningTime(animation.getRunningTime())
-                    .pathUrl(animation.getPathUrl())
-                    .bestScore(getBestScore(animation.getId(), userId))
-                    .roles(getRoles(animation.getId()))
-                    .build();
-
-            results.add(result);
-        }
-
-        if (results.size() > 4) {
-            results = results.subList(0, 4);
-        }
-
-        return results;
     }
 }

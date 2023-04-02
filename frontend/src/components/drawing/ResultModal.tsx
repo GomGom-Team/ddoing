@@ -1,34 +1,42 @@
-import * as React from 'react';
-import Backdrop from '@mui/material/Backdrop';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
-import Button from '@mui/material/Button';
-import tw, { css, styled, theme } from 'twin.macro'
+import * as React from "react";
+import Backdrop from "@mui/material/Backdrop";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import Fade from "@mui/material/Fade";
+import Button from "@mui/material/Button";
+import tw, { css, styled, theme } from "twin.macro";
 
 type Anchor = "top";
 interface wordListType {
-  id : number
-  word: string
-  mean: string
-  engSentence: string
-  koSentence: string
+  id: number;
+  word: string;
+  mean: string;
+  engSentence: string;
+  koSentence: string;
 }
 interface modalProps {
-  answer : boolean
-  modalOpen : boolean 
-  modalHandleOpen() : void
-  modalHandleClose() : void
-  wordList : wordListType[]
-  index: number
-  stageHandler() : void
-  anchor: Anchor
-  drawerHandler() : void
+  answer: boolean;
+  modalOpen: boolean;
+  modalHandleOpen(): void;
+  modalHandleClose(): void;
+  wordList: wordListType[];
+  index: number;
+  stageHandler(): void;
+  anchor: Anchor;
+  drawerHandler(): void;
 }
 
-
-export default function TransitionsModal({ drawerHandler, anchor, answer, modalOpen, modalHandleOpen, modalHandleClose, wordList, index, stageHandler } : modalProps) {
-
+export default function TransitionsModal({
+  drawerHandler,
+  anchor,
+  answer,
+  modalOpen,
+  modalHandleOpen,
+  modalHandleClose,
+  wordList,
+  index,
+  stageHandler,
+}: modalProps) {
   // const closeModal = async ()=>{
   //   return modalHandleClose();
   // }
@@ -39,10 +47,10 @@ export default function TransitionsModal({ drawerHandler, anchor, answer, modalO
   //     })
   //     // setTimeout(() => stageHandler(), 500);
   // }
-  const nextStage = () =>{
-    modalHandleClose()
+  const nextStage = () => {
+    modalHandleClose();
     setTimeout(() => stageHandler(), 500);
-  }
+  };
   // 정답일 경우 띄울 모달 페이지
   if (answer) {
     return (
@@ -59,10 +67,10 @@ export default function TransitionsModal({ drawerHandler, anchor, answer, modalO
           }}
         >
           <Fade in={modalOpen}>
-            <Box sx={style}>
+            <Box component="div" sx={style}>
               {/* 결과 화면을 띄워줄 곳 */}
               <StyledDrawer>
-                <StyledDiv> 
+                <StyledDiv>
                   <DrawerHead> 정답! </DrawerHead>
   
                     <DrawerBody1>
@@ -90,14 +98,13 @@ export default function TransitionsModal({ drawerHandler, anchor, answer, modalO
                 </DrawerEnd>
                 </StyledDiv>
               </StyledDrawer>
-  
             </Box>
           </Fade>
         </Modal>
       </div>
     );
   }
-  return(
+  return (
     <div>
       {/* <Button onClick={modalHandleOpen}>Open modal</Button> */}
       <Modal
@@ -111,10 +118,10 @@ export default function TransitionsModal({ drawerHandler, anchor, answer, modalO
         }}
       >
         <Fade in={modalOpen}>
-          <Box sx={style}>
+          <Box component="div" sx={style}>
             {/* 결과 화면을 띄워줄 곳 */}
             <StyledDrawer>
-              <StyledDiv> 
+              <StyledDiv>
                 <DrawerHead> 땡! </DrawerHead>
 
                   <DrawerBody1>
@@ -142,22 +149,20 @@ export default function TransitionsModal({ drawerHandler, anchor, answer, modalO
                 </DrawerEnd>
               </StyledDiv>
             </StyledDrawer>
-
           </Box>
         </Fade>
       </Modal>
     </div>
-  )
+  );
 }
-
 
 // style
 
 const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 600,
   bgcolor: '#FBF8CC',
   border: '4px solid #9A7946',
@@ -180,20 +185,11 @@ const StyledDiv = styled.div(
     width: 40rem;
     height: 40rem;
   `
-)
+);
 
-const DrawerHead = styled.h1(
-  tw`flex justify-center mb-16 text-7xl p-5`
-)
+const DrawerHead = styled.h1(tw`flex justify-center mb-16 text-7xl p-5`);
 
-
-const DrawerBody1 = styled.div(
-  tw`flex justify-center mb-16`
-)
-
-const WordDiv = styled.div(
-  tw`flex flex-col items-center justify-center`
-)
+const DrawerBody1 = styled.div(tw`flex justify-evenly mb-16`);
 
 const WordEnglish = styled.p(
   tw`text-2xl mb-5 font-bold`
@@ -203,10 +199,9 @@ const WordKorean = styled.p(
   tw`text-xl`
 )
 
+const WordKorean = styled.h1(tw`text-3xl`);
 
-const ImgWrapper = styled.div(
-  tw`flex justify-center items-center pl-10 ml-10`
-)
+const ImgWrapper = styled.div(tw`flex justify-center items-center pl-10 ml-10`);
 
 const CustomedImage = styled.img(
   tw`object-cover rounded-md bg-slate-500`,
@@ -214,7 +209,7 @@ const CustomedImage = styled.img(
     height: 9rem;
     width: 16rem;
   `
-)
+);
 
 const DrawerBody2 = styled.div(
   tw`flex flex-col items-center mb-16 px-10`
@@ -228,6 +223,4 @@ const ExampleKorean = styled.p(
   tw`text-lg`
 )
 
-const DrawerEnd = styled.div(
-  tw`flex justify-center`
-)
+const DrawerEnd = styled.div(tw`flex justify-center`);
