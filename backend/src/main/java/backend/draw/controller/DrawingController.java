@@ -66,12 +66,8 @@ public class DrawingController {
         if(!userService.isExistById(id)){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Message("존재하지 않는 사용자 입니다."));
         }
-
         List<UserDrawingResponseDTO> result = drawingService.selectUserRecentDrawing(id);
 
-        if(result.size() <= 0) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new Message("사용자가 그린 그림이 존재하지 않음"));
-        }
         return ResponseEntity.ok(result);
     }
 }
