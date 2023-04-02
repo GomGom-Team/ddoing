@@ -177,7 +177,7 @@ const RegisterBox = () => {
       onSubmit={onSubmit}
       // sx={{ backgroundImage: "assets/img/login_background.jpg" }}
     >
-      <Box sx={boxStyle2}>
+      <Box component="div" sx={boxStyle2}>
         <FormControl variant="standard">
           <InputLabel
             htmlFor="id"

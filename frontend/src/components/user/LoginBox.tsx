@@ -57,7 +57,7 @@ const LoginBox = () => {
       autoComplete="off"
       onSubmit={onSubmit}
     >
-      <Box sx={boxStyle2}>
+      <Box component="div" sx={boxStyle2}>
         <InputWithLabel
           label="아이디"
           name="id"

@@ -28,7 +28,7 @@ const AboutMe = () => {
   };
   return (
     <Box component="form" sx={boxStyle} noValidate autoComplete="off">
-      <Box sx={boxStyle2}>
+      <Box component="div" sx={boxStyle2}>
         <FormControl variant="standard">
           <InputLabel
             htmlFor="id"

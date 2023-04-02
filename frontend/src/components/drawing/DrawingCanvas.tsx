@@ -10,7 +10,7 @@ interface Coordinate {
 interface predictListType {
   stage: number
   image : string
-  result : object
+  results : object
 }
 
 interface wordListType {
@@ -27,9 +27,10 @@ interface CanvasPropsType {
   setPredictList: React.Dispatch<React.SetStateAction<predictListType>>
   index: number
   modalHandleOpen(): void
+  predict: string
 }
 
-const DrawingCanvas = ({canvasRef, predictList, setPredictList, index, modalHandleOpen} : CanvasPropsType) => {
+const DrawingCanvas = ({canvasRef, predict, predictList, setPredictList, index, modalHandleOpen} : CanvasPropsType) => {
   // state
   const [mousePosition, setMousePosition] = useState<Coordinate | undefined>(undefined);
   const [isPainting, setIsPainting] = useState(false);
@@ -155,12 +156,12 @@ const DrawingCanvas = ({canvasRef, predictList, setPredictList, index, modalHand
           charset: 'utf-8'
         },
        }
-      axios.post(`http://70.12.130.101:19999/inference?stage=${1}`, formData, config)
+      axios.post(`https://j8a103.p.ssafy.io/ai/inference?stage=${1}`, formData, config)
       .then(res => {
         console.log(res.data)
         setPredictList(res.data)
       })
-      .catch(err => console.log(err)); 
+      .catch(err => console.log("먀노ㅓ야ㅓㅁ냐어ㅑ", err)); 
       }
   }
 
@@ -207,8 +208,15 @@ const DrawingCanvas = ({canvasRef, predictList, setPredictList, index, modalHand
         </FlexDiv>
       </StyledDiv>
       <PredictDiv>
-        {/* { predictList.stage } */}
-        ...
+        {predict === "..." &&
+          <p>...</p>
+        }
+        {predict === "잘 모르겠어요 ㅠ ㅠ" &&
+          <p>잘 모르겠어요 ㅠ ㅠ</p>
+        }
+        {predict !== "..." && predict !== "잘 모르겠어요 ㅠ ㅠ" &&
+          <p>음.. {predict}인가요??</p>
+        }
       </PredictDiv>
     </FixedDiv> 
   );

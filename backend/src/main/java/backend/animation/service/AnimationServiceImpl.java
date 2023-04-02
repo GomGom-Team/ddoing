@@ -100,7 +100,6 @@ public class AnimationServiceImpl implements AnimationService {
     // 점수 넣기
     @Override
     public boolean createScore(AnimationRequestDTO animationRequestDTO) {
-
         AnimationScoreEntity animationScoreEntity = AnimationScoreEntity.builder()
                 .userId(animationRequestDTO.getUserId())
                 .animationId(animationRequestDTO.getAnimationId())
@@ -110,6 +109,10 @@ public class AnimationServiceImpl implements AnimationService {
                 .build();
 
         animationScoreRepository.save(animationScoreEntity);
+
+        // best score update
+        updateBestScore(animationRequestDTO);
+        updateUserExpAndLevel(animationRequestDTO);
         return true;
     }
 
@@ -170,6 +173,7 @@ public class AnimationServiceImpl implements AnimationService {
         UserEntity result = UserEntity.builder()
                 .id(userEntity.getId())
                 .name(userEntity.getName())
+                .password(userEntity.getPassword())
                 .email(userEntity.getEmail())
                 .nickName(userEntity.getNickName())
                 .exp(newExp)
@@ -184,9 +188,6 @@ public class AnimationServiceImpl implements AnimationService {
     // userId, animationId, bestScore, exp, level
     @Override
     public UserScoreResponseDTO getUserScores(AnimationRequestDTO animationRequestDTO) {
-        updateBestScore(animationRequestDTO);
-        updateUserExpAndLevel(animationRequestDTO);
-
         UserEntity userEntity = userRepository.findById(animationRequestDTO.getUserId()).orElseThrow();
         UserScoreResponseDTO animationResponseDTO = UserScoreResponseDTO.builder()
                 .userId(animationRequestDTO.getUserId())
