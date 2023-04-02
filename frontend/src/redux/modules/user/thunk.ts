@@ -174,12 +174,12 @@ export const changePwAction: any = createAsyncThunk(
 );
 
 // 닉네임 변경
-export const changeNickAction: any = createAsyncThunk(
+export const changeUserAction: any = createAsyncThunk(
   "CHANGE_NICKNAME",
   async (userData: UpdateUserType, { dispatch, rejectWithValue }) => {
     try {
       const axios = axiosInitializer();
-      await axios.put("api/users/nickName", userData).then(() => {
+      await axios.put("api/users", userData).then(() => {
         dispatch(setUserWithTokenAction());
       });
     } catch (e) {

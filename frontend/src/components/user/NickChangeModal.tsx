@@ -16,7 +16,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/configStore.hooks";
 import {
-  changeNickAction,
+  changeUserAction,
   checkNickNameAction,
 } from "../../redux/modules/user";
 import BasicModal from "../common/BasicModal";
@@ -50,7 +50,7 @@ function NickChangeModal({ open, setOpen }: any): JSX.Element {
 
     if (!nickNameActivated || (nickNameActivated && nickNameCheck)) {
       dispatch(
-        changeNickAction({
+        changeUserAction({
           id: user.id,
           nickName,
         })
@@ -134,9 +134,9 @@ function NickChangeModal({ open, setOpen }: any): JSX.Element {
           <StyledButton variant="contained" type="submit">
             변경
           </StyledButton>
-          <StyledButton variant="contained" onClick={onCloseModal}>
+          <DeleteButton variant="contained" onClick={onCloseModal}>
             취소
-          </StyledButton>
+          </DeleteButton>
         </Box>
       </Box>
     </BasicModal>
@@ -164,6 +164,30 @@ const StyledButton = styled(Button)<ButtonProps>(({ theme }) => ({
   color: "black",
   padding: "6px 12px",
   border: "1px solid",
+  width: "50%",
+  "&:hover": {
+    backgroundColor: "#005112",
+    borderColor: "#005112",
+    boxShadow: "none",
+    color: "#FFFFFF",
+  },
+  "&:active": {
+    boxShadow: "none",
+    backgroundColor: "#0062cc",
+    borderColor: "#005cbf",
+  },
+  "&:focus": {
+    boxShadow: "0 0 0 0.2rem rgba(0,123,255,.5)",
+  },
+}));
+
+const DeleteButton = styled(Button)<ButtonProps>(({ theme }) => ({
+  border: "none",
+  backgroundColor: "white",
+  color: "black",
+  boxShadow: "none",
+  fontFamily: "insungitCutelivelyjisu",
+  padding: "6px 12px",
   width: "50%",
   "&:hover": {
     backgroundColor: "#005112",
