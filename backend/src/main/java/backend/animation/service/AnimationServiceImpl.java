@@ -173,6 +173,7 @@ public class AnimationServiceImpl implements AnimationService {
         UserEntity result = UserEntity.builder()
                 .id(userEntity.getId())
                 .name(userEntity.getName())
+                .password(userEntity.getPassword())
                 .email(userEntity.getEmail())
                 .nickName(userEntity.getNickName())
                 .exp(newExp)
