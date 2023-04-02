@@ -26,7 +26,7 @@ const AboutMe = () => {
   };
   return (
     <Box component="form" sx={boxStyle} noValidate autoComplete="off">
-      <Box sx={boxStyle2}>
+      <Box component="div" sx={boxStyle2}>
         <FormControl variant="standard">
           <InputLabel htmlFor="id">ID</InputLabel>
           <Input id="id" value={user.id} disabled></Input>
@@ -43,7 +43,7 @@ const AboutMe = () => {
           <Input id="email" value={user.email} disabled></Input>
         </FormControl>
 
-        <Box sx={buttonBoxStyle}>
+        <Box component="div" sx={buttonBoxStyle}>
           <Button variant="contained" onClick={onClickPw}>
             비밀번호 변경
           </Button>
