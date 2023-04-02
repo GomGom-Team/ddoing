@@ -187,9 +187,17 @@ const StyledDiv = styled.div(
   `
 );
 
-const DrawerHead = styled.h1(tw`flex justify-center mb-16 text-7xl p-5`);
+const DrawerHead = styled.h1(
+  tw`flex justify-center mb-16 text-7xl p-5`
+);
 
-const DrawerBody1 = styled.div(tw`flex justify-evenly mb-16`);
+const DrawerBody1 = styled.div(
+  tw`flex justify-evenly mb-16 px-5`
+);
+
+const WordDiv = styled.div(
+  tw`flex flex-col items-center justify-center`
+)
 
 const WordEnglish = styled.p(
   tw`text-2xl mb-5 font-bold`
@@ -198,8 +206,6 @@ const WordEnglish = styled.p(
 const WordKorean = styled.p(
   tw`text-xl`
 )
-
-const WordKorean = styled.h1(tw`text-3xl`);
 
 const ImgWrapper = styled.div(tw`flex justify-center items-center pl-10 ml-10`);
 
