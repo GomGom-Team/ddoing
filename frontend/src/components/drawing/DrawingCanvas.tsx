@@ -27,9 +27,10 @@ interface CanvasPropsType {
   setPredictList: React.Dispatch<React.SetStateAction<predictListType>>
   index: number
   modalHandleOpen(): void
+  predict: string
 }
 
-const DrawingCanvas = ({canvasRef, predictList, setPredictList, index, modalHandleOpen} : CanvasPropsType) => {
+const DrawingCanvas = ({canvasRef, predict, predictList, setPredictList, index, modalHandleOpen} : CanvasPropsType) => {
   // state
   const [mousePosition, setMousePosition] = useState<Coordinate | undefined>(undefined);
   const [isPainting, setIsPainting] = useState(false);
@@ -207,8 +208,15 @@ const DrawingCanvas = ({canvasRef, predictList, setPredictList, index, modalHand
         </FlexDiv>
       </StyledDiv>
       <PredictDiv>
-        {/* { predictList.stage } */}
-        ...
+        {predict === "..." &&
+          <p>...</p>
+        }
+        {predict === "잘 모르겠어요 ㅠ ㅠ" &&
+          <p>잘 모르겠어요 ㅠ ㅠ</p>
+        }
+        {predict !== "..." && predict !== "잘 모르겠어요 ㅠ ㅠ" &&
+          <p>음.. {predict}인가요??</p>
+        }
       </PredictDiv>
     </FixedDiv> 
   );

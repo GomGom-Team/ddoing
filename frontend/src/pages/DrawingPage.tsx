@@ -243,7 +243,7 @@ const DrawingPage = () => {
     image : "initial value",
     results : {"apple" : 85.6,
               "grape" : 11.2,
-              "pineapple" : 5.4},
+              "strawberry" : 5.4},
   })
 
   useDidMountEffect(() => {
@@ -254,18 +254,21 @@ const DrawingPage = () => {
         // 정답 맞추면 무조건 이미지 저장하는 요청 보내게 [이미지 / 클래스id / 인식정확도 / 유저아이디]       
       }
     })
+    returnPrediction(Array)
   }, [predictList])
 
-  const [predict, setPredict] = useState("")
+  const [predict, setPredict] = useState("...")
   
-  // const returnPrediction = () => {
-  //   if ("pending") {
-  //     setPredict("...")
-  //   } else {
-  //     const aaa = Object.keys(predictList.results[0])
-  //     setPredict() 
-  //   } 
-  // }
+  const returnPrediction = (Array : string[]) => {
+    if ("pending") {
+      setPredict("...")
+    } else {
+    } 
+    setPredict(Array[0])
+    setTimeout(() => setPredict(Array[1]), 1000)
+    setTimeout(() => setPredict(Array[2]), 2000)
+    setTimeout(() => setPredict("잘 모르겠어요 ㅠ ㅠ"), 3000)
+  }
   
 
 
@@ -325,6 +328,7 @@ const DrawingPage = () => {
             canvasRef={canvasRef}
             index={index}
             modalHandleOpen = {modalHandleOpen}
+            predict = {predict}
           />
         </StyledDiv>
         {/* Drawer */}
