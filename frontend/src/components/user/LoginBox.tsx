@@ -76,9 +76,9 @@ const LoginBox = () => {
         <StyledButton variant="contained" type="submit">
           Log in
         </StyledButton>
-        <StyledButton variant="contained" onClick={goRegister}>
+        <DeleteButton variant="contained" onClick={goRegister}>
           Sign up
-        </StyledButton>
+        </DeleteButton>
       </Box>
     </Box>
   );
@@ -99,6 +99,30 @@ const StyledButton = styled(Button)<ButtonProps>(({ theme }) => ({
   color: "black",
   padding: "6px 12px",
   border: "1px solid",
+  width: "50%",
+  "&:hover": {
+    backgroundColor: "#005112",
+    borderColor: "#005112",
+    boxShadow: "none",
+    color: "#FFFFFF",
+  },
+  "&:active": {
+    boxShadow: "none",
+    backgroundColor: "#0062cc",
+    borderColor: "#005cbf",
+  },
+  "&:focus": {
+    boxShadow: "0 0 0 0.2rem rgba(0,123,255,.5)",
+  },
+}));
+
+const DeleteButton = styled(Button)<ButtonProps>(({ theme }) => ({
+  border: "none",
+  backgroundColor: "white",
+  color: "black",
+  boxShadow: "none",
+  fontFamily: "insungitCutelivelyjisu",
+  padding: "6px 12px",
   width: "50%",
   "&:hover": {
     backgroundColor: "#005112",

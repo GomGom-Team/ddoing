@@ -384,7 +384,7 @@ const RegisterBox = () => {
         </Button>
         <Box component="div" sx={buttonBoxStyle}>
           <StyledButton variant="contained" type="submit">
-            Signup
+            Sign up
           </StyledButton>
         </Box>
       </Box>

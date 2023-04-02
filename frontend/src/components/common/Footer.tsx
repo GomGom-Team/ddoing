@@ -7,7 +7,7 @@ const Footer = () => {
 
 const CustomedFooter = styled.div(
   tw`bg-gray-200`,
-  css`position: absolute, bottom:0`
+  css`position: relative, transform:translateY(-100%)`
 );
 
 export default Footer;
