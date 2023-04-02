@@ -220,23 +220,32 @@ public class DrawingServiceImpl implements DrawingService {
         List<UserDrawingEntity> userDrawingEntityList = userDrawingRepository.findById(UserId);
         List<UserDrawingResponseDTO> results = new ArrayList<>();
 
-        for(UserDrawingEntity userDrawingEntity : userDrawingEntityList){
-            WordEntity wordEntity = wordRepository.findById(userDrawingEntity.getWordId()).orElseThrow();
-            // userId, drawingPath, percentage, word, mean
-            UserDrawingResponseDTO userDrawingResponseDTO = UserDrawingResponseDTO.builder()
-                    .userId(userDrawingEntity.getUserId())
-                    .drawingPath(userDrawingEntity.getDrawingPath())
-                    .percentage(userDrawingEntity.getPercentage())
-                    .word(wordEntity.getWord())
-                    .mean(wordEntity.getMean())
-                    .build();
+        for(int i=0; i<6; i++){
+            if(userDrawingEntityList.size() > i){
+                UserDrawingEntity userDrawingEntity = userDrawingEntityList.get(i);
+                WordEntity wordEntity = wordRepository.findById(userDrawingEntity.getWordId()).orElseThrow();
+                // userId, drawingPath, percentage, word, mean
+                UserDrawingResponseDTO userDrawingResponseDTO = UserDrawingResponseDTO.builder()
+                        .userId(userDrawingEntity.getUserId())
+                        .drawingPath(userDrawingEntity.getDrawingPath())
+                        .percentage(userDrawingEntity.getPercentage())
+                        .word(wordEntity.getWord())
+                        .mean(wordEntity.getMean())
+                        .build();
 
-            results.add(userDrawingResponseDTO);
+                results.add(userDrawingResponseDTO);
+            }else {
+                UserDrawingResponseDTO userDrawingResponseDTO = UserDrawingResponseDTO.builder()
+                        .userId(UserId)
+                        .drawingPath(null)
+                        .percentage(null)
+                        .word(null)
+                        .mean(null)
+                        .build();
 
-        }
+                results.add(userDrawingResponseDTO);
+            }
 
-        if(results.size() > 6){
-            results = results.subList(0, 6);
         }
 
         return results;
