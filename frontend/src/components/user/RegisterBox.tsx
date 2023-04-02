@@ -7,9 +7,10 @@ import {
   checkNickNameAction,
   checkEmailAction,
 } from "../../redux/modules/user";
+import { styled } from "@mui/material/styles";
+import Button, { ButtonProps } from "@mui/material/Button";
 import {
   Box,
-  Button,
   FormControl,
   Input,
   InputLabel,
@@ -174,10 +175,16 @@ const RegisterBox = () => {
       noValidate
       autoComplete="off"
       onSubmit={onSubmit}
+      // sx={{ backgroundImage: "assets/img/login_background.jpg" }}
     >
       <Box component="div" sx={boxStyle2}>
         <FormControl variant="standard">
-          <InputLabel htmlFor="id">ID</InputLabel>
+          <InputLabel
+            htmlFor="id"
+            sx={{ fontFamily: "insungitCutelivelyjisu" }}
+          >
+            아이디
+          </InputLabel>
           <Input
             id="id"
             value={uid}
@@ -191,7 +198,10 @@ const RegisterBox = () => {
               </InputAdornment>
             }
           />
-          <FormHelperText id="id-helper-text">
+          <FormHelperText
+            id="id-helper-text"
+            sx={{ fontFamily: "insungitCutelivelyjisu" }}
+          >
             {uid &&
               (idCheck === "Available" ? (
                 <span>사용 가능한 ID입니다</span>
@@ -207,13 +217,21 @@ const RegisterBox = () => {
         <Button
           onClick={onCheckID}
           disabled={
-            idCheck === "RegexFail" || idCheck === "Available" ? true : false
+            !uid || idCheck === "RegexFail" || idCheck === "Available"
+              ? true
+              : false
           }
+          sx={{ fontFamily: "insungitCutelivelyjisu" }}
         >
           아이디 중복 확인
         </Button>
         <FormControl variant="standard">
-          <InputLabel htmlFor="pw">Password</InputLabel>
+          <InputLabel
+            htmlFor="pw"
+            sx={{ fontFamily: "insungitCutelivelyjisu" }}
+          >
+            비밀번호
+          </InputLabel>
           <Input
             id="pw"
             value={pw}
@@ -234,12 +252,20 @@ const RegisterBox = () => {
               </InputAdornment>
             }
           />
-          <FormHelperText id="pw-helper-text">
-            {!pwCheck && <span>영문, 숫자, 특수문자 포함, 8~16자</span>}
+          <FormHelperText
+            id="pw-helper-text"
+            sx={{ fontFamily: "insungitCutelivelyjisu" }}
+          >
+            {!pwCheck && <span>영문, 숫자, 특수문자 포함 8~16자</span>}
           </FormHelperText>
         </FormControl>
         <FormControl variant="standard">
-          <InputLabel htmlFor="re-pw">Re-enter Password</InputLabel>
+          <InputLabel
+            htmlFor="re-pw"
+            sx={{ fontFamily: "insungitCutelivelyjisu" }}
+          >
+            비밀번호 확인
+          </InputLabel>
           <Input
             id="re-pw"
             value={rePw}
@@ -254,12 +280,20 @@ const RegisterBox = () => {
               </InputAdornment>
             }
           />
-          <FormHelperText id="repw-helper-text">
+          <FormHelperText
+            id="repw-helper-text"
+            sx={{ fontFamily: "insungitCutelivelyjisu" }}
+          >
             {rePw && !rePwCheck && <span>비밀번호가 일치하지 않습니다</span>}
           </FormHelperText>
         </FormControl>
         <FormControl variant="standard">
-          <InputLabel htmlFor="name">name</InputLabel>
+          <InputLabel
+            htmlFor="name"
+            sx={{ fontFamily: "insungitCutelivelyjisu" }}
+          >
+            이름
+          </InputLabel>
           <Input
             id="name"
             value={name}
@@ -269,7 +303,12 @@ const RegisterBox = () => {
           />
         </FormControl>
         <FormControl variant="standard">
-          <InputLabel htmlFor="nickName">nickName</InputLabel>
+          <InputLabel
+            htmlFor="nickName"
+            sx={{ fontFamily: "insungitCutelivelyjisu" }}
+          >
+            닉네임
+          </InputLabel>
           <Input
             id="nickName"
             value={nickName}
@@ -277,7 +316,10 @@ const RegisterBox = () => {
             required
             error={nickName && nickName === "" ? true : false}
           />
-          <FormHelperText id="nick-helper-text">
+          <FormHelperText
+            id="nick-helper-text"
+            sx={{ fontFamily: "insungitCutelivelyjisu" }}
+          >
             {nickName &&
               (nickNameCheck === "Available" ? (
                 <span>사용 가능한 닉네임입니다</span>
@@ -293,11 +335,17 @@ const RegisterBox = () => {
           disabled={
             !nickName || nickName.length === 0 || nickNameCheck === "Available"
           }
+          sx={{ fontFamily: "insungitCutelivelyjisu" }}
         >
           닉네임 중복 확인
         </Button>
         <FormControl variant="standard">
-          <InputLabel htmlFor="email">email</InputLabel>
+          <InputLabel
+            htmlFor="email"
+            sx={{ fontFamily: "insungitCutelivelyjisu" }}
+          >
+            이메일
+          </InputLabel>
           <Input
             id="email"
             value={email}
@@ -307,7 +355,10 @@ const RegisterBox = () => {
             error={email && emailCheck !== "Available" ? true : false}
             aria-describedby="email-helper-text"
           />
-          <FormHelperText id="email-helper-text">
+          <FormHelperText
+            id="email-helper-text"
+            sx={{ fontFamily: "insungitCutelivelyjisu" }}
+          >
             {email &&
               (emailCheck === "Available" ? (
                 <span>사용 가능한 이메일 입니다</span>
@@ -327,13 +378,14 @@ const RegisterBox = () => {
               ? true
               : false
           }
+          sx={{ fontFamily: "insungitCutelivelyjisu" }}
         >
           이메일 중복 확인
         </Button>
-        <Box component="div" sx={buttonBoxStyle}>
-          <Button variant="contained" type="submit">
+        <Box sx={buttonBoxStyle}>
+          <StyledButton variant="contained" type="submit">
             Signup
-          </Button>
+          </StyledButton>
         </Box>
       </Box>
     </Box>
@@ -366,3 +418,26 @@ const boxStyle2 = {
   top: "20%",
   transform: "translateX(-50%)",
 };
+
+const StyledButton = styled(Button)<ButtonProps>(({ theme }) => ({
+  fontFamily: "insungitCutelivelyjisu",
+  backgroundColor: "#FFD761",
+  color: "black",
+  padding: "6px 12px",
+  border: "1px solid",
+  width: "50%",
+  "&:hover": {
+    backgroundColor: "#005112",
+    borderColor: "#005112",
+    boxShadow: "none",
+    color: "#FFFFFF",
+  },
+  "&:active": {
+    boxShadow: "none",
+    backgroundColor: "#0062cc",
+    borderColor: "#005cbf",
+  },
+  "&:focus": {
+    boxShadow: "0 0 0 0.2rem rgba(0,123,255,.5)",
+  },
+}));

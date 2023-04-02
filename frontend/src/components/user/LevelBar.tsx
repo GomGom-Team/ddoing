@@ -19,7 +19,7 @@ class MultiColorProgressBar extends Component<MultiColorProgressBarProps> {
   render() {
     const parent = this.props;
 
-    let values =
+    const values: any =
       parent.readings &&
       parent.readings.length &&
       parent.readings.map(function (item, i) {
@@ -30,13 +30,13 @@ class MultiColorProgressBar extends Component<MultiColorProgressBarProps> {
               style={{ color: item.color, width: item.value + "%" }}
               key={i}
             >
-              <span>{item.value}%</span>
+              <span>{item.value}</span>
             </div>
           );
         }
       }, this);
 
-    let calibrations =
+    const calibrations: any =
       parent.readings &&
       parent.readings.length &&
       parent.readings.map(function (item, i) {
@@ -53,7 +53,7 @@ class MultiColorProgressBar extends Component<MultiColorProgressBarProps> {
         }
       }, this);
 
-    let bars =
+    const bars: any =
       parent.readings &&
       parent.readings.length &&
       parent.readings.map(function (item, i) {
@@ -68,7 +68,7 @@ class MultiColorProgressBar extends Component<MultiColorProgressBarProps> {
         }
       }, this);
 
-    let legends =
+    const legends: any =
       parent.readings &&
       parent.readings.length &&
       parent.readings.map(function (item, i) {
@@ -87,43 +87,15 @@ class MultiColorProgressBar extends Component<MultiColorProgressBarProps> {
     return (
       <MultiStlye>
         <div className="multicolor-bar">
-          {/* <div className="values">{values === "" ? "" : values}</div>
+          <div className="values">{values === "" ? "" : values}</div>
           <div className="scale">{calibrations === "" ? "" : calibrations}</div>
           <div className="bars">{bars === "" ? "" : bars}</div>
-          <div className="legends">{legends === "" ? "" : legends}</div> */}
+          {/* <div className="legends">{legends === "" ? "" : legends}</div> */}
         </div>
       </MultiStlye>
     );
   }
 }
-
-// let readings: Reading[] = [
-//   {
-//     name: "Apples",
-//     value: 60,
-//     color: "#eb4d4b",
-//   },
-//   {
-//     name: "Blueberries",
-//     value: 7,
-//     color: "#22a6b3",
-//   },
-//   {
-//     name: "Guavas",
-//     value: 23,
-//     color: "#6ab04c",
-//   },
-//   {
-//     name: "Grapes",
-//     value: 10,
-//     color: "#e056fd",
-//   },
-// ];
-
-// ReactDOM.render(
-//   <MultiColorProgressBar readings={readings} />,
-//   document.getElementById("root")
-// );
 
 const MultiStlye = styled.div`
   .multicolor-bar {

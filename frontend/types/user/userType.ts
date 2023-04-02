@@ -5,5 +5,6 @@ export type UserType = {
   email: string;
   level: number | null;
   exp: number | null;
+  profile: string;
   isLoggedIn: boolean;
 };

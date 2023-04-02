@@ -1,6 +1,7 @@
 import * as React from "react";
+import { styled } from "@mui/material/styles";
 import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
+import Tab, { TabProps } from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import AboutMe from "../user/AboutMe";
@@ -63,11 +64,11 @@ export default function VerticalTabs() {
         value={value}
         onChange={handleChange}
         aria-label="Vertical tabs example"
-        sx={{ borderRight: 1, borderColor: "divider" }}
+        sx={TabsStyle}
       >
-        <Tab label="내 정보 보기" {...a11yProps(0)} />
-        <Tab label="시바 도감" {...a11yProps(1)} />
-        <Tab label="복습 하기" {...a11yProps(2)} />
+        <StyledTab label="내 정보 보기" {...a11yProps(0)} />
+        <StyledTab label="시바 도감" {...a11yProps(1)} />
+        <StyledTab label="복습 하기" {...a11yProps(2)} />
       </Tabs>
       <TabPanel value={value} index={0}>
         <AboutMe></AboutMe>
@@ -81,3 +82,22 @@ export default function VerticalTabs() {
     </Box>
   );
 }
+
+const StyledTab = styled(Tab)<TabProps>(({ theme }) => ({
+  fontFamily: "insungitCutelivelyjisu",
+  // backgroundColor: "#FFD761",
+}));
+
+const TabsStyle = {
+  borderRight: 1,
+  borderColor: "divider",
+  fontFamily: "insungitCutelivelyjisu",
+  backgroundColor: "#FFD761",
+  "& .MuiTabs-indicator": {
+    backgroundColor: "#FBF8CC",
+    height: 3,
+  },
+  "& .MuiTab-root.Mui-selected": {
+    color: "#FBF8CC",
+  },
+};
