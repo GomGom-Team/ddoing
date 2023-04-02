@@ -15,7 +15,7 @@ import {
   Shiba_Mars_13,
   Shiba_HarryPotter_14,
   Shiba_House_15,
-} from "../user/index";
+} from "./index";
 
 function ThreeScene({ name, level }: any) {
   return (

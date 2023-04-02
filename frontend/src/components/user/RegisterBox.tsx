@@ -175,7 +175,7 @@ const RegisterBox = () => {
       autoComplete="off"
       onSubmit={onSubmit}
     >
-      <Box sx={boxStyle2}>
+      <Box component="div" sx={boxStyle2}>
         <FormControl variant="standard">
           <InputLabel htmlFor="id">ID</InputLabel>
           <Input
@@ -330,7 +330,7 @@ const RegisterBox = () => {
         >
           이메일 중복 확인
         </Button>
-        <Box sx={buttonBoxStyle}>
+        <Box component="div" sx={buttonBoxStyle}>
           <Button variant="contained" type="submit">
             Signup
           </Button>

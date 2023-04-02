@@ -1,0 +1,15 @@
+export { Shiba_Basic_1 } from "./Shiba_Basic_1_Scene";
+export { Shiba_Spot_2 } from "./Shiba_Spot_2_Scene";
+export { Shiba_Robo_3 } from "./Shiba_Robo_3_Scene";
+export { Shiba_Komainu_4 } from "./Shiba_Komainu_4_Scene";
+export { Shiba_Constellation_5 } from "./Shiba_Constellation_5_Scene";
+export { Shiba_Pyjama_6 } from "./Shiba_Pyjama_6_Scene";
+export { Shiba_Blue_7 } from "./Shiba_Blue_7_Scene";
+export { Shiba_Deadpool_8 } from "./Shiba_Deadpool_8_Scene";
+export { Shiba_Bodyguard_9 } from "./Shiba_Bodyguard_9_Scene";
+export { Shiba_Paint_10 } from "./Shiba_Paint_10_Scene";
+export { Shiba_Black_11 } from "./Shiba_Black_11_Scene";
+export { Shiba_Hippie_12 } from "./Shiba_Hippie_12_Scene";
+export { Shiba_Mars_13 } from "./Shiba_Mars_13_Scene";
+export { Shiba_HarryPotter_14 } from "./Shiba_HarryPotter_14_Scene";
+export { Shiba_House_15 } from "./Shiba_House_15_Scene";

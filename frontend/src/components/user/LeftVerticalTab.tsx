@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import AboutMe from "../user/AboutMe";
 import Remind from "./Remind";
-import ShibaList from "./ShibaList";
+import ShibaList from "../Shiba/ShibaList";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -25,7 +25,7 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box component="div" sx={{ p: 3 }}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -49,6 +49,7 @@ export default function VerticalTabs() {
 
   return (
     <Box
+      component="div"
       sx={{
         flexGrow: 1,
         bgcolor: "background.paper",
