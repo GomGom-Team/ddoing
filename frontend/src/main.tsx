@@ -16,8 +16,8 @@ root.render(
   <Provider store={store}>
     <PersistGate persistor={persistor}>
       {/* <React.StrictMode> */}
-        <GlobalStyles />
-        <App />
+      <GlobalStyles />
+      <App />
       {/* </React.StrictMode> */}
     </PersistGate>
   </Provider>

@@ -5,7 +5,9 @@ import { FormControl, InputLabel, Input, TextField } from "@mui/material";
 
 const InputWithLabel = ({ label, ...rest }: InputProps) => (
   <FormControl variant="standard">
-    <InputLabel>{label}</InputLabel>
+    <InputLabel sx={{ fontFamily: "insungitCutelivelyjisu" }}>
+      {label}
+    </InputLabel>
     <Input {...rest} />
   </FormControl>
 );

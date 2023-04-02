@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import tw, { css, styled, theme } from "twin.macro";
 import InputWithLabel from "./InputWithLabel";
 import { signinAction } from "../../redux/modules/user";
-import { Box, Button, FormControl } from "@mui/material";
+import { Box, FormControl } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../redux/configStore.hooks";
+import { styled } from "@mui/material/styles";
+import Button, { ButtonProps } from "@mui/material/Button";
 
 const LoginBox = () => {
   const dispatch = useAppDispatch();
@@ -33,6 +34,10 @@ const LoginBox = () => {
       console.log(users.id);
       navigate("/");
     });
+  };
+
+  const goRegister = (e: React.MouseEvent<HTMLButtonElement>) => {
+    navigate("/register");
   };
 
   const handleClickShowPw = () => {
@@ -68,9 +73,12 @@ const LoginBox = () => {
           type="password"
           onChange={onChangePw}
         />
-        <Button variant="contained" type="submit">
-          로그인
-        </Button>
+        <StyledButton variant="contained" type="submit">
+          Log in
+        </StyledButton>
+        <StyledButton variant="contained" onClick={goRegister}>
+          Sign up
+        </StyledButton>
       </Box>
     </Box>
   );
@@ -84,3 +92,26 @@ const boxStyle2 = {
   left: "50%",
   transform: "translateX(-50%)",
 };
+
+const StyledButton = styled(Button)<ButtonProps>(({ theme }) => ({
+  fontFamily: "insungitCutelivelyjisu",
+  backgroundColor: "#FFD761",
+  color: "black",
+  padding: "6px 12px",
+  border: "1px solid",
+  width: "50%",
+  "&:hover": {
+    backgroundColor: "#005112",
+    borderColor: "#005112",
+    boxShadow: "none",
+    color: "#FFFFFF",
+  },
+  "&:active": {
+    boxShadow: "none",
+    backgroundColor: "#0062cc",
+    borderColor: "#005cbf",
+  },
+  "&:focus": {
+    boxShadow: "0 0 0 0.2rem rgba(0,123,255,.5)",
+  },
+}));

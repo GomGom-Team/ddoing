@@ -30,7 +30,7 @@ class MultiColorProgressBar extends Component<MultiColorProgressBarProps> {
               style={{ color: item.color, width: item.value + "%" }}
               key={i}
             >
-              <span>{item.value}%</span>
+              <span>{item.value}</span>
             </div>
           );
         }
@@ -96,34 +96,6 @@ class MultiColorProgressBar extends Component<MultiColorProgressBarProps> {
     );
   }
 }
-
-// let readings: Reading[] = [
-//   {
-//     name: "Apples",
-//     value: 60,
-//     color: "#eb4d4b",
-//   },
-//   {
-//     name: "Blueberries",
-//     value: 7,
-//     color: "#22a6b3",
-//   },
-//   {
-//     name: "Guavas",
-//     value: 23,
-//     color: "#6ab04c",
-//   },
-//   {
-//     name: "Grapes",
-//     value: 10,
-//     color: "#e056fd",
-//   },
-// ];
-
-// ReactDOM.render(
-//   <MultiColorProgressBar readings={readings} />,
-//   document.getElementById("root")
-// );
 
 const MultiStlye = styled.div`
   .multicolor-bar {
