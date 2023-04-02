@@ -1,7 +1,5 @@
 import React, { useRef, useState, useCallback, useEffect } from 'react';
 import tw, { css, styled, theme } from 'twin.macro'
-import { Button } from '../common/index'
-import AutorenewIcon from '@mui/icons-material/Autorenew';
 import axios from "axios";
 
 interface Coordinate {
@@ -9,12 +7,30 @@ interface Coordinate {
   y: number;
 };
 
-interface CanvasPropsType {
-  canvasRef: React.RefObject<HTMLCanvasElement>
+interface predictListType {
+  stage: number
+  image : string
+  results : object
 }
 
+interface wordListType {
+  id : number
+  word: string
+  mean: string
+  engSentence: string
+  koSentence: string
+}
 
-const DrawingCanvas = ({canvasRef} : CanvasPropsType) => {
+interface CanvasPropsType {
+  canvasRef: React.RefObject<HTMLCanvasElement>
+  predictList: predictListType
+  setPredictList: React.Dispatch<React.SetStateAction<predictListType>>
+  index: number
+  modalHandleOpen(): void
+  predict: string
+}
+
+const DrawingCanvas = ({canvasRef, predict, predictList, setPredictList, index, modalHandleOpen} : CanvasPropsType) => {
   // state
   const [mousePosition, setMousePosition] = useState<Coordinate | undefined>(undefined);
   const [isPainting, setIsPainting] = useState(false);
@@ -83,6 +99,8 @@ const DrawingCanvas = ({canvasRef} : CanvasPropsType) => {
 
   const exitPaint = useCallback(() => {
     setIsPainting(false);
+    // API 요청 보낼 코드
+    getPrediction()
   }, []);
   // EventListner 등록
   useEffect(() => {
@@ -113,13 +131,14 @@ const DrawingCanvas = ({canvasRef} : CanvasPropsType) => {
     const canvas: HTMLCanvasElement = canvasRef.current;
     canvas.getContext('2d')!!.clearRect(0, 0, canvas.width, canvas.height);
   }
-  const test = () => {
+
+  const getPrediction = () => {
     if (!canvasRef.current) {
       return;
     } else {
       const canvas: HTMLCanvasElement = canvasRef.current;
-      const context = canvas.getContext('2d');
-      const canvasImg = context?.getImageData(0,0,1000,600)
+      // const context = canvas.getContext('2d');
+      // const canvasImg = context?.getImageData(0,0,1000,600)
       const formData = new FormData()
 
       const getBase64StringFromDataURL = (dataURL:string) =>
@@ -129,10 +148,7 @@ const DrawingCanvas = ({canvasRef} : CanvasPropsType) => {
       const base64 = getBase64StringFromDataURL(dataUrl)
 
       formData.append('file', base64)
-
-
-
-      
+ 
       // axios test
       const config = {
         headers: { 
@@ -140,32 +156,69 @@ const DrawingCanvas = ({canvasRef} : CanvasPropsType) => {
           charset: 'utf-8'
         },
        }
-      axios.post('http://70.12.130.101:19999/inference?stage=5', formData, config)
+      axios.post(`https://j8a103.p.ssafy.io/ai/inference?stage=${1}`, formData, config)
       .then(res => {
-      console.log(res.data + 'this is data after api call');
+        console.log(res.data)
+        setPredictList(res.data)
       })
-      .catch(err => console.log(err)); 
+      .catch(err => console.log("먀노ㅓ야ㅓㅁ냐어ㅑ", err)); 
       }
   }
 
-
+  // useEffect(() => {
+  //   const ctx = canvasRef.current?.getContext("2d");
   
+  //   const handleResize = () => {
+  //     if (ctx) {
+  //       ctx.canvas.height = window.innerHeight * 0.765;
+  //       ctx.canvas.width = window.innerWidth - 200;
+  //     }
+  //   };
+  //   handleResize();
+  //   window.addEventListener("resize", handleResize);
+
+  //   return () => window.removeEventListener("resize", handleResize);
+  // }, []);
+
+  const canvasHeight = window.innerHeight - 249
+  const canvasWidth = window.innerWidth - 500
 
 
   return (
+    
     <FixedDiv>
       <StyledDiv>
         {/* <AutorenewIcon onClick={()=>clearCanvas()}/> */}
-        <StyledCanvas ref={canvasRef} width={1000} height={600} className="canvas"/>
-        <div>
-          <StyledButton onClick={()=>clearCanvas()}><AutorenewIcon/></StyledButton>
-          <StyledButton onClick={()=>test()}><AutorenewIcon/></StyledButton>
-        </div>
+        <StyledCanvas ref={canvasRef} width={canvasWidth} height={canvasHeight} className="canvas"/>
+        <FlexDiv>
+          <StyledButton onClick={()=>clearCanvas()}>
+            <img 
+              src="assets/icons/eraser.png" 
+              height="36"
+              width="36"
+            />
+          </StyledButton>
+          <StyledButton onClick={()=>modalHandleOpen()}>
+            <SkipButtonDiv>
+              <StyledText>
+                {`>>`}
+              </StyledText>
+            </SkipButtonDiv>
+            </StyledButton>
+        </FlexDiv>
       </StyledDiv>
       <PredictDiv>
-        ...
+        {predict === "..." &&
+          <p>...</p>
+        }
+        {predict === "잘 모르겠어요 ㅠ ㅠ" &&
+          <p>잘 모르겠어요 ㅠ ㅠ</p>
+        }
+        {predict !== "..." && predict !== "잘 모르겠어요 ㅠ ㅠ" &&
+          <p>음.. {predict}인가요??</p>
+        }
       </PredictDiv>
-    </FixedDiv>
+    </FixedDiv> 
   );
 
 };
@@ -173,7 +226,7 @@ const DrawingCanvas = ({canvasRef} : CanvasPropsType) => {
 export default DrawingCanvas;
 
 const StyledCanvas = styled.canvas(
-  tw`rounded-2xl bg-stone-400 bg-opacity-20`
+  tw`rounded-2xl bg-stone-400 bg-opacity-20`,
 )
 
 const FixedDiv = styled.div(
@@ -185,9 +238,26 @@ const StyledDiv =  styled.div(
 )
 
 const StyledButton = styled.button(
-  tw`bg-none hocus:(scale-105 text-yellowD)`
+  tw`hocus:(scale-105 text-yellowD)`,
 )
 
 const PredictDiv = styled.div(
   tw`inline-block mr-5 py-3 px-4 bg-brownD rounded-2xl text-white`
+)
+
+const FlexDiv = styled.div(
+  tw`flex flex-col`
+)
+
+const SkipButtonDiv = styled.div`
+  height: 36px;
+  width: 36px;
+`
+
+const StyledText = styled.h1(
+  tw`font-bold`,
+  css`
+    font-family: "insungitCutelivelyjisu";
+    font-size: 24px;
+  `
 )

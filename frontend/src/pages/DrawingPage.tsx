@@ -5,6 +5,7 @@ import { DrawingDrawer, DrawingCanvas, ResultModal, DrawingLanding } from '../co
 import { useAppDispatch, useAppSelector } from "../redux/configStore.hooks";
 import { getWordListAction } from "../redux/modules/drawing";
 import useDidMountEffect from '../components/common/useDidMountEffect';
+import axios from 'axios';
 
 type Anchor = "top";
 
@@ -14,6 +15,10 @@ interface wordListType {
   mean: string
   engSentence: string
   koSentence: string
+}
+
+interface radiusType {
+  radius : number
 }
 
 const DrawingPage = () => {
@@ -34,7 +39,7 @@ const DrawingPage = () => {
   };
 
   // Timer
-  const [timer, setTimer] = useState(20);
+  const [timer, setTimer] = useState(60);
   const id = useRef(0);
 
   const clear=()=>{
@@ -48,15 +53,63 @@ const DrawingPage = () => {
     return ()=>clear();
   }
 
-
+  const mapNumber = (number: number, in_min: number, in_max: number, out_min: number, out_max: number) => {
+    return (
+        ((number - in_min) * (out_max - out_min)) / (in_max - in_min) + out_min
+    );
+  }
 
   useDidMountEffect(()=>{
     if(timer <= 0){
-      setTimeout(() => setTimer(20), 1000);
+      setTimeout(() => setTimer(60), 1000);
       modalHandleOpen()
     }
   },[timer])
 
+  const polarToCartesian = ( centerX: number, centerY: number, radius: number, angleInDegrees: number) => {
+    var angleInRadians = ((angleInDegrees - 90) * Math.PI) / 180.0;
+
+    return {
+        x: centerX + radius * Math.cos(angleInRadians),
+        y: centerY + radius * Math.sin(angleInRadians)
+    };
+  }
+
+  function describeArc(x: number, y: number, radius: number, startAngle: number, endAngle: number) {
+    var start = polarToCartesian(x, y, radius, endAngle);
+    var end = polarToCartesian(x, y, radius, startAngle);
+
+    var largeArcFlag = endAngle - startAngle <= 180 ? '0' : '1';
+
+    var d = [
+        'M',
+        start.x,
+        start.y,
+        'A',
+        radius,
+        radius,
+        0,
+        largeArcFlag,
+        0,
+        end.x,
+        end.y
+    ].join(' ');
+
+    return d;
+  }
+
+  const SVGCircle = ({ radius } : radiusType) => (
+    <CountDownSVG>
+        <path
+            fill="none"
+            stroke="#333"
+            strokeWidth={4}
+            d={describeArc(50, 50, 48, 0, radius)}
+        />
+    </CountDownSVG>
+  );
+  
+  const secondsRadius = mapNumber(timer, 60, 0, 0, 360);
 
   // Modal
   const [modalOpen, setmodalOpen] = useState(false);
@@ -70,10 +123,14 @@ const DrawingPage = () => {
 
 
   // Answer
-  const [answer, setAnswer] = useState(false);
+  const [answer, setAnswer] = useState(true);
+
+  const answerResetHandler = () => {
+    setAnswer(false)
+  }
 
   const answerHandler = () => {
-    setAnswer(false)
+    setAnswer(true)
   }
 
   // WordList
@@ -90,6 +147,7 @@ const DrawingPage = () => {
 
   useEffect(() => {
     wordListHandler()
+    console.log(Object.keys(predictList.results))
   }, [])
 
 
@@ -117,7 +175,7 @@ const DrawingPage = () => {
   // state
   const [state, setState] = useState({
     top: false,
-  });
+  }); 
 
   const drawerHandler = () => {
     if (state.top === false) {
@@ -132,9 +190,9 @@ const DrawingPage = () => {
       setTimeout(() => landingHandler(), 500);
       clearCanvas()
       clear()
-      setTimeout(() => setTimer(20), 500);
+      setTimeout(() => setTimer(60), 500);
     } else {
-      setTimeout(() => countDown(), 500);
+      countDown();
     }
   }, [state]);
 
@@ -151,10 +209,10 @@ const DrawingPage = () => {
       setIsDone(true)
     }
   }
-
+  // 재시작 하는 코드
   const restartHandler = () => {
     setIndex(0)
-    console.log("하이하이")
+    clear()
   }
 
   useDidMountEffect(() => {
@@ -163,13 +221,56 @@ const DrawingPage = () => {
     }
     else {
       // 재시작시 새로 요청
-      drawerHandler()  
+      setTimeout(() => wordListHandler());
+      clear()
+      drawerHandler()
       setTimeout(() => isDoneHandler(), 500);
       // // API wordlis 새로 요청
-      setTimeout(() => wordListHandler(), 500);
-      setTimeout(() => drawerHandler(), 500);
+      // setTimeout(() => drawerHandler(), 500);
     }
+    answerResetHandler()
   }, [index])
+  
+
+  // Prediction
+  interface predictListType {
+    stage: number
+    image : string
+    results : object
+  }
+  const [predictList, setPredictList] = useState<predictListType>({
+    stage: 1,
+    image : "initial value",
+    results : {"apple" : 85.6,
+              "grape" : 11.2,
+              "strawberry" : 5.4},
+  })
+
+  useDidMountEffect(() => {
+    const Array = Object.keys(predictList.results)
+    Array.forEach(item => {
+      if (item === wordList[index].word){
+        answerHandler()
+        // 정답 맞추면 무조건 이미지 저장하는 요청 보내게 [이미지 / 클래스id / 인식정확도 / 유저아이디]       
+      }
+    })
+    returnPrediction(Array)
+  }, [predictList])
+
+  const [predict, setPredict] = useState("...")
+  
+  const returnPrediction = (Array : string[]) => {
+    if ("pending") {
+      setPredict("...")
+    } else {
+    } 
+    setPredict(Array[0])
+    setTimeout(() => setPredict(Array[1]), 1000)
+    setTimeout(() => setPredict(Array[2]), 2000)
+    setTimeout(() => setPredict("잘 모르겠어요 ㅠ ㅠ"), 3000)
+  }
+  
+
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -209,12 +310,26 @@ const DrawingPage = () => {
       <BackgroundDiv>
         <Header/>
         <DummyDiv></DummyDiv> 
+        <CountDownWrapper>
+          <CountDownItem>
+              <SVGCircle radius={secondsRadius} />
+              <CountDownSpan>{timer}</CountDownSpan>
+              <TimerWordSpan>seconds</TimerWordSpan>
+          </CountDownItem>
+        </CountDownWrapper>
+
         <TimerWrapper>
-          <Timer>{timer}</Timer>
-          <button onClick={countDown}>시작</button>
+          { wordList[index].word }
         </TimerWrapper>
         <StyledDiv>
-          <DrawingCanvas canvasRef={canvasRef}/>
+          <DrawingCanvas 
+            predictList={predictList} 
+            setPredictList={setPredictList} 
+            canvasRef={canvasRef}
+            index={index}
+            modalHandleOpen = {modalHandleOpen}
+            predict = {predict}
+          />
         </StyledDiv>
         {/* Drawer */}
         <DrawingDrawer
@@ -287,9 +402,52 @@ const BackgroundDiv = styled.div`
 `
 
 const TimerWrapper = styled.div(
-  tw`flex items-center justify-center`
+  tw`flex items-center justify-center text-3xl`,
+  css`
+    font-family: "insungitCutelivelyjisu";
+  `
 )
 
-const Timer = styled.div(
-  tw`rounded border-yellowD border-4 bg-none text-blue-800 text-2xl px-2`
-)
+const CountDownWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+`
+
+const CountDownItem = styled.div`
+  color: #111;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  line-height: 30px;
+  padding-top: 10px;
+  position: relative;
+  width: 100px;
+  height: 100px;
+`
+
+const CountDownSpan = styled.span`  
+  color: #333;
+  font-family: "insungitCutelivelyjisu";
+  font-size: 24px;
+  font-weight: 600;
+`
+
+const TimerWordSpan = styled.span`
+  color: #333;
+  font-family: "insungitCutelivelyjisu";
+  font-size: 8px;
+  font-weight: 600;
+  text-transform: uppercase;
+`
+
+const CountDownSVG = styled.svg`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+`

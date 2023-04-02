@@ -1,7 +1,6 @@
 import { CheckRounded, Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Box,
-  Button,
   Checkbox,
   FormControl,
   FormControlLabel,
@@ -11,6 +10,8 @@ import {
   InputAdornment,
   InputLabel,
 } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import Button, { ButtonProps } from "@mui/material/Button";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/configStore.hooks";
@@ -119,10 +120,24 @@ function PasswordModal({ open, setOpen }: any): JSX.Element {
         autoComplete="off"
         onSubmit={onSubmit}
       >
-        <h2 id="parent-modal-title">비밀번호 변경</h2>
+        <h2
+          id="parent-modal-title"
+          style={{
+            fontFamily: "insungitCutelivelyjisu",
+            marginBottom: "10%",
+            fontSize: "25px",
+          }}
+        >
+          비밀번호 변경하기
+        </h2>
         <div>
           <FormControl variant="standard">
-            <InputLabel htmlFor="pw">현재 비밀번호</InputLabel>
+            <InputLabel
+              htmlFor="pw"
+              sx={{ fontFamily: "insungitCutelivelyjisu" }}
+            >
+              현재 비밀번호
+            </InputLabel>
             <Input
               id="pw"
               value={pw}
@@ -149,7 +164,12 @@ function PasswordModal({ open, setOpen }: any): JSX.Element {
           </FormControl>
         </div>
         <FormControl variant="standard">
-          <InputLabel htmlFor="newPw">새 비밀번호</InputLabel>
+          <InputLabel
+            htmlFor="newPw"
+            sx={{ fontFamily: "insungitCutelivelyjisu" }}
+          >
+            새 비밀번호
+          </InputLabel>
           <Input
             id="newPw"
             value={newPw}
@@ -173,14 +193,22 @@ function PasswordModal({ open, setOpen }: any): JSX.Element {
               </InputAdornment>
             }
           />
-          <FormHelperText id="pw-helper-text">
+          <FormHelperText
+            id="pw-helper-text"
+            sx={{ fontFamily: "insungitCutelivelyjisu" }}
+          >
             {isEditNewPw && !rePwCheck && (
               <span>영문, 숫자, 특수문자 포함, 8~16자</span>
             )}
           </FormHelperText>
         </FormControl>
         <FormControl variant="standard">
-          <InputLabel htmlFor="re-pw">새 비밀번호 확인</InputLabel>
+          <InputLabel
+            htmlFor="re-pw"
+            sx={{ fontFamily: "insungitCutelivelyjisu" }}
+          >
+            새 비밀번호 확인
+          </InputLabel>
           <Input
             id="re-pw"
             value={rePw}
@@ -196,18 +224,21 @@ function PasswordModal({ open, setOpen }: any): JSX.Element {
             }
             disabled={!isEditNewPw}
           />
-          <FormHelperText id="repw-helper-text">
+          <FormHelperText
+            id="repw-helper-text"
+            sx={{ fontFamily: "insungitCutelivelyjisu" }}
+          >
             {rePw && !rePwCheck && <span>비밀번호가 일치하지 않습니다</span>}
           </FormHelperText>
         </FormControl>
 
-        <Box sx={buttonBoxStyle}>
-          <Button variant="contained" type="submit">
+        <Box component="div" sx={buttonBoxStyle}>
+          <StyledButton variant="contained" type="submit">
             비밀번호 변경
-          </Button>
-          <Button variant="contained" onClick={onCloseModal}>
+          </StyledButton>
+          <DeleteButton variant="contained" onClick={onCloseModal}>
             취소
-          </Button>
+          </DeleteButton>
         </Box>
       </Box>
     </BasicModal>
@@ -228,3 +259,50 @@ const checkBoxStyle = {
   justifyContent: "center",
   alignItems: "center",
 };
+
+const StyledButton = styled(Button)<ButtonProps>(({ theme }) => ({
+  fontFamily: "insungitCutelivelyjisu",
+  backgroundColor: "#FFD761",
+  color: "black",
+  padding: "6px 12px",
+  border: "1px solid",
+  width: "50%",
+  "&:hover": {
+    backgroundColor: "#005112",
+    borderColor: "#005112",
+    boxShadow: "none",
+    color: "#FFFFFF",
+  },
+  "&:active": {
+    boxShadow: "none",
+    backgroundColor: "#0062cc",
+    borderColor: "#005cbf",
+  },
+  "&:focus": {
+    boxShadow: "0 0 0 0.2rem rgba(0,123,255,.5)",
+  },
+}));
+
+const DeleteButton = styled(Button)<ButtonProps>(({ theme }) => ({
+  border: "none",
+  backgroundColor: "white",
+  color: "black",
+  boxShadow: "none",
+  fontFamily: "insungitCutelivelyjisu",
+  padding: "6px 12px",
+  width: "50%",
+  "&:hover": {
+    backgroundColor: "#005112",
+    borderColor: "#005112",
+    boxShadow: "none",
+    color: "#FFFFFF",
+  },
+  "&:active": {
+    boxShadow: "none",
+    backgroundColor: "#0062cc",
+    borderColor: "#005cbf",
+  },
+  "&:focus": {
+    boxShadow: "0 0 0 0.2rem rgba(0,123,255,.5)",
+  },
+}));

@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
 import tw, { css, styled, theme } from "twin.macro";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import NextArrow2 from "./NextArrow2";
 import PrevArrow2 from "./PrevArrow2";
-import { animationTop6GetAction } from "../../redux/modules/animation";
 import { useAppDispatch, useAppSelector } from "../../redux/configStore.hooks";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { animationTop6GetAction } from "../../redux/modules/animation";
 
 interface Popularprops {
   Thumbnail: string;
@@ -18,15 +18,10 @@ interface Popularprops {
 function PopularContents() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const user = useAppSelector((state) => state.user.userData);
-  if (user !== null) {
-    useEffect(() => {
-      dispatch(animationTop6GetAction(user.id));
-    }, [user]);
-  }
   const topVideoList = useAppSelector(
     (state) => state.animation.getAnimationTop6
   );
+  console.log(topVideoList);
   const settings = {
     dots: false,
     infinite: true,
@@ -36,6 +31,10 @@ function PopularContents() {
     nextArrow: <NextArrow2 />,
     prevArrow: <PrevArrow2 />,
   };
+
+  useEffect(() => {
+    dispatch(animationTop6GetAction());
+  }, []);
 
   return (
     <SectionWrapper>

@@ -2,43 +2,54 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
-import ResultPage from "./ResultPage"
-import WordDrawer from "./WordDrawer"
+import ResultPage from "./ResultPage";
+import WordDrawer from "./WordDrawer";
 
 type Anchor = "top";
 interface wordListType {
-  id : number
-  word: string
-  mean: string
-  engSentence: string
-  koSentence: string
+  id: number;
+  word: string;
+  mean: string;
+  engSentence: string;
+  koSentence: string;
 }
 interface ResultPageProps {
-  anchor: Anchor
-  toggleDrawer: (anchor: Anchor, open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => void;
+  anchor: Anchor;
+  toggleDrawer: (
+    anchor: Anchor,
+    open: boolean
+  ) => (event: React.KeyboardEvent | React.MouseEvent) => void;
   state: {
-    top: boolean
-  }
-  wordList: wordListType[]
-  index: number
-  maxStage: number
-  isDone : boolean
-  restartHandler(): void
-};
+    top: boolean;
+  };
+  wordList: wordListType[];
+  index: number;
+  maxStage: number;
+  isDone: boolean;
+  restartHandler(): void;
+}
 
-const DrawingDrawer = ({isDone, toggleDrawer, state, index, maxStage, wordList, restartHandler }: ResultPageProps) => {
-
+const DrawingDrawer = ({
+  isDone,
+  toggleDrawer,
+  state,
+  index,
+  maxStage,
+  wordList,
+  restartHandler,
+}: ResultPageProps) => {
   const list = (anchor: Anchor) => (
     <Box
       role="presentation"
-    // onClick={toggleDrawer(anchor, false)}
-    // onKeyDown={toggleDrawer(anchor, false)}
+      component="div"
+      // onClick={toggleDrawer(anchor, false)}
+      // onKeyDown={toggleDrawer(anchor, false)}
     >
-      <WordDrawer 
-        toggleDrawer={toggleDrawer} 
-        anchor={anchor} 
-        index= {index} 
-        maxStage={maxStage} 
+      <WordDrawer
+        toggleDrawer={toggleDrawer}
+        anchor={anchor}
+        index={index}
+        maxStage={maxStage}
         wordList={wordList}
         isDone={isDone}
         restartHandler={restartHandler}
@@ -62,7 +73,6 @@ const DrawingDrawer = ({isDone, toggleDrawer, state, index, maxStage, wordList, 
       ))}
     </div>
   );
-}
+};
 
-export default DrawingDrawer
-
+export default DrawingDrawer;

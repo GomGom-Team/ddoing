@@ -19,31 +19,48 @@ interface Reading {
 // useEffect(() => {
 //   setLevel(users.level);
 //   setExp(users.exp);
-// }, [users]);
+// }, [users]);\
 
 const MyPage = () => {
   const users = useAppSelector((state) => state.user.userData);
-  console.log(users.level);
+  const level = 0;
+  const exp = useAppSelector((state) => state.user.userData.exp);
+
+  let readings: Reading[] = [
+    {
+      name: "EXP",
+      value: exp === null ? 0 : exp,
+      color: "#eb4d4b",
+    },
+    {
+      name: "Blueberries",
+      value: exp === null ? 100 : 100 - exp,
+      color: "#22a6b3",
+    },
+  ];
+
   return (
     <Container>
       {/* Header */}
-      <Header />
-      <DummyDiv></DummyDiv>
-      <Profile>
-        <CustomedImage />
-        <ProfileName>{users.nickName}</ProfileName>
-      </Profile>
-      <LevelArea>
-        <LevelStyle>Level {users.level}</LevelStyle>
-        <div id="root"></div>
-        <MultiColorProgressBar readings={readings} />
-        {/* <CustomedBar /> */}
-      </LevelArea>
-      <Box sx={TabStyle}>
-        <VerticalTabs></VerticalTabs>
-      </Box>
-      {/* Footer */}
-      <Footer />
+      <FontStyle>
+        <Header />
+        <DummyDiv></DummyDiv>
+        <Profile>
+          <CustomedImage src={`assets/img/ddio${level}.png`} />
+          <ProfileName>{users.nickName} 님</ProfileName>
+        </Profile>
+        <LevelArea>
+          <LevelStyle>Level {users.level}</LevelStyle>
+          <div id="root"></div>
+          <MultiColorProgressBar readings={readings} />
+          {/* <CustomedBar /> */}
+        </LevelArea>
+        <Box component="div" sx={TabStyle}>
+          <VerticalTabs></VerticalTabs>
+        </Box>
+        {/* Footer */}
+        <Footer />
+      </FontStyle>
     </Container>
   );
 };
@@ -54,44 +71,32 @@ const DummyDiv = styled.div(tw`h-16`);
 export default MyPage;
 
 //프로필사진
-const CustomedImage = styled.img(
-  tw`h-52 object-cover rounded-md bg-slate-500`,
-  css`
-    width: 10rem;
-    height: 10rem;
-    display: block;
-    float: left;
-    margin-left: 5%;
-    margin-top: 4%;
-    border-radius: 70%;
-  `
-);
+// tw`h-52 object-cover rounded-md bg-slate-500`,
+const CustomedImage = styled.img`
+  width: 10rem;
+  height: 10rem;
+  display: block;
+  float: left;
+  margin-left: 50px;
+  margin-top: 30px;
+  border-radius: 70%;
+`;
 
 const Profile = styled.div`
   display: block;
   float: left;
-  margin-left: 5%;
-  margin-top: 4%;
+  margin-left: 70px;
+  margin-top: 40px;
   border-radius: 70%;
 `;
 
 const ProfileName = styled.span`
   display: block;
   text-align: center;
-  /* margin-left: 40%; */
-  margin-top: 120%;
+  margin-left: 40px;
+  margin-top: 120px;
   border-radius: 70%;
 `;
-
-const CustomedBar = styled.img(
-  tw`h-4 object-cover rounded-md bg-slate-500`,
-  css`
-    width: 30rem;
-    display: block;
-    margin-left: 200px;
-    padding-left: 600px;
-  `
-);
 
 const TabStyle = {
   display: "flex",
@@ -103,35 +108,17 @@ const TabStyle = {
 const LevelStyle = styled.div`
   display: "flex";
   width: 40rem;
-  margin: 30px;
-  padding-left: 200px;
+  margin: 25px;
+  padding-left: 150px;
+  font-size: 50px;
 `;
 
 // level 영역
 const LevelArea = styled.div`
   padding-left: 350px;
-  margin-top: 10%;
+  margin-top: 70px;
 `;
 
-let readings: Reading[] = [
-  {
-    name: "EXP",
-    value: 60,
-    color: "#eb4d4b",
-  },
-  {
-    name: "Blueberries",
-    value: 30,
-    color: "#22a6b3",
-  },
-  // {
-  //   name: "Guavas",
-  //   value: 23,
-  //   color: "#6ab04c",
-  // },
-  // {
-  //   name: "Grapes",
-  //   value: 10,
-  //   color: "#e056fd",
-  // },
-];
+const FontStyle = styled.div`
+  font-family: "insungitCutelivelyjisu";
+`;
