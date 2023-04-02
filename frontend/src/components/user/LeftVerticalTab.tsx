@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import AboutMe from "../user/AboutMe";
 import Remind from "./Remind";
+import ShibaList from "./ShibaList";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -71,7 +72,7 @@ export default function VerticalTabs() {
         <AboutMe></AboutMe>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        <ShibaList></ShibaList>
       </TabPanel>
       <TabPanel value={value} index={2}>
         <Remind></Remind>
