@@ -2,6 +2,7 @@ import React from "react";
 import tw, { css, styled, theme } from "twin.macro";
 import { Button } from '../common/index'
 import { useNavigate } from 'react-router-dom';
+import banner_animation_img from '/assets/img/banner_animation_img2.jpg';
 
 // interface
 
@@ -14,11 +15,15 @@ const navigate = useNavigate();
   return (
   <BackgroundDiv>
     <TitleDescriptionWrapper>
-      <StyledTitle>애니메이션 따라하기</StyledTitle>
+      <StyledTitle>애니메이션으로 배우는 즐거운 영어 말하기</StyledTitle>
       <div>
         <StyledDescription>
-          애니메이션을 따라할 수 있습니다.
+        애니메이션으로 재밌게, AI 발음 평가로 똑똑하게 
         </StyledDescription>
+        <StyledDescription>
+        영어 말하기 학습을 할 수 있습니다.
+        </StyledDescription>
+        <br/>
         <StyledDescription>
             지금 바로 하러 가볼까요?
         </StyledDescription>
@@ -26,7 +31,7 @@ const navigate = useNavigate();
       <Button variant="primary" onClick={()=>navigate("animation")}>Go</Button>
     </TitleDescriptionWrapper>
     <ImgWrapper>
-      <CustomedImage></CustomedImage>
+      <CustomedImage src={banner_animation_img}></CustomedImage>
     </ImgWrapper>
   </BackgroundDiv>
   );
