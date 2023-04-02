@@ -10,7 +10,7 @@ interface Coordinate {
 interface predictListType {
   stage: number
   image : string
-  result : object
+  results : object
 }
 
 interface wordListType {
@@ -160,7 +160,7 @@ const DrawingCanvas = ({canvasRef, predictList, setPredictList, index, modalHand
         console.log(res.data)
         setPredictList(res.data)
       })
-      .catch(err => console.log(err)); 
+      .catch(err => console.log("먀노ㅓ야ㅓㅁ냐어ㅑ", err)); 
       }
   }
 

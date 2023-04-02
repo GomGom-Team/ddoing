@@ -5,6 +5,7 @@ import { DrawingDrawer, DrawingCanvas, ResultModal, DrawingLanding } from '../co
 import { useAppDispatch, useAppSelector } from "../redux/configStore.hooks";
 import { getWordListAction } from "../redux/modules/drawing";
 import useDidMountEffect from '../components/common/useDidMountEffect';
+import axios from 'axios';
 
 type Anchor = "top";
 
@@ -124,8 +125,12 @@ const DrawingPage = () => {
   // Answer
   const [answer, setAnswer] = useState(true);
 
-  const answerHandler = () => {
+  const answerResetHandler = () => {
     setAnswer(false)
+  }
+
+  const answerHandler = () => {
+    setAnswer(true)
   }
 
   // WordList
@@ -142,7 +147,7 @@ const DrawingPage = () => {
 
   useEffect(() => {
     wordListHandler()
-    console.log(Object.keys(predictList.result))
+    console.log(Object.keys(predictList.results))
   }, [])
 
 
@@ -170,7 +175,7 @@ const DrawingPage = () => {
   // state
   const [state, setState] = useState({
     top: false,
-  });
+  }); 
 
   const drawerHandler = () => {
     if (state.top === false) {
@@ -187,7 +192,7 @@ const DrawingPage = () => {
       clear()
       setTimeout(() => setTimer(60), 500);
     } else {
-      setTimeout(() => countDown(), 500);
+      countDown();
     }
   }, [state]);
 
@@ -207,6 +212,7 @@ const DrawingPage = () => {
   // 재시작 하는 코드
   const restartHandler = () => {
     setIndex(0)
+    clear()
   }
 
   useDidMountEffect(() => {
@@ -215,12 +221,14 @@ const DrawingPage = () => {
     }
     else {
       // 재시작시 새로 요청
-      drawerHandler()  
+      setTimeout(() => wordListHandler());
+      clear()
+      drawerHandler()
       setTimeout(() => isDoneHandler(), 500);
       // // API wordlis 새로 요청
-      setTimeout(() => wordListHandler(), 500);
-      setTimeout(() => drawerHandler(), 500);
+      // setTimeout(() => drawerHandler(), 500);
     }
+    answerResetHandler()
   }, [index])
   
 
@@ -228,15 +236,25 @@ const DrawingPage = () => {
   interface predictListType {
     stage: number
     image : string
-    result : object
+    results : object
   }
   const [predictList, setPredictList] = useState<predictListType>({
     stage: 1,
     image : "initial value",
-    result : {"apple" : 85.6,
+    results : {"apple" : 85.6,
               "grape" : 11.2,
               "pineapple" : 5.4},
   })
+
+  useDidMountEffect(() => {
+    const Array = Object.keys(predictList.results)
+    Array.forEach(item => {
+      if (item === wordList[index].word){
+        answerHandler()
+        // 정답 맞추면 무조건 이미지 저장하는 요청 보내게 [이미지 / 클래스id / 인식정확도 / 유저아이디]       
+      }
+    })
+  }, [predictList])
 
   const [predict, setPredict] = useState("")
   
