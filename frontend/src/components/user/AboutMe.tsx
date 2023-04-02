@@ -99,7 +99,7 @@ const AboutMe = () => {
           ></Input>
         </FormControl>
 
-        <Box sx={buttonBoxStyle}>
+        <Box component="div" sx={buttonBoxStyle}>
           <StyledButton variant="contained" onClick={onClickPw}>
             비밀번호 변경
           </StyledButton>

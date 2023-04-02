@@ -130,7 +130,7 @@ function NickChangeModal({ open, setOpen }: any): JSX.Element {
         >
           닉네임 중복 확인
         </Button>
-        <Box sx={buttonBoxStyle}>
+        <Box component="div" sx={buttonBoxStyle}>
           <StyledButton variant="contained" type="submit">
             변경
           </StyledButton>

@@ -55,7 +55,7 @@ const MyPage = () => {
           <MultiColorProgressBar readings={readings} />
           {/* <CustomedBar /> */}
         </LevelArea>
-        <Box sx={TabStyle}>
+        <Box component="div" sx={TabStyle}>
           <VerticalTabs></VerticalTabs>
         </Box>
         {/* Footer */}
