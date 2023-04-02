@@ -155,7 +155,7 @@ const DrawingCanvas = ({canvasRef, predictList, setPredictList, index, modalHand
           charset: 'utf-8'
         },
        }
-      axios.post(`http://70.12.130.101:19999/inference?stage=${1}`, formData, config)
+      axios.post(`https://j8a103.p.ssafy.io/ai/inference?stage=${1}`, formData, config)
       .then(res => {
         console.log(res.data)
         setPredictList(res.data)
