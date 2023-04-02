@@ -1,6 +1,8 @@
 import React from "react";
 import tw, { css, styled, theme } from "twin.macro";
 import { Button } from '../common/index'
+import banner_ddoing_img from '/assets/img/banner_ddoing_img2.png';
+
 
 // interface
 
@@ -13,19 +15,26 @@ const NewContent = () => {
   return (
   <BackgroundDiv>
     <TitleDescriptionWrapper>
-      <StyledTitle>신규 컨텐츠</StyledTitle>
+      <StyledTitle>우리 아이 영어 학습을 위한 선택, 또잉</StyledTitle>
       <div>
         <StyledDescription>
-          뽀로로 컨텐츠가 업데이트되었습니다.
+          애니메이션을 보며 따라하고,
         </StyledDescription>
         <StyledDescription>
-          새로운 컨텐츠를 즐겨보세요!
+          영어 단어를 직접 그려보면서
+        </StyledDescription>
+        <StyledDescription>
+          자연스럽게 영어를 학습할 수 있습니다.
+        </StyledDescription>
+        <br/>
+        <StyledDescription>
+          또잉과 함께 즐거운 영어 공부해요!
         </StyledDescription>
       </div>
       <Button variant="third"></Button>
     </TitleDescriptionWrapper>
     <ImgWrapper>
-      <CustomedImage></CustomedImage>
+      <CustomedImage src={banner_ddoing_img}></CustomedImage>
     </ImgWrapper>
   </BackgroundDiv>
   );

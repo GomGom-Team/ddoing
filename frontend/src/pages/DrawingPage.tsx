@@ -211,7 +211,7 @@ const DrawingPage = () => {
         <DummyDiv></DummyDiv> 
         <TimerWrapper>
           <Timer>{timer}</Timer>
-          <button onClick={countDown}>씨짞</button>
+          <button onClick={countDown}>시작</button>
         </TimerWrapper>
         <StyledDiv>
           <DrawingCanvas canvasRef={canvasRef}/>

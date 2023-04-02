@@ -2,6 +2,7 @@ import React from "react";
 import tw, { css, styled, theme } from "twin.macro";
 import { Button } from '../common/index'
 import { useNavigate } from 'react-router-dom';
+import banner_drawing_img from '/assets/img/banner_drawing_disney2.png';
 
 // interface
 
@@ -14,11 +15,15 @@ const navigate = useNavigate();
   return (
   <BackgroundDiv>
     <TitleDescriptionWrapper>
-      <StyledTitle>그림 그리기</StyledTitle>
+      <StyledTitle>그리면서 배우는 영단어</StyledTitle>
       <div>
         <StyledDescription>
-          그림을 그려볼 수 있습니다.
+        제시된 영어 단어에 해당하는 그림을 그리면 AI가 답을 맞춰요! 
         </StyledDescription>
+        <StyledDescription>
+        그림을 그리면서 단어와 예문까지 학습할 수 있습니다.
+        </StyledDescription>
+        <br/>
         <StyledDescription>
           지금 바로 하러 가볼까요?
         </StyledDescription>
@@ -26,7 +31,7 @@ const navigate = useNavigate();
       <Button variant="primary" onClick={()=>navigate("drawing")}>Go</Button>
     </TitleDescriptionWrapper>
     <ImgWrapper>
-      <CustomedImage></CustomedImage>
+      <CustomedImage src={banner_drawing_img}></CustomedImage>
     </ImgWrapper>
   </BackgroundDiv>
   );
