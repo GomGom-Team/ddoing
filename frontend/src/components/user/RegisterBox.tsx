@@ -382,7 +382,7 @@ const RegisterBox = () => {
         >
           이메일 중복 확인
         </Button>
-        <Box sx={buttonBoxStyle}>
+        <Box component="div" sx={buttonBoxStyle}>
           <StyledButton variant="contained" type="submit">
             Signup
           </StyledButton>

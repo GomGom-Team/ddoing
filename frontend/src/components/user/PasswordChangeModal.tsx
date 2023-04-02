@@ -232,7 +232,7 @@ function PasswordModal({ open, setOpen }: any): JSX.Element {
           </FormHelperText>
         </FormControl>
 
-        <Box sx={buttonBoxStyle}>
+        <Box component="div" sx={buttonBoxStyle}>
           <StyledButton variant="contained" type="submit">
             비밀번호 변경
           </StyledButton>
