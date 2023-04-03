@@ -48,7 +48,7 @@ public class DrawingServiceImpl implements DrawingService {
     @Override
     public void saveFile(MultipartFile drawingImg, UserDrawingDTO userDrawingDTO) throws IOException {
         // 변환
-        String fileNameAvailable = drawingImg.getOriginalFilename() 
+        String fileNameAvailable = drawingImg.getOriginalFilename();
         String originalFileName = fileNameAvailable == null ? userDrawingDTO.getUserId() + ".jpg":fileNameAvailable;  // 원본 파일 이름
         String storeFileName = createStoreFileName(originalFileName);   // 저장할 파일명으로 변경
         String storedPath = getFullPath(userDrawingPath, storeFileName);   // 저장 위치 + custom 된 파일명
