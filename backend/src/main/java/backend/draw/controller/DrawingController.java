@@ -23,7 +23,7 @@ public class DrawingController {
     private final UserServiceImpl userService;
 
     @PostMapping("/file/upload")
-    public ResponseEntity drawingUpload(@RequestPart MultipartFile multipartFile, @RequestPart("dto") UserDrawingDTO userDrawingDTO) throws IOException {
+    public ResponseEntity drawingUpload(@RequestPart(value = "file", required = false) MultipartFile multipartFile, @RequestPart(value = "dto") UserDrawingDTO userDrawingDTO) throws IOException {
         drawingService.saveFile(multipartFile, userDrawingDTO);
         return ResponseEntity.ok(new Message("이미지 업로드 성공"));
     }
