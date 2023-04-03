@@ -19,7 +19,6 @@ const MainPage = () => {
   const topVideoList = useAppSelector(
     (state) => state.animation.getAnimationTop6
   );
-
   useEffect(() => {
     dispatch(animationTop6GetAction());
   }, []);

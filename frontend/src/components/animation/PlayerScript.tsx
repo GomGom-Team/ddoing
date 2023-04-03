@@ -40,8 +40,8 @@ const PlayerScript = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
   const playerWrap = React.useRef(null);
 
   const [playing, setPlaying] = useState(false);
-  const [width, setWidth] = useState("50vw");
-  const [height, setHeight] = useState("28vw");
+  const [width, setWidth] = useState("48vw");
+  const [height, setHeight] = useState("27vw");
   const [pip, setPip] = useState(false);
   const [controls, setControls] = useState(true);
   const [volume, setVolumn] = useState(1);
@@ -136,7 +136,7 @@ const PlayerScript = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
 
   return (
     <AllWrapDiv>
-      <div ref={playerWrap}>
+      <PlayerDiv ref={playerWrap}>
         <ReactPlayer
           ref={player}
           className="react-player"
@@ -168,7 +168,7 @@ const PlayerScript = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
             setPip(false);
           }} // PIP 모드 취소 PIP set ture
         />
-      </div>
+      </PlayerDiv>
 
       {loaded > 0 && playing === false && (
         <AllWrapperDiv>
@@ -224,7 +224,12 @@ const PlayerScript = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
                     playedSeconds < item.endTime + 1
                   }
                 >
-                  <RoleDiv>{item.role}</RoleDiv>
+                  <RoleDiv>
+                    <RoleNowDiv>
+                      <RoleImg src={`/assets/img/${item.role}.png`} />
+                    </RoleNowDiv>
+                    <RoleNameDiv>{item.role}</RoleNameDiv>
+                  </RoleDiv>
                   <ScriptWrapDiv>
                     <EngDiv>{item.engSentence}</EngDiv>
                     <KoDiv>{item.koSentence}</KoDiv>
@@ -277,6 +282,7 @@ const ScriptAllDiv = styled.div`
   height: 500px;
   width: 30vw;
   margin-left: 5vw;
+  /* margin-top: 5vw; */
   overflow-y: scroll;
 `;
 
@@ -290,7 +296,7 @@ const RoleDiv = styled.div`
 
 const ScriptWrapDiv = styled.div`
   margin: 5px;
-  width: 30vw;
+  width: 100%;
   font-family: "CookieRun-Regular";
 `;
 
@@ -316,4 +322,30 @@ const AllWrapperDiv = styled.div`
   z-index: 999;
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
+`;
+
+const RoleImg = styled.img`
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+`;
+
+const RoleNowDiv = styled.div`
+  width: 50px;
+  height: 5 0px;
+  display: grid;
+  border-radius: 100%;
+  overflow: hidden;
+  border: 3px outset rgba(156, 122, 219, 0.67);
+`;
+const RoleNameDiv = styled.div`
+  justify-content: center;
+`;
+
+const PlayerDiv = styled.div`
+  margin-left: 5vw;
+  /* margin-top: 5vw; */
 `;

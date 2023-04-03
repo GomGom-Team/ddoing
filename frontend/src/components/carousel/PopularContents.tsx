@@ -1,4 +1,5 @@
 import tw, { css, styled, theme } from "twin.macro";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -24,6 +25,7 @@ function PopularContents({ videoList }: any) {
     prevArrow: <PrevArrow2 />,
   };
 
+  console.log(videoList);
   return (
     <SectionWrapper>
       <CustomedSection>
