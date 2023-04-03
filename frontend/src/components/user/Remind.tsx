@@ -7,18 +7,34 @@ import NextArrow2 from "../carousel/NextArrow2";
 import PrevArrow2 from "../carousel/PrevArrow2";
 import tw, { css, styled, theme } from "twin.macro";
 
-const Remind = () => {
+
+interface DrawingListType {
+  userId: string
+  drawingPath: string
+  percentage: number
+  word: string
+  mean: string
+}
+
+interface MypagePropsType {
+  drawingList : DrawingListType[]
+}
+
+const Remind = ({drawingList} : MypagePropsType) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.user.userData);
 
-  useEffect(() => {
-    dispatch(animationRemindGetAction(user.id));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(animationRemindGetAction(user.id));
+  // }, []);
 
   const remindVideoList = useAppSelector(
     (state) => state.animation.getAnimationRemind
   );
+
+  
+  
   return (
     <AllWrapDiv>
       <AniWrapDiv>
@@ -41,6 +57,13 @@ const Remind = () => {
       </AniWrapDiv>
       <DrawWrapDiv>
         <div>내가 그린 그림</div>
+        {drawingList.map((item: any, index: number) => {
+          return(
+            <div key={index}>
+              {item.userId}
+            </div>
+          )
+        })}
       </DrawWrapDiv>
     </AllWrapDiv>
   );

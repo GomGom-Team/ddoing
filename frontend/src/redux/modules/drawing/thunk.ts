@@ -16,3 +16,19 @@ export const getWordListAction:any = createAsyncThunk(
     }
   }
 );
+
+
+export const getRecentDrawingAction:any = createAsyncThunk(
+  "GET_RECENT_DRAWING",
+  async (userId: string, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`/api/drawing/myRecent/${userId}`)
+      console.log("최근 그린 그림 수신 완료")
+      console.log("최근 그린 그림 수신 완료")
+      return data;
+    } catch (e:any) {
+      console.log("에러에러에러")
+      return rejectWithValue(e)
+    }
+  }
+);

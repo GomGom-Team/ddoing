@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import tw, { css, styled, theme } from "twin.macro";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -6,8 +6,20 @@ import "slick-carousel/slick/slick-theme.css";
 import NextArrow2 from "./NextArrow2";
 import PrevArrow2 from "./PrevArrow2"
 
+interface DrawingListType {
+  userId: string
+  drawingPath: string
+  percentage: number
+  word: string
+  mean: string
+}
 
-function HallofFame() {
+interface HallofFameProps {
+  bestDrawing: DrawingListType[]
+
+}
+
+function HallofFame({ bestDrawing } : HallofFameProps) {
 	const settings = {
     	dots: false,
         infinite: true,
@@ -18,6 +30,10 @@ function HallofFame() {
         prevArrow: <PrevArrow2 />,
     }
 
+    useEffect(()=>{
+
+    },[bestDrawing])
+
     return(
       <SectionWrapper>
       <CustomedSection className="page-carousel">
@@ -26,7 +42,7 @@ function HallofFame() {
           <SliderItems>
               <SliderItemsWrapper>
                 <CustomedFigure>
-                  <ThumbNail></ThumbNail>
+                  <ThumbNail src={bestDrawing[0].drawingPath}></ThumbNail>
                 </CustomedFigure>
               </SliderItemsWrapper>
           </SliderItems>
@@ -34,7 +50,7 @@ function HallofFame() {
           <SliderItems>
               <SliderItemsWrapper>
                 <CustomedFigure>
-                  <ThumbNail></ThumbNail>
+                  <ThumbNail src={bestDrawing[1].drawingPath}></ThumbNail>
                 </CustomedFigure>
               </SliderItemsWrapper>
           </SliderItems>
@@ -42,7 +58,7 @@ function HallofFame() {
           <SliderItems>
               <SliderItemsWrapper>
                 <CustomedFigure>
-                  <ThumbNail></ThumbNail>
+                  <ThumbNail src={bestDrawing[2].drawingPath}></ThumbNail>
                 </CustomedFigure>
               </SliderItemsWrapper>
           </SliderItems>
@@ -50,7 +66,7 @@ function HallofFame() {
           <SliderItems>
               <SliderItemsWrapper>
                 <CustomedFigure>
-                  <ThumbNail></ThumbNail>
+                  <ThumbNail src={bestDrawing[3].drawingPath}></ThumbNail>
                 </CustomedFigure>
               </SliderItemsWrapper>
           </SliderItems>
@@ -58,7 +74,7 @@ function HallofFame() {
           <SliderItems>
               <SliderItemsWrapper>
                 <CustomedFigure>
-                  <ThumbNail></ThumbNail>
+                  <ThumbNail src={bestDrawing[4].drawingPath}></ThumbNail>
                 </CustomedFigure>
               </SliderItemsWrapper>
           </SliderItems>
@@ -66,7 +82,7 @@ function HallofFame() {
           <SliderItems>
               <SliderItemsWrapper>
                 <CustomedFigure>
-                  <ThumbNail></ThumbNail>
+                  <ThumbNail src={bestDrawing[5].drawingPath}></ThumbNail>
                 </CustomedFigure>
               </SliderItemsWrapper>
           </SliderItems>

@@ -1,26 +1,57 @@
-import React, { useState, useEffect } from "react";
-import tw, { css, styled, theme } from "twin.macro";
-import {
-  NewContent,
-  Animation,
-  Drawing,
-  HallofFame,
-  Banner,
-  PopularContents,
-} from "../components/carousel/index";
-import { Container, Header, Footer } from "../components/common/index";
+import React, { useState, useEffect } from 'react'
+import tw, { css, styled, theme } from 'twin.macro'
 import { useAppDispatch, useAppSelector } from "../redux/configStore.hooks";
+import { HallofFame, Banner, PopularContents } from '../components/carousel/index'
+import { Container, Header, Footer } from '../components/common/index'
 import { animationTop6GetAction } from "../redux/modules/animation";
+import axios from 'axios'
 
-const items = [<NewContent />, <Animation />, <Drawing />];
+interface DrawingListType {
+  userId: string
+  drawingPath: string
+  percentage: number
+  word: string
+  mean: string
+}
+
+interface TopVideoListType {
+    id: number
+    title: string
+    runningTime: number
+    pathUrl: string
+    bestScore: number | null
+    roles: string[]
+}
 
 const MainPage = () => {
-  const dispatch = useAppDispatch();
-  const topVideoList = useAppSelector(
-    (state) => state.animation.getAnimationTop6
-  );
+  const [bestDrawing, setBestDrawing] = useState<DrawingListType[] | null>(null)
+  const [topVideoList, setTopVideoList] = useState<TopVideoListType[] | null>(null)
+
+  const bestDrawingHandler = async () => {
+    await axios.get(`https://j8a103.p.ssafy.io/api/drawing/gallery`)
+    .then((res) => {
+      console.log(res.data)
+      setBestDrawing(res.data)
+    })
+    .catch((err) => {
+      console.log("제에에에에에발", err)
+    }); 
+  }
+
+  const topVideoListHandler = async () => {
+    await axios.get(`https://j8a103.p.ssafy.io/api/animations/top6`)
+    .then((res) => {
+      console.log(res.data)
+      setTopVideoList(res.data)
+    })
+    .catch((err) => {
+      console.log("제에에에에에발", err)
+    }); 
+  }
+
   useEffect(() => {
-    dispatch(animationTop6GetAction());
+    bestDrawingHandler()
+    topVideoListHandler()
   }, []);
 
   return (
@@ -29,14 +60,22 @@ const MainPage = () => {
       <Header />
       <DummyDiv></DummyDiv>
 
-      {/* Banner */}
-      <Banner></Banner>
-      {/* // Popular Contents */}
-      <PopularContents videoList={topVideoList}></PopularContents>
+    {/* Banner */}
+      <Banner></Banner> 
+    {/* // Popular Contents */}
+    {topVideoList &&
+      <PopularContents
+      topVideoList={topVideoList}
+      />
+    }
 
-      {/* 명예의 전당 */}
-      <HallofFame></HallofFame>
-      {/* <HallofFame></HallofFame> */}
+    {/* 명예의 전당 */}
+    {bestDrawing && 
+      <HallofFame
+        bestDrawing={bestDrawing}
+      />
+    }
+    {/* <HallofFame></HallofFame> */}
 
       {/* Footer  */}
       <Footer />

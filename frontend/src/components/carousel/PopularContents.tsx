@@ -7,14 +7,22 @@ import NextArrow2 from "./NextArrow2";
 import PrevArrow2 from "./PrevArrow2";
 import { useNavigate } from "react-router-dom";
 
-interface Popularprops {
-  Thumbnail: string;
-  title: string;
-  description: string;
+interface TopVideoListType {
+  id: number
+  title: string
+  runningTime: number
+  pathUrl: string
+  bestScore: number | null
+  roles: string[]
+}
+interface PopularContentsType {
+  topVideoList: TopVideoListType[]
 }
 
-function PopularContents({ videoList }: any) {
+
+function PopularContents({topVideoList} :PopularContentsType) {
   const navigate = useNavigate();
+
   const settings = {
     dots: false,
     infinite: true,
@@ -25,7 +33,6 @@ function PopularContents({ videoList }: any) {
     prevArrow: <PrevArrow2 />,
   };
 
-  console.log(videoList);
   return (
     <SectionWrapper>
       <CustomedSection>
@@ -33,7 +40,7 @@ function PopularContents({ videoList }: any) {
           tw="flex w-10/12 overflow-hidden justify-center items-center"
           {...settings}
         >
-          {videoList?.data?.map((item: any, index: number) => {
+          {topVideoList?.map((item: any, index: number) => {
             return (
               <SliderItems key={index}>
                 <SliderItemsWrapper
