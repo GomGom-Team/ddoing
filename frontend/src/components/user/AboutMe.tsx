@@ -23,7 +23,10 @@ const AboutMe = () => {
     setOpenNickNameModal((prev) => !prev);
   };
   const onDeleteUser = () => {
-    dispatch(deleteUserAction()).then(() => navigate("/", { replace: true }));
+    console.log(user.id);
+    dispatch(deleteUserAction(user.id)).then(() =>
+      navigate("/", { replace: true })
+    );
   };
   return (
     <Box component="form" sx={boxStyle} noValidate autoComplete="off">
