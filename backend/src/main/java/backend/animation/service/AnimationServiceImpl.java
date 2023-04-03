@@ -299,16 +299,26 @@ public class AnimationServiceImpl implements AnimationService {
         List<Long> animationScoreIds = animationScoreRepository.findTop4ByUserId(userId);
         List<AnimationResponseDTO> results = new ArrayList<>();
 
-        for (Long list : animationScoreIds) {
-            AnimationEntity animation = animationRepository.findById(list).orElseThrow();
-            AnimationResponseDTO result = toAnimationResponseDto(animation, userId);
+        for (int i = 0; i < 3; i++) {
+            if (animationScoreIds.size() > i) {
+                AnimationEntity animation = animationRepository.findById(animationScoreIds.get(i)).orElseThrow();
+                AnimationResponseDTO result = toAnimationResponseDto(animation, userId);
+                results.add(result);
+            } else {
+                AnimationResponseDTO result = AnimationResponseDTO.builder()
+                        .id(null)
+                        .title(null)
+                        .runningTime(null)
+                        .pathUrl(null)
+                        .bestScore(null)
+                        .roles(null)
+                        .build();
+                results.add(result);
+            }
 
-            results.add(result);
         }
 
-        if (results.size() > 3) {
-            results = results.subList(0, 3);
-        }
+
         return results;
     }
 
