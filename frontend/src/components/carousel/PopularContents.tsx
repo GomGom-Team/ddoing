@@ -4,10 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import NextArrow2 from "./NextArrow2";
 import PrevArrow2 from "./PrevArrow2";
-import { useAppDispatch, useAppSelector } from "../../redux/configStore.hooks";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import { animationTop6GetAction } from "../../redux/modules/animation";
 
 interface Popularprops {
   Thumbnail: string;
@@ -15,13 +12,8 @@ interface Popularprops {
   description: string;
 }
 
-function PopularContents() {
-  const dispatch = useAppDispatch();
+function PopularContents({ videoList }: any) {
   const navigate = useNavigate();
-  const topVideoList = useAppSelector(
-    (state) => state.animation.getAnimationTop6
-  );
-  console.log(topVideoList);
   const settings = {
     dots: false,
     infinite: true,
@@ -32,10 +24,6 @@ function PopularContents() {
     prevArrow: <PrevArrow2 />,
   };
 
-  useEffect(() => {
-    dispatch(animationTop6GetAction());
-  }, []);
-
   return (
     <SectionWrapper>
       <CustomedSection>
@@ -43,7 +31,7 @@ function PopularContents() {
           tw="flex w-10/12 overflow-hidden justify-center items-center"
           {...settings}
         >
-          {topVideoList?.data?.map((item: any, index: number) => {
+          {videoList?.data?.map((item: any, index: number) => {
             return (
               <SliderItems key={index}>
                 <SliderItemsWrapper
