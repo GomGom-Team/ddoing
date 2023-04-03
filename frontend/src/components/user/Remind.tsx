@@ -1,12 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../redux/configStore.hooks";
-import { animationRemindGetAction } from "../../redux/modules/animation";
-import Slider from "react-slick";
-import NextArrow2 from "../carousel/NextArrow2";
-import PrevArrow2 from "../carousel/PrevArrow2";
+import { useAppSelector } from "../../redux/configStore.hooks";
 import tw, { css, styled, theme } from "twin.macro";
-
+import { Container } from "../common/index"
+import axios from "axios";
 
 interface DrawingListType {
   userId: string
@@ -16,56 +13,81 @@ interface DrawingListType {
   mean: string
 }
 
-interface MypagePropsType {
-  drawingList : DrawingListType[]
+interface RemindVideoListType{
+  id: number | null
+  title: string | null
+  runningTime: number | null
+  pathUrl: string | null
+  bestScore: number | null
+  roles: string[] | []
 }
 
-const Remind = ({drawingList} : MypagePropsType) => {
-  const dispatch = useAppDispatch();
+const Remind = () => {
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.user.userData);
 
-  // useEffect(() => {
-  //   dispatch(animationRemindGetAction(user.id));
-  // }, []);
+  const [drawingList, setDrawingList] = useState<DrawingListType[] | null>(null)
+  const [remindVideoList, setRemindVideoList] = useState<RemindVideoListType[] | null>(null)
 
-  const remindVideoList = useAppSelector(
-    (state) => state.animation.getAnimationRemind
-  );
+  const drawingListHandler = () => {
+    axios.get(`https://j8a103.p.ssafy.io/api/drawing/myRecent/${user.id}`)
+    .then(res => {
+      console.log(res.data)
+      setDrawingList(res.data)
+    })
+    .catch(err => console.log(err));
+  }
 
+  const remindVideoListHandler = () => {
+    axios.get(`https://j8a103.p.ssafy.io/api/animations/myStudy/${user.id}`)
+    .then(res => {
+      console.log(res.data)
+      setRemindVideoList(res.data)
+    })
+    .catch(err => console.log(err)); 
+  }
+
+
+
+  useEffect(() => {
+    drawingListHandler()
+    remindVideoListHandler()
+  }, []);
   
   
   return (
-    <AllWrapDiv>
-      <AniWrapDiv>
-        <AniDiv>최근 공부한 영상 조회</AniDiv>
-        <AniListDiv>
-          {remindVideoList?.data?.map((item: any, index: number) => {
-            return (
-              <div key={index}>
-                <div onClick={() => navigate(`/video/${item.id}`)}>
-                  <img
-                    src={`https://img.youtube.com/vi/${item.pathUrl}/0.jpg`}
-                  />
-                  <div>{item.title}</div>
-                  <div></div>
+    <Container isOverflowed>
+        <AniWrapDiv>
+          <AniDiv>최근 공부한 영상 조회</AniDiv>
+          <AniListDiv>
+            {remindVideoList&&
+            remindVideoList.map((item: any, index: number) => {
+              return (
+                <div key={index}>
+                  <div onClick={() => navigate(`/video/${item.id}`)}>
+                    <img
+                      src={`https://img.youtube.com/vi/${item.pathUrl}/0.jpg`}
+                    />
+                    <div>{item.title}</div>
+                    <div></div>
+                  </div>
                 </div>
+              );
+            })}
+          </AniListDiv>
+        </AniWrapDiv>
+        <DrawWrapDiv>
+          <div>내가 그린 그림</div>
+          {drawingList&&
+          drawingList.map((item: any, index: number) => {
+            return(
+              <div key={index}>
+                <img src={`https://j8a103.p.ssafy.io/assets/img_backend/${item.drawingPath}`} width={200} height={200} alt="" />
               </div>
-            );
+            )
           })}
-        </AniListDiv>
-      </AniWrapDiv>
-      <DrawWrapDiv>
-        <div>내가 그린 그림</div>
-        {drawingList.map((item: any, index: number) => {
-          return(
-            <div key={index}>
-              {item.userId}
-            </div>
-          )
-        })}
-      </DrawWrapDiv>
-    </AllWrapDiv>
+        </DrawWrapDiv>
+    </Container>
   );
 };
 

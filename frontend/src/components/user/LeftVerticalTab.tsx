@@ -14,17 +14,6 @@ interface TabPanelProps {
   value: number;
 }
 
-interface DrawingListType {
-  userId: string
-  drawingPath: string
-  percentage: number
-  word: string
-  mean: string
-}
-
-interface MypagePropsType {
-  drawingList : DrawingListType[]
-}
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
 
@@ -53,7 +42,7 @@ function a11yProps(index: number) {
 }
 
 
-export default function VerticalTabs({drawingList} : MypagePropsType) {
+export default function VerticalTabs() {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -89,9 +78,7 @@ export default function VerticalTabs({drawingList} : MypagePropsType) {
         <ShibaList></ShibaList>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <Remind
-          drawingList ={drawingList}
-        />
+        <Remind/>
       </TabPanel>
     </Box>
   );

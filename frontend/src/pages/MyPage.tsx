@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import tw, { css, styled, theme } from "twin.macro";
 import VerticalTabs from "../components/user/LeftVerticalTab";
 import { Container, Header, Footer } from "../components/common/index";
 import { Box } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../redux/configStore.hooks";
 import MultiColorProgressBar from "../components/user/LevelBar";
-import user from "../redux/modules/user";
-import { getRecentDrawingAction } from "../redux/modules/drawing";
-import axios from "axios";
 
 interface Reading {
   name: string;
@@ -49,21 +46,6 @@ const MyPage = () => {
     },
   ];
 
-  const [drawingList, setDrawingList] = useState<DrawingListType[]>([])
-
-  const drawingListHandler = () => {
-    axios.get(`https://j8a103.p.ssafy.io/api/drawing/myRecent/${users.id}`)
-    .then(res => {
-      console.log(res.data)
-      setDrawingList(res.data)
-    })
-    .catch(err => console.log("제에에에에에발", err)); 
-    }
-
-  useEffect(() => {
-    drawingListHandler()
-  }, []);
-
   return (
     <Container>
       {/* Header */}
@@ -81,9 +63,7 @@ const MyPage = () => {
           {/* <CustomedBar /> */}
         </LevelArea>
         <Box component="div" sx={TabStyle}>
-          <VerticalTabs
-            drawingList={drawingList}
-          />
+          <VerticalTabs/>
         </Box>
         {/* Footer */}
         <Footer />
