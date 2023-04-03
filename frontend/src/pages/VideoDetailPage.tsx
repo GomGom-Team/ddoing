@@ -40,47 +40,42 @@ const VideoDetailPage = () => {
   const video = useAppSelector((state) => state.animation.getAnimation);
 
   return (
-    <>
+    <AllDiv>
       <Header />
       <WrapperDiv>
-        <div>
-          {isOpen === true ? (
-            <MyActDiv>
-              <ChoiceDiv>Choose character</ChoiceDiv>
-              <BtnWrapperDiv>
-                {video?.data?.roles.map((role: string, idx: number) => {
-                  return (
-                    <ActChoiceBtn
-                      onClick={() => {
-                        selectAct(role),
-                          setIsOpen(!isOpen),
-                          setIsStart(!isStart);
-                      }}
-                      key={idx}
-                    >
-                      <ActChoiceDiv>
-                        <ActChoiceImg src={`/assets/img/${role}.png`} />
-                      </ActChoiceDiv>
-                      <ActChoiceName>{role}</ActChoiceName>
-                    </ActChoiceBtn>
-                  );
-                })}
-              </BtnWrapperDiv>
-            </MyActDiv>
-          ) : (
-            <MyActDiv2></MyActDiv2>
-          )}
-          <VideoDiv>
-            <PlayerScript
-              myAct={act}
-              isVideoStart={isStart}
-              videoIdx={videoIdx}
-            />
-          </VideoDiv>
-        </div>
-        <div></div>
+        {isOpen === true ? (
+          <MyActDiv>
+            <ChoiceDiv>Choose character</ChoiceDiv>
+            <BtnWrapperDiv>
+              {video?.data?.roles.map((role: string, idx: number) => {
+                return (
+                  <ActChoiceBtn
+                    onClick={() => {
+                      selectAct(role), setIsOpen(!isOpen), setIsStart(!isStart);
+                    }}
+                    key={idx}
+                  >
+                    <ActChoiceDiv>
+                      <ActChoiceImg src={`/assets/img/${role}.png`} />
+                    </ActChoiceDiv>
+                    <ActChoiceName>{role}</ActChoiceName>
+                  </ActChoiceBtn>
+                );
+              })}
+            </BtnWrapperDiv>
+          </MyActDiv>
+        ) : (
+          <MyActDiv2></MyActDiv2>
+        )}
+        <VideoDiv>
+          <PlayerScript
+            myAct={act}
+            isVideoStart={isStart}
+            videoIdx={videoIdx}
+          />
+        </VideoDiv>
       </WrapperDiv>
-    </>
+    </AllDiv>
   );
 };
 
@@ -89,25 +84,23 @@ export default VideoDetailPage;
 const MyActDiv = styled.div`
   position: absolute;
   display: grid;
-  width: 1000px;
-  height: 500px;
+  width: 48vw;
+  height: 27vw;
+  left: 5vw;
+  top: 180px;
   z-index: 999;
-  align-items: center;
-  justify-content: center;
   background-color: rgba(0, 0, 0, 0.5);
   font-family: "insungitCutelivelyjisu";
-  font-size: 40px;
+  font-size: 60px;
   color: white;
 `;
 
 const MyActDiv2 = styled.div`
   position: absolute;
   display: grid;
-  width: 1000px;
-  height: 500px;
+  width: 48vw;
+  height: 27vw;
   z-index: 999;
-  align-items: center;
-  justify-content: center;
   background-color: none;
   font-family: "insungitCutelivelyjisu";
   font-size: 40px;
@@ -145,13 +138,14 @@ const ActChoiceImg = styled.img`
 
 const ActChoiceBtn = styled.button`
   display: grid;
-  margin-left: 10px;
-  margin-right: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
   align-items: center;
   justify-content: center;
   text-align: center;
   width: 100%;
   font-family: "PyeongChangPeace-Bold";
+  font-size: 30px;
   padding: 5px;
   :hover {
     color: aquamarine;
@@ -162,21 +156,40 @@ const BtnWrapperDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 50px;
+  padding-bottom: 50px;
   align-items: center;
   justify-content: center;
 `;
 
 const VideoDiv = styled.div`
   display: grid;
+  width: 100vw;
+  /* height: 100vh; */
 `;
 
 const WrapperDiv = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
-  margin-left: 5vw;
-  margin-top: 10vw;
+  padding-top: 200px;
   align-items: center;
   justify-content: center;
+`;
+
+const AllDiv = styled.div`
+  width: 100%;
+  /* height: 100vh; */
+  background: linear-gradient(-45deg, #fbf8cc, #fdf579, #fff125, #ffd761);
+  animation: gradient 15s ease infinite;
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
 `;

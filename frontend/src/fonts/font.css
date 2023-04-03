@@ -39,3 +39,38 @@
   font-weight: 300;
   font-style: normal;
 }
+
+@font-face {
+  font-family: "ONE-Mobile-POP";
+  src: url("./ONE-Mobile-POP-OTF.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ONE-Mobile-Light";
+  src: url("./ONE-Mobile-OTF-Light.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ONE-Mobile-Regular";
+  src: url("./ONE-Mobile-OTF-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ONE-Mobile-Bold";
+  src: url("./ONE-Mobile-OTF-Bold.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ONE-Mobile-Title";
+  src: url("./ONE-Mobile-Title-OTF.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
