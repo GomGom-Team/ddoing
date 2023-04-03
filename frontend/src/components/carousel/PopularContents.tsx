@@ -1,10 +1,10 @@
 import tw, { css, styled, theme } from "twin.macro";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import NextArrow2 from "./NextArrow2";
 import PrevArrow2 from "./PrevArrow2";
-import { useAppDispatch, useAppSelector } from "../../redux/configStore.hooks";
 import { useNavigate } from "react-router-dom";
 
 interface TopVideoListType {

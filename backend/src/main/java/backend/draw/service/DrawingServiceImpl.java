@@ -220,7 +220,7 @@ public class DrawingServiceImpl implements DrawingService {
         List<UserDrawingEntity> userDrawingEntityList = userDrawingRepository.findById(UserId);
         List<UserDrawingResponseDTO> results = new ArrayList<>();
 
-        for(int i=0; i<6; i++){
+        for(int i=0; i<3; i++){
             if(userDrawingEntityList.size() > i){
                 UserDrawingEntity userDrawingEntity = userDrawingEntityList.get(i);
                 WordEntity wordEntity = wordRepository.findById(userDrawingEntity.getWordId()).orElseThrow();

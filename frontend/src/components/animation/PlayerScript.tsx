@@ -6,15 +6,16 @@ import ReactPlayer from "react-player/youtube";
 import tw, { css, styled, theme } from "twin.macro";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useAppDispatch, useAppSelector } from "../redux/configStore.hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/configStore.hooks";
 import {
   animationGetAction,
   scriptGetAction,
   recordSendAction,
   recordResultSendAction,
-} from "../redux/modules/animation";
-import { getScore } from "../redux/modules/animation/score";
+} from "../../redux/modules/animation";
+import { getScore } from "../../redux/modules/animation/score";
 import AudioAnalyser from "react-audio-analyser";
+import Container from "../common/Container";
 
 type InfoProps = {
   myAct: string;
@@ -30,7 +31,7 @@ const getAverage = (numbers: any) => {
   return sum / numbers.length;
 };
 
-const myvideo = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
+const PlayerScript = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const player = React.useRef<ReactPlayer | null>(null);
@@ -39,8 +40,8 @@ const myvideo = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
   const playerWrap = React.useRef(null);
 
   const [playing, setPlaying] = useState(false);
-  const [width, setWidth] = useState("1000px");
-  const [height, setHeight] = useState("500px");
+  const [width, setWidth] = useState("48vw");
+  const [height, setHeight] = useState("27vw");
   const [pip, setPip] = useState(false);
   const [controls, setControls] = useState(true);
   const [volume, setVolumn] = useState(1);
@@ -135,7 +136,7 @@ const myvideo = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
 
   return (
     <AllWrapDiv>
-      <div ref={playerWrap}>
+      <PlayerDiv ref={playerWrap}>
         <ReactPlayer
           ref={player}
           className="react-player"
@@ -167,7 +168,7 @@ const myvideo = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
             setPip(false);
           }} // PIP 모드 취소 PIP set ture
         />
-      </div>
+      </PlayerDiv>
 
       {loaded > 0 && playing === false && (
         <AllWrapperDiv>
@@ -211,32 +212,39 @@ const myvideo = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
             </AllWrapperDiv>
           </>
         )}
-      <ScriptAllDiv>
-        {script?.data?.map((item: any, index: number) => {
-          return (
-            <ScriptOl key={index}>
-              <StyledLi
-                isMyRole={myAct === item.role}
-                isNowScript={
-                  playedSeconds > item.startTime &&
-                  playedSeconds < item.endTime + 1
-                }
-              >
-                <RoleDiv>{item.role}</RoleDiv>
-                <ScriptWrapDiv>
-                  <EngDiv>{item.engSentence}</EngDiv>
-                  <KoDiv>{item.koSentence}</KoDiv>
-                </ScriptWrapDiv>
-              </StyledLi>
-            </ScriptOl>
-          );
-        })}
-      </ScriptAllDiv>
+      <Container isOverflowed={true}>
+        <ScriptAllDiv>
+          {script?.data?.map((item: any, index: number) => {
+            return (
+              <ScriptOl key={index}>
+                <StyledLi
+                  isMyRole={myAct === item.role}
+                  isNowScript={
+                    playedSeconds > item.startTime &&
+                    playedSeconds < item.endTime + 1
+                  }
+                >
+                  <RoleDiv>
+                    <RoleNowDiv>
+                      <RoleImg src={`/assets/img/${item.role}.png`} />
+                    </RoleNowDiv>
+                    <RoleNameDiv>{item.role}</RoleNameDiv>
+                  </RoleDiv>
+                  <ScriptWrapDiv>
+                    <EngDiv>{item.engSentence}</EngDiv>
+                    <KoDiv>{item.koSentence}</KoDiv>
+                  </ScriptWrapDiv>
+                </StyledLi>
+              </ScriptOl>
+            );
+          })}
+        </ScriptAllDiv>
+      </Container>
     </AllWrapDiv>
   );
 };
 
-export default myvideo;
+export default PlayerScript;
 
 interface LiProps {
   isMyRole?: boolean;
@@ -250,10 +258,10 @@ const AllWrapDiv = styled.div`
 const StyledLi = styled.li(({ isMyRole, isNowScript }: LiProps) => [
   isMyRole
     ? css`
-        font-weight: 600;
+        font-weight: 700;
       `
     : css`
-        font-weight: 200;
+        font-weight: 400;
       `,
   isNowScript
     ? css`
@@ -272,6 +280,9 @@ const StyledLi = styled.li(({ isMyRole, isNowScript }: LiProps) => [
 const ScriptAllDiv = styled.div`
   display: grid;
   height: 500px;
+  width: 30vw;
+  margin-left: 5vw;
+  /* margin-top: 5vw; */
   overflow-y: scroll;
 `;
 
@@ -280,11 +291,13 @@ const RoleDiv = styled.div`
   margin-right: 5px;
   width: 5vw;
   text-align: center;
+  font-family: "PyeongChangPeace-Light";
 `;
 
 const ScriptWrapDiv = styled.div`
   margin: 5px;
-  width: 30vw;
+  width: 100%;
+  font-family: "CookieRun-Regular";
 `;
 
 const EngDiv = styled.div``;
@@ -309,4 +322,30 @@ const AllWrapperDiv = styled.div`
   z-index: 999;
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
+`;
+
+const RoleImg = styled.img`
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+`;
+
+const RoleNowDiv = styled.div`
+  width: 50px;
+  height: 5 0px;
+  display: grid;
+  border-radius: 100%;
+  overflow: hidden;
+  border: 3px outset rgba(156, 122, 219, 0.67);
+`;
+const RoleNameDiv = styled.div`
+  justify-content: center;
+`;
+
+const PlayerDiv = styled.div`
+  margin-left: 5vw;
+  /* margin-top: 5vw; */
 `;

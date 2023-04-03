@@ -33,7 +33,7 @@ type GLTFResult = GLTF & {
 
 export function Shiba_Hippie_12(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF(
-    "/model/Shiba_Hippie_12/scene.gltf"
+    "/ec2/model/Shiba_Hippie_12/scene.gltf"
   ) as GLTFResult;
   return (
     <group {...props} dispose={null} scale={0.001}>
@@ -47,4 +47,4 @@ export function Shiba_Hippie_12(props: JSX.IntrinsicElements["group"]) {
   );
 }
 
-useGLTF.preload("/model/Shiba_Hippie_12/scene.gltf");
+useGLTF.preload("/ec2/model/Shiba_Hippie_12/scene.gltf");

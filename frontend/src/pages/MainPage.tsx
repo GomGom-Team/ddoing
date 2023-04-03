@@ -56,8 +56,8 @@ const MainPage = () => {
 
   return (
     <Container isOverflowed>
-    {/* Header */}
-      <Header/>
+      {/* Header */}
+      <Header />
       <DummyDiv></DummyDiv>
 
     {/* Banner */}
@@ -77,15 +77,13 @@ const MainPage = () => {
     }
     {/* <HallofFame></HallofFame> */}
 
-    {/* Footer  */}
-      <Footer/>
+      {/* Footer  */}
+      <Footer />
     </Container>
-  )
-}
+  );
+};
 
 // style
-const DummyDiv = styled.div(
-  tw`h-16`
-)
+const DummyDiv = styled.div(tw`h-16`);
 
-export default MainPage
+export default MainPage;
