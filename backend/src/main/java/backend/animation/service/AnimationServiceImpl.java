@@ -309,7 +309,6 @@ public class AnimationServiceImpl implements AnimationService {
         if (results.size() > 3) {
             results = results.subList(0, 3);
         }
-
         return results;
     }
 
