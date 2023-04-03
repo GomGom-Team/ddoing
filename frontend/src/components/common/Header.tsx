@@ -44,7 +44,7 @@ const Header = () => {
           <NavWrapperContents>
             <MainLogo onClick={() => navigate("/")}>또잉</MainLogo>
             <NavigateContents>
-              <StyledButton onClick={() => navigate("/animation")}>
+              <StyledButton onClick={() => navigate("/videolist")}>
                 A n i m a t i o n
               </StyledButton>
               <StyledButton onClick={() => navigate("/drawing")}>
