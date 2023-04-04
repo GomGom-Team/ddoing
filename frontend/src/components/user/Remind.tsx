@@ -7,20 +7,19 @@ import NextArrow2 from "../carousel/NextArrow2";
 import PrevArrow2 from "../carousel/PrevArrow2";
 import tw, { css, styled, theme } from "twin.macro";
 
-
 interface DrawingListType {
-  userId: string
-  drawingPath: string
-  percentage: number
-  word: string
-  mean: string
+  userId: string;
+  drawingPath: string;
+  percentage: number;
+  word: string;
+  mean: string;
 }
 
 interface MypagePropsType {
-  drawingList : DrawingListType[]
+  drawingList: DrawingListType[];
 }
 
-const Remind = ({drawingList} : MypagePropsType) => {
+const Remind = ({ drawingList }: MypagePropsType) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.user.userData);
@@ -33,8 +32,6 @@ const Remind = ({drawingList} : MypagePropsType) => {
     (state) => state.animation.getAnimationRemind
   );
 
-  
-  
   return (
     <AllWrapDiv>
       <AniWrapDiv>
@@ -45,7 +42,7 @@ const Remind = ({drawingList} : MypagePropsType) => {
               <div key={index}>
                 <div onClick={() => navigate(`/video/${item.id}`)}>
                   <img
-                    src={`https://img.youtube.com/vi/${item.pathUrl}/0.jpg`}
+                    src={`https://img.youtube.com/vi/${item.pathUrl}/maxresdefault.jpg`}
                   />
                   <div>{item.title}</div>
                   <div></div>
@@ -58,11 +55,7 @@ const Remind = ({drawingList} : MypagePropsType) => {
       <DrawWrapDiv>
         <div>내가 그린 그림</div>
         {drawingList.map((item: any, index: number) => {
-          return(
-            <div key={index}>
-              {item.userId}
-            </div>
-          )
+          return <div key={index}>{item.userId}</div>;
         })}
       </DrawWrapDiv>
     </AllWrapDiv>

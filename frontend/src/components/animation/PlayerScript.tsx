@@ -1,4 +1,3 @@
-import React, { useMemo, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { findDOMNode } from "react-dom";
 import FilePlayer from "react-player/file";
@@ -16,6 +15,7 @@ import {
 import { getScore } from "../../redux/modules/animation/score";
 import AudioAnalyser from "react-audio-analyser";
 import Container from "../common/Container";
+import React, { useState, useEffect, useMemo } from "react";
 
 type InfoProps = {
   myAct: string;
@@ -40,8 +40,8 @@ const PlayerScript = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
   const playerWrap = React.useRef(null);
 
   const [playing, setPlaying] = useState(false);
-  const [width, setWidth] = useState("48vw");
-  const [height, setHeight] = useState("27vw");
+  const [width, setWidth] = useState("44.8vw");
+  const [height, setHeight] = useState("25.2vw");
   const [pip, setPip] = useState(false);
   const [controls, setControls] = useState(true);
   const [volume, setVolumn] = useState(1);
@@ -58,9 +58,14 @@ const PlayerScript = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
   const [audioSrc, setAudioSrc] = useState("");
   const [audioType, setAudioType] = useState("audio/wav");
   const [myScore, setMyScore] = useState(0);
+  const [isRecording, setIsRecording] = useState(false);
 
   const controlAudio = (status: any) => {
     setStatus(status);
+  };
+
+  const controlRecording = () => {
+    setIsRecording(!isRecording);
   };
 
   const [list, setList] = useState<number[]>([]);
@@ -70,6 +75,9 @@ const PlayerScript = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
     audioType,
     status,
     audioSrc,
+    width: "0px",
+    height: "0px",
+    className: "MyCanvas",
     timeslice: 1000,
     stopCallback: (e: any) => {
       setAudioSrc(window.URL.createObjectURL(e));
@@ -139,7 +147,6 @@ const PlayerScript = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
       <PlayerDiv ref={playerWrap}>
         <ReactPlayer
           ref={player}
-          className="react-player"
           width={width} // 가로 크기
           height={height} // 세로 크기
           url={`https://www.youtube.com/watch?v=${video?.data?.pathUrl}`} // url
@@ -174,10 +181,13 @@ const PlayerScript = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
         <AllWrapperDiv>
           <AudioAnalyser {...audioProps}>
             <div className="btn-box">
-              <div>{status}</div>
-              <button className="btn" onClick={() => controlAudio("recording")}>
+              <div>녹음을 시작해 볼까요?</div>
+              <RecordStartBtn
+                className="btn"
+                onClick={() => controlAudio("recording")}
+              >
                 Start
-              </button>
+              </RecordStartBtn>
               <button className="btn" onClick={() => controlAudio("inactive")}>
                 Stop
               </button>
@@ -212,12 +222,12 @@ const PlayerScript = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
             </AllWrapperDiv>
           </>
         )}
-      <Container isOverflowed={true}>
-        <ScriptAllDiv>
+      <ScriptAllDiv>
+        <Container isOverflowed={true}>
           {script?.data?.map((item: any, index: number) => {
             return (
-              <ScriptOl key={index}>
-                <StyledLi
+              <ScriptDiv key={index}>
+                <StyledDiv
                   isMyRole={myAct === item.role}
                   isNowScript={
                     playedSeconds > item.startTime &&
@@ -225,21 +235,20 @@ const PlayerScript = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
                   }
                 >
                   <RoleDiv>
-                    <RoleNowDiv>
+                    <RoleNowDiv isMyRole={myAct === item.role}>
                       <RoleImg src={`/assets/img/${item.role}.png`} />
                     </RoleNowDiv>
-                    <RoleNameDiv>{item.role}</RoleNameDiv>
                   </RoleDiv>
                   <ScriptWrapDiv>
                     <EngDiv>{item.engSentence}</EngDiv>
                     <KoDiv>{item.koSentence}</KoDiv>
                   </ScriptWrapDiv>
-                </StyledLi>
-              </ScriptOl>
+                </StyledDiv>
+              </ScriptDiv>
             );
           })}
-        </ScriptAllDiv>
-      </Container>
+        </Container>
+      </ScriptAllDiv>
     </AllWrapDiv>
   );
 };
@@ -251,14 +260,69 @@ interface LiProps {
   isNowScript?: boolean;
 }
 
-const AllWrapDiv = styled.div`
-  display: flex;
+interface MyProps {
+  isMyRole?: boolean;
+}
+
+const RecordStartBtn = styled.button`
+  border: none;
+  width: 130px;
+  height: 40px;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 25px;
+  font-family: "Lato", sans-serif;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5),
+    7px 7px 20px 0px rgba(0, 0, 0, 0.1), 4px 4px 5px 0px rgba(0, 0, 0, 0.1);
+  outline: none;
+  after {
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 100%;
+    top: 0;
+    left: 0;
+    direction: rtl;
+    z-index: -1;
+    box-shadow: -7px -7px 20px 0px #fff9, -4px -4px 5px 0px #fff9,
+      7px 7px 20px 0px #0002, 4px 4px 5px 0px #0001;
+    transition: all 0.3s ease;
+  }
+  :hover {
+    color: #000;
+  }
+  .btn-16:hover:after {
+    left: auto;
+    right: 0;
+    width: 100%;
+  }
+  .btn-16:active {
+    top: 2px;
+  }
 `;
 
-const StyledLi = styled.li(({ isMyRole, isNowScript }: LiProps) => [
+const MyCanvas = styled.div`
+  display: flex;
+  background-color: blue;
+`;
+
+const AllWrapDiv = styled.div`
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  padding-top: 13vh;
+`;
+
+const StyledDiv = styled.div(({ isMyRole, isNowScript }: LiProps) => [
   isMyRole
     ? css`
-        font-weight: 700;
+        font-weight: 900;
       `
     : css`
         font-weight: 400;
@@ -279,11 +343,13 @@ const StyledLi = styled.li(({ isMyRole, isNowScript }: LiProps) => [
 
 const ScriptAllDiv = styled.div`
   display: grid;
-  height: 500px;
+  height: 40vw;
   width: 30vw;
-  margin-left: 5vw;
-  /* margin-top: 5vw; */
-  overflow-y: scroll;
+  /* padding: 1vw; */
+  border-radius: 1.5%;
+  margin-left: 12vw;
+  overflow-y: auto;
+  background-color: white;
 `;
 
 const RoleDiv = styled.div`
@@ -297,28 +363,38 @@ const RoleDiv = styled.div`
 const ScriptWrapDiv = styled.div`
   margin: 5px;
   width: 100%;
-  font-family: "CookieRun-Regular";
+  font-size: 17px;
 `;
 
-const EngDiv = styled.div``;
+const EngDiv = styled.div`
+  font-family: "ONE-Mobile-Bold";
+`;
 
-const KoDiv = styled.div``;
+const KoDiv = styled.div`
+  color: rgb(102, 102, 102);
+  font-family: "ONE-Mobile-Light";
+`;
 
 const VideoDiv = styled.div`
   display: grid;
 `;
 
-const ScriptOl = styled.ol`
+const ScriptDiv = styled.ol`
   display: flex;
+  margin-top: 10px;
+  background-color: #ffffff;
+  border-radius: 5%;
 `;
 
 const AllWrapperDiv = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
   align-items: center;
   justify-content: center;
   text-align: center;
-  position: absolute;
+  top: 0px;
+  /* position: absolute; */
   z-index: 999;
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
@@ -328,24 +404,33 @@ const RoleImg = styled.img`
   display: grid;
   align-items: center;
   justify-content: center;
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
   object-fit: cover;
 `;
 
-const RoleNowDiv = styled.div`
-  width: 50px;
-  height: 5 0px;
-  display: grid;
-  border-radius: 100%;
-  overflow: hidden;
-  border: 3px outset rgba(156, 122, 219, 0.67);
-`;
+const RoleNowDiv = styled.div(({ isMyRole }: MyProps) => [
+  isMyRole
+    ? css`
+        border: 3px outset rgba(219, 150, 122, 0.67);
+      `
+    : css`
+        border: 3px outset rgba(156, 122, 219, 0.67);
+      `,
+  css`
+    width: 70px;
+    height: 70px;
+    display: grid;
+    border-radius: 100%;
+    overflow: hidden;
+  `,
+]);
+
 const RoleNameDiv = styled.div`
   justify-content: center;
 `;
 
 const PlayerDiv = styled.div`
-  margin-left: 5vw;
-  /* margin-top: 5vw; */
+  margin-left: 6.4vw;
+  margin-top: 5.5vw;
 `;
