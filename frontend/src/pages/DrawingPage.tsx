@@ -324,7 +324,8 @@ const DrawingPage = () => {
         <StyledDiv>
           <DrawingCanvas 
             predictList={predictList} 
-            setPredictList={setPredictList} 
+            setPredictList={setPredictList}
+            wordList={wordList}
             canvasRef={canvasRef}
             index={index}
             modalHandleOpen = {modalHandleOpen}

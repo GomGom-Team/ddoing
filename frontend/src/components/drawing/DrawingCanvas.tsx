@@ -24,13 +24,14 @@ interface wordListType {
 interface CanvasPropsType {
   canvasRef: React.RefObject<HTMLCanvasElement>
   predictList: predictListType
+  wordList : wordListType[]
   setPredictList: React.Dispatch<React.SetStateAction<predictListType>>
   index: number
   modalHandleOpen(): void
   predict: string
 }
 
-const DrawingCanvas = ({canvasRef, predict, predictList, setPredictList, index, modalHandleOpen} : CanvasPropsType) => {
+const DrawingCanvas = ({canvasRef, predict, wordList, predictList, setPredictList, index, modalHandleOpen} : CanvasPropsType) => {
   // state
   const [mousePosition, setMousePosition] = useState<Coordinate | undefined>(undefined);
   const [isPainting, setIsPainting] = useState(false);
@@ -101,6 +102,7 @@ const DrawingCanvas = ({canvasRef, predict, predictList, setPredictList, index, 
     setIsPainting(false);
     // API 요청 보낼 코드
     getPrediction()
+    saveFile()
   }, []);
   // EventListner 등록
   useEffect(() => {
@@ -156,7 +158,7 @@ const DrawingCanvas = ({canvasRef, predict, predictList, setPredictList, index, 
           charset: 'utf-8'
         },
        }
-      axios.post(`https://j8a103.p.ssafy.io/ai/inference?stage=${1}`, formData, config)
+      axios.post(`https://j8a103.p.ssafy.io/ai/inference?stage=${index}`, formData, config)
       .then(res => {
         console.log(res.data)
         setPredictList(res.data)
@@ -165,20 +167,58 @@ const DrawingCanvas = ({canvasRef, predict, predictList, setPredictList, index, 
       }
   }
 
-  // useEffect(() => {
-  //   const ctx = canvasRef.current?.getContext("2d");
-  
-  //   const handleResize = () => {
-  //     if (ctx) {
-  //       ctx.canvas.height = window.innerHeight * 0.765;
-  //       ctx.canvas.width = window.innerWidth - 200;
-  //     }
-  //   };
-  //   handleResize();
-  //   window.addEventListener("resize", handleResize);
+  const saveFile = () => {
+    if (!canvasRef.current) {
+      return;
+    } else {
+      const canvas: HTMLCanvasElement = canvasRef.current;
+      const formData = new FormData()
+      const dataUrl = canvas.toDataURL();
+      //need to update
+      let id = "pika";
+      let word_class = wordList[index].word;
 
-  //   return () => window.removeEventListener("resize", handleResize);
-  // }, []);
+      const data = {
+        "userId" : id,
+        "wordId" : wordList[index].id,
+        "percentage" : 30
+
+      }
+
+      const imgFile = dataURLtoFileObject(dataUrl, id+"_"+word_class+".png");
+      // console.log(typeof imgFile, imgFile);
+      formData.append('file', imgFile);
+      formData.append('dto' , new Blob([JSON.stringify(data)], {type : "application/json"}))
+ 
+      // axios test
+      const config = {
+        headers: { 
+          'content-type': 'multipart/form-data',
+          charset: 'utf-8'
+        },
+       }
+      axios.post('https://j8a103.p.ssafy.io/api/drawing/file/upload', formData, config)
+      .then(res => {
+        console.log(res.data)
+      })
+      .catch(err => console.log("먀노ㅓ야ㅓㅁ냐어ㅑ", err)); 
+      }
+  }
+
+  const dataURLtoFileObject = (dataURL : string, fileName : string) => {
+
+    let arr = dataURL.split(',');
+    let mime = 'image/png';
+    let bstr = atob(arr[1]);
+    let n = bstr.length;
+    let u8arr = new Uint8Array(n);
+
+    while(n--){
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new File([u8arr], fileName, {type:mime})
+  }
 
   const canvasHeight = window.innerHeight - 249
   const canvasWidth = window.innerWidth - 500
