@@ -29,12 +29,12 @@ const MyPage = () => {
   let readings: Reading[] = [
     {
       name: "EXP",
-      value: exp === null ? 0 : exp,
+      value: exp === null ? 0 : Math.round(exp / 2),
       color: "#eb4d4b",
     },
     {
       name: "Blueberries",
-      value: exp === null ? 100 : 100 - exp,
+      value: exp === null ? 100 : 100 - Math.round(exp / 2),
       color: "#22a6b3",
     },
   ];
