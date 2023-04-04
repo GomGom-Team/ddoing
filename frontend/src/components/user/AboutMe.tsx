@@ -27,6 +27,7 @@ const AboutMe = () => {
     dispatch(deleteUserAction(user.id)).then(() =>
       navigate("/", { replace: true })
     );
+    alert("회원 탈퇴 되었습니다.");
   };
   return (
     <Box component="form" sx={boxStyle} noValidate autoComplete="off">
@@ -178,22 +179,22 @@ const boxStyle2 = {
 // 탈퇴 버튼 스타일
 const DeleteButton = styled(Button)<ButtonProps>(({ theme }) => ({
   border: "none",
-  backgroundColor: "white",
+  backgroundColor: "#FBF8CC",
   color: "black",
   boxShadow: "none",
   fontFamily: "insungitCutelivelyjisu",
   padding: "6px 12px",
   width: "50%",
   "&:hover": {
-    backgroundColor: "#005112",
-    borderColor: "#005112",
+    backgroundColor: "white",
+    borderColor: "#FBF8CC",
     boxShadow: "none",
-    color: "#FFFFFF",
+    color: "#FFD761",
   },
   "&:active": {
     boxShadow: "none",
-    backgroundColor: "#0062cc",
-    borderColor: "#005cbf",
+    backgroundColor: "#FBF8CC",
+    borderColor: "#FBF8CC",
   },
   "&:focus": {
     boxShadow: "0 0 0 0.2rem rgba(0,123,255,.5)",
@@ -216,8 +217,8 @@ const StyledButton = styled(Button)<ButtonProps>(({ theme }) => ({
   },
   "&:active": {
     boxShadow: "none",
-    backgroundColor: "#0062cc",
-    borderColor: "#005cbf",
+    backgroundColor: "#005112",
+    borderColor: "#005112",
   },
   "&:focus": {
     boxShadow: "0 0 0 0.2rem rgba(0,123,255,.5)",

@@ -29,9 +29,10 @@ interface CanvasPropsType {
   index: number
   modalHandleOpen(): void
   predict: string
+  setPredict: React.Dispatch<React.SetStateAction<string>>
 }
 
-const DrawingCanvas = ({canvasRef, predict, wordList, predictList, setPredictList, index, modalHandleOpen} : CanvasPropsType) => {
+const DrawingCanvas = ({canvasRef, predict, wordList, predictList, setPredict, setPredictList, index, modalHandleOpen} : CanvasPropsType) => {
   // state
   const [mousePosition, setMousePosition] = useState<Coordinate | undefined>(undefined);
   const [isPainting, setIsPainting] = useState(false);
@@ -158,9 +159,9 @@ const DrawingCanvas = ({canvasRef, predict, wordList, predictList, setPredictLis
           charset: 'utf-8'
         },
        }
-      axios.post(`https://j8a103.p.ssafy.io/ai/inference?stage=${index}`, formData, config)
+       axiosInstance.post(`https://j8a103.p.ssafy.io/ai/inference?stage=${index}`, formData, config)
       .then(res => {
-        console.log(res.data)
+        console.log("여기가 프로미스",res.data.results)
         setPredictList(res.data)
       })
       .catch(err => console.log("먀노ㅓ야ㅓㅁ냐어ㅑ", err)); 
@@ -219,6 +220,26 @@ const DrawingCanvas = ({canvasRef, predict, wordList, predictList, setPredictLis
 
     return new File([u8arr], fileName, {type:mime})
   }
+  const axiosInstance = axios.create();
+  axiosInstance.interceptors.request.use(
+    config => {
+      console.log("request", config)
+      setPredict("...")
+      return config;
+    },
+    err => {
+      return Promise.reject(err);
+    },
+  );
+  axiosInstance.interceptors.response.use(
+    config => {
+      return config;
+    },
+    err => {
+      return Promise.reject(err);
+    },
+  );
+
 
   const canvasHeight = window.innerHeight - 249
   const canvasWidth = window.innerWidth - 500

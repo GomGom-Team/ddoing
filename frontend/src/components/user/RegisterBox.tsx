@@ -20,7 +20,7 @@ import {
   IconButton,
 } from "@mui/material";
 import { CheckRounded, VisibilityOff, Visibility } from "@mui/icons-material";
-import InputWithLabel from "./InputWithLabel";
+import { styled as styledComp } from "twin.macro";
 
 const RegisterBox = () => {
   const dispatch = useAppDispatch();
@@ -169,226 +169,240 @@ const RegisterBox = () => {
   }, [checkEmail]);
 
   return (
-    <Box
-      component="form"
-      sx={boxStyle}
-      noValidate
-      autoComplete="off"
-      onSubmit={onSubmit}
-      // sx={{ backgroundImage: "assets/img/login_background.jpg" }}
-    >
-      <Box component="div" sx={boxStyle2}>
-        <FormControl variant="standard">
-          <InputLabel
-            htmlFor="id"
-            sx={{ fontFamily: "insungitCutelivelyjisu" }}
+    <BackgroundDiv>
+      <Box
+        component="form"
+        sx={boxStyle}
+        noValidate
+        autoComplete="off"
+        onSubmit={onSubmit}
+        // sx={{ backgroundImage: "assets/img/login_background.jpg" }}
+      >
+        <Box component="div" sx={boxStyle2}>
+          <h2
+            id="parent-modal-title"
+            style={{
+              fontFamily: "insungitCutelivelyjisu",
+              marginBottom: "10%",
+              fontSize: "25px",
+            }}
           >
-            아이디
-          </InputLabel>
-          <Input
-            id="id"
-            value={uid}
-            onChange={onChangeId}
-            required
-            error={uid && idCheck !== "Available" ? true : false}
-            aria-describedby="id-helper-text"
-            endAdornment={
-              <InputAdornment position="end">
-                {idCheck === "Available" && <CheckRounded />}
-              </InputAdornment>
+            회원가입
+          </h2>
+          <FormControl variant="standard">
+            <InputLabel
+              htmlFor="id"
+              sx={{ fontFamily: "insungitCutelivelyjisu" }}
+            >
+              아이디
+            </InputLabel>
+            <Input
+              id="id"
+              value={uid}
+              onChange={onChangeId}
+              required
+              error={uid && idCheck !== "Available" ? true : false}
+              aria-describedby="id-helper-text"
+              endAdornment={
+                <InputAdornment position="end">
+                  {idCheck === "Available" && <CheckRounded />}
+                </InputAdornment>
+              }
+            />
+            <FormHelperText
+              id="id-helper-text"
+              sx={{ fontFamily: "insungitCutelivelyjisu" }}
+            >
+              {uid &&
+                (idCheck === "Available" ? (
+                  <span>사용 가능한 ID입니다</span>
+                ) : idCheck === "PleaseCheckId" ? (
+                  <span>아이디 중복 검사를 해주세요</span>
+                ) : idCheck === "RegexFail" ? (
+                  <span>영문자 또는 숫자 4~12자</span>
+                ) : (
+                  <span>이미 사용중인 ID입니다</span>
+                ))}
+            </FormHelperText>
+          </FormControl>
+          <Button
+            onClick={onCheckID}
+            disabled={
+              !uid || idCheck === "RegexFail" || idCheck === "Available"
+                ? true
+                : false
             }
-          />
-          <FormHelperText
-            id="id-helper-text"
             sx={{ fontFamily: "insungitCutelivelyjisu" }}
           >
-            {uid &&
-              (idCheck === "Available" ? (
-                <span>사용 가능한 ID입니다</span>
-              ) : idCheck === "PleaseCheckId" ? (
-                <span>아이디 중복 검사를 해주세요</span>
-              ) : idCheck === "RegexFail" ? (
-                <span>영문자 또는 숫자 4~12자</span>
-              ) : (
-                <span>이미 사용중인 ID입니다</span>
-              ))}
-          </FormHelperText>
-        </FormControl>
-        <Button
-          onClick={onCheckID}
-          disabled={
-            !uid || idCheck === "RegexFail" || idCheck === "Available"
-              ? true
-              : false
-          }
-          sx={{ fontFamily: "insungitCutelivelyjisu" }}
-        >
-          아이디 중복 확인
-        </Button>
-        <FormControl variant="standard">
-          <InputLabel
-            htmlFor="pw"
-            sx={{ fontFamily: "insungitCutelivelyjisu" }}
-          >
-            비밀번호
-          </InputLabel>
-          <Input
-            id="pw"
-            value={pw}
-            onChange={onChangePw}
-            type={showPw ? "text" : "password"}
-            required
-            error={pw && !pwCheck ? true : false}
-            aria-describedby="pw-helper-text"
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPw}
-                  onMouseDown={handleMouseDownPw}
-                >
-                  {showPw ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
+            아이디 중복 확인
+          </Button>
+          <FormControl variant="standard">
+            <InputLabel
+              htmlFor="pw"
+              sx={{ fontFamily: "insungitCutelivelyjisu" }}
+            >
+              비밀번호
+            </InputLabel>
+            <Input
+              id="pw"
+              value={pw}
+              onChange={onChangePw}
+              type={showPw ? "text" : "password"}
+              required
+              error={pw && !pwCheck ? true : false}
+              aria-describedby="pw-helper-text"
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPw}
+                    onMouseDown={handleMouseDownPw}
+                  >
+                    {showPw ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+            <FormHelperText
+              id="pw-helper-text"
+              sx={{ fontFamily: "insungitCutelivelyjisu" }}
+            >
+              {!pwCheck && <span>영문, 숫자, 특수문자 포함 8~16자</span>}
+            </FormHelperText>
+          </FormControl>
+          <FormControl variant="standard">
+            <InputLabel
+              htmlFor="re-pw"
+              sx={{ fontFamily: "insungitCutelivelyjisu" }}
+            >
+              비밀번호 확인
+            </InputLabel>
+            <Input
+              id="re-pw"
+              value={rePw}
+              onChange={onChangeRePw}
+              type="password"
+              required
+              error={rePw && !rePwCheck ? true : false}
+              aria-describedby="repw-helper-text"
+              endAdornment={
+                <InputAdornment position="end">
+                  {rePw && rePwCheck && <CheckRounded />}
+                </InputAdornment>
+              }
+            />
+            <FormHelperText
+              id="repw-helper-text"
+              sx={{ fontFamily: "insungitCutelivelyjisu" }}
+            >
+              {rePw && !rePwCheck && <span>비밀번호가 일치하지 않습니다</span>}
+            </FormHelperText>
+          </FormControl>
+          <FormControl variant="standard">
+            <InputLabel
+              htmlFor="name"
+              sx={{ fontFamily: "insungitCutelivelyjisu" }}
+            >
+              이름
+            </InputLabel>
+            <Input
+              id="name"
+              value={name}
+              onChange={onChangeName}
+              required
+              error={name && name === "" ? true : false}
+            />
+          </FormControl>
+          <FormControl variant="standard">
+            <InputLabel
+              htmlFor="nickName"
+              sx={{ fontFamily: "insungitCutelivelyjisu" }}
+            >
+              닉네임
+            </InputLabel>
+            <Input
+              id="nickName"
+              value={nickName}
+              onChange={onChangeNickName}
+              required
+              error={nickName && nickName === "" ? true : false}
+            />
+            <FormHelperText
+              id="nick-helper-text"
+              sx={{ fontFamily: "insungitCutelivelyjisu" }}
+            >
+              {nickName &&
+                (nickNameCheck === "Available" ? (
+                  <span>사용 가능한 닉네임입니다</span>
+                ) : nickNameCheck === "UnAvailable" ? (
+                  <span>이미 사용중인 닉네임입니다</span>
+                ) : (
+                  <span>닉네임 중복 체크를 해주세요</span>
+                ))}
+            </FormHelperText>
+          </FormControl>
+          <Button
+            onClick={onCheckNickName}
+            disabled={
+              !nickName ||
+              nickName.length === 0 ||
+              nickNameCheck === "Available"
             }
-          />
-          <FormHelperText
-            id="pw-helper-text"
             sx={{ fontFamily: "insungitCutelivelyjisu" }}
           >
-            {!pwCheck && <span>영문, 숫자, 특수문자 포함 8~16자</span>}
-          </FormHelperText>
-        </FormControl>
-        <FormControl variant="standard">
-          <InputLabel
-            htmlFor="re-pw"
-            sx={{ fontFamily: "insungitCutelivelyjisu" }}
-          >
-            비밀번호 확인
-          </InputLabel>
-          <Input
-            id="re-pw"
-            value={rePw}
-            onChange={onChangeRePw}
-            type="password"
-            required
-            error={rePw && !rePwCheck ? true : false}
-            aria-describedby="repw-helper-text"
-            endAdornment={
-              <InputAdornment position="end">
-                {rePw && rePwCheck && <CheckRounded />}
-              </InputAdornment>
+            닉네임 중복 확인
+          </Button>
+          <FormControl variant="standard">
+            <InputLabel
+              htmlFor="email"
+              sx={{ fontFamily: "insungitCutelivelyjisu" }}
+            >
+              이메일
+            </InputLabel>
+            <Input
+              id="email"
+              value={email}
+              onChange={onChangeEmail}
+              type="email"
+              required
+              error={email && emailCheck !== "Available" ? true : false}
+              aria-describedby="email-helper-text"
+            />
+            <FormHelperText
+              id="email-helper-text"
+              sx={{ fontFamily: "insungitCutelivelyjisu" }}
+            >
+              {email &&
+                (emailCheck === "Available" ? (
+                  <span>사용 가능한 이메일 입니다</span>
+                ) : emailCheck === "PleaseCheckEmail" ? (
+                  <span>이메일 중복 확인을 해주세요</span>
+                ) : emailCheck === "RegexFail" ? (
+                  <span>올바른 이메일 형식이 아닙니다</span>
+                ) : (
+                  <span>유효한 이메일이 아닙니다</span>
+                ))}
+            </FormHelperText>
+          </FormControl>
+          <Button
+            onClick={onCheckEmail}
+            disabled={
+              !email || emailCheck === "RegexFail" || emailCheck === "Available"
+                ? true
+                : false
             }
-          />
-          <FormHelperText
-            id="repw-helper-text"
             sx={{ fontFamily: "insungitCutelivelyjisu" }}
           >
-            {rePw && !rePwCheck && <span>비밀번호가 일치하지 않습니다</span>}
-          </FormHelperText>
-        </FormControl>
-        <FormControl variant="standard">
-          <InputLabel
-            htmlFor="name"
-            sx={{ fontFamily: "insungitCutelivelyjisu" }}
-          >
-            이름
-          </InputLabel>
-          <Input
-            id="name"
-            value={name}
-            onChange={onChangeName}
-            required
-            error={name && name === "" ? true : false}
-          />
-        </FormControl>
-        <FormControl variant="standard">
-          <InputLabel
-            htmlFor="nickName"
-            sx={{ fontFamily: "insungitCutelivelyjisu" }}
-          >
-            닉네임
-          </InputLabel>
-          <Input
-            id="nickName"
-            value={nickName}
-            onChange={onChangeNickName}
-            required
-            error={nickName && nickName === "" ? true : false}
-          />
-          <FormHelperText
-            id="nick-helper-text"
-            sx={{ fontFamily: "insungitCutelivelyjisu" }}
-          >
-            {nickName &&
-              (nickNameCheck === "Available" ? (
-                <span>사용 가능한 닉네임입니다</span>
-              ) : nickNameCheck === "UnAvailable" ? (
-                <span>이미 사용중인 닉네임입니다</span>
-              ) : (
-                <span>닉네임 중복 체크를 해주세요</span>
-              ))}
-          </FormHelperText>
-        </FormControl>
-        <Button
-          onClick={onCheckNickName}
-          disabled={
-            !nickName || nickName.length === 0 || nickNameCheck === "Available"
-          }
-          sx={{ fontFamily: "insungitCutelivelyjisu" }}
-        >
-          닉네임 중복 확인
-        </Button>
-        <FormControl variant="standard">
-          <InputLabel
-            htmlFor="email"
-            sx={{ fontFamily: "insungitCutelivelyjisu" }}
-          >
-            이메일
-          </InputLabel>
-          <Input
-            id="email"
-            value={email}
-            onChange={onChangeEmail}
-            type="email"
-            required
-            error={email && emailCheck !== "Available" ? true : false}
-            aria-describedby="email-helper-text"
-          />
-          <FormHelperText
-            id="email-helper-text"
-            sx={{ fontFamily: "insungitCutelivelyjisu" }}
-          >
-            {email &&
-              (emailCheck === "Available" ? (
-                <span>사용 가능한 이메일 입니다</span>
-              ) : emailCheck === "PleaseCheckEmail" ? (
-                <span>이메일 중복 확인을 해주세요</span>
-              ) : emailCheck === "RegexFail" ? (
-                <span>올바른 이메일 형식이 아닙니다</span>
-              ) : (
-                <span>유효한 이메일이 아닙니다</span>
-              ))}
-          </FormHelperText>
-        </FormControl>
-        <Button
-          onClick={onCheckEmail}
-          disabled={
-            !email || emailCheck === "RegexFail" || emailCheck === "Available"
-              ? true
-              : false
-          }
-          sx={{ fontFamily: "insungitCutelivelyjisu" }}
-        >
-          이메일 중복 확인
-        </Button>
-        <Box component="div" sx={buttonBoxStyle}>
-          <StyledButton variant="contained" type="submit">
-            Sign up
-          </StyledButton>
+            이메일 중복 확인
+          </Button>
+          <Box component="div" sx={buttonBoxStyle}>
+            <StyledButton variant="contained" type="submit">
+              Sign up
+            </StyledButton>
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </BackgroundDiv>
   );
 };
 
@@ -408,14 +422,18 @@ const boxStyle = {
     width: "25ch",
     display: "flex",
     justifyContent: "center",
-    marginTop: "15px",
+    // marginTop: "15px",
   },
 };
 
 const boxStyle2 = {
+  backgroundColor: "#FBF8CC",
+  borderColor: "black",
+  padding: "100px",
+  boxShadow: "0 0 0 0.2rem #FFD761",
   position: "absolute",
   left: "50%",
-  top: "20%",
+  top: "5%",
   transform: "translateX(-50%)",
 };
 
@@ -426,6 +444,7 @@ const StyledButton = styled(Button)<ButtonProps>(({ theme }) => ({
   padding: "6px 12px",
   border: "1px solid",
   width: "50%",
+  top: "20px",
   "&:hover": {
     backgroundColor: "#005112",
     borderColor: "#005112",
@@ -434,10 +453,20 @@ const StyledButton = styled(Button)<ButtonProps>(({ theme }) => ({
   },
   "&:active": {
     boxShadow: "none",
-    backgroundColor: "#0062cc",
-    borderColor: "#005cbf",
+    backgroundColor: "#005112",
+    borderColor: "#005112",
   },
   "&:focus": {
-    boxShadow: "0 0 0 0.2rem rgba(0,123,255,.5)",
+    boxShadow: "0 0 0 0.2rem #005112",
   },
 }));
+
+const BackgroundDiv = styledComp.div`
+  background-image:url('assets/img/background.jpg');
+  background-repeat:no-repeat;
+  background-size: 100%;
+  width:100%;
+  height:100%;
+  background-position:center;
+  
+`;
