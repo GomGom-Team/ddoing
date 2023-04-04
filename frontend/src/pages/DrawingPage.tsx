@@ -219,7 +219,8 @@ const DrawingPage = () => {
 
   const stageHandler = () => {
     if (index < 5) {
-      setIndex(index + 1);
+      //이얍
+      setIndex((index) => index + 1);
       setTimeout(() => console.log("몇스테이지?", index), 1000);
     } else {
       setIsDone(true);

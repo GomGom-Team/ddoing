@@ -13,11 +13,11 @@ interface Reading {
 }
 
 interface DrawingListType {
-  userId: string
-  drawingPath: string
-  percentage: number
-  word: string
-  mean: string
+  userId: string;
+  drawingPath: string;
+  percentage: number;
+  word: string;
+  mean: string;
 }
 // const [level, setLevel] = useState<number>(users.level);
 // const [exp, setExp] = useState<number>(users.exp);
@@ -52,6 +52,7 @@ const MyPage = () => {
       <FontStyle>
         <Header />
         <DummyDiv></DummyDiv>
+        <DummyDiv2 />
         <ProfileDiv>
           <ProfileWrapper>
             <Profile>
@@ -68,53 +69,58 @@ const MyPage = () => {
         </ProfileDiv>
         <BoxContentDiv>
           <Box component="div" sx={TabStyle}>
-            <VerticalTabs/>
+            <VerticalTabs />
           </Box>
-          <Footer />
         </BoxContentDiv>
       </FontStyle>
     </ContaineDiv>
   );
 };
 
+export default MyPage;
 // style
 const DummyDiv = styled.div(tw`h-16`);
-
-export default MyPage;
+const DummyDiv2 = styled.div(tw`h-12`);
 
 //프로필사진
 // tw`h-52 object-cover rounded-md bg-slate-500`,
 const ContaineDiv = styled.div`
   width: 100%;
   height: 100%;
-`
+`;
 
 const ProfileDiv = styled.div(
-  tw`h-2/6 w-full`
-)
+  tw`flex items-center h-2/6 content-between`,
+  css`
+    width: 100vw;
+  `
+);
 
 const ProfileWrapper = styled.div(
-  tw`flex`
-)
+  tw`flex`,
+  css`
+    height: 40vh;
+  `
+);
 
 const BoxContentDiv = styled.div`
-  height: 66.66666%
-`
+  height: 60vh - 6rem;
+`;
 
 const CustomedImage = styled.img`
   width: 10rem;
   height: 10rem;
-  display: block;
+  display: flex;
   float: left;
   border-radius: 70%;
 `;
 
 const Profile = styled.div(
-  tw`flex flex-col rounded-sm`,
+  tw`flex flex-col items-center rounded-sm`,
   css`
-    width: 30%;
+    width: 30vw;
   `
-)
+);
 
 const ProfileName = styled.span`
   display: block;
@@ -124,24 +130,22 @@ const ProfileName = styled.span`
 
 const TabStyle = {
   display: "flex",
-  height: "40rem"
+  height: "20rem",
 };
 
 // level 글자
 const LevelStyle = styled.div`
   display: "flex";
-  width: 40rem;
-  padding-left: 150px;
+  /* width: 40rem; */
+  padding-left: 100px;
   font-size: 50px;
 `;
 
 // level 영역
 const LevelArea = styled.div`
-  width: 70%
+  width: 70vw;
 `;
 
 const FontStyle = styled.div`
   font-family: "insungitCutelivelyjisu";
-  height: 100vh;
-  width: 100vh
 `;
