@@ -88,9 +88,15 @@ const MainPage = () => {
       {/* Banner */}
       <Banner></Banner>
       {/* // Popular Contents */}
+      <CarouselTitle1>
+        인기 컨텐츠
+      </CarouselTitle1>
       {topVideoList && <PopularContents topVideoList={topVideoList} />}
 
       {/* 명예의 전당 */}
+      <CarouselTitle2>
+        명예의전당
+      </CarouselTitle2>
       {bestDrawing && <HallofFame bestDrawing={bestDrawing} />}
       {/* <HallofFame></HallofFame> */}
 
@@ -102,5 +108,19 @@ const MainPage = () => {
 
 // style
 const DummyDiv = styled.div(tw`h-16`);
+
+const CarouselTitle1 = styled.div(
+  tw`flex items-center justify-center text-3xl pt-16`,
+  css`
+    font-family: "insungitCutelivelyjisu";
+  `
+)
+const CarouselTitle2 = styled.div(
+  tw`flex items-center justify-center text-3xl`,
+  css`
+    font-family: "insungitCutelivelyjisu";
+  `
+)
+
 
 export default MainPage;
