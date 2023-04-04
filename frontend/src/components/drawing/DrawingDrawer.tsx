@@ -12,6 +12,7 @@ interface wordListType {
   mean: string;
   engSentence: string;
   koSentence: string;
+  picturePath: string;
 }
 interface ResultPageProps {
   anchor: Anchor;

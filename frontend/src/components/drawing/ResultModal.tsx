@@ -13,6 +13,7 @@ interface wordListType {
   mean: string;
   engSentence: string;
   koSentence: string;
+  picturePath: string;
 }
 interface modalProps {
   answer: boolean;
@@ -72,30 +73,34 @@ export default function TransitionsModal({
               <StyledDrawer>
                 <StyledDiv>
                   <DrawerHead> 정답! </DrawerHead>
-  
-                    <DrawerBody1>
-                      <WordDiv>
-                        <WordEnglish>{ wordList[index].word }</WordEnglish>
-                        <WordKorean>{ wordList[index].mean }</WordKorean>
-                      </WordDiv>
-                      <ImgWrapper>
-                        <CustomedImage></CustomedImage>
-                      </ImgWrapper>
-                    </DrawerBody1>
-  
-                    <DrawerBody2>
-                      <ExampleEnglish>{ wordList[index].engSentence }</ExampleEnglish>
-                      <ExampleKorean>{ wordList[index].koSentence }</ExampleKorean>
-                    </DrawerBody2>
-  
-                <DrawerEnd>
-                  {index < 5 &&
-                    <button onClick ={nextStage}>다음 문제</button>
-                  }
-                  {index === 5 &&
-                    <button onClick ={nextStage}>결과 보기</button>
-                  }
-                </DrawerEnd>
+
+                  <DrawerBody1>
+                    <WordDiv>
+                      <WordEnglish>{wordList[index].word}</WordEnglish>
+                      <WordKorean>{wordList[index].mean}</WordKorean>
+                    </WordDiv>
+                    <ImgWrapper>
+                      <CustomedImage
+                        src={`https://j8a103.p.ssafy.io/ec2/class_images/${wordList[index].picturePath}`}
+                      ></CustomedImage>
+                    </ImgWrapper>
+                  </DrawerBody1>
+
+                  <DrawerBody2>
+                    <ExampleEnglish>
+                      {wordList[index].engSentence}
+                    </ExampleEnglish>
+                    <ExampleKorean>{wordList[index].koSentence}</ExampleKorean>
+                  </DrawerBody2>
+
+                  <DrawerEnd>
+                    {index < 5 && (
+                      <button onClick={nextStage}>다음 문제</button>
+                    )}
+                    {index === 5 && (
+                      <button onClick={nextStage}>결과 보기</button>
+                    )}
+                  </DrawerEnd>
                 </StyledDiv>
               </StyledDrawer>
             </Box>
@@ -124,28 +129,28 @@ export default function TransitionsModal({
               <StyledDiv>
                 <DrawerHead> 땡! </DrawerHead>
 
-                  <DrawerBody1>
-                    <WordDiv>
-                      <WordEnglish>{ wordList[index].word }</WordEnglish>
-                      <WordKorean>{ wordList[index].mean }</WordKorean>
-                    </WordDiv>
-                    <ImgWrapper>
-                      <CustomedImage></CustomedImage>
-                    </ImgWrapper>
-                  </DrawerBody1>
+                <DrawerBody1>
+                  <WordDiv>
+                    <WordEnglish>{wordList[index].word}</WordEnglish>
+                    <WordKorean>{wordList[index].mean}</WordKorean>
+                  </WordDiv>
+                  <ImgWrapper>
+                    <CustomedImage
+                      src={`https://j8a103.p.ssafy.io/ec2/class_images/${wordList[index].picturePath}`}
+                    ></CustomedImage>
+                  </ImgWrapper>
+                </DrawerBody1>
 
-                  <DrawerBody2>
-                    <ExampleEnglish>{ wordList[index].engSentence }</ExampleEnglish>
-                    <ExampleKorean>{ wordList[index].koSentence }</ExampleKorean>
-                  </DrawerBody2>
+                <DrawerBody2>
+                  <ExampleEnglish>{wordList[index].engSentence}</ExampleEnglish>
+                  <ExampleKorean>{wordList[index].koSentence}</ExampleKorean>
+                </DrawerBody2>
 
                 <DrawerEnd>
-                  {index < 5 &&
-                    <button onClick ={nextStage}>다음 문제</button>
-                  }
-                  {index === 5 &&
-                    <button onClick ={nextStage}>결과 보기</button>
-                  }
+                  {index < 5 && <button onClick={nextStage}>다음 문제</button>}
+                  {index === 5 && (
+                    <button onClick={nextStage}>결과 보기</button>
+                  )}
                 </DrawerEnd>
               </StyledDiv>
             </StyledDrawer>
@@ -164,8 +169,8 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 600,
-  bgcolor: '#FBF8CC',
-  border: '4px solid #9A7946',
+  bgcolor: "#FBF8CC",
+  border: "4px solid #9A7946",
   // boxShadow: 24,
   p: 2,
   borderRadius: 10,
@@ -177,7 +182,7 @@ const StyledDrawer = styled.div(
     font-family: "insungitCutelivelyjisu";
     font-size: 24px;
   `
-)
+);
 
 const StyledDiv = styled.div(
   tw`border-red-500 rounded`,
@@ -187,25 +192,15 @@ const StyledDiv = styled.div(
   `
 );
 
-const DrawerHead = styled.h1(
-  tw`flex justify-center mb-16 text-7xl p-5`
-);
+const DrawerHead = styled.h1(tw`flex justify-center mb-16 text-7xl p-5`);
 
-const DrawerBody1 = styled.div(
-  tw`flex justify-evenly mb-16 px-5`
-);
+const DrawerBody1 = styled.div(tw`flex justify-evenly mb-16 px-5`);
 
-const WordDiv = styled.div(
-  tw`flex flex-col items-center justify-center`
-)
+const WordDiv = styled.div(tw`flex flex-col items-center justify-center`);
 
-const WordEnglish = styled.p(
-  tw`text-2xl mb-5 font-bold`
-)
+const WordEnglish = styled.p(tw`text-2xl mb-5 font-bold`);
 
-const WordKorean = styled.p(
-  tw`text-xl`
-)
+const WordKorean = styled.p(tw`text-xl`);
 
 const ImgWrapper = styled.div(tw`flex justify-center items-center pl-10 ml-10`);
 
@@ -217,16 +212,10 @@ const CustomedImage = styled.img(
   `
 );
 
-const DrawerBody2 = styled.div(
-  tw`flex flex-col items-center mb-16 px-10`
-)
+const DrawerBody2 = styled.div(tw`flex flex-col items-center mb-16 px-10`);
 
-const ExampleEnglish = styled.p(
-  tw`mb-5 font-bold text-lg`
-)
+const ExampleEnglish = styled.p(tw`mb-5 font-bold text-lg`);
 
-const ExampleKorean = styled.p(
-  tw`text-lg`
-)
+const ExampleKorean = styled.p(tw`text-lg`);
 
 const DrawerEnd = styled.div(tw`flex justify-center`);
