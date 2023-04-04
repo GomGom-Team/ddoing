@@ -10,6 +10,7 @@ import {
 import { useAppDispatch, useAppSelector } from "../redux/configStore.hooks";
 import { getWordListAction } from "../redux/modules/drawing";
 import useDidMountEffect from "../components/common/useDidMountEffect";
+import axios from "axios";
 
 type Anchor = "top";
 interface wordListType {
@@ -26,6 +27,8 @@ interface radiusType {
 }
 
 const DrawingPage = () => {
+  // 유저 정보
+  const user = useAppSelector((state) => state.user.userData);
   // Data
   // 단어 목록
   // 스테이지 index
@@ -142,7 +145,7 @@ const DrawingPage = () => {
   const modalHandleClose = () => setmodalOpen(false);
 
   // Answer
-  const [answer, setAnswer] = useState(true);
+  const [answer, setAnswer] = useState(false);
 
   const answerResetHandler = () => {
     setAnswer(false);
@@ -152,14 +155,17 @@ const DrawingPage = () => {
     setAnswer(true);
   };
 
+  useDidMountEffect(() => {
+    if (answer === true) {
+      setAnswerCount(answerCount + 1)
+    }
+  }, [answer]);
+
   // WordList
   const [wordList, setWordList] = useState<wordListType[]>([]);
 
   const wordListHandler = () => {
-    // const words = useAppSelector((state) =>
-    // state.drawing.getWordList.data
     dispatch(getWordListAction()).then((res: any) => {
-      // console.log(res.payload)
       setWordList(res.payload);
     });
   };
@@ -267,6 +273,7 @@ const DrawingPage = () => {
         // 정답 맞추면 무조건 이미지 저장하는 요청 보내게 [이미지 / 클래스id / 인식정확도 / 유저아이디]
       }
     });
+    saveFile()
     returnPrediction(Array);
   }, [predictList]);
 
@@ -288,6 +295,60 @@ const DrawingPage = () => {
     canvas.getContext("2d")!!.clearRect(0, 0, canvas.width, canvas.height);
   };
 
+  // 이미지 저장 로직 코드
+  const dataURLtoFileObject = (dataURL : string, fileName : string) => {
+
+    let arr = dataURL.split(',');
+    let mime = 'image/png';
+    let bstr = atob(arr[1]);
+    let n = bstr.length;
+    let u8arr = new Uint8Array(n);
+
+    while(n--){
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new File([u8arr], fileName, {type:mime})
+  }
+
+  const saveFile = () => {
+    if (!canvasRef.current) {
+      return;
+    } else {
+      const canvas: HTMLCanvasElement = canvasRef.current;
+      const formData = new FormData()
+      const dataUrl = canvas.toDataURL();
+      //need to update
+      let id = "pika";
+      let word_class = wordList[index].word;
+
+      const data = {
+        "userId" : id,
+        "wordId" : wordList[index].id,
+        "percentage" : 30
+
+      }
+
+      const imgFile = dataURLtoFileObject(dataUrl, id+"_"+word_class+".png");
+      // console.log(typeof imgFile, imgFile);
+      formData.append('file', imgFile);
+      formData.append('dto' , new Blob([JSON.stringify(data)], {type : "application/json"}))
+ 
+      // axios test
+      const config = {
+        headers: { 
+          'content-type': 'multipart/form-data',
+          charset: 'utf-8'
+        },
+       }
+      axios.post('https://j8a103.p.ssafy.io/api/drawing/file/upload', formData, config)
+      .then(res => {
+        console.log(res.data)
+      })
+      .catch(err => console.log("이미지 업로드 에러", err)); 
+      }
+  }
+
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
     (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -304,6 +365,54 @@ const DrawingPage = () => {
       console.log(val);
       setState(val);
     };
+
+
+  // 경험치 올리기
+  // axios intercepter 만들기
+  const axiosInstance = axios.create();
+  axiosInstance.interceptors.request.use(
+    (config) => {
+      console.log("경험치 요청")
+      return config;
+    },
+    (err) => {
+      return Promise.reject(err);
+    }
+  );
+  axiosInstance.interceptors.response.use(
+    (config) => {
+      console.log("경험치 반영 완료")
+      return config;
+    },
+    (err) => {
+      return Promise.reject(err);
+    }
+  );
+
+  // 경험치 요청 보내는 axios 요청 함수
+  const levelUP = () => {
+    const payload = {
+      userId: user.id,
+      score: answerCount
+    }
+    
+    axiosInstance.post('https://j8a103.p.ssafy.io/api/drawing/score', payload)
+    .then(res => {
+      console.log("경험치 요청 성공 후 데이터",res.data)
+    })
+    .catch(err => console.log("경험치 에러", err)); 
+  
+  }
+
+  const [answerCount, setAnswerCount] = useState(0)
+  
+
+  useDidMountEffect(() => {
+    if(isDone){
+      console.log("내가 문제 맞춘 갯수", answerCount)
+      levelUP()
+    }
+  }, [isDone]);
 
   if (!landing) {
     return (
