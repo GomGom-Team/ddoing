@@ -41,6 +41,7 @@ function a11yProps(index: number) {
   };
 }
 
+
 export default function VerticalTabs() {
   const [value, setValue] = React.useState(0);
 
@@ -77,7 +78,7 @@ export default function VerticalTabs() {
         <ShibaList></ShibaList>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <Remind></Remind>
+        <Remind/>
       </TabPanel>
     </Box>
   );
@@ -100,4 +101,5 @@ const TabsStyle = {
   "& .MuiTab-root.Mui-selected": {
     color: "#FBF8CC",
   },
+  height: "18rem",
 };

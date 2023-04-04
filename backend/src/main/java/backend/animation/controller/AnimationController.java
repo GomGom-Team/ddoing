@@ -106,11 +106,6 @@ public class AnimationController {
     // 마이페이지 학습 영상 top4
     @GetMapping("/myStudy/{userId}")
     public ResponseEntity getAnimationsStudyRecent(@PathVariable String userId) {
-        List<AnimationResponseDTO> result = animationService.getAnimationsStudyRecent(userId);
-        if (result.size() < 1) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.ok(result);
-        }
+        return ResponseEntity.ok(animationService.getAnimationsStudyRecent(userId));
     }
 }

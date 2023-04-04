@@ -44,7 +44,7 @@ const Header = () => {
           <NavWrapperContents>
             <MainLogo onClick={() => navigate("/")}>또잉</MainLogo>
             <NavigateContents>
-              <StyledButton onClick={() => navigate("/animation")}>
+              <StyledButton onClick={() => navigate("/videolist")}>
                 A n i m a t i o n
               </StyledButton>
               <StyledButton onClick={() => navigate("/drawing")}>
@@ -108,7 +108,6 @@ const StickyHeader = styled.header(tw`fixed top-0 z-10 w-full`);
 
 const CustomedNav = styled.nav(
   tw`
-    h-16
     bg-white 
     backdrop-filter 
     backdrop-blur-lg 
@@ -118,6 +117,7 @@ const CustomedNav = styled.nav(
   `,
   css`
     font-family: "insungitCutelivelyjisu";
+    height: 65px;
   `
 );
 

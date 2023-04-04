@@ -25,7 +25,7 @@ const ShibaList = () => {
             >
               <LevelDiv>{item.level}</LevelDiv>
               <ShibaImg
-                src={`../../../model/Shiba_${item.name}_${item.level}/Shiba_${item.name}_${item.level}.png`}
+                src={`../../../ec2/model/Shiba_${item.name}_${item.level}/Shiba_${item.name}_${item.level}.png`}
               />
             </OneWrapBtn>
           </>

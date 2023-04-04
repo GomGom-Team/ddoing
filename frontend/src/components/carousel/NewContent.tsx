@@ -45,9 +45,22 @@ const TitleDescriptionWrapper = styled.div(
   tw`flex flex-col justify-evenly pl-48`
 );
 
-const StyledTitle = styled.h2(tw`mt-2 text-2xl font-bold text-gray-700`);
+const StyledTitle = styled.h2(
+  tw`mt-2 text-4xl font-bold text-gray-700`,
+  css`
+    font-family: "One-Mobile-POP";
+    padding-top: 15px;
+    padding-bottom: 20px;
+    margin-top: 20px;
+  `
+);
 
-const StyledDescription = styled.h2(tw`text-xl text-gray-700`);
+const StyledDescription = styled.h2(
+  tw`text-2xl text-gray-700`,
+  css`
+    font-family: "ONE-Mobile-Regular";
+  `
+);
 
 const ImgWrapper = styled.div(tw`flex justify-center items-center pr-48`);
 

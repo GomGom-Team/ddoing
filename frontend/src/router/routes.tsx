@@ -1,14 +1,11 @@
-import { Fragment } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import MainPage from "../pages/MainPage";
 import DrawingPage from "../pages/DrawingPage";
 import LoginBox from "../components/user/LoginBox";
 import RegisterBox from "../components/user/RegisterBox";
 import MyPage from "../pages/MyPage";
-import Soundtest from "../pages/soundtest";
-import VideoList from "../pages/videolist";
-import VideoTest from "../pages/videotest";
-import LandingPage from "../pages/LandingPage";
+import VideoListPage from "../pages/VideoListPage";
+import VideoDetailPage from "../pages/VideoDetailPage";
 
 const router = createBrowserRouter([
   {
@@ -34,10 +31,6 @@ const router = createBrowserRouter([
     element: <RegisterBox />,
   },
   {
-    path: "animation",
-    element: <div>빈페이지 입니다.</div>,
-  },
-  {
     path: "drawing",
     element: <DrawingPage />,
   },
@@ -50,20 +43,12 @@ const router = createBrowserRouter([
     element: <MyPage />,
   },
   {
-    path: "sound",
-    element: <Soundtest />,
-  },
-  {
     path: "videolist",
-    element: <VideoList />,
+    element: <VideoListPage />,
   },
   {
     path: "video/:id",
-    element: <VideoTest />,
-  },
-  {
-    path: "landing",
-    element: <LandingPage />,
+    element: <VideoDetailPage />,
   },
 ]);
 

@@ -422,7 +422,7 @@ const boxStyle = {
     width: "25ch",
     display: "flex",
     justifyContent: "center",
-    marginTop: "15px",
+    // marginTop: "15px",
   },
 };
 
