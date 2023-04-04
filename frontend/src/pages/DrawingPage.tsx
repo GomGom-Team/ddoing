@@ -320,8 +320,10 @@ const DrawingPage = () => {
 
         <TimerWrapper>{wordList[index].word}</TimerWrapper>
         <StyledDiv>
-          <DrawingCanvas
+          <DrawingCanvas 
+            predictList={predictList} 
             setPredictList={setPredictList}
+            wordList={wordList}
             canvasRef={canvasRef}
             index={index}
             modalHandleOpen={modalHandleOpen}

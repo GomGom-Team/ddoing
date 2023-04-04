@@ -22,22 +22,17 @@ interface wordListType {
 }
 
 interface CanvasPropsType {
-  canvasRef: React.RefObject<HTMLCanvasElement>;
-  setPredictList: React.Dispatch<React.SetStateAction<predictListType>>;
-  index: number;
-  modalHandleOpen(): void;
-  predict: string;
-  setPredict: React.Dispatch<React.SetStateAction<string>>;
+  canvasRef: React.RefObject<HTMLCanvasElement>
+  predictList: predictListType
+  wordList : wordListType[]
+  setPredictList: React.Dispatch<React.SetStateAction<predictListType>>
+  index: number
+  modalHandleOpen(): void
+  predict: string
+  setPredict: React.Dispatch<React.SetStateAction<string>>
 }
 
-const DrawingCanvas = ({
-  canvasRef,
-  predict,
-  setPredictList,
-  setPredict,
-  index,
-  modalHandleOpen,
-}: CanvasPropsType) => {
+const DrawingCanvas = ({canvasRef, predict, wordList, predictList, setPredict, setPredictList, index, modalHandleOpen} : CanvasPropsType) => {
   // state
   const [mousePosition, setMousePosition] = useState<Coordinate | undefined>(
     undefined
@@ -110,7 +105,7 @@ const DrawingCanvas = ({
   const exitPaint = () => {
     setIsPainting(false);
     // API 요청 보낼 코드
-
+    saveFile()
     getPrediction();
   };
   // EventListner 등록
@@ -182,6 +177,58 @@ const DrawingCanvas = ({
     }
   };
 
+  const saveFile = () => {
+    if (!canvasRef.current) {
+      return;
+    } else {
+      const canvas: HTMLCanvasElement = canvasRef.current;
+      const formData = new FormData()
+      const dataUrl = canvas.toDataURL();
+      //need to update
+      let id = "pika";
+      let word_class = wordList[index].word;
+
+      const data = {
+        "userId" : id,
+        "wordId" : wordList[index].id,
+        "percentage" : 30
+
+      }
+
+      const imgFile = dataURLtoFileObject(dataUrl, id+"_"+word_class+".png");
+      // console.log(typeof imgFile, imgFile);
+      formData.append('file', imgFile);
+      formData.append('dto' , new Blob([JSON.stringify(data)], {type : "application/json"}))
+ 
+      // axios test
+      const config = {
+        headers: { 
+          'content-type': 'multipart/form-data',
+          charset: 'utf-8'
+        },
+       }
+      axios.post('https://j8a103.p.ssafy.io/api/drawing/file/upload', formData, config)
+      .then(res => {
+        console.log(res.data)
+      })
+      .catch(err => console.log("먀노ㅓ야ㅓㅁ냐어ㅑ", err)); 
+      }
+  }
+
+  const dataURLtoFileObject = (dataURL : string, fileName : string) => {
+
+    let arr = dataURL.split(',');
+    let mime = 'image/png';
+    let bstr = atob(arr[1]);
+    let n = bstr.length;
+    let u8arr = new Uint8Array(n);
+
+    while(n--){
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new File([u8arr], fileName, {type:mime})
+  }
   const axiosInstance = axios.create();
   axiosInstance.interceptors.request.use(
     (config) => {
@@ -266,3 +313,4 @@ const StyledText = styled.h1(
     font-size: 24px;
   `
 );
+
