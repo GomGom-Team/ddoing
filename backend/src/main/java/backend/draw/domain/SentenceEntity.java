@@ -1,6 +1,5 @@
 package backend.draw.domain;
 
-import backend.common.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,12 +8,12 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name="sentences")
+@Table(name = "sentences")
 @Builder
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SentenceEntity extends BaseEntity {
+public class SentenceEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

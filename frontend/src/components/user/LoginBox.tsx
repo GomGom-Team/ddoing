@@ -58,6 +58,16 @@ const LoginBox = () => {
       onSubmit={onSubmit}
     >
       <Box component="div" sx={boxStyle2}>
+        <h2
+          id="parent-modal-title"
+          style={{
+            fontFamily: "insungitCutelivelyjisu",
+            marginBottom: "10%",
+            fontSize: "25px",
+          }}
+        >
+          로그인
+        </h2>
         <InputWithLabel
           label="아이디"
           name="id"
@@ -87,8 +97,12 @@ const LoginBox = () => {
 export default LoginBox;
 
 const boxStyle2 = {
+  backgroundColor: "#FBF8CC",
+  borderColor: "black",
+  padding: "100px",
+  boxShadow: "0 0 0 0.2rem #FFD761",
   position: "absolute",
-  top: "30%",
+  top: "25%",
   left: "50%",
   transform: "translateX(-50%)",
 };
@@ -99,6 +113,7 @@ const StyledButton = styled(Button)<ButtonProps>(({ theme }) => ({
   color: "black",
   padding: "6px 12px",
   border: "1px solid",
+  top: "20px",
   width: "50%",
   "&:hover": {
     backgroundColor: "#005112",
@@ -108,34 +123,35 @@ const StyledButton = styled(Button)<ButtonProps>(({ theme }) => ({
   },
   "&:active": {
     boxShadow: "none",
-    backgroundColor: "#0062cc",
-    borderColor: "#005cbf",
+    backgroundColor: "#005112",
+    borderColor: "#005112",
   },
   "&:focus": {
-    boxShadow: "0 0 0 0.2rem rgba(0,123,255,.5)",
+    boxShadow: "0 0 0 0.2rem #005112",
   },
 }));
 
 const DeleteButton = styled(Button)<ButtonProps>(({ theme }) => ({
   border: "none",
-  backgroundColor: "white",
+  backgroundColor: "#FBF8CC",
   color: "black",
   boxShadow: "none",
   fontFamily: "insungitCutelivelyjisu",
   padding: "6px 12px",
   width: "50%",
+  top: "20px",
   "&:hover": {
-    backgroundColor: "#005112",
-    borderColor: "#005112",
+    backgroundColor: "#FBF8CC",
+    borderColor: "#FBF8CC",
     boxShadow: "none",
-    color: "#FFFFFF",
+    color: "#FFD761",
   },
   "&:active": {
     boxShadow: "none",
-    backgroundColor: "#0062cc",
-    borderColor: "#005cbf",
+    backgroundColor: "#FBF8CC",
+    borderColor: "#FBF8CC",
   },
   "&:focus": {
-    boxShadow: "0 0 0 0.2rem rgba(0,123,255,.5)",
+    boxShadow: "0 0 0 0.2rem #FBF8CC",
   },
 }));

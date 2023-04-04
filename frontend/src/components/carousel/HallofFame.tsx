@@ -41,7 +41,9 @@ function HallofFame({ bestDrawing }: HallofFameProps) {
           <SliderItems>
             <SliderItemsWrapper>
               <CustomedFigure>
-                <ThumbNail src={bestDrawing[0].drawingPath}></ThumbNail>
+                <ThumbNail
+                  src={`https://j8a103.p.ssafy.io/assets/img_backend/${bestDrawing[0].drawingPath}`}
+                ></ThumbNail>
               </CustomedFigure>
             </SliderItemsWrapper>
           </SliderItems>
@@ -49,7 +51,9 @@ function HallofFame({ bestDrawing }: HallofFameProps) {
           <SliderItems>
             <SliderItemsWrapper>
               <CustomedFigure>
-                <ThumbNail src={bestDrawing[1].drawingPath}></ThumbNail>
+                <ThumbNail
+                  src={`https://j8a103.p.ssafy.io/assets/img_backend/${bestDrawing[1].drawingPath}`}
+                ></ThumbNail>
               </CustomedFigure>
             </SliderItemsWrapper>
           </SliderItems>
@@ -57,7 +61,9 @@ function HallofFame({ bestDrawing }: HallofFameProps) {
           <SliderItems>
             <SliderItemsWrapper>
               <CustomedFigure>
-                <ThumbNail src={bestDrawing[2].drawingPath}></ThumbNail>
+                <ThumbNail
+                  src={`https://j8a103.p.ssafy.io/assets/img_backend/${bestDrawing[2].drawingPath}`}
+                ></ThumbNail>
               </CustomedFigure>
             </SliderItemsWrapper>
           </SliderItems>
@@ -65,7 +71,9 @@ function HallofFame({ bestDrawing }: HallofFameProps) {
           <SliderItems>
             <SliderItemsWrapper>
               <CustomedFigure>
-                <ThumbNail src={bestDrawing[3].drawingPath}></ThumbNail>
+                <ThumbNail
+                  src={`https://j8a103.p.ssafy.io/assets/img_backend/${bestDrawing[3].drawingPath}`}
+                ></ThumbNail>
               </CustomedFigure>
             </SliderItemsWrapper>
           </SliderItems>
@@ -73,7 +81,9 @@ function HallofFame({ bestDrawing }: HallofFameProps) {
           <SliderItems>
             <SliderItemsWrapper>
               <CustomedFigure>
-                <ThumbNail src={bestDrawing[4].drawingPath}></ThumbNail>
+                <ThumbNail
+                  src={`https://j8a103.p.ssafy.io/assets/img_backend/${bestDrawing[4].drawingPath}`}
+                ></ThumbNail>
               </CustomedFigure>
             </SliderItemsWrapper>
           </SliderItems>
@@ -81,7 +91,9 @@ function HallofFame({ bestDrawing }: HallofFameProps) {
           <SliderItems>
             <SliderItemsWrapper>
               <CustomedFigure>
-                <ThumbNail src={bestDrawing[5].drawingPath}></ThumbNail>
+                <ThumbNail
+                  src={`https://j8a103.p.ssafy.io/assets/img_backend/${bestDrawing[5].drawingPath}`}
+                ></ThumbNail>
               </CustomedFigure>
             </SliderItemsWrapper>
           </SliderItems>

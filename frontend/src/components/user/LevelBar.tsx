@@ -30,7 +30,7 @@ class MultiColorProgressBar extends Component<MultiColorProgressBarProps> {
               style={{ color: item.color, width: item.value + "%" }}
               key={i}
             >
-              <span>{item.value}</span>
+              <span>{item.value * 2}</span>
             </div>
           );
         }
@@ -99,7 +99,7 @@ class MultiColorProgressBar extends Component<MultiColorProgressBarProps> {
 
 const MultiStlye = styled.div`
   .multicolor-bar {
-    margin: 20px 20%;
+    margin: 20px 200px;
   }
 
   .multicolor-bar .values .value {
