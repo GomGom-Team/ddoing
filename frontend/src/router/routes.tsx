@@ -6,6 +6,7 @@ import RegisterBox from "../components/user/RegisterBox";
 import MyPage from "../pages/MyPage";
 import VideoListPage from "../pages/VideoListPage";
 import VideoDetailPage from "../pages/VideoDetailPage";
+import LandingPage from "../pages/LandingPage";
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
   {
     path: "video/:id",
     element: <VideoDetailPage />,
+  },
+  {
+    path: "landing",
+    element: <LandingPage />,
   },
 ]);
 
