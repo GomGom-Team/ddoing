@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import tw, { css, styled, theme } from "twin.macro";
 import PlayerScript from "../components/animation/PlayerScript";
 import { useLocation } from "react-router-dom";
@@ -42,6 +42,7 @@ const VideoDetailPage = () => {
   return (
     <AllDiv>
       <Header />
+      <TVImg src="/assets/img/TV.png" width="1210px" />
       <WrapperDiv>
         {isOpen === true ? (
           <MyActDiv>
@@ -55,10 +56,12 @@ const VideoDetailPage = () => {
                     }}
                     key={idx}
                   >
-                    <ActChoiceDiv>
-                      <ActChoiceImg src={`/assets/img/${role}.png`} />
-                    </ActChoiceDiv>
-                    <ActChoiceName>{role}</ActChoiceName>
+                    <ActDiv>
+                      <ActChoiceDiv>
+                        <ActChoiceImg src={`/assets/img/${role}.png`} />
+                      </ActChoiceDiv>
+                      <ActChoiceName>{role}</ActChoiceName>
+                    </ActDiv>
                   </ActChoiceBtn>
                 );
               })}
@@ -84,15 +87,21 @@ export default VideoDetailPage;
 const MyActDiv = styled.div`
   position: absolute;
   display: grid;
-  width: 48vw;
-  height: 27vw;
-  left: 5vw;
-  top: 180px;
+  width: 44.8vw;
+  height: 25.2vw;
+  left: 6.4vw;
+  margin-top: 23.7vh;
   z-index: 999;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.8);
   font-family: "insungitCutelivelyjisu";
   font-size: 60px;
   color: white;
+`;
+
+const TVImg = styled.img`
+  position: absolute;
+  margin-top: 65px;
+  z-index: 0;
 `;
 
 const MyActDiv2 = styled.div`
@@ -111,11 +120,23 @@ const ChoiceDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 30px;
+`;
+
+const ActDiv = styled.div`
+  display: grid;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 const ActChoiceDiv = styled.div`
-  width: 80px;
-  height: 80px;
+  width: 120px;
+  height: 120px;
   display: grid;
   border-radius: 100%;
   overflow: hidden;
@@ -131,8 +152,8 @@ const ActChoiceImg = styled.img`
   display: grid;
   align-items: center;
   justify-content: center;
-  width: 80px;
-  height: 80px;
+  width: 120px;
+  height: 120px;
   object-fit: cover;
 `;
 
@@ -171,17 +192,18 @@ const WrapperDiv = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
-  padding-top: 200px;
-  align-items: center;
+  /* padding-top: 200px; */
+  /* align-items: center; */
   justify-content: center;
 `;
 
 const AllDiv = styled.div`
-  width: 100%;
-  /* height: 100vh; */
-  background: linear-gradient(-45deg, #fbf8cc, #fdf579, #fff125, #ffd761);
-  animation: gradient 15s ease infinite;
-  @keyframes gradient {
+  width: 100vw;
+  height: 100vh;
+  background-image: url("/assets/img/SKY2.png");
+  /* background: linear-gradient(-45deg, #fbf8cc, #fdf579, #fff125, #ffd761); */
+  /* animation: gradient 15s ease infinite; */
+  /* @keyframes gradient {
     0% {
       background-position: 0% 50%;
     }
@@ -191,5 +213,5 @@ const AllDiv = styled.div`
     100% {
       background-position: 0% 50%;
     }
-  }
+  } */
 `;

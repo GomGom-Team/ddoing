@@ -8,19 +8,18 @@ import PrevArrow2 from "./PrevArrow2";
 import { useNavigate } from "react-router-dom";
 
 interface TopVideoListType {
-  id: number
-  title: string
-  runningTime: number
-  pathUrl: string
-  bestScore: number | null
-  roles: string[]
+  id: number;
+  title: string;
+  runningTime: number;
+  pathUrl: string;
+  bestScore: number | null;
+  roles: string[];
 }
 interface PopularContentsType {
-  topVideoList: TopVideoListType[]
+  topVideoList: TopVideoListType[];
 }
 
-
-function PopularContents({topVideoList} :PopularContentsType) {
+function PopularContents({ topVideoList }: PopularContentsType) {
   const navigate = useNavigate();
 
   const settings = {
@@ -47,7 +46,7 @@ function PopularContents({topVideoList} :PopularContentsType) {
                   onClick={() => navigate(`/video/${item.id}`)}
                 >
                   <img
-                    src={`https://img.youtube.com/vi/${item.pathUrl}/0.jpg`}
+                    src={`https://img.youtube.com/vi/${item.pathUrl}/maxresdefault.jpg`}
                   />
                   <ThumbNailTitle>{item.title}</ThumbNailTitle>
                   <ThumbNailDescription></ThumbNailDescription>

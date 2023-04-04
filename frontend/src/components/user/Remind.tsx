@@ -7,11 +7,11 @@ import { Container } from "../common/index"
 import axios from "axios";
 
 interface DrawingListType {
-  userId: string
-  drawingPath: string
-  percentage: number
-  word: string
-  mean: string
+  userId: string;
+  drawingPath: string;
+  percentage: number;
+  word: string;
+  mean: string;
 }
 
 interface RemindVideoListType{
