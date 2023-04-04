@@ -16,6 +16,7 @@ import { getScore } from "../../redux/modules/animation/score";
 import AudioAnalyser from "react-audio-analyser";
 import Container from "../common/Container";
 import React, { useState, useEffect, useMemo } from "react";
+import Button, { ButtonProps } from "@mui/material/Button";
 
 type InfoProps = {
   myAct: string;
@@ -180,29 +181,70 @@ const PlayerScript = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
       {loaded > 0 && playing === false && (
         <AllWrapperDiv>
           <AudioAnalyser {...audioProps}>
-            <div className="btn-box">
-              <div>녹음을 시작해 볼까요?</div>
-              <RecordStartBtn
-                className="btn"
-                onClick={() => controlAudio("recording")}
-              >
-                Start
-              </RecordStartBtn>
-              <button className="btn" onClick={() => controlAudio("inactive")}>
-                Stop
-              </button>
-            </div>
+            <RecordStartWrapdiv className="btn-box">
+              {(status === "" || status === "inactive") && (
+                <>
+                  <RecordDiv>녹음을 시작해 볼까요?</RecordDiv>
+                  <div>{test[nowMy - 1]?.engSentence}</div>
+                  <RecordStartBtn
+                    className="btn"
+                    variant="contained"
+                    onClick={() => controlAudio("recording")}
+                  >
+                    Start
+                  </RecordStartBtn>
+                </>
+              )}
+
+              {status === "recording" && (
+                <>
+                  <div>듣고 있어요!</div>
+                  <div>{test[nowMy - 1]?.engSentence}</div>
+                  <button
+                    className="btn"
+                    onClick={() => controlAudio("inactive")}
+                  >
+                    Stop
+                  </button>
+                </>
+              )}
+            </RecordStartWrapdiv>
           </AudioAnalyser>
-          <div>Score is {myScore}</div>
-          <div>{test[nowMy - 1]?.engSentence}</div>
+          {status === "inactive" && myScore >= 20 && (
+            <>
+              {myScore >= 20 && myScore <= 40 && (
+                <>
+                  <div>Good!</div>
+                </>
+              )}
+              {myScore >= 41 && myScore <= 75 && (
+                <>
+                  <div>Great!</div>
+                </>
+              )}
+              {myScore >= 76 && myScore <= 100 && (
+                <>
+                  <div>Excellent!</div>
+                </>
+              )}
+              <button
+                onClick={() => {
+                  setPlaying(!playing);
+                  controlAudio("");
+                }}
+              >
+                닫기
+              </button>
+            </>
+          )}
+          {/* <div>my Score is {myScore}</div> */}
           <div>
-            <ul>
+            {/* <ul>
               {list.map((value: number, index: number) => (
                 <li key={index}>{value}</li>
               ))}
-            </ul>
+            </ul> */}
             <div></div>
-            <button onClick={() => setPlaying(!playing)}>닫기</button>
           </div>
         </AllWrapperDiv>
       )}
@@ -264,48 +306,38 @@ interface MyProps {
   isMyRole?: boolean;
 }
 
-const RecordStartBtn = styled.button`
-  border: none;
-  width: 130px;
-  height: 40px;
-  color: #fff;
-  border-radius: 5px;
-  padding: 10px 25px;
-  font-family: "Lato", sans-serif;
-  font-weight: 500;
-  background: transparent;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  display: inline-block;
-  box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5),
-    7px 7px 20px 0px rgba(0, 0, 0, 0.1), 4px 4px 5px 0px rgba(0, 0, 0, 0.1);
-  outline: none;
-  after {
-    position: absolute;
-    content: "";
-    width: 0;
-    height: 100%;
-    top: 0;
-    left: 0;
-    direction: rtl;
-    z-index: -1;
-    box-shadow: -7px -7px 20px 0px #fff9, -4px -4px 5px 0px #fff9,
-      7px 7px 20px 0px #0002, 4px 4px 5px 0px #0001;
-    transition: all 0.3s ease;
-  }
-  :hover {
-    color: #000;
-  }
-  .btn-16:hover:after {
-    left: auto;
-    right: 0;
-    width: 100%;
-  }
-  .btn-16:active {
-    top: 2px;
-  }
+const RecordStartWrapdiv = styled.div`
+  /* margin-top: 20vh; */
+  display: grid;
 `;
+
+const RecordDiv = styled.div`
+  margin-top: 20vh;
+`;
+
+const RecordStartBtn = styled(Button)<ButtonProps>(({ theme }) => ({
+  fontFamily: "insungitCutelivelyjisu",
+  backgroundColor: "#FFD761",
+  color: "black",
+  padding: "6px 12px",
+  border: "1px solid",
+  top: "20px",
+  width: "50%",
+  "&:hover": {
+    backgroundColor: "#005112",
+    borderColor: "#005112",
+    boxShadow: "none",
+    color: "#FFFFFF",
+  },
+  "&:active": {
+    boxShadow: "none",
+    backgroundColor: "#005112",
+    borderColor: "#005112",
+  },
+  "&:focus": {
+    boxShadow: "0 0 0 0.2rem #005112",
+  },
+}));
 
 const MyCanvas = styled.div`
   display: flex;
@@ -314,9 +346,9 @@ const MyCanvas = styled.div`
 
 const AllWrapDiv = styled.div`
   display: flex;
-  height: 100vh;
+  height: 100%;
   width: 100vw;
-  padding-top: 13vh;
+  padding-top: 10vw;
 `;
 
 const StyledDiv = styled.div(({ isMyRole, isNowScript }: LiProps) => [
@@ -388,7 +420,7 @@ const ScriptDiv = styled.ol`
 
 const AllWrapperDiv = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   position: absolute;
   align-items: center;
   justify-content: center;
@@ -432,5 +464,5 @@ const RoleNameDiv = styled.div`
 
 const PlayerDiv = styled.div`
   margin-left: 6.4vw;
-  margin-top: 5.5vw;
+  margin-top: 2.8vw;
 `;

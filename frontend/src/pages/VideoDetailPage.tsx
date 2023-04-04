@@ -42,7 +42,7 @@ const VideoDetailPage = () => {
   return (
     <AllDiv>
       <Header />
-      <TVImg src="/assets/img/TV.png" width="1210px" />
+      <TVImg src="/assets/img/TV.png" />
       <WrapperDiv>
         {isOpen === true ? (
           <MyActDiv>
@@ -90,7 +90,7 @@ const MyActDiv = styled.div`
   width: 44.8vw;
   height: 25.2vw;
   left: 6.4vw;
-  margin-top: 23.7vh;
+  margin-top: 12.8vw;
   z-index: 999;
   background-color: rgba(0, 0, 0, 0.8);
   font-family: "insungitCutelivelyjisu";
@@ -100,7 +100,8 @@ const MyActDiv = styled.div`
 
 const TVImg = styled.img`
   position: absolute;
-  margin-top: 65px;
+  top: 4.5vw;
+  width: 63vw;
   z-index: 0;
 `;
 
@@ -120,7 +121,7 @@ const ChoiceDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 30px;
+  margin-top: 5vh;
 `;
 
 const ActDiv = styled.div`
@@ -200,7 +201,7 @@ const WrapperDiv = styled.div`
 const AllDiv = styled.div`
   width: 100vw;
   height: 100vh;
-  background-image: url("/assets/img/SKY2.png");
+  background-image: url("/assets/img/SKY.jpg");
   /* background: linear-gradient(-45deg, #fbf8cc, #fdf579, #fff125, #ffd761); */
   /* animation: gradient 15s ease infinite; */
   /* @keyframes gradient {
