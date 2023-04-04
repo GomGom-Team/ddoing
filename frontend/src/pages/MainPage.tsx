@@ -66,7 +66,7 @@ const MainPage = () => {
     api();
     setTimeout(() => {
       setLoading(false);
-    }, 2700);
+    }, 1000);
   }, []);
 
   const api = async () => {

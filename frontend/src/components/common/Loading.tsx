@@ -12,7 +12,7 @@ const Loading = () => {
           transform: "translate(-50%, -50%)",
         }}
       >
-        <PulseLoader color="#C63DEE" margin={2} />
+        <PulseLoader color="#FFD761" margin={2} />
       </div>
     </div>
   );
