@@ -408,14 +408,14 @@ const boxStyle = {
     width: "25ch",
     display: "flex",
     justifyContent: "center",
-    marginTop: "15px",
+    // marginTop: "15px",
   },
 };
 
 const boxStyle2 = {
   position: "absolute",
   left: "50%",
-  top: "20%",
+  // top: "20%",
   transform: "translateX(-50%)",
 };
 

@@ -101,4 +101,5 @@ const TabsStyle = {
   "& .MuiTab-root.Mui-selected": {
     color: "#FBF8CC",
   },
+  height: "18rem",
 };
