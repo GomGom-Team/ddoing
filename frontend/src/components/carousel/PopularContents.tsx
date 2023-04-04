@@ -42,15 +42,17 @@ function PopularContents({ topVideoList }: PopularContentsType) {
           {topVideoList?.map((item: any, index: number) => {
             return (
               <SliderItems key={index}>
-                <SliderItemsWrapper
-                  onClick={() => navigate(`/video/${item.id}`)}
-                >
-                  <img
-                    src={`https://img.youtube.com/vi/${item.pathUrl}/maxresdefault.jpg`}
-                  />
-                  <ThumbNailTitle>{item.title}</ThumbNailTitle>
-                  <ThumbNailDescription></ThumbNailDescription>
-                </SliderItemsWrapper>
+                <FrameThumbnail>
+                  <SliderItemsWrapper
+                    onClick={() => navigate(`/video/${item.id}`)}
+                  >
+                    <img
+                      src={`https://img.youtube.com/vi/${item.pathUrl}/maxresdefault.jpg`}
+                    />
+                    <ThumbNailTitle>{item.title}</ThumbNailTitle>
+                    <ThumbNailDescription></ThumbNailDescription>
+                  </SliderItemsWrapper>
+                </FrameThumbnail>
               </SliderItems>
             );
           })}
@@ -72,8 +74,12 @@ const SliderItems = styled.li(tw`w-96 p-5`);
 
 const SliderItemsWrapper = styled.button(tw`border rounded-lg p-5 h-full`);
 
-const ThumbNail = styled.img(
-  tw`h-44 w-full object-cover rounded-md bg-slate-500`
+const FrameThumbnail = styled.div(
+  tw`flex justify-center items-center`,
+  css`
+    border: 40px solid;
+    border-image: url("/assets/border/Border3.png") 50 64;
+  `
 );
 
 const ThumbNailTitle = styled.h2(tw`mt-2 text-2xl font-bold text-gray-700`);

@@ -38,71 +38,27 @@ function HallofFame({ bestDrawing }: HallofFameProps) {
           tw="flex w-10/12 overflow-hidden justify-center items-center"
           {...settings}
         >
-          <SliderItems>
-            <SliderItemsWrapper>
-              <CustomedFigure>
-                <FrameThumbnail>
-                  <ThumbNail
-                    src={`https://j8a103.p.ssafy.io/assets/img_backend/${bestDrawing[0].drawingPath}`}
-                  ></ThumbNail>
-                </FrameThumbnail>
-              </CustomedFigure>
-            </SliderItemsWrapper>
-          </SliderItems>
-
-          <SliderItems>
-            <SliderItemsWrapper>
-              <CustomedFigure>
-                <ThumbNail
-                  src={`https://j8a103.p.ssafy.io/assets/img_backend/${bestDrawing[1].drawingPath}`}
-                ></ThumbNail>
-              </CustomedFigure>
-            </SliderItemsWrapper>
-          </SliderItems>
-
-          <SliderItems>
-            <SliderItemsWrapper>
-              <CustomedFigure>
-                <ThumbNail
-                  src={`https://j8a103.p.ssafy.io/assets/img_backend/${bestDrawing[2].drawingPath}`}
-                ></ThumbNail>
-              </CustomedFigure>
-            </SliderItemsWrapper>
-          </SliderItems>
-
-          <SliderItems>
-            <SliderItemsWrapper>
-              <CustomedFigure>
-                <ThumbNail
-                  src={`https://j8a103.p.ssafy.io/assets/img_backend/${bestDrawing[3].drawingPath}`}
-                ></ThumbNail>
-              </CustomedFigure>
-            </SliderItemsWrapper>
-          </SliderItems>
-
-          <SliderItems>
-            <SliderItemsWrapper>
-              <CustomedFigure>
-                <FrameThumbnail>
-                  <ThumbNail
-                    src={`https://j8a103.p.ssafy.io/assets/img_backend/${bestDrawing[4].drawingPath}`}
-                  ></ThumbNail>
-                </FrameThumbnail>
-              </CustomedFigure>
-            </SliderItemsWrapper>
-          </SliderItems>
-
-          <SliderItems>
-            <SliderItemsWrapper>
-              <CustomedFigure>
-                <FrameThumbnail>
-                  <ThumbNail
-                    src={`https://j8a103.p.ssafy.io/assets/img_backend/${bestDrawing[5].drawingPath}`}
-                  ></ThumbNail>
-                </FrameThumbnail>
-              </CustomedFigure>
-            </SliderItemsWrapper>
-          </SliderItems>
+              {bestDrawing &&
+                bestDrawing.map((item: any, index: number) => {
+                  return (
+                    <SliderItems key={index}>
+                      <SliderItemsWrapper>
+                        <CustomedFigure>
+                          <FrameThumbnail>
+                            {item.drawingPath && (
+                              <ThumbNail
+                                src={`https://j8a103.p.ssafy.io/assets/img_backend/${item.drawingPath}`}
+                              ></ThumbNail>
+                            )}
+                            {!item.drawingPath && (
+                              <NullImg>아직 그림이 없어요</NullImg>
+                            )}
+                          </FrameThumbnail>
+                        </CustomedFigure>
+                      </SliderItemsWrapper>
+                    </SliderItems>
+                  );
+                })}
         </Slider>
       </CustomedSection>
     </SectionWrapper>
@@ -116,7 +72,7 @@ const CustomedSection = styled.section(
 );
 
 const SectionWrapper = styled.div(
-  tw`flex justify-center w-full pb-24 items-center`
+  tw`flex justify-center w-full py-24 items-center`
 );
 
 const SliderItems = styled.li(tw`w-96 p-5`);
@@ -126,13 +82,18 @@ const SliderItemsWrapper = styled.div(
 );
 
 const FrameThumbnail = styled.div(
-  tw`h-56 w-56 object-cover flex justify-center items-center`,
+  tw`flex justify-center items-center`,
   css`
-    background-image: url("assets/img/Frame.png");
+    border: 60px solid;
+    border-image: url("/assets/border/Border8.png") 50 64;
   `
 );
 
 const ThumbNail = styled.img(tw`h-56 w-56 object-cover bg-slate-500`);
+
+const NullImg = styled.div(
+  tw`flex justify-center items-center h-36 w-48 object-cover bg-slate-500 border-4 m-5`
+);
 
 const CustomedFigure = styled.figure`
   animation: swing ease-in-out 1s infinite alternate;
