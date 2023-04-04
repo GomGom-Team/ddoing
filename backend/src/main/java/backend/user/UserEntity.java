@@ -6,7 +6,6 @@ import backend.animation.domain.AnimationBestScoreEntity;
 import backend.animation.domain.AnimationScoreEntity;
 import backend.draw.domain.DrawingScoreEntity;
 import backend.draw.domain.UserDrawingEntity;
-import backend.rank.RankEntity;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -50,9 +49,6 @@ public class UserEntity extends BaseEntity {
 
     @OneToOne(mappedBy = "userEntity", cascade = CascadeType.REMOVE)
     private TokenEntity tokenEntity;
-
-    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.REMOVE)
-    private List<RankEntity> rankEntities;
 
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.REMOVE)
     private List<DrawingScoreEntity> drawingScoreEntities;
