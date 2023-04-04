@@ -168,11 +168,9 @@ const boxStyle = {
 
 // 내정보 스타일
 const boxStyle2 = {
-  position: "absolute",
-  left: "800px",
-  top: "250px",
+  position: "relative",
+  left: "20rem",
   transform: "translateX(-50%)",
-  marginTop: "100px",
   fontFamily: "insungitCutelivelyjisu",
 };
 

@@ -26,8 +26,8 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box component="div" sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+        <Box component="div" sx={{ display: "flex" }}>
+          {children}
         </Box>
       )}
     </div>
@@ -40,7 +40,6 @@ function a11yProps(index: number) {
     "aria-controls": `vertical-tabpanel-${index}`,
   };
 }
-
 
 export default function VerticalTabs() {
   const [value, setValue] = React.useState(0);
@@ -78,7 +77,7 @@ export default function VerticalTabs() {
         <ShibaList></ShibaList>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <Remind/>
+        <Remind />
       </TabPanel>
     </Box>
   );
@@ -101,5 +100,6 @@ const TabsStyle = {
   "& .MuiTab-root.Mui-selected": {
     color: "#FBF8CC",
   },
-  height: "18rem",
+  height: "20rem",
+  width: "15rem",
 };

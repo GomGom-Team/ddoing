@@ -114,10 +114,11 @@ const CustomedNav = styled.nav(
     bg-opacity-30
     border-b
     border-gray-200
+    h-16
   `,
   css`
     font-family: "insungitCutelivelyjisu";
-    height: 65px;
+    /* height: 65px; */
   `
 );
 
