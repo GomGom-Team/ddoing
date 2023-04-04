@@ -255,19 +255,14 @@ const DrawingPage = () => {
       }
     })
     returnPrediction(Array)
+
   }, [predictList])
 
   const [predict, setPredict] = useState("...")
   
   const returnPrediction = (Array : string[]) => {
-    if ("pending") {
-      setPredict("...")
-    } else {
-    } 
-    setPredict(Array[0])
-    setTimeout(() => setPredict(Array[1]), 1000)
-    setTimeout(() => setPredict(Array[2]), 2000)
-    setTimeout(() => setPredict("잘 모르겠어요 ㅠ ㅠ"), 3000)
+
+    setPredict(`${Array[0]} 또는 ${Array[1]} 또는 ${Array[2]} `)
   }
   
 
@@ -323,12 +318,12 @@ const DrawingPage = () => {
         </TimerWrapper>
         <StyledDiv>
           <DrawingCanvas 
-            predictList={predictList} 
             setPredictList={setPredictList} 
             canvasRef={canvasRef}
             index={index}
             modalHandleOpen = {modalHandleOpen}
             predict = {predict}
+            setPredict = {setPredict}
           />
         </StyledDiv>
         {/* Drawer */}
