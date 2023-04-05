@@ -157,7 +157,7 @@ const DrawingPage = () => {
 
   useDidMountEffect(() => {
     if (answer === true) {
-      setAnswerCount(answerCount + 1)
+      setAnswerCount(answerCount + 1);
     }
   }, [answer]);
 
@@ -236,6 +236,7 @@ const DrawingPage = () => {
   const restartHandler = () => {
     setIndex(0);
     clear();
+    setAnswerCount(0);
   };
 
   useDidMountEffect(() => {
@@ -273,7 +274,7 @@ const DrawingPage = () => {
         // 정답 맞추면 무조건 이미지 저장하는 요청 보내게 [이미지 / 클래스id / 인식정확도 / 유저아이디]
       }
     });
-    saveFile()
+    saveFile();
     returnPrediction(Array);
   }, [predictList]);
 
@@ -296,58 +297,67 @@ const DrawingPage = () => {
   };
 
   // 이미지 저장 로직 코드
-  const dataURLtoFileObject = (dataURL : string, fileName : string) => {
-
-    let arr = dataURL.split(',');
-    let mime = 'image/png';
+  const dataURLtoFileObject = (dataURL: string, fileName: string) => {
+    let arr = dataURL.split(",");
+    let mime = "image/png";
     let bstr = atob(arr[1]);
     let n = bstr.length;
     let u8arr = new Uint8Array(n);
 
-    while(n--){
+    while (n--) {
       u8arr[n] = bstr.charCodeAt(n);
     }
 
-    return new File([u8arr], fileName, {type:mime})
-  }
+    return new File([u8arr], fileName, { type: mime });
+  };
 
   const saveFile = () => {
     if (!canvasRef.current) {
       return;
     } else {
       const canvas: HTMLCanvasElement = canvasRef.current;
-      const formData = new FormData()
+      const formData = new FormData();
       const dataUrl = canvas.toDataURL();
       //need to update
       let id = "pika";
       let word_class = wordList[index].word;
 
       const data = {
-        "userId" : id,
-        "wordId" : wordList[index].id,
-        "percentage" : 30
+        userId: id,
+        wordId: wordList[index].id,
+        percentage: 30,
+      };
 
-      }
-
-      const imgFile = dataURLtoFileObject(dataUrl, id+"_"+word_class+".png");
+      const imgFile = dataURLtoFileObject(
+        dataUrl,
+        id + "_" + word_class + ".png"
+      );
       // console.log(typeof imgFile, imgFile);
-      formData.append('file', imgFile);
-      formData.append('dto' , new Blob([JSON.stringify(data)], {type : "application/json"}))
- 
+      formData.append("file", imgFile);
+      formData.append(
+        "dto",
+        new Blob([JSON.stringify(data)], { type: "application/json" })
+      );
+
       // axios test
       const config = {
-        headers: { 
-          'content-type': 'multipart/form-data',
-          charset: 'utf-8'
+        headers: {
+          "content-type": "multipart/form-data",
+          charset: "utf-8",
         },
-       }
-      axios.post('https://j8a103.p.ssafy.io/api/drawing/file/upload', formData, config)
-      .then(res => {
-        console.log(res.data)
-      })
-      .catch(err => console.log("이미지 업로드 에러", err)); 
-      }
-  }
+      };
+      axios
+        .post(
+          "https://j8a103.p.ssafy.io/api/drawing/file/upload",
+          formData,
+          config
+        )
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => console.log("이미지 업로드 에러", err));
+    }
+  };
 
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
@@ -366,13 +376,12 @@ const DrawingPage = () => {
       setState(val);
     };
 
-
   // 경험치 올리기
   // axios intercepter 만들기
   const axiosInstance = axios.create();
   axiosInstance.interceptors.request.use(
     (config) => {
-      console.log("경험치 요청")
+      console.log("경험치 요청");
       return config;
     },
     (err) => {
@@ -381,7 +390,7 @@ const DrawingPage = () => {
   );
   axiosInstance.interceptors.response.use(
     (config) => {
-      console.log("경험치 반영 완료")
+      console.log("경험치 반영 완료");
       return config;
     },
     (err) => {
@@ -393,24 +402,23 @@ const DrawingPage = () => {
   const levelUP = () => {
     const payload = {
       userId: user.id,
-      score: answerCount
-    }
-    
-    axiosInstance.post('https://j8a103.p.ssafy.io/api/drawing/score', payload)
-    .then(res => {
-      console.log("경험치 요청 성공 후 데이터",res.data)
-    })
-    .catch(err => console.log("경험치 에러", err)); 
-  
-  }
+      score: answerCount,
+    };
 
-  const [answerCount, setAnswerCount] = useState(0)
-  
+    axiosInstance
+      .post("https://j8a103.p.ssafy.io/api/drawing/score", payload)
+      .then((res) => {
+        console.log("경험치 요청 성공 후 데이터", res.data);
+      })
+      .catch((err) => console.log("경험치 에러", err));
+  };
+
+  const [answerCount, setAnswerCount] = useState(0);
 
   useDidMountEffect(() => {
-    if(isDone){
-      console.log("내가 문제 맞춘 갯수", answerCount)
-      levelUP()
+    if (isDone) {
+      console.log("내가 문제 맞춘 갯수", answerCount);
+      levelUP();
     }
   }, [isDone]);
 
@@ -429,8 +437,8 @@ const DrawingPage = () => {
 
         <TimerWrapper>{wordList[index].word}</TimerWrapper>
         <StyledDiv>
-          <DrawingCanvas 
-            predictList={predictList} 
+          <DrawingCanvas
+            predictList={predictList}
             setPredictList={setPredictList}
             wordList={wordList}
             canvasRef={canvasRef}
