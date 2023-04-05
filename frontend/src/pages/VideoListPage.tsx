@@ -86,6 +86,12 @@ const VideoListPage = () => {
       } else {
         setTestArray([]);
       }
+    } else if (status === "All") {
+      if (videoList !== null) {
+        setTestArray(videoList);
+      } else {
+        setTestArray([]);
+      }
     }
     console.log("now status is ", status);
   };
@@ -247,6 +253,13 @@ const VideoListPage = () => {
             </StarBtn>
           </StarDiv>
           <DoneSelectDiv>
+            <AllSelectBtn
+              onClick={() => {
+                handleClick("All");
+              }}
+            >
+              <NotDoneDiv>All</NotDoneDiv>
+            </AllSelectBtn>
             <DoneBtn
               onClick={() => {
                 setSelectedDone(1);
@@ -255,6 +268,7 @@ const VideoListPage = () => {
             >
               <DoneImg>
                 <img src="/assets/img/Done.png" />
+                <DoneDiv>Done</DoneDiv>
               </DoneImg>
             </DoneBtn>
             <NotDoneBtn
@@ -265,6 +279,7 @@ const VideoListPage = () => {
             >
               <NotDoneImg>
                 <img src="/assets/img/NotDone.png" />
+                <NotDoneDiv>Not Done</NotDoneDiv>
               </NotDoneImg>
             </NotDoneBtn>
           </DoneSelectDiv>
@@ -347,64 +362,65 @@ const VideoListPage = () => {
           </ListWrapperDiv>
         ) : (
           <ListWrapperDiv>
-            {testArray?.map((item: any, index: number) => {
-              return (
-                <EachBtn
-                  key={index}
-                  onClick={() => navigate(`/video/${item.id}`)}
-                >
-                  <VideoDiv>
-                    <VideoImg
-                      src={`https://img.youtube.com/vi/${item.pathUrl}/maxresdefault.jpg`}
-                    />
-                  </VideoDiv>
-                  <VideoTitleDiv>{item.title.split(" - ")[1]}</VideoTitleDiv>
-                  <VideoTimeDiv>
-                    {(item.runningTime - (item.runningTime % 60)) / 60} :{" "}
-                    {item.runningTime % 60 >= 10
-                      ? item.runningTime % 60
-                      : "0" + (item.runningTime % 60)}
-                  </VideoTimeDiv>
-                  {item.bestScore >= 20 && item.bestScore <= 40 && (
-                    <VideoScoreDiv>
-                      <img src="/assets/img/EmptyStar.png" />
-                      <img src="/assets/img/EmptyStar.png" />
-                      <img src="/assets/img/Star.png" />
-                    </VideoScoreDiv>
-                  )}
-                  {item.bestScore >= 41 && item.bestScore <= 75 && (
-                    <VideoScoreDiv>
-                      <img src="/assets/img/EmptyStar.png" />
-                      <img src="/assets/img/Star.png" />
-                      <img src="/assets/img/Star.png" />
-                    </VideoScoreDiv>
-                  )}
-                  {item.bestScore >= 76 && item.bestScore <= 100 && (
-                    <VideoScoreDiv>
-                      <img src="/assets/img/Star.png" />
-                      <img src="/assets/img/Star.png" />
-                      <img src="/assets/img/Star.png" />
-                    </VideoScoreDiv>
-                  )}
-                  {item.bestScore === null && (
-                    <VideoScoreDiv>
-                      <img src="/assets/img/EmptyStar.png" />
-                      <img src="/assets/img/EmptyStar.png" />
-                      <img src="/assets/img/EmptyStar.png" />
-                    </VideoScoreDiv>
-                  )}
-                  <VideoAllRoleDiv>
-                    {item.roles.map((item: any, index: number) => {
-                      return (
-                        <VideoRoleWrapDiv key={index}>
-                          <VideoRoleDiv># {item}</VideoRoleDiv>
-                        </VideoRoleWrapDiv>
-                      );
-                    })}
-                  </VideoAllRoleDiv>
-                </EachBtn>
-              );
-            })}
+            {testArray &&
+              testArray?.map((item: any, index: number) => {
+                return (
+                  <EachBtn
+                    key={index}
+                    onClick={() => navigate(`/video/${item.id}`)}
+                  >
+                    <VideoDiv>
+                      <VideoImg
+                        src={`https://img.youtube.com/vi/${item.pathUrl}/maxresdefault.jpg`}
+                      />
+                    </VideoDiv>
+                    <VideoTitleDiv>{item.title.split(" - ")[1]}</VideoTitleDiv>
+                    <VideoTimeDiv>
+                      {(item.runningTime - (item.runningTime % 60)) / 60} :{" "}
+                      {item.runningTime % 60 >= 10
+                        ? item.runningTime % 60
+                        : "0" + (item.runningTime % 60)}
+                    </VideoTimeDiv>
+                    {item.bestScore >= 20 && item.bestScore <= 40 && (
+                      <VideoScoreDiv>
+                        <img src="/assets/img/EmptyStar.png" />
+                        <img src="/assets/img/EmptyStar.png" />
+                        <img src="/assets/img/Star.png" />
+                      </VideoScoreDiv>
+                    )}
+                    {item.bestScore >= 41 && item.bestScore <= 75 && (
+                      <VideoScoreDiv>
+                        <img src="/assets/img/EmptyStar.png" />
+                        <img src="/assets/img/Star.png" />
+                        <img src="/assets/img/Star.png" />
+                      </VideoScoreDiv>
+                    )}
+                    {item.bestScore >= 76 && item.bestScore <= 100 && (
+                      <VideoScoreDiv>
+                        <img src="/assets/img/Star.png" />
+                        <img src="/assets/img/Star.png" />
+                        <img src="/assets/img/Star.png" />
+                      </VideoScoreDiv>
+                    )}
+                    {item.bestScore === null && (
+                      <VideoScoreDiv>
+                        <img src="/assets/img/EmptyStar.png" />
+                        <img src="/assets/img/EmptyStar.png" />
+                        <img src="/assets/img/EmptyStar.png" />
+                      </VideoScoreDiv>
+                    )}
+                    <VideoAllRoleDiv>
+                      {item.roles.map((item: any, index: number) => {
+                        return (
+                          <VideoRoleWrapDiv key={index}>
+                            <VideoRoleDiv># {item}</VideoRoleDiv>
+                          </VideoRoleWrapDiv>
+                        );
+                      })}
+                    </VideoAllRoleDiv>
+                  </EachBtn>
+                );
+              })}
           </ListWrapperDiv>
         )}
       </AllDiv>
@@ -416,6 +432,20 @@ export default VideoListPage;
 
 const AllWrapperDiv = styled.div`
   display: flex;
+`;
+
+const DoneDiv = styled.div`
+  font-family: "PyeongChangPeace-Bold";
+  font-size: 1vw;
+  margin-left: 0.5vw;
+  margin-right: 0.25vw;
+`;
+
+const NotDoneDiv = styled.div`
+  font-family: "PyeongChangPeace-Bold";
+  font-size: 1vw;
+  margin-left: 0.5vw;
+  margin-right: 0.25vw;
 `;
 
 const ListWrapperDiv = styled.div`
@@ -472,7 +502,23 @@ const DoneSelectDiv = styled.div`
   top: 11vw;
   right: 13vw;
 `;
-const DoneBtn = styled.div`
+const DoneBtn = styled.button`
+  display: flex;
+  height: 100%;
+  border-radius: 10px;
+  margin-right: 5px;
+  font-family: "CookieRun-Bold";
+  box-shadow: 4px 8px 8px hsl(0deg 0% 0% / 0.25);
+  background: white;
+
+  transition: all 0.2s ease-in-out;
+  padding: 5px 13px 5px 10px;
+  &:hover {
+    box-shadow: -2px -2px 5px #fff;
+  }
+`;
+
+const AllSelectBtn = styled.button`
   display: flex;
   height: 100%;
   border-radius: 10px;
@@ -645,10 +691,6 @@ const VideoRoleWrapDiv = styled.div`
   animation: ${gradient} 15s ease infinite;
   transition: all 0.2s ease-in-out;
   padding: 5px 13px 5px 10px;
-  &:hover {
-    box-shadow: -2px -2px 5px #fff;
-  }
-
   &:active {
     box-shadow: inset 1px 1px 2px
         linear-gradient(-45deg, #fbf8cc, #fdf579, #fff125, #ffd761),

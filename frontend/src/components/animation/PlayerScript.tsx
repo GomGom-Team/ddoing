@@ -17,6 +17,7 @@ import AudioAnalyser from "react-audio-analyser";
 import Container from "../common/Container";
 import React, { useState, useEffect, useMemo } from "react";
 import Button, { ButtonProps } from "@mui/material/Button";
+import Loading from "../common/Loading";
 
 type InfoProps = {
   myAct: string;
@@ -60,6 +61,8 @@ const PlayerScript = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
   const [audioType, setAudioType] = useState("audio/wav");
   const [myScore, setMyScore] = useState(0);
   const [isRecording, setIsRecording] = useState(false);
+  const [isOnResult, setIsOnResult] = useState(false);
+  const [retry, setRetry] = useState(false);
 
   const controlAudio = (status: any) => {
     setStatus(status);
@@ -76,8 +79,8 @@ const PlayerScript = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
     audioType,
     status,
     audioSrc,
-    width: "0px",
-    height: "0px",
+    width: 0,
+    height: 0,
     className: "MyCanvas",
     timeslice: 1000,
     stopCallback: (e: any) => {
@@ -113,6 +116,7 @@ const PlayerScript = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
     if (myScore !== 0) {
       const nextList = list.concat(myScore);
       setList(nextList);
+      console.log("list!!!!!!!", nextList);
     }
   }, [myScore]);
 
@@ -142,6 +146,28 @@ const PlayerScript = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
     setLoaded(state.loaded);
     setPlayedSeconds(state.playedSeconds);
   };
+
+  useEffect(() => {
+    if (status === "inactive") {
+      setTimeout(() => {
+        setIsOnResult(true);
+      }, 2500);
+    } else if (status === "") {
+      setMyScore(0);
+      setIsOnResult(false);
+    }
+  }, [status]);
+
+  useEffect(() => {
+    if (isOnResult && myScore === 0) {
+      setRetry(true);
+      setIsOnResult(false);
+    }
+  }, [isOnResult]);
+
+  console.log("status", status);
+  console.log("isOnResult", isOnResult);
+  console.log("retry", retry);
 
   return (
     <AllWrapDiv>
@@ -180,9 +206,12 @@ const PlayerScript = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
 
       {loaded > 0 && playing === false && (
         <AllWrapperDiv>
+          <HideThingDiv>
+            {myAct} : {nowMy} / {test?.length}
+          </HideThingDiv>
           <AudioAnalyser {...audioProps}>
             <RecordStartWrapdiv className="btn-box">
-              {(status === "" || status === "inactive") && (
+              {status === "" && (
                 <RecordStartAll>
                   <RecordDiv>녹음을 시작해 볼까요?</RecordDiv>
                   <NowScriptDiv>{test[nowMy - 1]?.engSentence}</NowScriptDiv>
@@ -196,42 +225,60 @@ const PlayerScript = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
                 <RecordStartAll>
                   <RecordDiv>듣고 있어요!</RecordDiv>
                   <NowScriptDiv>{test[nowMy - 1]?.engSentence}</NowScriptDiv>
-                  <button
-                    className="btn"
-                    onClick={() => controlAudio("inactive")}
-                  >
-                    Stop
-                  </button>
+                  <RecordStopBtn onClick={() => controlAudio("inactive")}>
+                    <MicImg src="/assets/img/Mic.gif" />
+                  </RecordStopBtn>
                 </RecordStartAll>
               )}
             </RecordStartWrapdiv>
           </AudioAnalyser>
-          {status === "inactive" && myScore >= 20 && (
-            <>
+          {status === "inactive" && myScore >= 20 && isOnResult && (
+            <RecordStartAll>
               {myScore >= 20 && myScore <= 40 && (
                 <>
-                  <div>Good!</div>
+                  <RecordResDiv>Good!</RecordResDiv>
+                  <ResultImg src="/assets/img/Good.png"></ResultImg>
                 </>
               )}
               {myScore >= 41 && myScore <= 75 && (
                 <>
-                  <div>Great!</div>
+                  <RecordResDiv>Great!</RecordResDiv>
+                  <ResultImg src="/assets/img/Great.png"></ResultImg>
                 </>
               )}
               {myScore >= 76 && myScore <= 100 && (
                 <>
-                  <div>Excellent!</div>
+                  <RecordResDiv>Excellent!</RecordResDiv>
+                  <ResultImg src="/assets/img/Excellent.png"></ResultImg>
                 </>
               )}
-              <button
+              <RecordEndBtn
                 onClick={() => {
                   setPlaying(!playing);
                   controlAudio("");
                 }}
               >
                 닫기
-              </button>
-            </>
+              </RecordEndBtn>
+            </RecordStartAll>
+          )}
+          {status === "inactive" && isOnResult === false && retry === false && (
+            <RecordStartAll>
+              <LoadingImg src="/assets/img/Loading.gif" />
+            </RecordStartAll>
+          )}
+          {status === "inactive" && retry && (
+            <RecordStartAll>
+              <RecordResDiv>앗, 제대로 못들었어요😥</RecordResDiv>
+              <RecordEndBtn
+                onClick={() => {
+                  setRetry(false);
+                  setStatus("");
+                }}
+              >
+                다시하기
+              </RecordEndBtn>
+            </RecordStartAll>
           )}
           {/* <div>my Score is {myScore}</div> */}
           <div>
@@ -248,15 +295,62 @@ const PlayerScript = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
         playedSeconds > video?.data?.runningTime && (
           <>
             <AllWrapperDiv>
-              <b>평균 값:{avg}</b>
-              <button
-                onClick={() => {
-                  navigate(`/videolist`);
-                  resultSubmit();
-                }}
-              >
-                닫기
-              </button>
+              {avg >= 20 && avg <= 40 && (
+                <RecordStartAll>
+                  <RealEndAll>
+                    <RealResDiv>Good Job</RealResDiv>
+                    <StarImg src="/assets/img/Star1.gif" />
+
+                    <RealImg src="/assets/img/Good_Finish.png"></RealImg>
+
+                    <RealEndBtn
+                      onClick={() => {
+                        navigate(`/videolist`);
+                        resultSubmit();
+                      }}
+                    >
+                      닫기
+                    </RealEndBtn>
+                  </RealEndAll>
+                </RecordStartAll>
+              )}
+              {avg >= 41 && avg <= 75 && (
+                <RecordStartAll>
+                  <RealEndAll>
+                    <RealResDiv>Great Job</RealResDiv>
+                    <StarImg src="/assets/img/Star2.gif" />
+
+                    <RealImg src="/assets/img/Great_Finish.png"></RealImg>
+
+                    <RealEndBtn
+                      onClick={() => {
+                        navigate(`/videolist`);
+                        resultSubmit();
+                      }}
+                    >
+                      닫기
+                    </RealEndBtn>
+                  </RealEndAll>
+                </RecordStartAll>
+              )}
+              {avg >= 76 && avg <= 100 && (
+                <RecordStartAll>
+                  <RealEndAll>
+                    <RealResDiv>Excellent Job</RealResDiv>
+                    <StarImg src="/assets/img/Star3.gif" />
+                    <RealImg src="/assets/img/Excellent_Finish.png"></RealImg>
+
+                    <RealEndBtn
+                      onClick={() => {
+                        navigate(`/videolist`);
+                        resultSubmit();
+                      }}
+                    >
+                      닫기
+                    </RealEndBtn>
+                  </RealEndAll>
+                </RecordStartAll>
+              )}
             </AllWrapperDiv>
           </>
         )}
@@ -307,9 +401,62 @@ const ClipboardImg = styled.img`
   display: flex;
   position: absolute;
   width: 34.5vw;
-  right: 5vw;
+  right: 3vw;
   top: 5.2vw;
 `;
+
+const LoadingImg = styled.img`
+  position: absolute;
+  width: 10vw;
+  left: 45vw;
+  top: 23vw;
+  z-index: 999;
+`;
+
+const StarImg = styled.img`
+  position: absolute;
+  width: 20vw;
+  left: 40vw;
+  top: 20vw;
+  z-index: 999;
+`;
+
+const HideThingDiv = styled.div`
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 17.5vw;
+  padding: 5px;
+  font-family: "PyeongChangPeace-Bold";
+  font-size: 2vw;
+  z-index: 999;
+  text-align: center;
+  color: Black;
+  background-color: #fbf8cc;
+`;
+const ResultImg = styled.img(
+  tw`
+  animate-bounce
+  `,
+  css`
+    position: absolute;
+    width: 10vw;
+    left: 45vw;
+    top: 22.5vw;
+  `
+);
+
+const RealImg = styled.img(
+  tw`
+  animate-bounce
+  `,
+  css`
+    position: absolute;
+    width: 10vw;
+    left: 45vw;
+    top: 28.5vw;
+  `
+);
 
 const RecordStartWrapdiv = styled.div`
   /* margin-top: 20vh; */
@@ -320,32 +467,92 @@ const MicImg = styled.img`
   width: 7.5vw;
 `;
 
+const RecordEndBtn = styled.button`
+  width: 10vw;
+  position: absolute;
+  top: 35vw;
+  left: 45vw;
+  text-align: center;
+  font-family: "PyeongChangPeace-Light";
+  font-size: 2vw;
+  color: black;
+  background-color: white;
+  border-radius: 1vw;
+`;
+
+const RealEndBtn = styled.button`
+  width: 10vw;
+  position: absolute;
+  top: 40vw;
+  left: 45vw;
+  text-align: center;
+  font-family: "PyeongChangPeace-Light";
+  font-size: 2vw;
+  color: black;
+  background-color: white;
+  border-radius: 1vw;
+  border: 3px solid;
+  border-color: #969696;
+`;
+
 const RecordDiv = styled.div`
   margin-top: 10vw;
+  /* position: absolute; */
+  /* top: 10vw; */
+  /* margin-bottom: 30vw; */
   font-family: "ONE-Mobile-POP";
   font-size: 4vw;
 `;
 
+const RecordResDiv = styled.div`
+  /* position: absolute; */
+  /* top: 0px; */
+  /* left: 44vw; */
+  /* margin-top: 10vw; */
+  margin-bottom: 45vh;
+  font-family: "ONE-Mobile-POP";
+  font-size: 4vw;
+`;
+
+const RealResDiv = styled.div`
+  margin-bottom: 45vh;
+  font-family: "ONE-Mobile-POP";
+  font-size: 4vw;
+  color: black;
+`;
+
 const NowScriptDiv = styled.div`
-  margin-top: 5vw;
+  margin-bottom: 25vw;
+  width: 65vw;
   font-family: "PyeongChangPeace-Light";
   font-size: 3vw;
 `;
 
 const RecordStartBtn = styled.button`
-  font-family: "insungitCutelivelyjisu";
-  background-color: #fff125;
-  margin-top: 10vw;
+  /* background-color: #fff125; */
+  margin-top: 15vw;
   width: 7.5vw;
   height: 7.5vw;
-  font-size: 2vw;
   border-radius: 100%;
   left: 45vw;
   top: 22.5vw;
   position: absolute;
   align-items: center;
   justify-content: center;
-  box-shadow: 4px 8px 8px hsl(0deg 0% 0% / 0.25);
+  border-color: white;
+  border: 2px solid;
+`;
+
+const RecordStopBtn = styled.button`
+  margin-top: 15vw;
+  width: 7.5vw;
+  height: 7.5vw;
+  border-radius: 100%;
+  left: 45vw;
+  top: 22.5vw;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
 `;
 const MyCanvas = styled.div`
   display: flex;
@@ -357,6 +564,17 @@ const RecordStartAll = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
+  height: 100vh;
+`;
+
+const RealEndAll = styled.div`
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 75vh;
+  width: 50vw;
+  background-color: #fbf8cc;
 `;
 
 const AllWrapDiv = styled.div`
@@ -369,14 +587,14 @@ const AllWrapDiv = styled.div`
 const StyledDiv = styled.div(({ isMyRole, isNowScript }: LiProps) => [
   isMyRole
     ? css`
-        font-weight: 900;
+        font-weight: 700;
       `
     : css`
         font-weight: 400;
       `,
   isNowScript
     ? css`
-        background-color: #ffd0b5;
+        background-color: #fdf579;
       `
     : css`
         color: black;
@@ -386,6 +604,7 @@ const StyledDiv = styled.div(({ isMyRole, isNowScript }: LiProps) => [
     justify-content: center;
     align-items: center;
     width: 31vw;
+    box-shadow: 2px 4px 4px hsl(0deg 0% 0% / 0.25);
   `,
 ]);
 
@@ -397,7 +616,7 @@ const ScriptAllDiv = styled.div`
   /* border: 1px solid; */
   /* padding: 1vw; */
   border-radius: 1.5%;
-  margin-left: 13.1vw;
+  margin-left: 13vw;
   overflow-y: auto;
   background-color: white;
   z-index: 2;
@@ -405,25 +624,25 @@ const ScriptAllDiv = styled.div`
 
 const RoleDiv = styled.div`
   margin-left: 0.5vw;
-  margin-right: 0.5vw;
+  /* margin-right: 0.5vw; */
   width: 5vw;
   text-align: center;
   font-family: "PyeongChangPeace-Light";
 `;
 
 const ScriptWrapDiv = styled.div`
-  margin: 0.75vw;
+  margin: 0.5vw;
   width: 100%;
   font-size: 1.2vw;
 `;
 
 const EngDiv = styled.div`
-  font-family: "ONE-Mobile-Bold";
+  font-family: "Pretendard-Medium";
 `;
 
 const KoDiv = styled.div`
   color: rgb(102, 102, 102);
-  font-family: "ONE-Mobile-Light";
+  font-family: "Pretendard-Light";
 `;
 
 const VideoDiv = styled.div`
@@ -444,7 +663,7 @@ const AllWrapperDiv = styled.div`
   position: absolute;
   align-items: center;
   justify-content: center;
-  text-align: center;
+  /* text-align: center; */
   top: 0px;
   /* position: absolute; */
   z-index: 999;
