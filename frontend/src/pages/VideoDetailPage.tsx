@@ -191,11 +191,11 @@ const VideoDiv = styled.div`
 
 const WrapperDiv = styled.div`
   display: flex;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   /* padding-top: 200px; */
   /* align-items: center; */
-  justify-content: center;
+  /* justify-content: center; */
 `;
 
 const AllDiv = styled.div`
