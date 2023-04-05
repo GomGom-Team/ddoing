@@ -2,8 +2,10 @@ package backend.animation.controller;
 
 import backend.animation.dto.AnimationRequestDTO;
 import backend.animation.dto.AnimationResponseDTO;
+import backend.animation.dto.ScriptDTO;
 import backend.animation.service.AnimationServiceImpl;
 import backend.common.Message;
+import backend.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,7 @@ import java.util.List;
 public class AnimationController {
 
     private final AnimationServiceImpl animationService;
+    private final UserRepository userRepository;
 
     // 영상 전체 리스트
     @GetMapping("/{userId}")
@@ -40,16 +43,22 @@ public class AnimationController {
     // 스크립트 정보 불러오기
     @GetMapping("/script/{id}")
     public ResponseEntity getScripts(@PathVariable Long id) {
-        return ResponseEntity.ok(animationService.getScripts(id));
+        List<ScriptDTO> result = animationService.getScripts(id);
+        if (result.size() < 1) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(result);
+        }
     }
 
     // 애니메이션 점수 갱신
     @PostMapping("/score")
     public ResponseEntity insertAnimationScore(@RequestBody AnimationRequestDTO animationRequestDTO) {
         if (!animationService.createScore(animationRequestDTO)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Message("점수 저장 실패"));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Message("잘못된 정보입니다."));
+        } else {
+            return ResponseEntity.ok(new Message("점수 갱신 성공"));
         }
-        return ResponseEntity.ok(new Message("점수 갱신 성공"));
     }
 
     // 영상 검색 (제목별)
@@ -106,6 +115,10 @@ public class AnimationController {
     // 마이페이지 학습 영상 top4
     @GetMapping("/myStudy/{userId}")
     public ResponseEntity getAnimationsStudyRecent(@PathVariable String userId) {
-        return ResponseEntity.ok(animationService.getAnimationsStudyRecent(userId));
+        if (!userRepository.existsById(userId)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Message("존재하지 않는 ID 입니다."));
+        } else {
+            return ResponseEntity.ok(animationService.getAnimationsStudyRecent(userId));
+        }
     }
 }
