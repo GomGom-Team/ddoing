@@ -55,7 +55,8 @@ export default function VerticalTabs() {
         flexGrow: 1,
         bgcolor: "background.paper",
         display: "flex",
-        height: 224,
+        // height: "70%",
+        // width: "100%",
       }}
     >
       <Tabs
@@ -100,6 +101,6 @@ const TabsStyle = {
   "& .MuiTab-root.Mui-selected": {
     color: "#FBF8CC",
   },
-  height: "20rem",
+  height: "30rem",
   width: "15rem",
 };
