@@ -47,6 +47,7 @@ public class DrawingServiceImpl implements DrawingService {
 
     @Override
     public void saveFile(MultipartFile drawingImg, UserDrawingDTO userDrawingDTO) throws IOException {
+        System.out.println("multipart: "+drawingImg+" userDTO: "+userDrawingDTO);
     	String filename = "";
     	try {
     		filename = drawingImg.getOriginalFilename(); //원본 파일 이름
@@ -165,6 +166,7 @@ public class DrawingServiceImpl implements DrawingService {
 
         UserEntity result = UserEntity.builder()
                 .id(userEntity.getId())
+                .password(userEntity.getPassword())
                 .name(userEntity.getName())
                 .email(userEntity.getEmail())
                 .nickName(userEntity.getNickName())
