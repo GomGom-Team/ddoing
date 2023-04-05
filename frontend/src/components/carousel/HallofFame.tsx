@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import tw, { css, styled, theme } from "twin.macro";
+import { keyframes } from "styled-components";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -43,10 +44,19 @@ function HallofFame({ bestDrawing }: HallofFameProps) {
               return (
                 <SliderItems key={index}>
                   <SliderItemsWrapper>
+                  <NicknameDiv>
+                    <NameTag>{item.userId}</NameTag>
+                  </NicknameDiv>
                     <CustomedFigure>
+                      
                       <FrameThumbnail>
                         {item.drawingPath && (
                           <FixedDiv>
+                            <ItemDivWrapper>
+                              <ItemDiv>
+                                <ItemTag>{item.word}</ItemTag>
+                              </ItemDiv>
+                            </ItemDivWrapper>
                             <ThumbNail
                               src={`https://j8a103.p.ssafy.io/assets/img_backend/${item.drawingPath}`}
                             ></ThumbNail>
@@ -58,6 +68,11 @@ function HallofFame({ bestDrawing }: HallofFameProps) {
                       </FrameThumbnail>
                     </CustomedFigure>
                   </SliderItemsWrapper>
+                  <ItemScoreDiv>
+                    <ScoreDiv>
+                      <NameTag>{Math.round(item.percentage* 100) / 100}점</NameTag>
+                    </ScoreDiv>
+                  </ItemScoreDiv>
                 </SliderItems>
               );
             })}
@@ -74,13 +89,13 @@ const CustomedSection = styled.section(
 );
 
 const SectionWrapper = styled.div(
-  tw`flex justify-center w-full py-24 items-center`
+  tw`flex justify-center w-full h-96 py-24 items-center`
 );
 
 const SliderItems = styled.li(tw`w-96`);
 
 const SliderItemsWrapper = styled.div(
-  tw`flex justify-center rounded-lg p-5 h-full`
+  tw`flex justify-center rounded-lg p-5 h-full flex-col`
 );
 
 const FrameThumbnail = styled.div(
@@ -137,3 +152,59 @@ const CustomedFigure = styled.figure`
     }
   }
 `;
+
+const gradient = keyframes`
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+`;
+const ItemScoreDiv = styled.div(
+  tw`flex justify-center rounded-lg px-10 h-full`
+)
+
+const ItemDivWrapper = styled.div(
+  tw`absolute`,
+  css`
+    width: 7rem;
+    top: 2rem;
+  `
+)
+const ItemDiv = styled.div(
+  tw`flex items-start justify-center top-5`
+)
+
+const ScoreDiv = styled.div(
+  tw`pt-5`
+)
+
+const NicknameDiv = styled.div(
+  tw`flex justify-center rounded-lg p-5 h-full`
+)
+
+const NameTag = styled.div(
+  tw`border border-black flex justify-center`,
+  css`
+    height: 100%;
+    border-radius: 10px;
+    font-family: "CookieRun-Bold";
+    font-size: 0.75vw;
+    padding: 5px 13px 5px 10px;
+  `
+)
+
+const ItemTag = styled.div(
+  tw`flex justify-center`,
+  css`
+    height: 100%;
+    border-radius: 10px;
+    font-family: "CookieRun-Bold";
+    font-size: 1vw;
+    padding: 5px 13px 5px 10px;
+  `
+)
