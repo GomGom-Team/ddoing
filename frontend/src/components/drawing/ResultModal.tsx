@@ -50,7 +50,6 @@ export default function TransitionsModal({
   // }
   const nextStage = () => {
     modalHandleClose();
-    setTimeout(() => stageHandler(), 500);
   };
   // 정답일 경우 띄울 모달 페이지
   if (answer) {

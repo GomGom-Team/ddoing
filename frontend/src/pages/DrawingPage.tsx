@@ -144,6 +144,13 @@ const DrawingPage = () => {
   };
   const modalHandleClose = () => setmodalOpen(false);
 
+
+  useDidMountEffect(() => {
+    if(modalOpen === false) {
+      setTimeout(() => stageHandler(), 500)      
+    }
+  }, [modalOpen])
+
   // Answer
   const [answer, setAnswer] = useState(false);
 
