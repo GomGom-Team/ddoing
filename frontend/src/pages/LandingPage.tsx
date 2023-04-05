@@ -6,6 +6,7 @@ import { styled as muistyled } from "@mui/material/styles";
 import Button, { ButtonProps } from "@mui/material/Button";
 import { Container, Header, Footer } from "../components/common/index";
 import "aos/dist/aos.css";
+import abc_img from "/assets/img/ABC2.png";
 import LandingComp1 from "../components/land/LandingComp1";
 import LandingComp2 from "../components/land/LandingComp2";
 import LandingComp3 from "../components/land/LandingComp3";
@@ -18,7 +19,8 @@ const LandingPage = () => {
   });
 
   return (
-    <Container isOverflowed>
+    <div>
+      <FloatLogo src={abc_img} />
       <ExtraBox style={{ textAlign: "center" }}>
         <LandingComp1 />
         <LandingComp2 />
@@ -29,7 +31,7 @@ const LandingPage = () => {
         <div style={{ height: "500px" }}></div>
       </ExtraBox>
       //{" "}
-    </Container>
+    </div>
   );
 };
 
@@ -44,7 +46,7 @@ const BoxStyle = styled.div`
 `;
 
 const ExtraBox = styled.div`
-  height: 3000px;
+  height: 300vh;
 `;
 
 const StyledButton = muistyled(Button)<ButtonProps>(({ theme }) => ({
@@ -76,8 +78,15 @@ const Float = styled.div`
   position: fixed;
   left: 43%;
   right: 50%;
-  top: 70%;
+  top: 80%;
   margin-right: 50%;
   text-align: center;
+  /* width: 120px; */
+`;
+
+const FloatLogo = styled.img`
+  position: fixed;
+  right: 70%;
+  top: 80%;
   /* width: 120px; */
 `;

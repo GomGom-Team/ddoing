@@ -38,7 +38,10 @@ const NewContent = () => {
 // style
 
 const BackgroundDiv = styled.div(
-  tw`flex bg-yellowD w-full h-96 justify-between`
+  tw`flex bg-yellowD w-full justify-between`,
+  css`
+    height: 30rem;
+  `
 );
 
 const TitleDescriptionWrapper = styled.div(

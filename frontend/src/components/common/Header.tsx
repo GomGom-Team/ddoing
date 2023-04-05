@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import tw, { css, styled, theme } from "twin.macro";
 import { useAppDispatch, useAppSelector } from "../../redux/configStore.hooks";
 import { useNavigate } from "react-router-dom";
-import { logoutAction } from "../../redux/modules/user";
+import { logoutAction, setUserWithTokenAction } from "../../redux/modules/user";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import logo from "/assets/img/LOGO2.png";
 
 const Header = () => {
   // State
@@ -21,6 +22,7 @@ const Header = () => {
   const onLogout = (e: React.MouseEvent<HTMLElement>) => {
     dispatch(logoutAction());
     setLoginCheck(false);
+    setAnchorEl(null);
     navigate("/");
   };
 
@@ -30,6 +32,10 @@ const Header = () => {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const goMyPage = () => {
+    dispatch(setUserWithTokenAction()).then(() => navigate("/mypage"));
   };
 
   useEffect(() => {
@@ -42,7 +48,7 @@ const Header = () => {
       <CustomedNav>
         <NavWrapper>
           <NavWrapperContents>
-            <MainLogo onClick={() => navigate("/")}>또잉</MainLogo>
+            <MainLogo src={logo} onClick={() => navigate("/")}></MainLogo>
             <NavigateContents>
               <StyledButton onClick={() => navigate("/videolist")}>
                 A n i m a t i o n
@@ -67,10 +73,7 @@ const Header = () => {
                 </Button>
               ) : (
                 <div>
-                  <button onClick={() => navigate("/login")}>로그인</button>{" "}
-                  <button onClick={() => navigate("/register")}>
-                    회원가입
-                  </button>
+                  <button onClick={() => navigate("/login")}>Login</button>
                 </div>
               )}
               <Menu
@@ -88,7 +91,7 @@ const Header = () => {
                   horizontal: "left",
                 }}
               >
-                <MenuItem sx={ButtonStyle} onClick={() => navigate("/mypage")}>
+                <MenuItem sx={ButtonStyle} onClick={goMyPage}>
                   Profile
                 </MenuItem>
                 <MenuItem sx={ButtonStyle} onClick={onLogout}>
@@ -110,11 +113,10 @@ const CustomedNav = styled.nav(
   tw`
     bg-white 
     backdrop-filter 
-    backdrop-blur-lg 
+    backdrop-blur-xl
     bg-opacity-30
-    border-b
     border-gray-200
-    h-16
+    h-20
   `,
   css`
     font-family: "insungitCutelivelyjisu";
@@ -125,16 +127,23 @@ const CustomedNav = styled.nav(
 const NavWrapper = styled.div(tw`ml-0 mr-0 px-6`);
 
 const NavWrapperContents = styled.div(
-  tw`flex items-center justify-between h-16`
+  tw`flex items-center justify-between h-20`
 );
 
-const MainLogo = styled.button(tw`text-2xl text-gray-900 font-semibold`);
+const MainLogo = styled.img`
+  height: 3rem;
+`;
 
 const NavigateContents = styled.div(tw`flex space-x-4 text-xl text-gray-900`);
 
 const Profile = styled.div(tw`text-2xl`);
 
-const StyledButton = styled.button(tw`px-5`);
+const StyledButton = styled.button(
+  tw`px-5 h-20`,
+  css`
+    size: "5rem";
+  `
+);
 
 const ProfileImg = styled.img`
   width: 3rem;

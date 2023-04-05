@@ -39,7 +39,12 @@ const Animation = () => {
 
 // style
 
-const BackgroundDiv = styled.div(tw`flex bg-blueC w-full h-96 justify-between`);
+const BackgroundDiv = styled.div(
+  tw`flex bg-blueC w-full justify-between`,
+  css`
+    height: 30rem;
+  `
+);
 
 const TitleDescriptionWrapper = styled.div(
   tw`flex flex-col justify-evenly pl-48`

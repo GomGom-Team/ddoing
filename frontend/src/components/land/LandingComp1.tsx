@@ -1,39 +1,45 @@
 import React from "react";
 import tw, { css, styled, theme } from "twin.macro";
-import banner_ddoing_img from "/assets/img/banner_ddoing_img2.png";
 import { styled as muistyled } from "@mui/material/styles";
 import Button, { ButtonProps } from "@mui/material/Button";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
+import abc_img from "/assets/img/ABC.png";
 
 const LandingComp1 = () => {
   return (
-    <Background>
+    <Background style={{ textAlign: "center" }}>
       <TitleDescriptionWrapper data-aos="fade-up">
-        <StyledTitle>우리 아이 영어 학습을 위한 선택, 또잉</StyledTitle>
-        <div>
-          <StyledDescription>애니메이션을 보며 따라하고,</StyledDescription>
-          <StyledDescription>영어 단어를 직접 그려보면서</StyledDescription>
-          <StyledDescription>
-            자연스럽게 영어를 학습할 수 있습니다.
-          </StyledDescription>
-          <br />
-          <StyledDescription>
-            또잉과 함께 즐거운 영어 공부해요!
-          </StyledDescription>
-        </div>
+        <Content>
+          <StyledTitle>우리 아이 영어 학습을 위한 선택, 또잉</StyledTitle>
+          <ContentScript>
+            <StyledDescription>애니메이션을 보며 따라하고,</StyledDescription>
+            <StyledDescription>영어 단어를 직접 그려보면서</StyledDescription>
+            <StyledDescription>
+              자연스럽게 영어를 학습할 수 있습니다.
+            </StyledDescription>
+            <br />
+            <StyledDescription>
+              또잉과 함께 즐거운 영어 공부해요!
+            </StyledDescription>
+          </ContentScript>
+        </Content>
+        <ImgWrapper>
+          <CustomedImage src={abc_img}></CustomedImage>
+        </ImgWrapper>
       </TitleDescriptionWrapper>
+      <Bounce>
+        <KeyboardDoubleArrowDownIcon sx={IconStyle} />
+      </Bounce>
     </Background>
   );
 };
 export default LandingComp1;
 
-const BoxStyle = styled.div`
-  width: 40%;
-  height: 30%;
-`;
-
 const Background = styled.div`
-  /* background: #ffd761; */
-  height: 50%;
+  background: #ffd761;
+  padding: 15vh 15vh 0px 15vh;
+  height: 100vh;
 `;
 
 const BackgroundDiv = styled.div(
@@ -41,7 +47,12 @@ const BackgroundDiv = styled.div(
 );
 
 const TitleDescriptionWrapper = styled.div(
-  tw`flex flex-col justify-evenly pl-48`
+  tw`justify-evenly pl-48`,
+  css`
+    margin-top: 5em;
+    margin-bottom: 15em;
+    display: flex;
+  `
 );
 
 const StyledTitle = styled.h2(
@@ -57,6 +68,7 @@ const StyledTitle = styled.h2(
 const StyledDescription = styled.h2(
   tw`text-2xl text-gray-700`,
   css`
+    width: "10px";
     font-family: "ONE-Mobile-Regular";
   `
 );
@@ -64,8 +76,26 @@ const StyledDescription = styled.h2(
 const ImgWrapper = styled.div(tw`flex justify-center items-center pr-48`);
 
 const CustomedImage = styled.img(
-  tw`h-64 object-cover rounded-md bg-slate-500`,
+  tw`object-cover rounded-md`,
   css`
-    width: 30rem;
+    width: 500px;
   `
 );
+
+const Content = styled.div`
+  margin-right: 5em;
+`;
+
+const IconStyle = {
+  // marginTop: "23vh",
+  marginLeft: "0.7em",
+  right: "50px",
+  fontSize: "70px",
+  color: "#005112",
+};
+
+const ContentScript = styled.div`
+  width: 400px;
+`;
+
+const Bounce = styled.div(tw`animate-bounce`);

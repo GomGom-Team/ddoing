@@ -40,7 +40,10 @@ const Drawing = () => {
 // style
 
 const BackgroundDiv = styled.div(
-  tw`flex bg-greenC w-full h-96 justify-between`
+  tw`flex bg-greenC w-full justify-between`,
+  css`
+    height: 30rem;
+  `
 );
 
 const TitleDescriptionWrapper = styled.div(
