@@ -93,7 +93,7 @@ const FrameThumbnail = styled.div(
 
 const FixedDiv = styled.div(tw`h-32 w-32`);
 
-const ThumbNail = styled.img(tw`h-32 w-32 object-cover bg-slate-500`);
+const ThumbNail = styled.img(tw`h-32 w-32 object-cover bg-white`);
 
 const NullImg = styled.div(
   tw`flex justify-center items-center h-36 w-48 object-cover bg-slate-500 border-4 m-5`
