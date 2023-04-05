@@ -66,7 +66,7 @@ const Header = () => {
                   aria-expanded={open ? "true" : undefined}
                   onClick={handleClick}
                 >
-                  <ProfileImg src={`assets/img/ddio0.png`}></ProfileImg>
+                  <ProfileImg src={`/assets/img/ddio0.png`}></ProfileImg>
                 </Button>
               ) : (
                 <div>
