@@ -236,6 +236,7 @@ const DrawingPage = () => {
   const restartHandler = () => {
     setIndex(0);
     clear();
+    setAnswerCount(0);
   };
 
   useDidMountEffect(() => {

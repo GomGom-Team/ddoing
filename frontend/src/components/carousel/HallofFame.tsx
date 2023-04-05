@@ -46,9 +46,11 @@ function HallofFame({ bestDrawing }: HallofFameProps) {
                     <CustomedFigure>
                       <FrameThumbnail>
                         {item.drawingPath && (
-                          <ThumbNail
-                            src={`https://j8a103.p.ssafy.io/assets/img_backend/${item.drawingPath}`}
-                          ></ThumbNail>
+                          <FixedDiv>
+                            <ThumbNail
+                              src={`https://j8a103.p.ssafy.io/assets/img_backend/${item.drawingPath}`}
+                            ></ThumbNail>
+                          </FixedDiv>
                         )}
                         {!item.drawingPath && (
                           <NullImg>아직 그림이 없어요</NullImg>
@@ -84,12 +86,14 @@ const SliderItemsWrapper = styled.div(
 const FrameThumbnail = styled.div(
   tw`flex justify-center items-center`,
   css`
-    border: 80px solid;
-    border-image: url("/assets/border/Border_Final.png") 300 200;
+    border: 60px solid;
+    border-image: url("/assets/border/Border_Final.png") 250 200;
   `
 );
 
-const ThumbNail = styled.img(tw`h-full w-full bg-slate-500`);
+const FixedDiv = styled.div(tw`h-32 w-32`);
+
+const ThumbNail = styled.img(tw`h-32 w-32 object-cover bg-slate-500`);
 
 const NullImg = styled.div(
   tw`flex justify-center items-center h-36 w-48 object-cover bg-slate-500 border-4 m-5`
