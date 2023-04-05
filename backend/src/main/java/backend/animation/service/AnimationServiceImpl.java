@@ -100,20 +100,23 @@ public class AnimationServiceImpl implements AnimationService {
     // 점수 넣기
     @Override
     public boolean createScore(AnimationRequestDTO animationRequestDTO) {
-        AnimationScoreEntity animationScoreEntity = AnimationScoreEntity.builder()
-                .userId(animationRequestDTO.getUserId())
-                .animationId(animationRequestDTO.getAnimationId())
-                .score(animationRequestDTO.getScore())
-                .animationEntity(animationRepository.findById(animationRequestDTO.getAnimationId()).orElseThrow())
-                .userEntity(userRepository.findById(animationRequestDTO.getUserId()).orElseThrow())
-                .build();
+        if (userRepository.existsById(animationRequestDTO.getUserId()) && animationRepository.existsById(animationRequestDTO.getAnimationId())) {
+            AnimationScoreEntity animationScoreEntity = AnimationScoreEntity.builder()
+                    .userId(animationRequestDTO.getUserId())
+                    .animationId(animationRequestDTO.getAnimationId())
+                    .score(animationRequestDTO.getScore())
+                    .animationEntity(animationRepository.findById(animationRequestDTO.getAnimationId()).orElseThrow())
+                    .userEntity(userRepository.findById(animationRequestDTO.getUserId()).orElseThrow())
+                    .build();
+            animationScoreRepository.save(animationScoreEntity);
 
-        animationScoreRepository.save(animationScoreEntity);
-
-        // best score update
-        updateBestScore(animationRequestDTO);
-        updateUserExpAndLevel(animationRequestDTO);
-        return true;
+            // best score update
+            updateBestScore(animationRequestDTO);
+            updateUserExpAndLevel(animationRequestDTO);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // bestScore 생성
@@ -209,7 +212,6 @@ public class AnimationServiceImpl implements AnimationService {
         for (AnimationEntity animation : animations) {
             // animationId, title, runningTime, pathUrl, bestScore, roles
             AnimationResponseDTO result = toAnimationResponseDto(animation, userId);
-
             results.add(result);
         }
         return results;

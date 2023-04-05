@@ -36,9 +36,9 @@ public class DrawingController {
 
     // 그림 평가 점수 저장
     @PostMapping("/score")
-    public ResponseEntity saveDrawingScore(@RequestBody DrawingScoreRequestDTO drawingScoreRequestDTO){
+    public ResponseEntity saveDrawingScore(@RequestBody DrawingScoreRequestDTO drawingScoreRequestDTO) {
         // 점수 저장
-        if(!drawingService.createDrawingScore(drawingScoreRequestDTO)){
+        if (!drawingService.createDrawingScore(drawingScoreRequestDTO)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Message("점수 저장 실패"));
         }
 
@@ -51,23 +51,22 @@ public class DrawingController {
 
     // 명예의 전당
     @GetMapping("/gallery")
-    public ResponseEntity getUserDrawingGallery(){
+    public ResponseEntity getUserDrawingGallery() {
         List<UserDrawingResponseDTO> result = drawingService.selectDrawingGallery();
-        if(result.size() <= 0) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new Message("그림 점수가 존재하지 않음"));
+        if (result.size() < 1) {
+            return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(result);
     }
 
+
     // 마이페이지 - 내가 그린 그림
     @GetMapping("/myRecent/{id}")
-    public ResponseEntity getMyRecentDrawing(@PathVariable String id){
-
-        if(!userService.isExistById(id)){
+    public ResponseEntity getMyRecentDrawing(@PathVariable String id) {
+        if (!userService.isExistById(id)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Message("존재하지 않는 사용자 입니다."));
         }
         List<UserDrawingResponseDTO> result = drawingService.selectUserRecentDrawing(id);
-
         return ResponseEntity.ok(result);
     }
 }
