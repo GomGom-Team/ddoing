@@ -37,7 +37,7 @@ const BoxStyle = styled.div`
 `;
 
 const Background = styled.div`
-  /* background: #5bb83f; */
+  background: #9fddff;
   padding: 25vh;
   height: 100vh;
 `;

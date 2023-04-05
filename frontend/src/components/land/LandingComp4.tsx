@@ -7,7 +7,7 @@ import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrow
 import abc_img from "/assets/img/ABC.png";
 import { Height } from "@mui/icons-material";
 
-const LandingComp1 = () => {
+const LandingComp4 = () => {
   return (
     <Background style={{ textAlign: "center" }}>
       <TitleDescriptionWrapper data-aos="fade-up">
@@ -29,16 +29,12 @@ const LandingComp1 = () => {
         <CustomedImage src={abc_img} style={{ width: "500px" }}></CustomedImage>
         {/* </ImgWrapper> */}
       </TitleDescriptionWrapper>
-      <Bounce>
-        <KeyboardDoubleArrowDownIcon sx={IconStyle} />
-      </Bounce>
     </Background>
   );
 };
-export default LandingComp1;
+export default LandingComp4;
 
 const Background = styled.div`
-  background: #ffd761;
   padding: 15vh 15vh 0px 15vh;
   height: 100vh;
 `;

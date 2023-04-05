@@ -6,10 +6,11 @@ import { styled as muistyled } from "@mui/material/styles";
 import Button, { ButtonProps } from "@mui/material/Button";
 import { Container, Header, Footer } from "../components/common/index";
 import "aos/dist/aos.css";
-import abc_img from "/assets/img/ABC2.png";
+import abc_img from "/assets/img/LOGO2.png";
 import LandingComp1 from "../components/land/LandingComp1";
 import LandingComp2 from "../components/land/LandingComp2";
 import LandingComp3 from "../components/land/LandingComp3";
+import LandingComp4 from "../components/land/LandingComp4";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -20,33 +21,24 @@ const LandingPage = () => {
 
   return (
     <div>
-      <FloatLogo src={abc_img} />
       <ExtraBox style={{ textAlign: "center" }}>
+        <FloatLogo src={abc_img} style={{ width: "200px" }} />
         <LandingComp1 />
         <LandingComp2 />
         <LandingComp3 />
+        <LandingComp4 />
         <Float>
           <StyledButton onClick={() => navigate("/login")}>START</StyledButton>
         </Float>
-        <div style={{ height: "500px" }}></div>
       </ExtraBox>
-      //{" "}
     </div>
   );
 };
 
 export default LandingPage;
-const BoxStyle = styled.div`
-  width: 40%;
-  height: 200px;
-  fontsize: 30px;
-  lineheight: 200px;
-  color: white;
-  textalign: center;
-`;
 
 const ExtraBox = styled.div`
-  height: 300vh;
+  height: 400vh;
 `;
 
 const StyledButton = muistyled(Button)<ButtonProps>(({ theme }) => ({
@@ -79,14 +71,17 @@ const Float = styled.div`
   left: 43%;
   right: 50%;
   top: 80%;
-  margin-right: 50%;
+  /* margin-left: 50vw;
+  margin-right: 50vw; */
   text-align: center;
   /* width: 120px; */
 `;
 
 const FloatLogo = styled.img`
   position: fixed;
-  right: 70%;
-  top: 80%;
+  width: "20px";
+  height: "3rem";
+  left: 1em;
+  top: 1em;
   /* width: 120px; */
 `;

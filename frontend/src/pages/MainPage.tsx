@@ -97,7 +97,7 @@ const MainPage = () => {
       {/* <HallofFame></HallofFame> */}
 
       {/* Footer  */}
-      <Footer />
+      {/* <Footer /> */}
     </Container>
   );
 };

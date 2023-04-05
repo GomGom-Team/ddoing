@@ -56,9 +56,6 @@ const Header = () => {
               <StyledButton onClick={() => navigate("/drawing")}>
                 D r a w i n g
               </StyledButton>
-              <StyledButton onClick={() => navigate("/ranking")}>
-                R a n k i n g
-              </StyledButton>
             </NavigateContents>
             <Profile>
               {loginCheck ? (
