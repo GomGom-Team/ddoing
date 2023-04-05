@@ -11,6 +11,16 @@ import {
 } from "../redux/modules/animation";
 import { Header } from "../components/common";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
+import axios from "axios";
+
+interface VideoListType {
+  id: number;
+  title: string;
+  runningTime: number;
+  pathUrl: string;
+  bestScore: number | null;
+  roles: string[];
+}
 
 const VideoListPage = () => {
   const dispatch = useAppDispatch();
@@ -18,71 +28,147 @@ const VideoListPage = () => {
   const [inputData, setInputData] = useState("");
   const starList = ["선택", 1, 2, 3];
   const [selectedStar, setSelectedStar] = useState(0);
-  const [selectedDone, setSelectedDone] = useState("선택");
-  const [isNow, setIsNow] = useState("");
+  const [selectedDone, setSelectedDone] = useState(-1);
   const user = useAppSelector((state) => state.user.userData);
-  const [testArray, setTestArray] = useState<any>([]);
-  // const [videoSearchList, setVideoSearchList]: any = useState([]);
+  const [testArray, setTestArray] = useState<any>(null);
+  // 새로운 것들
+  // 별 3개 리스트
+  const [myStar3List, setMyStar3List] = useState<VideoListType[] | null>(null);
+  const [myStar2List, setMyStar2List] = useState<VideoListType[] | null>(null);
+  const [myStar1List, setMyStar1List] = useState<VideoListType[] | null>(null);
+  const [myDoneList, setMyDoneList] = useState<VideoListType[] | null>(null);
+  const [myNotDoneList, setMyNotDoneList] = useState<VideoListType[] | null>(
+    null
+  );
+  const [mySearchList, setMySearchList] = useState<VideoListType[] | null>(
+    null
+  );
   const changeInputData = (e: any) => {
     setInputData(e.target.value);
   };
-  const videoList = useAppSelector((state) => state.animation.getAnimationList);
-  useEffect(() => {
-    dispatch(animationListGetAction(user.id));
-  }, []);
 
   const handleKeyPress = (e: any) => {
     if (e.key === "Enter" && inputData !== "") {
-      dispatch(
-        animationSearchGetAction({ keyword: inputData, userId: user.id })
-      );
+      searchListHandeler();
     }
   };
 
-  const myClickEvent = () => {
-    dispatch(animationSearchGetAction({ keyword: inputData, userId: user.id }));
-  };
-  const videoSearchList = useAppSelector(
-    (state) => state.animation.getAnimationSearch
-  );
-  // const handleSelectStar = (e: any) => {
-  //   setSelectedStar(e.target.value);
-  // };
-
   const handleClick = (status: string) => {
-    if (status === "Star") {
-      setTestArray(videoStarList);
+    if (status === "Star3") {
+      setTestArray(myStar3List);
+    } else if (status === "Star2") {
+      setTestArray(myStar2List);
+    } else if (status === "Star1") {
+      setTestArray(myStar1List);
     } else if (status === "Done") {
-      setTestArray(videoDoneList);
-    } else if (status === "Search") {
-      setTestArray(videoSearchList);
+      setTestArray(myDoneList);
+    } else if (status === "NotDone") {
+      setTestArray(myNotDoneList);
     }
     console.log("now status is ", status);
   };
 
-  // console.log("select ", selected);
   useEffect(() => {
-    dispatch(animationStarGetAction({ userId: user.id, star: selectedStar }));
-  }, [selectedStar]);
+    setTestArray(testArray);
+  }, [testArray]);
 
   useEffect(() => {
-    if (selectedDone !== "선택") {
-      dispatch(
-        animationDoneGetAction({
-          userId: user.id,
-          done: selectedDone === "Done" ? 1 : 0,
-        })
-      );
-    }
-  }, [selectedDone]);
+    setTestArray(mySearchList);
+  }, [mySearchList]);
 
-  const videoStarList = useAppSelector(
-    (state) => state.animation.getAnimationStar
-  );
+  console.log("test", testArray);
 
-  const videoDoneList = useAppSelector(
-    (state) => state.animation.getAnimationDone
-  );
+  const videoList = useAppSelector((state) => state.animation.getAnimationList);
+
+  const star3ListHandler = async () => {
+    await axios
+      .get(`https://j8a103.p.ssafy.io/api/animations/filter/star/${user.id}/3`)
+      .then((res) => {
+        console.log(res.data);
+        setMyStar3List(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const star2ListHandler = async () => {
+    await axios
+      .get(`https://j8a103.p.ssafy.io/api/animations/filter/star/${user.id}/2`)
+      .then((res) => {
+        console.log(res.data);
+        setMyStar2List(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const star1ListHandler = async () => {
+    await axios
+      .get(`https://j8a103.p.ssafy.io/api/animations/filter/star/${user.id}/1`)
+      .then((res) => {
+        console.log(res.data);
+        setMyStar1List(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const doneListHandeler = async () => {
+    await axios
+      .get(`https://j8a103.p.ssafy.io/api/animations/filter/${user.id}/1`)
+      .then((res) => {
+        console.log(
+          `https://j8a103.p.ssafy.io/api/animations/filter/${user.id}/1`
+        );
+        console.log(res.data);
+        setMyDoneList(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const notDoneListHandeler = async () => {
+    await axios
+      .get(`https://j8a103.p.ssafy.io/api/animations/filter/${user.id}/0`)
+      .then((res) => {
+        console.log(res.data);
+        setMyNotDoneList(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const searchListHandeler = async () => {
+    await axios
+      .get(
+        `https://j8a103.p.ssafy.io/api/animations/search/${inputData}/${user.id}`
+      )
+      .then((res) => {
+        console.log(res.data);
+        setMySearchList(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const api = async () => {
+    star1ListHandler();
+    star2ListHandler();
+    star3ListHandler();
+    doneListHandeler();
+    notDoneListHandeler();
+    searchListHandeler();
+  };
+
+  useEffect(() => {
+    api();
+  }, []);
 
   return (
     <AllWrapperDiv>
@@ -93,7 +179,7 @@ const VideoListPage = () => {
             <StarBtn
               onClick={() => {
                 setSelectedStar(3);
-                handleClick("Star");
+                handleClick("Star3");
               }}
             >
               <StarImg>
@@ -105,7 +191,7 @@ const VideoListPage = () => {
             <StarBtn
               onClick={() => {
                 setSelectedStar(2);
-                handleClick("Star");
+                handleClick("Star2");
               }}
             >
               <StarImg>
@@ -116,7 +202,7 @@ const VideoListPage = () => {
             <StarBtn
               onClick={() => {
                 setSelectedStar(1);
-                handleClick("Star");
+                handleClick("Star1");
               }}
             >
               <StarImg>
@@ -124,21 +210,10 @@ const VideoListPage = () => {
               </StarImg>
             </StarBtn>
           </StarDiv>
-          {/* <select
-          onChange={handleSelectStar}
-          value={selectedStar}
-          onClick={() => handleClick("Star")}
-        >
-          {starList.map((item) => (
-            <option value={item} key={item}>
-              {item}
-            </option>
-          ))}
-        </select> */}
           <DoneSelectDiv>
             <DoneBtn
               onClick={() => {
-                setSelectedDone("Done");
+                setSelectedDone(1);
                 handleClick("Done");
               }}
             >
@@ -148,8 +223,8 @@ const VideoListPage = () => {
             </DoneBtn>
             <NotDoneBtn
               onClick={() => {
-                setSelectedDone("NotDone");
-                handleClick("Done");
+                setSelectedDone(0);
+                handleClick("NotDone");
               }}
             >
               <NotDoneImg>
@@ -171,201 +246,135 @@ const VideoListPage = () => {
           </SearchDiv>
         </SelectDiv>
 
-        <ListWrapperDiv>
-          {/* <div>여긴 영상 리스트</div> */}
-          {videoList?.data?.map((item: any, index: number) => {
-            return (
-              <EachBtn
-                key={index}
-                onClick={() => navigate(`/video/${item.id}`)}
-              >
-                <VideoImg>
-                  <img
-                    src={`https://img.youtube.com/vi/${item.pathUrl}/maxresdefault.jpg`}
-                  />
-                </VideoImg>
-                <VideoTitleDiv>{item.title.split(" - ")[1]}</VideoTitleDiv>
-                <VideoTimeDiv>
-                  {(item.runningTime - (item.runningTime % 60)) / 60} :{" "}
-                  {item.runningTime % 60 >= 10
-                    ? item.runningTime % 60
-                    : "0" + (item.runningTime % 60)}
-                </VideoTimeDiv>
-                {item.bestScore >= 20 && item.bestScore <= 40 && (
-                  <VideoScoreDiv>
-                    <img src="/assets/img/EmptyStar.png" />
-                    <img src="/assets/img/EmptyStar.png" />
-                    <img src="/assets/img/Star.png" />
-                  </VideoScoreDiv>
-                )}
-                {item.bestScore >= 41 && item.bestScore <= 75 && (
-                  <VideoScoreDiv>
-                    <img src="/assets/img/EmptyStar.png" />
-                    <img src="/assets/img/Star.png" />
-                    <img src="/assets/img/Star.png" />
-                  </VideoScoreDiv>
-                )}
-                {item.bestScore >= 76 && item.bestScore <= 100 && (
-                  <VideoScoreDiv>
-                    <img src="/assets/img/Star.png" />
-                    <img src="/assets/img/Star.png" />
-                    <img src="/assets/img/Star.png" />
-                  </VideoScoreDiv>
-                )}
-                {item.bestScore === null && (
-                  <VideoScoreDiv>
-                    <img src="/assets/img/EmptyStar.png" />
-                    <img src="/assets/img/EmptyStar.png" />
-                    <img src="/assets/img/EmptyStar.png" />
-                  </VideoScoreDiv>
-                )}
-                <VideoAllRoleDiv>
-                  {item.roles.map((item: any, index: number) => {
-                    return (
-                      <VideoRoleWrapDiv key={index}>
-                        <VideoRoleDiv># {item}</VideoRoleDiv>
-                      </VideoRoleWrapDiv>
-                    );
-                  })}
-                </VideoAllRoleDiv>
-              </EachBtn>
-            );
-          })}
-        </ListWrapperDiv>
-        {/* {testArray?.data?.length !== 0 && (
-        <SearchWrapperDiv>
-          <div>여기부터 검색결과</div>
-          {testArray?.data?.map((item: any, index: number) => {
-            return (
-              <div key={index} onClick={() => navigate(`/video/${item.id}`)}>
-                <img
-                  src={`https://img.youtube.com/vi/${item.pathUrl}/maxresdefault.jpg`}
-                />
-                <div>{item.id}</div>
-                <div>{item.title}</div>
-                <div>{item.runningTime}</div>
-                <div>{item.pathUrl}</div>
-                <div>{item.bestScore}</div>
-                {item.roles.map((item: any, index: number) => {
-                  return (
-                    <div key={index}>
-                      <div>{item}</div>
-                    </div>
-                  );
-                })}
-              </div>
-            );
-          })}
-        </SearchWrapperDiv>
-      )}
-
-      <SearchWrapperDiv>
-        <div>여기부터 검색결과</div>
-        {videoSearchList?.data?.map((item: any, index: number) => {
-          return (
-            <div key={index} onClick={() => navigate(`/video/${item.id}`)}>
-              <img
-                src={`https://img.youtube.com/vi/${item.pathUrl}/maxresdefault.jpg`}
-              />
-              <div>{item.id}</div>
-              <div>{item.title}</div>
-              <div>{item.runningTime}</div>
-              <div>{item.pathUrl}</div>
-              <div>{item.bestScore}</div>
-              {item.roles.map((item: any, index: number) => {
-                return (
-                  <div key={index}>
-                    <div>{item}</div>
-                  </div>
-                );
-              })}
-            </div>
-          );
-        })}
-      </SearchWrapperDiv>
-
-      <StarWrapperDiv>
-        <div>여기부터 별결과</div>
-        {videoStarList?.data?.map((item: any, index: number) => {
-          return (
-            <div key={index} onClick={() => navigate(`/video/${item.id}`)}>
-              <img
-                src={`https://img.youtube.com/vi/${item.pathUrl}/maxresdefault.jpg`}
-              />
-              <div>{item.id}</div>
-              <div>{item.title}</div>
-              <div>{item.runningTime}</div>
-              <div>{item.pathUrl}</div>
-              <div>{item.bestScore}</div>
-              {item.roles.map((item: any, index: number) => {
-                return (
-                  <div key={index}>
-                    <div>{item}</div>
-                  </div>
-                );
-              })}
-            </div>
-          );
-        })}
-      </StarWrapperDiv>
-
-      <DoneWrapperDiv>
-        <div>여기부터 수강여부결과</div>
-        {videoDoneList?.data?.map((item: any, index: number) => {
-          return (
-            <div key={index} onClick={() => navigate(`/video/${item.id}`)}>
-              <img
-                src={`https://img.youtube.com/vi/${item.pathUrl}/maxresdefault.jpg`}
-              />
-              <div>{item.id}</div>
-              <div>{item.title}</div>
-              <div>{item.runningTime}</div>
-              <div>{item.pathUrl}</div>
-              <div>{item.bestScore}</div>
-              {item.roles.map((item: any, index: number) => {
-                return (
-                  <div key={index}>
-                    <div>{item}</div>
-                  </div>
-                );
-              })}
-            </div>
-          );
-        })}
-      </DoneWrapperDiv> */}
+        {testArray === null ? (
+          <ListWrapperDiv>
+            {videoList?.data?.map((item: any, index: number) => {
+              return (
+                <EachBtn
+                  key={index}
+                  onClick={() => navigate(`/video/${item.id}`)}
+                >
+                  <VideoImg>
+                    <img
+                      src={`https://img.youtube.com/vi/${item.pathUrl}/maxresdefault.jpg`}
+                    />
+                  </VideoImg>
+                  <VideoTitleDiv>{item.title.split(" - ")[1]}</VideoTitleDiv>
+                  <VideoTimeDiv>
+                    {(item.runningTime - (item.runningTime % 60)) / 60} :{" "}
+                    {item.runningTime % 60 >= 10
+                      ? item.runningTime % 60
+                      : "0" + (item.runningTime % 60)}
+                  </VideoTimeDiv>
+                  {item.bestScore >= 20 && item.bestScore <= 40 && (
+                    <VideoScoreDiv>
+                      <img src="/assets/img/EmptyStar.png" />
+                      <img src="/assets/img/EmptyStar.png" />
+                      <img src="/assets/img/Star.png" />
+                    </VideoScoreDiv>
+                  )}
+                  {item.bestScore >= 41 && item.bestScore <= 75 && (
+                    <VideoScoreDiv>
+                      <img src="/assets/img/EmptyStar.png" />
+                      <img src="/assets/img/Star.png" />
+                      <img src="/assets/img/Star.png" />
+                    </VideoScoreDiv>
+                  )}
+                  {item.bestScore >= 76 && item.bestScore <= 100 && (
+                    <VideoScoreDiv>
+                      <img src="/assets/img/Star.png" />
+                      <img src="/assets/img/Star.png" />
+                      <img src="/assets/img/Star.png" />
+                    </VideoScoreDiv>
+                  )}
+                  {item.bestScore === null && (
+                    <VideoScoreDiv>
+                      <img src="/assets/img/EmptyStar.png" />
+                      <img src="/assets/img/EmptyStar.png" />
+                      <img src="/assets/img/EmptyStar.png" />
+                    </VideoScoreDiv>
+                  )}
+                  <VideoAllRoleDiv>
+                    {item.roles.map((item: any, index: number) => {
+                      return (
+                        <VideoRoleWrapDiv key={index}>
+                          <VideoRoleDiv># {item}</VideoRoleDiv>
+                        </VideoRoleWrapDiv>
+                      );
+                    })}
+                  </VideoAllRoleDiv>
+                </EachBtn>
+              );
+            })}
+          </ListWrapperDiv>
+        ) : (
+          <ListWrapperDiv>
+            {testArray?.map((item: any, index: number) => {
+              return (
+                <EachBtn
+                  key={index}
+                  onClick={() => navigate(`/video/${item.id}`)}
+                >
+                  <VideoImg>
+                    <img
+                      src={`https://img.youtube.com/vi/${item.pathUrl}/maxresdefault.jpg`}
+                    />
+                  </VideoImg>
+                  <VideoTitleDiv>{item.title.split(" - ")[1]}</VideoTitleDiv>
+                  <VideoTimeDiv>
+                    {(item.runningTime - (item.runningTime % 60)) / 60} :{" "}
+                    {item.runningTime % 60 >= 10
+                      ? item.runningTime % 60
+                      : "0" + (item.runningTime % 60)}
+                  </VideoTimeDiv>
+                  {item.bestScore >= 20 && item.bestScore <= 40 && (
+                    <VideoScoreDiv>
+                      <img src="/assets/img/EmptyStar.png" />
+                      <img src="/assets/img/EmptyStar.png" />
+                      <img src="/assets/img/Star.png" />
+                    </VideoScoreDiv>
+                  )}
+                  {item.bestScore >= 41 && item.bestScore <= 75 && (
+                    <VideoScoreDiv>
+                      <img src="/assets/img/EmptyStar.png" />
+                      <img src="/assets/img/Star.png" />
+                      <img src="/assets/img/Star.png" />
+                    </VideoScoreDiv>
+                  )}
+                  {item.bestScore >= 76 && item.bestScore <= 100 && (
+                    <VideoScoreDiv>
+                      <img src="/assets/img/Star.png" />
+                      <img src="/assets/img/Star.png" />
+                      <img src="/assets/img/Star.png" />
+                    </VideoScoreDiv>
+                  )}
+                  {item.bestScore === null && (
+                    <VideoScoreDiv>
+                      <img src="/assets/img/EmptyStar.png" />
+                      <img src="/assets/img/EmptyStar.png" />
+                      <img src="/assets/img/EmptyStar.png" />
+                    </VideoScoreDiv>
+                  )}
+                  <VideoAllRoleDiv>
+                    {item.roles.map((item: any, index: number) => {
+                      return (
+                        <VideoRoleWrapDiv key={index}>
+                          <VideoRoleDiv># {item}</VideoRoleDiv>
+                        </VideoRoleWrapDiv>
+                      );
+                    })}
+                  </VideoAllRoleDiv>
+                </EachBtn>
+              );
+            })}
+          </ListWrapperDiv>
+        )}
       </AllDiv>
     </AllWrapperDiv>
   );
 };
 
 export default VideoListPage;
-
-// const StyledDiv = styled.div`
-//   width: 4rem;
-//   height: 4rem;
-//   border-radius: 50%;
-//   box-shadow: 0.3rem 0.3rem 0.6rem var(#c8d0e7),
-//     -0.2rem -0.2rem 0.5rem var(#ffffff);
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   font-size: 2rem;
-//   cursor: pointer;
-//   color: var(#9baacf);
-//   transition: all 0.5s ease;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   background: var(#e4ebf5);
-//   &:active {
-//     box-shadow: inset 0.2rem 0.2rem 0.5rem var(#c8d0e7),
-//       inset -0.2rem -0.2rem 0.5rem var(#ffffff);
-//     color: var(#6d5dfc);
-//   }
-//   &:hover {
-//     color: var(#6d5dfc);
-//   }
-// `;
 
 const AllWrapperDiv = styled.div`
   display: flex;
@@ -374,9 +383,9 @@ const AllWrapperDiv = styled.div`
 const ListWrapperDiv = styled.div`
   display: flex;
   width: 100vw;
-  padding: 5vw;
+  padding: 7.5vw 5vw 5vw 5vw;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: left;
 `;
 
 const SearchWrapperDiv = styled.div`
@@ -394,7 +403,7 @@ const DoneWrapperDiv = styled.div`
 const StarDiv = styled.div`
   display: flex;
   position: absolute;
-  top: 10vw;
+  top: 11vw;
   left: 7vw;
 `;
 
@@ -422,7 +431,7 @@ const StarImg = styled.image`
 const DoneSelectDiv = styled.div`
   display: flex;
   position: absolute;
-  top: 10vw;
+  top: 11vw;
   right: 6.7vw;
 `;
 const DoneBtn = styled.div`
@@ -480,6 +489,7 @@ const SearchInput = styled.input`
   border-radius: 10px;
   padding: 0.5vw 1vw 0.5vw 1vw;
   font-family: "PyeongChangPeace-Light";
+  font-weight: 900;
   font-size: 1.5vw;
   box-shadow: 8px 16px 16px hsl(0deg 0% 0% / 0.25);
 `;
@@ -504,8 +514,8 @@ const EachBtn = styled.button`
   position: relative;
   width: 27vw;
   height: 21vw;
-  margin: 2vh;
-  padding: 2vh;
+  margin: 1.25vw;
+  padding: 1.25vw;
   border-radius: 1vw;
   /* border: 1px solid; */
   box-shadow: 8px 16px 16px hsl(0deg 0% 0% / 0.25);

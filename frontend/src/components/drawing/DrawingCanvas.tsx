@@ -22,17 +22,26 @@ interface wordListType {
 }
 
 interface CanvasPropsType {
-  canvasRef: React.RefObject<HTMLCanvasElement>
-  predictList: predictListType
-  wordList : wordListType[]
-  setPredictList: React.Dispatch<React.SetStateAction<predictListType>>
-  index: number
-  modalHandleOpen(): void
-  predict: string
-  setPredict: React.Dispatch<React.SetStateAction<string>>
+  canvasRef: React.RefObject<HTMLCanvasElement>;
+  predictList: predictListType;
+  wordList: wordListType[];
+  setPredictList: React.Dispatch<React.SetStateAction<predictListType>>;
+  index: number;
+  modalHandleOpen(): void;
+  predict: string;
+  setPredict: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const DrawingCanvas = ({canvasRef, predict, wordList, predictList, setPredict, setPredictList, index, modalHandleOpen} : CanvasPropsType) => {
+const DrawingCanvas = ({
+  canvasRef,
+  predict,
+  wordList,
+  predictList,
+  setPredict,
+  setPredictList,
+  index,
+  modalHandleOpen,
+}: CanvasPropsType) => {
   // state
   const [mousePosition, setMousePosition] = useState<Coordinate | undefined>(
     undefined
@@ -66,7 +75,7 @@ const DrawingCanvas = ({canvasRef, predict, wordList, predictList, setPredict, s
     if (context) {
       context.strokeStyle = "black"; // 선 색깔
       context.lineJoin = "round"; // 선 끄트머리(?)
-      context.lineWidth = 5; // 선 굵기
+      context.lineWidth = 20; // 선 굵기
 
       context.beginPath();
       context.moveTo(originalMousePosition.x, originalMousePosition.y);
@@ -261,4 +270,3 @@ const StyledText = styled.h1(
     font-size: 24px;
   `
 );
-

@@ -272,9 +272,10 @@ const DrawingPage = () => {
       if (item === wordList[index].word) {
         answerHandler();
         // 정답 맞추면 무조건 이미지 저장하는 요청 보내게 [이미지 / 클래스id / 인식정확도 / 유저아이디]
+        modalHandleOpen();
+        saveFile();
       }
     });
-    saveFile();
     returnPrediction(Array);
   }, [predictList]);
 
