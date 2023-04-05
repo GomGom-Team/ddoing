@@ -43,6 +43,8 @@ const VideoListPage = () => {
   const [mySearchList, setMySearchList] = useState<VideoListType[] | null>(
     null
   );
+
+  const [videoList, setVideoList] = useState<VideoListType[] | null>(null);
   const changeInputData = (e: any) => {
     setInputData(e.target.value);
   };
@@ -55,15 +57,35 @@ const VideoListPage = () => {
 
   const handleClick = (status: string) => {
     if (status === "Star3") {
-      setTestArray(myStar3List);
+      if (myStar3List !== null) {
+        setTestArray(myStar3List);
+      } else {
+        setTestArray([]);
+      }
     } else if (status === "Star2") {
-      setTestArray(myStar2List);
+      if (myStar2List !== null) {
+        setTestArray(myStar2List);
+      } else {
+        setTestArray([]);
+      }
     } else if (status === "Star1") {
-      setTestArray(myStar1List);
+      if (myStar1List !== null) {
+        setTestArray(myStar1List);
+      } else {
+        setTestArray([]);
+      }
     } else if (status === "Done") {
-      setTestArray(myDoneList);
+      if (myDoneList !== null) {
+        setTestArray(myDoneList);
+      } else {
+        setTestArray([]);
+      }
     } else if (status === "NotDone") {
-      setTestArray(myNotDoneList);
+      if (myNotDoneList !== null) {
+        setTestArray(myNotDoneList);
+      } else {
+        setTestArray([]);
+      }
     }
     console.log("now status is ", status);
   };
@@ -78,8 +100,9 @@ const VideoListPage = () => {
 
   console.log("test", testArray);
 
-  const videoList = useAppSelector((state) => state.animation.getAnimationList);
+  // const videoList = useAppSelector((state) => state.animation.getAnimationList);
 
+  console.log("videoList!!!!!!", videoList);
   const star3ListHandler = async () => {
     await axios
       .get(`https://j8a103.p.ssafy.io/api/animations/filter/star/${user.id}/3`)
@@ -157,7 +180,20 @@ const VideoListPage = () => {
       });
   };
 
+  const videoListHandeler = async () => {
+    await axios
+      .get(`https://j8a103.p.ssafy.io/api/animations/${user.id}`)
+      .then((res) => {
+        console.log(res.data);
+        setVideoList(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const api = async () => {
+    videoListHandeler();
     star1ListHandler();
     star2ListHandler();
     star3ListHandler();
@@ -248,7 +284,7 @@ const VideoListPage = () => {
 
         {testArray === null ? (
           <ListWrapperDiv>
-            {videoList?.data?.map((item: any, index: number) => {
+            {videoList?.map((item: any, index: number) => {
               return (
                 <EachBtn
                   key={index}
