@@ -390,12 +390,9 @@ public class AnimationServiceImpl implements AnimationService {
             e.printStackTrace();
         }
         // score에 string 값이 들어갈 때 발생하는 에러 처리
-        catch (NumberFormatException e) {
+        catch (Exception e) {
+        	e.printStackTrace();
             score = 0;
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
         }
 
         return score;
