@@ -38,27 +38,27 @@ function HallofFame({ bestDrawing }: HallofFameProps) {
           tw="flex w-10/12 overflow-hidden justify-center items-center"
           {...settings}
         >
-              {bestDrawing &&
-                bestDrawing.map((item: any, index: number) => {
-                  return (
-                    <SliderItems key={index}>
-                      <SliderItemsWrapper>
-                        <CustomedFigure>
-                          <FrameThumbnail>
-                            {item.drawingPath && (
-                              <ThumbNail
-                                src={`https://j8a103.p.ssafy.io/assets/img_backend/${item.drawingPath}`}
-                              ></ThumbNail>
-                            )}
-                            {!item.drawingPath && (
-                              <NullImg>아직 그림이 없어요</NullImg>
-                            )}
-                          </FrameThumbnail>
-                        </CustomedFigure>
-                      </SliderItemsWrapper>
-                    </SliderItems>
-                  );
-                })}
+          {bestDrawing &&
+            bestDrawing.map((item: any, index: number) => {
+              return (
+                <SliderItems key={index}>
+                  <SliderItemsWrapper>
+                    <CustomedFigure>
+                      <FrameThumbnail>
+                        {item.drawingPath && (
+                          <ThumbNail
+                            src={`https://j8a103.p.ssafy.io/assets/img_backend/${item.drawingPath}`}
+                          ></ThumbNail>
+                        )}
+                        {!item.drawingPath && (
+                          <NullImg>아직 그림이 없어요</NullImg>
+                        )}
+                      </FrameThumbnail>
+                    </CustomedFigure>
+                  </SliderItemsWrapper>
+                </SliderItems>
+              );
+            })}
         </Slider>
       </CustomedSection>
     </SectionWrapper>
@@ -75,7 +75,7 @@ const SectionWrapper = styled.div(
   tw`flex justify-center w-full py-24 items-center`
 );
 
-const SliderItems = styled.li(tw`w-96 p-5`);
+const SliderItems = styled.li(tw`w-96`);
 
 const SliderItemsWrapper = styled.div(
   tw`flex justify-center rounded-lg p-5 h-full`
@@ -84,12 +84,12 @@ const SliderItemsWrapper = styled.div(
 const FrameThumbnail = styled.div(
   tw`flex justify-center items-center`,
   css`
-    border: 60px solid;
-    border-image: url("/assets/border/Border8.png") 50 64;
+    border: 80px solid;
+    border-image: url("/assets/border/Border_Final.png") 300 200;
   `
 );
 
-const ThumbNail = styled.img(tw`h-56 w-56 object-cover bg-slate-500`);
+const ThumbNail = styled.img(tw`h-full w-full bg-slate-500`);
 
 const NullImg = styled.div(
   tw`flex justify-center items-center h-36 w-48 object-cover bg-slate-500 border-4 m-5`
