@@ -183,30 +183,26 @@ const PlayerScript = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
           <AudioAnalyser {...audioProps}>
             <RecordStartWrapdiv className="btn-box">
               {(status === "" || status === "inactive") && (
-                <>
+                <RecordStartAll>
                   <RecordDiv>녹음을 시작해 볼까요?</RecordDiv>
-                  <div>{test[nowMy - 1]?.engSentence}</div>
-                  <RecordStartBtn
-                    className="btn"
-                    variant="contained"
-                    onClick={() => controlAudio("recording")}
-                  >
-                    Start
+                  <NowScriptDiv>{test[nowMy - 1]?.engSentence}</NowScriptDiv>
+                  <RecordStartBtn onClick={() => controlAudio("recording")}>
+                    <MicImg src="/assets/img/Mic.png" />
                   </RecordStartBtn>
-                </>
+                </RecordStartAll>
               )}
 
               {status === "recording" && (
-                <>
-                  <div>듣고 있어요!</div>
-                  <div>{test[nowMy - 1]?.engSentence}</div>
+                <RecordStartAll>
+                  <RecordDiv>듣고 있어요!</RecordDiv>
+                  <NowScriptDiv>{test[nowMy - 1]?.engSentence}</NowScriptDiv>
                   <button
                     className="btn"
                     onClick={() => controlAudio("inactive")}
                   >
                     Stop
                   </button>
-                </>
+                </RecordStartAll>
               )}
             </RecordStartWrapdiv>
           </AudioAnalyser>
@@ -264,6 +260,7 @@ const PlayerScript = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
             </AllWrapperDiv>
           </>
         )}
+      <ClipboardImg src="/assets/img/Clipboard.png" />
       <ScriptAllDiv>
         <Container isOverflowed={true}>
           {script?.data?.map((item: any, index: number) => {
@@ -306,47 +303,65 @@ interface MyProps {
   isMyRole?: boolean;
 }
 
+const ClipboardImg = styled.img`
+  display: flex;
+  position: absolute;
+  width: 34.5vw;
+  right: 5vw;
+  top: 5.2vw;
+`;
+
 const RecordStartWrapdiv = styled.div`
   /* margin-top: 20vh; */
   display: grid;
 `;
 
-const RecordDiv = styled.div`
-  margin-top: 20vh;
+const MicImg = styled.img`
+  width: 7.5vw;
 `;
 
-const RecordStartBtn = styled(Button)<ButtonProps>(({ theme }) => ({
-  fontFamily: "insungitCutelivelyjisu",
-  backgroundColor: "#FFD761",
-  color: "black",
-  padding: "6px 12px",
-  border: "1px solid",
-  top: "20px",
-  width: "50%",
-  "&:hover": {
-    backgroundColor: "#005112",
-    borderColor: "#005112",
-    boxShadow: "none",
-    color: "#FFFFFF",
-  },
-  "&:active": {
-    boxShadow: "none",
-    backgroundColor: "#005112",
-    borderColor: "#005112",
-  },
-  "&:focus": {
-    boxShadow: "0 0 0 0.2rem #005112",
-  },
-}));
+const RecordDiv = styled.div`
+  margin-top: 10vw;
+  font-family: "ONE-Mobile-POP";
+  font-size: 4vw;
+`;
 
+const NowScriptDiv = styled.div`
+  margin-top: 5vw;
+  font-family: "PyeongChangPeace-Light";
+  font-size: 3vw;
+`;
+
+const RecordStartBtn = styled.button`
+  font-family: "insungitCutelivelyjisu";
+  background-color: #fff125;
+  margin-top: 10vw;
+  width: 7.5vw;
+  height: 7.5vw;
+  font-size: 2vw;
+  border-radius: 100%;
+  left: 45vw;
+  top: 22.5vw;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 4px 8px 8px hsl(0deg 0% 0% / 0.25);
+`;
 const MyCanvas = styled.div`
   display: flex;
   background-color: blue;
 `;
 
+const RecordStartAll = styled.div`
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+`;
+
 const AllWrapDiv = styled.div`
   display: flex;
-  height: 100%;
+  height: 100vh;
   width: 100vw;
   padding-top: 10vw;
 `;
@@ -370,32 +385,36 @@ const StyledDiv = styled.div(({ isMyRole, isNowScript }: LiProps) => [
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 31vw;
   `,
 ]);
 
 const ScriptAllDiv = styled.div`
   display: grid;
-  height: 40vw;
-  width: 30vw;
+  height: 35.3vw;
+  width: 31vw;
+  margin-top: 1.3vw;
+  /* border: 1px solid; */
   /* padding: 1vw; */
   border-radius: 1.5%;
-  margin-left: 12vw;
+  margin-left: 13.1vw;
   overflow-y: auto;
   background-color: white;
+  z-index: 2;
 `;
 
 const RoleDiv = styled.div`
-  margin-left: 5px;
-  margin-right: 5px;
+  margin-left: 0.5vw;
+  margin-right: 0.5vw;
   width: 5vw;
   text-align: center;
   font-family: "PyeongChangPeace-Light";
 `;
 
 const ScriptWrapDiv = styled.div`
-  margin: 5px;
+  margin: 0.75vw;
   width: 100%;
-  font-size: 17px;
+  font-size: 1.2vw;
 `;
 
 const EngDiv = styled.div`
@@ -413,7 +432,8 @@ const VideoDiv = styled.div`
 
 const ScriptDiv = styled.ol`
   display: flex;
-  margin-top: 10px;
+  /* margin-top: 10px */
+  padding: 5px;
   background-color: #ffffff;
   border-radius: 5%;
 `;
@@ -428,7 +448,7 @@ const AllWrapperDiv = styled.div`
   top: 0px;
   /* position: absolute; */
   z-index: 999;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.75);
   color: white;
 `;
 
