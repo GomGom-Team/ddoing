@@ -4,29 +4,15 @@ import { styled as muistyled } from "@mui/material/styles";
 import Button, { ButtonProps } from "@mui/material/Button";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
-import abc_img from "/assets/img/ABC.png";
+import abc_img from "/assets/img/LOGO.png";
 import { Height } from "@mui/icons-material";
 
-const LandingComp1 = () => {
+const LandingComp5 = () => {
   return (
     <Background style={{ textAlign: "center" }}>
-      <TitleDescriptionWrapper data-aos="fade-up">
-        <Content>
-          <StyledTitle>우리 아이 영어 학습을 위한 선택, 또잉</StyledTitle>
-          <ContentScript>
-            <StyledDescription>애니메이션을 보며 따라하고,</StyledDescription>
-            <StyledDescription>영어 단어를 직접 그려보면서</StyledDescription>
-            <StyledDescription>
-              자연스럽게 영어를 학습할 수 있습니다.
-            </StyledDescription>
-            <br />
-            <StyledDescription>
-              또잉과 함께 즐거운 영어 공부해요!
-            </StyledDescription>
-          </ContentScript>
-        </Content>
+      <TitleDescriptionWrapper data-aos="fade-up" data-aos-delay="100">
         {/* <ImgWrapper> */}
-        <CustomedImage src={abc_img} style={{ width: "500px" }}></CustomedImage>
+        <CustomedImage src={abc_img} style={{ width: "80vh" }}></CustomedImage>
         {/* </ImgWrapper> */}
       </TitleDescriptionWrapper>
       <Bounce>
@@ -35,10 +21,10 @@ const LandingComp1 = () => {
     </Background>
   );
 };
-export default LandingComp1;
+export default LandingComp5;
 
 const Background = styled.div`
-  background: #5bb83f;
+  background: #ffd761;
   padding: 15vh 15vh 0px 15vh;
   height: 100vh;
 `;
@@ -51,7 +37,7 @@ const TitleDescriptionWrapper = styled.div(
   tw`justify-evenly pl-48`,
   css`
     margin-top: 5em;
-    margin-bottom: 35em;
+    /* margin-bottom: 30em; */
     display: flex;
   `
 );
@@ -77,7 +63,7 @@ const StyledDescription = styled.h2(
 // const ImgWrapper = styled.div(tw`flex justify-center items-center pr-48`);
 
 const CustomedImage = styled.img(
-  tw`object-cover rounded-md`,
+  tw`object-cover rounded-md animate-bounce hover:delay-700 hover:animate-spin `,
   css`
     width: 500px;
   `
@@ -101,13 +87,13 @@ const ContentScript = styled.div`
 `;
 
 const Bounce = styled.div(
-  tw`animate-bounce`,
+  tw`animate-pulse`,
   css`
     position: "absolute";
     /* left: 43%; */
     /* right: 50%; */
-    /* top: 80%; */
-    bottom: 10em;
+    /* top: 660em; */
+    /* bottom: 10em; */
     /* margin-right: 50%; */
     text-align: center;
   `

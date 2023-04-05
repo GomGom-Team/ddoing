@@ -11,6 +11,7 @@ import LandingComp1 from "../components/land/LandingComp1";
 import LandingComp2 from "../components/land/LandingComp2";
 import LandingComp3 from "../components/land/LandingComp3";
 import LandingComp4 from "../components/land/LandingComp4";
+import LandingComp5 from "../components/land/LandingComp5";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -23,8 +24,9 @@ const LandingPage = () => {
     <div>
       <ExtraBox style={{ textAlign: "center" }}>
         <FloatLogo src={abc_img} style={{ width: "200px" }} />
-        <LandingComp1 />
+        <LandingComp5 />
         <LandingComp2 />
+        <LandingComp1 />
         <LandingComp3 />
         <LandingComp4 />
         <Float>
@@ -38,7 +40,7 @@ const LandingPage = () => {
 export default LandingPage;
 
 const ExtraBox = styled.div`
-  height: 400vh;
+  height: 500vh;
 `;
 
 const StyledButton = muistyled(Button)<ButtonProps>(({ theme }) => ({
