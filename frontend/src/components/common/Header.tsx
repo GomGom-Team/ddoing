@@ -48,7 +48,9 @@ const Header = () => {
       <CustomedNav>
         <NavWrapper>
           <NavWrapperContents>
-            <MainLogo src={logo} onClick={() => navigate("/")}></MainLogo>
+            <LogoBtn onClick={() => navigate("/")}>
+              <MainLogo src={logo}></MainLogo>
+            </LogoBtn>
             <NavigateContents>
               <StyledButton onClick={() => navigate("/videolist")}>
                 A n i m a t i o n
@@ -128,6 +130,10 @@ const NavWrapperContents = styled.div(
 );
 
 const MainLogo = styled.img`
+  height: 3rem;
+`;
+
+const LogoBtn = styled.button`
   height: 3rem;
 `;
 

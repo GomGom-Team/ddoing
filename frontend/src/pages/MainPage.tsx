@@ -80,7 +80,7 @@ const MainPage = () => {
   // }, []);
   if (loading) return <Loading></Loading>;
   return (
-    <Container isOverflowed>
+    <AllWrapDiv>
       {/* Header */}
       <Header />
       <DummyDiv></DummyDiv>
@@ -98,7 +98,7 @@ const MainPage = () => {
 
       {/* Footer  */}
       {/* <Footer /> */}
-    </Container>
+    </AllWrapDiv>
   );
 };
 
@@ -117,5 +117,9 @@ const CarouselTitle2 = styled.div(
     font-family: "insungitCutelivelyjisu";
   `
 );
+
+const AllWrapDiv = styled.div`
+  width: 100vw;
+`;
 
 export default MainPage;
