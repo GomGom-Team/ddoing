@@ -266,14 +266,28 @@ const DrawingPage = () => {
     results: { apple: 85.6, grape: 11.2, strawberry: 5.4 },
   });
 
+  const answerList = [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]
+
+  const [predictScore, setPredictScore] = useState(0)
+
   useDidMountEffect(() => {
-    const Array = Object.keys(predictList.results);
+    const Array = Object.entries(predictList.results);
+
     Array.forEach((item) => {
-      if (item === wordList[index].word) {
-        answerHandler();
-        // 정답 맞추면 무조건 이미지 저장하는 요청 보내게 [이미지 / 클래스id / 인식정확도 / 유저아이디]
-        modalHandleOpen();
-        saveFile();
+      if (item[0] === wordList[index].word && index === predictList.stage) {
+        if (!modalOpen) {
+          answerHandler();
+          // 정답 맞추면 무조건 이미지 저장하는 요청 보내게 [이미지 / 클래스id / 인식정확도 / 유저아이디]
+          modalHandleOpen();
+          saveFile(item[1])
+        }
       }
     });
     returnPrediction(Array);
@@ -281,8 +295,8 @@ const DrawingPage = () => {
 
   const [predict, setPredict] = useState("...");
 
-  const returnPrediction = (Array: string[]) => {
-    setPredict(`${Array[0]} 또는 ${Array[1]} 또는 ${Array[2]} `);
+  const returnPrediction = (Array: [string, any][]) => {
+    setPredict(`${Array[0][0]} 또는 ${Array[1][0]} 또는 ${Array[2][0]} `);
   };
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -312,21 +326,21 @@ const DrawingPage = () => {
     return new File([u8arr], fileName, { type: mime });
   };
 
-  const saveFile = () => {
+  const saveFile = (score : number) => {
     if (!canvasRef.current) {
       return;
     } else {
       const canvas: HTMLCanvasElement = canvasRef.current;
       const formData = new FormData();
       const dataUrl = canvas.toDataURL();
+
       //need to update
-      let id = "pika";
       let word_class = wordList[index].word;
 
       const data = {
-        userId: id,
+        userId: user.id,
         wordId: wordList[index].id,
-        percentage: 30,
+        percentage: score * 100,
       };
 
       const imgFile = dataURLtoFileObject(
