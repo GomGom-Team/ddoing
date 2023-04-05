@@ -35,6 +35,7 @@ const LandingComp4 = () => {
 export default LandingComp4;
 
 const Background = styled.div`
+  background: #9fddff;
   padding: 15vh 15vh 0px 15vh;
   height: 100vh;
 `;
