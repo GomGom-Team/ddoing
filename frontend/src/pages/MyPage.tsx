@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import tw, { css, styled, theme } from "twin.macro";
 import VerticalTabs from "../components/user/LeftVerticalTab";
 import { Container, Header, Footer } from "../components/common/index";
 import { Box } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../redux/configStore.hooks";
 import MultiColorProgressBar from "../components/user/LevelBar";
+import { useNavigate } from "react-router-dom";
 
 interface Reading {
   name: string;
@@ -28,7 +29,6 @@ interface DrawingListType {
 // }, [users]);\
 
 const MyPage = () => {
-  const dispatch = useAppDispatch();
   const users = useAppSelector((state) => state.user.userData);
   const level = 0;
   const exp = useAppSelector((state) => state.user.userData.exp);
@@ -45,6 +45,13 @@ const MyPage = () => {
       color: "#22a6b3",
     },
   ];
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!users.id) {
+      navigate("/login");
+    }
+  }, []);
 
   return (
     <ContaineDiv>
