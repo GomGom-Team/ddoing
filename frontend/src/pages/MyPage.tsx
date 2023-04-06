@@ -95,8 +95,7 @@ const ContaineDiv = styled.div(
     width: 100%;
     height: 100%;
   `
-)
-
+);
 
 const ProfileDiv = styled.div(
   tw`flex items-center content-between border border-black`,
@@ -119,7 +118,7 @@ const BoxContentDiv = styled.div(
   css`
     height: 70%;
     width: 100%;
-  `  
+  `
 );
 
 const CustomedImage = styled.img`
@@ -146,7 +145,7 @@ const ProfileName = styled.span`
 const TabStyle = {
   display: "flex",
   height: "100%",
-  width: "100%"
+  width: "100%",
 };
 
 // level 글자
@@ -160,15 +159,13 @@ const LevelArea = styled.div(
   tw`flex flex-col border border-yellow-500`,
   css`
     width: 100%;
-    height:100%;
+    height: 100%;
   `
-)
-;
-
+);
 const FontStyle = styled.div(
   tw``,
   css`
-  font-family: "insungitCutelivelyjisu";
-  height: 100%;
+    font-family: "insungitCutelivelyjisu";
+    height: 100%;
   `
-)
+);

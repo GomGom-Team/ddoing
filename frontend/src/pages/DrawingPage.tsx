@@ -144,12 +144,11 @@ const DrawingPage = () => {
   };
   const modalHandleClose = () => setmodalOpen(false);
 
-
   useDidMountEffect(() => {
-    if(modalOpen === false) {
-      setTimeout(() => stageHandler(), 500)      
+    if (modalOpen === false) {
+      setTimeout(() => stageHandler(), 500);
     }
-  }, [modalOpen])
+  }, [modalOpen]);
 
   // Answer
   const [answer, setAnswer] = useState(false);
@@ -273,16 +272,9 @@ const DrawingPage = () => {
     results: { apple: 85.6, grape: 11.2, strawberry: 5.4 },
   });
 
-  const answerList = [
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ]
+  const answerList = [false, false, false, false, false, false];
 
-  const [predictScore, setPredictScore] = useState(0)
+  const [predictScore, setPredictScore] = useState(0);
 
   useDidMountEffect(() => {
     const Array = Object.entries(predictList.results);
@@ -293,7 +285,7 @@ const DrawingPage = () => {
           answerHandler();
           // 정답 맞추면 무조건 이미지 저장하는 요청 보내게 [이미지 / 클래스id / 인식정확도 / 유저아이디]
           modalHandleOpen();
-          saveFile(item[1])
+          saveFile(item[1]);
         }
       }
     });
@@ -333,7 +325,7 @@ const DrawingPage = () => {
     return new File([u8arr], fileName, { type: mime });
   };
 
-  const saveFile = (score : number) => {
+  const saveFile = (score: number) => {
     if (!canvasRef.current) {
       return;
     } else {
@@ -522,7 +514,7 @@ export default DrawingPage;
 
 const StyledDiv = styled.div(tw`flex justify-center text-center`);
 
-const DummyDiv = styled.div(tw`h-16`);
+const DummyDiv = styled.div(tw`h-20`);
 
 const BackgroundDiv = styled.div`
   background-image: url("assets/img/background.jpg");
