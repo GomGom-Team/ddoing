@@ -2,19 +2,40 @@ import React, { useEffect, useState } from "react";
 import tw, { css, styled, theme } from "twin.macro";
 import { useAppDispatch, useAppSelector } from "../../redux/configStore.hooks";
 import { useNavigate } from "react-router-dom";
-import { logoutAction } from "../../redux/modules/user";
+import { logoutAction, setUserWithTokenAction } from "../../redux/modules/user";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import logo from "/assets/img/LOGO2.png";
 
 const Header = () => {
   // State
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const isLogin = useAppSelector((state) => state.user.userData.isLoggedIn);
+  const profile = useAppSelector((state) => state.user.userData.profile);
   const [loginCheck, setLoginCheck] = useState<boolean>(isLogin);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
   // Logic
-  const onLogout = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onLogout = (e: React.MouseEvent<HTMLElement>) => {
     dispatch(logoutAction());
     setLoginCheck(false);
+    setAnchorEl(null);
     navigate("/");
+  };
+
+  // 프로필, 로그아웃
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const goMyPage = () => {
+    dispatch(setUserWithTokenAction()).then(() => navigate("/mypage"));
   };
 
   useEffect(() => {
@@ -27,26 +48,55 @@ const Header = () => {
       <CustomedNav>
         <NavWrapper>
           <NavWrapperContents>
-            <MainLogo onClick={() => navigate("/")}>또잉</MainLogo>
+            <LogoBtn onClick={() => navigate("/")}>
+              <MainLogo src={logo}></MainLogo>
+            </LogoBtn>
             <NavigateContents>
-              <StyledButton onClick={() => navigate("/animation")}>A n i m a t i o n</StyledButton>
-              <StyledButton onClick={() => navigate("/drawing")}>D r a w i n g</StyledButton>
-              <StyledButton onClick={() => navigate("/ranking")}>R a n k i n g</StyledButton>
+              <StyledButton onClick={() => navigate("/videolist")}>
+                A n i m a t i o n
+              </StyledButton>
+              <StyledButton onClick={() => navigate("/drawing")}>
+                D r a w i n g
+              </StyledButton>
             </NavigateContents>
             <Profile>
               {loginCheck ? (
-                <div>
-                  <button onClick={() => navigate("/mypage")}>프로필</button>{" "}
-                  <button onClick={onLogout}>로그아웃</button>
-                </div>
+                <Button
+                  id="demo-positioned-button"
+                  aria-controls={open ? "demo-positioned-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? "true" : undefined}
+                  onClick={handleClick}
+                >
+                  <ProfileImg src={`/assets/img/ddio0.png`}></ProfileImg>
+                </Button>
               ) : (
                 <div>
-                  <button onClick={() => navigate("/login")}>로그인</button>{" "}
-                  <button onClick={() => navigate("/register")}>
-                    회원가입
-                  </button>
+                  <button onClick={() => navigate("/login")}>Login</button>
                 </div>
               )}
+              <Menu
+                id="demo-positioned-menu"
+                aria-labelledby="demo-positioned-button"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+              >
+                <MenuItem sx={ButtonStyle} onClick={goMyPage}>
+                  Profile
+                </MenuItem>
+                <MenuItem sx={ButtonStyle} onClick={onLogout}>
+                  Logout
+                </MenuItem>
+              </Menu>
             </Profile>
           </NavWrapperContents>
         </NavWrapper>
@@ -60,34 +110,56 @@ const StickyHeader = styled.header(tw`fixed top-0 z-10 w-full`);
 
 const CustomedNav = styled.nav(
   tw`
-    h-16
     bg-white 
     backdrop-filter 
-    backdrop-blur-lg 
+    backdrop-blur-xl
     bg-opacity-30
-    border-b
     border-gray-200
+    h-20
   `,
   css`
-    font-family: 'insungitCutelivelyjisu';
+    font-family: "insungitCutelivelyjisu";
+    /* height: 65px; */
   `
-
 );
 
 const NavWrapper = styled.div(tw`ml-0 mr-0 px-6`);
 
 const NavWrapperContents = styled.div(
-  tw`flex items-center justify-between h-16`
+  tw`flex items-center justify-between h-20`
 );
 
-const MainLogo = styled.button(tw`text-2xl text-gray-900 font-semibold`);
+const MainLogo = styled.img`
+  height: 3rem;
+`;
+
+const LogoBtn = styled.button`
+  height: 3rem;
+`;
 
 const NavigateContents = styled.div(tw`flex space-x-4 text-xl text-gray-900`);
 
 const Profile = styled.div(tw`text-2xl`);
 
 const StyledButton = styled.button(
-  tw`px-5`
-)
+  tw`px-5 h-20`,
+  css`
+    size: "5rem";
+  `
+);
+
+const ProfileImg = styled.img`
+  width: 3rem;
+  height: 3rem;
+  display: block;
+  float: left;
+  margin-left: 5%;
+  margin-top: 4%;
+  border-radius: 70%;
+`;
+
+const ButtonStyle = {
+  fontFamily: "insungitCutelivelyjisu",
+};
 
 export default Header;

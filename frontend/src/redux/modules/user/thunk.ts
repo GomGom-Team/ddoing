@@ -152,7 +152,6 @@ export const logoutAction: any = createAsyncThunk(
         })
         .then(() => {
           removeToken();
-          alert("로그아웃 되었습니다.");
         });
     } catch (e) {
       return rejectWithValue(e);
@@ -174,12 +173,12 @@ export const changePwAction: any = createAsyncThunk(
 );
 
 // 닉네임 변경
-export const changeNickAction: any = createAsyncThunk(
-  "CHANGE_NICKNAME",
+export const changeUserAction: any = createAsyncThunk(
+  "CHANGE_USER",
   async (userData: UpdateUserType, { dispatch, rejectWithValue }) => {
     try {
       const axios = axiosInitializer();
-      await axios.put("api/users/nickName", userData).then(() => {
+      await axios.put("api/users", userData).then(() => {
         dispatch(setUserWithTokenAction());
       });
     } catch (e) {
@@ -191,18 +190,19 @@ export const changeNickAction: any = createAsyncThunk(
 // 회원 탈퇴
 export const deleteUserAction: any = createAsyncThunk(
   "DELETE_USER",
-  async (_, { rejectWithValue }) => {
+  async (_, { dispatch, rejectWithValue }) => {
     try {
       const axios = axiosInitializer();
       await axios
-        .delete("api/users", {
+        .delete(`/api/users`, {
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Baerer" + getToken(),
+            Authorization: "Baerer " + getToken(),
           },
         })
         .then(() => {
-          removeToken();
+          dispatch(logoutAction());
+          // removeToken();
         });
     } catch (e) {
       return rejectWithValue(e);

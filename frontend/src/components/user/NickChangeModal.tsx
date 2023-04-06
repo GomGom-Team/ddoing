@@ -1,7 +1,6 @@
 import { CheckRounded, Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Box,
-  Button,
   Checkbox,
   FormControl,
   FormControlLabel,
@@ -11,11 +10,13 @@ import {
   InputAdornment,
   InputLabel,
 } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import Button, { ButtonProps } from "@mui/material/Button";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/configStore.hooks";
 import {
-  changeNickAction,
+  changeUserAction,
   checkNickNameAction,
 } from "../../redux/modules/user";
 import BasicModal from "../common/BasicModal";
@@ -49,7 +50,7 @@ function NickChangeModal({ open, setOpen }: any): JSX.Element {
 
     if (!nickNameActivated || (nickNameActivated && nickNameCheck)) {
       dispatch(
-        changeNickAction({
+        changeUserAction({
           id: user.id,
           nickName,
         })
@@ -82,9 +83,23 @@ function NickChangeModal({ open, setOpen }: any): JSX.Element {
         autoComplete="off"
         onSubmit={onSubmit}
       >
-        <h2 id="parent-modal-title">닉네임 변경</h2>
+        <h2
+          id="parent-modal-title"
+          style={{
+            fontFamily: "insungitCutelivelyjisu",
+            marginBottom: "10%",
+            fontSize: "25px",
+          }}
+        >
+          닉네임 변경하기
+        </h2>
         <FormControl variant="standard">
-          <InputLabel htmlFor="nickName">새 닉네임</InputLabel>
+          <InputLabel
+            htmlFor="nickName"
+            sx={{ fontFamily: "insungitCutelivelyjisu" }}
+          >
+            새 닉네임
+          </InputLabel>
           <Input
             id="nickName"
             value={nickName}
@@ -92,8 +107,12 @@ function NickChangeModal({ open, setOpen }: any): JSX.Element {
             aria-describedby="nick-helper-text"
             required
             error={nickNameActivated && nickName === "" ? true : false}
+            sx={{ fontFamily: "insungitCutelivelyjisu" }}
           />
-          <FormHelperText id="nick-helper-text">
+          <FormHelperText
+            id="nick-helper-text"
+            sx={{ fontFamily: "insungitCutelivelyjisu" }}
+          >
             {nickNameActivated &&
               (nickNameCheck === "Available" ? (
                 <span>사용 가능한 닉네임입니다</span>
@@ -107,16 +126,17 @@ function NickChangeModal({ open, setOpen }: any): JSX.Element {
         <Button
           onClick={onConfirmNickName}
           disabled={!nickNameActivated || user.nickName === nickName}
+          sx={{ fontFamily: "insungitCutelivelyjisu" }}
         >
           닉네임 중복 확인
         </Button>
-        <Box sx={buttonBoxStyle}>
-          <Button variant="contained" type="submit">
+        <Box component="div" sx={buttonBoxStyle}>
+          <StyledButton variant="contained" type="submit">
             변경
-          </Button>
-          <Button variant="contained" onClick={onCloseModal}>
+          </StyledButton>
+          <DeleteButton variant="contained" onClick={onCloseModal}>
             취소
-          </Button>
+          </DeleteButton>
         </Box>
       </Box>
     </BasicModal>
@@ -137,3 +157,50 @@ const checkBoxStyle = {
   justifyContent: "center",
   alignItems: "center",
 };
+
+const StyledButton = styled(Button)<ButtonProps>(({ theme }) => ({
+  fontFamily: "insungitCutelivelyjisu",
+  backgroundColor: "#FFD761",
+  color: "black",
+  padding: "6px 12px",
+  border: "1px solid",
+  width: "50%",
+  "&:hover": {
+    backgroundColor: "#005112",
+    borderColor: "#005112",
+    boxShadow: "none",
+    color: "#FFFFFF",
+  },
+  "&:active": {
+    boxShadow: "none",
+    backgroundColor: "#0062cc",
+    borderColor: "#005cbf",
+  },
+  "&:focus": {
+    boxShadow: "0 0 0 0.2rem rgba(0,123,255,.5)",
+  },
+}));
+
+const DeleteButton = styled(Button)<ButtonProps>(({ theme }) => ({
+  border: "none",
+  backgroundColor: "white",
+  color: "black",
+  boxShadow: "none",
+  fontFamily: "insungitCutelivelyjisu",
+  padding: "6px 12px",
+  width: "50%",
+  "&:hover": {
+    backgroundColor: "#005112",
+    borderColor: "#005112",
+    boxShadow: "none",
+    color: "#FFFFFF",
+  },
+  "&:active": {
+    boxShadow: "none",
+    backgroundColor: "#0062cc",
+    borderColor: "#005cbf",
+  },
+  "&:focus": {
+    boxShadow: "0 0 0 0.2rem rgba(0,123,255,.5)",
+  },
+}));

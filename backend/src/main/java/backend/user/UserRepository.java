@@ -8,4 +8,6 @@ public interface UserRepository extends JpaRepository<UserEntity, String> {
 
     boolean existsByEmail(String email);
 
+    void deleteById(String id);
+
 }

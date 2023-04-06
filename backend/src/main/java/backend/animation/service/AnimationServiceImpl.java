@@ -100,17 +100,23 @@ public class AnimationServiceImpl implements AnimationService {
     // 점수 넣기
     @Override
     public boolean createScore(AnimationRequestDTO animationRequestDTO) {
+        if (userRepository.existsById(animationRequestDTO.getUserId()) && animationRepository.existsById(animationRequestDTO.getAnimationId())) {
+            AnimationScoreEntity animationScoreEntity = AnimationScoreEntity.builder()
+                    .userId(animationRequestDTO.getUserId())
+                    .animationId(animationRequestDTO.getAnimationId())
+                    .score(animationRequestDTO.getScore())
+                    .animationEntity(animationRepository.findById(animationRequestDTO.getAnimationId()).orElseThrow())
+                    .userEntity(userRepository.findById(animationRequestDTO.getUserId()).orElseThrow())
+                    .build();
+            animationScoreRepository.save(animationScoreEntity);
 
-        AnimationScoreEntity animationScoreEntity = AnimationScoreEntity.builder()
-                .userId(animationRequestDTO.getUserId())
-                .animationId(animationRequestDTO.getAnimationId())
-                .score(animationRequestDTO.getScore())
-                .animationEntity(animationRepository.findById(animationRequestDTO.getAnimationId()).orElseThrow())
-                .userEntity(userRepository.findById(animationRequestDTO.getUserId()).orElseThrow())
-                .build();
-
-        animationScoreRepository.save(animationScoreEntity);
-        return true;
+            // best score update
+            updateBestScore(animationRequestDTO);
+            updateUserExpAndLevel(animationRequestDTO);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // bestScore 생성
@@ -170,6 +176,7 @@ public class AnimationServiceImpl implements AnimationService {
         UserEntity result = UserEntity.builder()
                 .id(userEntity.getId())
                 .name(userEntity.getName())
+                .password(userEntity.getPassword())
                 .email(userEntity.getEmail())
                 .nickName(userEntity.getNickName())
                 .exp(newExp)
@@ -184,9 +191,6 @@ public class AnimationServiceImpl implements AnimationService {
     // userId, animationId, bestScore, exp, level
     @Override
     public UserScoreResponseDTO getUserScores(AnimationRequestDTO animationRequestDTO) {
-        updateBestScore(animationRequestDTO);
-        updateUserExpAndLevel(animationRequestDTO);
-
         UserEntity userEntity = userRepository.findById(animationRequestDTO.getUserId()).orElseThrow();
         UserScoreResponseDTO animationResponseDTO = UserScoreResponseDTO.builder()
                 .userId(animationRequestDTO.getUserId())
@@ -208,7 +212,6 @@ public class AnimationServiceImpl implements AnimationService {
         for (AnimationEntity animation : animations) {
             // animationId, title, runningTime, pathUrl, bestScore, roles
             AnimationResponseDTO result = toAnimationResponseDto(animation, userId);
-
             results.add(result);
         }
         return results;
@@ -298,16 +301,25 @@ public class AnimationServiceImpl implements AnimationService {
         List<Long> animationScoreIds = animationScoreRepository.findTop4ByUserId(userId);
         List<AnimationResponseDTO> results = new ArrayList<>();
 
-        for (Long list : animationScoreIds) {
-            AnimationEntity animation = animationRepository.findById(list).orElseThrow();
-            AnimationResponseDTO result = toAnimationResponseDto(animation, userId);
+        for (int i = 0; i < 3; i++) {
+            if (animationScoreIds.size() > i) {
+                AnimationEntity animation = animationRepository.findById(animationScoreIds.get(i)).orElseThrow();
+                AnimationResponseDTO result = toAnimationResponseDto(animation, userId);
+                results.add(result);
+            } else {
+                AnimationResponseDTO result = AnimationResponseDTO.builder()
+                        .id(null)
+                        .title(null)
+                        .runningTime(null)
+                        .pathUrl(null)
+                        .bestScore(null)
+                        .roles(null)
+                        .build();
+                results.add(result);
+            }
 
-            results.add(result);
         }
 
-        if (results.size() > 4) {
-            results = results.subList(0, 4);
-        }
 
         return results;
     }
@@ -379,11 +391,11 @@ public class AnimationServiceImpl implements AnimationService {
         }
         // score에 string 값이 들어갈 때 발생하는 에러 처리
         catch (NumberFormatException e) {
+        	e.printStackTrace();
             score = 0;
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+        	e.printStackTrace();
+        	score = 0;
         }
 
         return score;

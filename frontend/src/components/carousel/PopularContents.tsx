@@ -1,23 +1,29 @@
 import tw, { css, styled, theme } from "twin.macro";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import NextArrow2 from "./NextArrow2";
 import PrevArrow2 from "./PrevArrow2";
-import { useAppSelector } from "../../redux/configStore.hooks";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../redux/configStore.hooks";
 
-interface Popularprops {
-  Thumbnail: string;
+interface TopVideoListType {
+  id: number;
   title: string;
-  description: string;
+  runningTime: number;
+  pathUrl: string;
+  bestScore: number | null;
+  roles: string[];
+}
+interface PopularContentsType {
+  topVideoList: TopVideoListType[];
 }
 
-function PopularContents() {
+function PopularContents({ topVideoList }: PopularContentsType) {
   const navigate = useNavigate();
-  const topVideoList = useAppSelector(
-    (state) => state.animation.getAnimationTop6
-  );
+
+  const user = useAppSelector((state) => state.user.userData);
   const settings = {
     dots: false,
     infinite: true,
@@ -35,14 +41,21 @@ function PopularContents() {
           tw="flex w-10/12 overflow-hidden justify-center items-center"
           {...settings}
         >
-          {topVideoList?.data?.map((item: any, index: number) => {
+          {topVideoList?.map((item: any, index: number) => {
             return (
               <SliderItems key={index}>
                 <SliderItemsWrapper
-                  onClick={() => navigate(`/video/${item.id}`)}
+                  onClick={() => {
+                    navigate(`/video/${item.id}`);
+                    // if (!user.id) {
+                    //   navigate("/login");
+                    // } else {
+                    //   navigate(`/video/${item.id}`);
+                    // }
+                  }}
                 >
                   <img
-                    src={`https://img.youtube.com/vi/${item.pathUrl}/0.jpg`}
+                    src={`https://img.youtube.com/vi/${item.pathUrl}/maxresdefault.jpg`}
                   />
                   <ThumbNailTitle>{item.title}</ThumbNailTitle>
                   <ThumbNailDescription></ThumbNailDescription>
@@ -61,17 +74,26 @@ export default PopularContents;
 const CustomedSection = styled.div(tw`flex justify-center w-full items-center`);
 
 const SectionWrapper = styled.div(
-  tw`flex justify-center w-full py-20 items-center`
+  tw`flex justify-center w-full py-10 items-center`
 );
 
 const SliderItems = styled.li(tw`w-96 p-5`);
 
 const SliderItemsWrapper = styled.button(tw`border rounded-lg p-5 h-full`);
 
-const ThumbNail = styled.img(
-  tw`h-44 w-full object-cover rounded-md bg-slate-500`
-);
+// const FrameThumbnail = styled.div(
+//   tw`flex justify-center items-center`,
+//   css`
+//     border: 40px solid;
+//     border-image: url("/assets/border/Border3.png") 50 64;
+//   `
+// );
 
-const ThumbNailTitle = styled.h2(tw`mt-2 text-2xl font-bold text-gray-700`);
+const ThumbNailTitle = styled.h2(
+  tw`mt-2 text-2xl font-bold text-gray-700`,
+  css`
+    font-family: "ONE-Mobile-Title";
+  `
+);
 
 const ThumbNailDescription = styled.p(tw`truncate mt-2 text-gray-500`);

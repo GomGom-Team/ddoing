@@ -47,9 +47,16 @@ public class DrawingServiceImpl implements DrawingService {
 
     @Override
     public void saveFile(MultipartFile drawingImg, UserDrawingDTO userDrawingDTO) throws IOException {
-        // 변환
-        String originalFileName = drawingImg.getOriginalFilename();  // 원본 파일 이름
-        String storeFileName = createStoreFileName(originalFileName);   // 저장할 파일명으로 변경
+        System.out.println("multipart: "+drawingImg+" userDTO: "+userDrawingDTO);
+    	String filename = "";
+    	try {
+    		filename = drawingImg.getOriginalFilename(); //원본 파일 이름
+    	}
+    	catch(NullPointerException e) {
+            //canvas.dataURL() 속성은 파일 이름을 추가할 수 없는 구조임
+    		filename = userDrawingDTO.getUserId()+"_"+userDrawingDTO.getWordId()+".jpg";
+    	}
+        String storeFileName = createStoreFileName(filename);   // 저장할 파일명으로 변경
         String storedPath = getFullPath(userDrawingPath, storeFileName);   // 저장 위치 + custom 된 파일명
 
         // db에 저장
@@ -132,6 +139,7 @@ public class DrawingServiceImpl implements DrawingService {
     // 그림 평가 점수 저장
     @Override
     public boolean createDrawingScore(DrawingScoreRequestDTO drawingScoreRequestDTO){
+        System.out.println("================="+(drawingScoreRequestDTO.getUserId()));
 
         DrawingScoreEntity drawingScoreEntity = DrawingScoreEntity.builder()
                 .userEntity(userRepository.findById(drawingScoreRequestDTO.getUserId()).orElseThrow())
@@ -159,6 +167,7 @@ public class DrawingServiceImpl implements DrawingService {
 
         UserEntity result = UserEntity.builder()
                 .id(userEntity.getId())
+                .password(userEntity.getPassword())
                 .name(userEntity.getName())
                 .email(userEntity.getEmail())
                 .nickName(userEntity.getNickName())
@@ -195,9 +204,11 @@ public class DrawingServiceImpl implements DrawingService {
 
         for(UserDrawingEntity userDrawingEntity : userDrawingEntityList){
             WordEntity wordEntity = wordRepository.findById(userDrawingEntity.getWordId()).orElseThrow();
+            UserEntity userEntity = userRepository.findById(userDrawingEntity.getUserId()).orElseThrow();
             // userId, drawingPath, percentage, word, mean
             UserDrawingResponseDTO userDrawingResponseDTO = UserDrawingResponseDTO.builder()
                     .userId(userDrawingEntity.getUserId())
+                    .nickName(userEntity.getNickName())
                     .drawingPath(userDrawingEntity.getDrawingPath())
                     .percentage(userDrawingEntity.getPercentage())
                     .word(wordEntity.getWord())
@@ -220,23 +231,32 @@ public class DrawingServiceImpl implements DrawingService {
         List<UserDrawingEntity> userDrawingEntityList = userDrawingRepository.findById(UserId);
         List<UserDrawingResponseDTO> results = new ArrayList<>();
 
-        for(UserDrawingEntity userDrawingEntity : userDrawingEntityList){
-            WordEntity wordEntity = wordRepository.findById(userDrawingEntity.getWordId()).orElseThrow();
-            // userId, drawingPath, percentage, word, mean
-            UserDrawingResponseDTO userDrawingResponseDTO = UserDrawingResponseDTO.builder()
-                    .userId(userDrawingEntity.getUserId())
-                    .drawingPath(userDrawingEntity.getDrawingPath())
-                    .percentage(userDrawingEntity.getPercentage())
-                    .word(wordEntity.getWord())
-                    .mean(wordEntity.getMean())
-                    .build();
+        for(int i=0; i<3; i++){
+            if(userDrawingEntityList.size() > i){
+                UserDrawingEntity userDrawingEntity = userDrawingEntityList.get(i);
+                WordEntity wordEntity = wordRepository.findById(userDrawingEntity.getWordId()).orElseThrow();
+                // userId, drawingPath, percentage, word, mean
+                UserDrawingResponseDTO userDrawingResponseDTO = UserDrawingResponseDTO.builder()
+                        .userId(userDrawingEntity.getUserId())
+                        .drawingPath(userDrawingEntity.getDrawingPath())
+                        .percentage(userDrawingEntity.getPercentage())
+                        .word(wordEntity.getWord())
+                        .mean(wordEntity.getMean())
+                        .build();
 
-            results.add(userDrawingResponseDTO);
+                results.add(userDrawingResponseDTO);
+            }else {
+                UserDrawingResponseDTO userDrawingResponseDTO = UserDrawingResponseDTO.builder()
+                        .userId(UserId)
+                        .drawingPath(null)
+                        .percentage(null)
+                        .word(null)
+                        .mean(null)
+                        .build();
 
-        }
+                results.add(userDrawingResponseDTO);
+            }
 
-        if(results.size() > 6){
-            results = results.subList(0, 6);
         }
 
         return results;

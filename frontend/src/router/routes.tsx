@@ -4,9 +4,9 @@ import DrawingPage from "../pages/DrawingPage";
 import LoginBox from "../components/user/LoginBox";
 import RegisterBox from "../components/user/RegisterBox";
 import MyPage from "../pages/MyPage";
-import Soundtest from "../pages/soundtest";
-import VideoList from "../pages/videolist";
-import VideoTest from "../pages/videotest";
+import VideoListPage from "../pages/VideoListPage";
+import VideoDetailPage from "../pages/VideoDetailPage";
+import LandingPage from "../pages/LandingPage";
 
 const router = createBrowserRouter([
   {
@@ -32,10 +32,6 @@ const router = createBrowserRouter([
     element: <RegisterBox />,
   },
   {
-    path: "animation",
-    element: <div>빈페이지 입니다.</div>,
-  },
-  {
     path: "drawing",
     element: <DrawingPage />,
   },
@@ -48,16 +44,16 @@ const router = createBrowserRouter([
     element: <MyPage />,
   },
   {
-    path: "sound",
-    element: <Soundtest />,
-  },
-  {
     path: "videolist",
-    element: <VideoList />,
+    element: <VideoListPage />,
   },
   {
     path: "video/:id",
-    element: <VideoTest />,
+    element: <VideoDetailPage />,
+  },
+  {
+    path: "landing",
+    element: <LandingPage />,
   },
 ]);
 
