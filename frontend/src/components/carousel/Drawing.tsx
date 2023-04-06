@@ -2,7 +2,7 @@ import React from "react";
 import tw, { css, styled, theme } from "twin.macro";
 import { Button } from "../common/index";
 import { useNavigate } from "react-router-dom";
-import banner_drawing_img from "/assets/img/banner_drawing_disney2.png";
+import banner_drawing_img from "/assets/img/banner_drawing_img4.png";
 
 // interface
 
@@ -68,7 +68,7 @@ const StyledDescription = styled.h2(
 const ImgWrapper = styled.div(tw`flex justify-center items-center pr-48`);
 
 const CustomedImage = styled.img(
-  tw`h-64 object-cover rounded-md bg-slate-500`,
+  tw`h-80 object-cover rounded-md`,
   css`
     width: 30rem;
   `

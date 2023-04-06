@@ -26,7 +26,7 @@ const Animation = () => {
           <br />
           <StyledDescription>지금 바로 하러 가볼까요?</StyledDescription>
         </div>
-        <Button variant="primary" onClick={() => navigate("animation")}>
+        <Button variant="primary" onClick={() => navigate("videolist")}>
           Go
         </Button>
       </TitleDescriptionWrapper>
@@ -68,7 +68,7 @@ const StyledDescription = styled.h2(
 const ImgWrapper = styled.div(tw`flex justify-center items-center pr-48`);
 
 const CustomedImage = styled.img(
-  tw`h-64 object-cover rounded-md bg-slate-500`,
+  tw`h-64 object-cover rounded-md`,
   css`
     width: 30rem;
   `
