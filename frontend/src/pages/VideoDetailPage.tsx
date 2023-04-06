@@ -142,6 +142,9 @@ const ActChoiceDiv = styled.div`
   border-radius: 100%;
   overflow: hidden;
   border: 3px outset rgba(156, 122, 219, 0.67);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 `;
 
 const ActChoiceName = styled.div`
@@ -151,8 +154,6 @@ const ActChoiceName = styled.div`
 `;
 const ActChoiceImg = styled.img`
   display: grid;
-  align-items: center;
-  justify-content: center;
   width: 120px;
   height: 120px;
   object-fit: cover;
