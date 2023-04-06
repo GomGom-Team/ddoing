@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import NextArrow2 from "./NextArrow2";
 import PrevArrow2 from "./PrevArrow2";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../redux/configStore.hooks";
 
 interface TopVideoListType {
   id: number;
@@ -22,6 +23,7 @@ interface PopularContentsType {
 function PopularContents({ topVideoList }: PopularContentsType) {
   const navigate = useNavigate();
 
+  const user = useAppSelector((state) => state.user.userData);
   const settings = {
     dots: false,
     infinite: true,
@@ -44,7 +46,14 @@ function PopularContents({ topVideoList }: PopularContentsType) {
               <SliderItems key={index}>
                 <FrameThumbnail>
                   <SliderItemsWrapper
-                    onClick={() => navigate(`/video/${item.id}`)}
+                    onClick={() => {
+                      navigate(`/video/${item.id}`);
+                      // if (!user.id) {
+                      //   navigate("/login");
+                      // } else {
+                      //   navigate(`/video/${item.id}`);
+                      // }
+                    }}
                   >
                     <img
                       src={`https://img.youtube.com/vi/${item.pathUrl}/maxresdefault.jpg`}

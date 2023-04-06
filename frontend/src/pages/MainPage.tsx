@@ -17,6 +17,7 @@ interface DrawingListType {
   percentage: number;
   word: string;
   mean: string;
+  nickName: string;
 }
 
 interface TopVideoListType {
