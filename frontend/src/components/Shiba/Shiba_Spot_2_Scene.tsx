@@ -42,7 +42,7 @@ export function Shiba_Spot_2(props: JSX.IntrinsicElements["group"]) {
     "/ec2/model/Shiba_Spot_2/scene.gltf"
   ) as GLTFResult;
   return (
-    <group {...props} dispose={null} scale={0.001}>
+    <group {...props} dispose={null} scale={0.0011}>
       <mesh
         geometry={nodes.Group18985_Material003_0.geometry}
         material={materials["Material.003"]}

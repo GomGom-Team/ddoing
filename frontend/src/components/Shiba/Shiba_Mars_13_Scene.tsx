@@ -39,7 +39,7 @@ export function Shiba_Mars_13(props: JSX.IntrinsicElements["group"]) {
     "/ec2/model/Shiba_Mars_13/scene.gltf"
   ) as GLTFResult;
   return (
-    <group {...props} dispose={null} scale={0.25}>
+    <group {...props} dispose={null} scale={0.27}>
       <group rotation={[-Math.PI / 2, 0, 0]} scale={0.36}>
         <group rotation={[Math.PI / 2, 0, 0]}>
           <group rotation={[Math.PI / 2, 0, 0]}>
