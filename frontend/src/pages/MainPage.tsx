@@ -104,23 +104,23 @@ const MainPage = () => {
 };
 
 // style
-const DummyDiv = styled.div(tw`h-20`);
+const DummyDiv = styled.div(tw`h-20 w-full`);
 
 const CarouselTitle1 = styled.div(
-  tw`flex items-center justify-center text-3xl pt-16`,
+  tw`flex items-center justify-center text-4xl pt-16`,
   css`
     font-family: "insungitCutelivelyjisu";
   `
 );
 const CarouselTitle2 = styled.div(
-  tw`flex items-center justify-center text-3xl`,
+  tw`flex items-center justify-center text-4xl pb-5`,
   css`
     font-family: "insungitCutelivelyjisu";
   `
 );
 
 const AllWrapDiv = styled.div`
-  width: 100vw;
+  width: 100%;
 `;
 
 export default MainPage;

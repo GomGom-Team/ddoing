@@ -204,7 +204,7 @@ const WordKorean = styled.p(tw`text-xl`);
 const ImgWrapper = styled.div(tw`flex justify-center items-center pl-10 ml-10`);
 
 const CustomedImage = styled.img(
-  tw`object-cover rounded-md bg-slate-500`,
+  tw`rounded-md bg-slate-500`,
   css`
     height: 9rem;
     width: 16rem;

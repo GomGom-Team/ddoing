@@ -449,7 +449,7 @@ const DrawingPage = () => {
           </CountDownItem>
         </CountDownWrapper>
 
-        <TimerWrapper>{wordList[index].word}</TimerWrapper>
+        <WordWrapper>{wordList[index].word}</WordWrapper>
         <StyledDiv>
           <DrawingCanvas
             predictList={predictList}
@@ -527,7 +527,7 @@ const BackgroundDiv = styled.div`
   background-position: center;
 `;
 
-const TimerWrapper = styled.div(
+const WordWrapper = styled.div(
   tw`flex items-center justify-center text-3xl`,
   css`
     font-family: "insungitCutelivelyjisu";

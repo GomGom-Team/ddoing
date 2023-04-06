@@ -75,7 +75,7 @@ const DrawingCanvas = ({
     if (context) {
       context.strokeStyle = "black"; // 선 색깔
       context.lineJoin = "round"; // 선 끄트머리(?)
-      context.lineWidth = 20; // 선 굵기
+      context.lineWidth = 10; // 선 굵기
 
       context.beginPath();
       context.moveTo(originalMousePosition.x, originalMousePosition.y);
@@ -207,8 +207,8 @@ const DrawingCanvas = ({
     }
   );
 
-  const canvasHeight = window.innerHeight - 249;
-  const canvasWidth = window.innerWidth - 500;
+  const canvasHeight = window.innerHeight - 305;
+  const canvasWidth = window.innerWidth - 700;
 
   return (
     <FixedDiv>
@@ -222,12 +222,10 @@ const DrawingCanvas = ({
         />
         <FlexDiv>
           <StyledButton onClick={() => clearCanvas()}>
-            <img src="assets/icons/eraser.png" height="36" width="36" />
+            <img src="assets/icons/eraser.png" height="60" width="60" />
           </StyledButton>
           <StyledButton onClick={() => modalHandleOpen()}>
-            <SkipButtonDiv>
-              <StyledText>{`>>`}</StyledText>
-            </SkipButtonDiv>
+            <img src="assets/icons/skip-icon.png" height="60" width="60" />
           </StyledButton>
         </FlexDiv>
       </StyledDiv>
@@ -246,27 +244,14 @@ export default DrawingCanvas;
 
 const StyledCanvas = styled.canvas(tw`rounded-2xl bg-stone-400 bg-opacity-20`);
 
-const FixedDiv = styled.div(tw`ml-4`);
+const FixedDiv = styled.div(tw`ml-4 pl-6`);
 
 const StyledDiv = styled.div(tw`flex`);
 
-const StyledButton = styled.button(tw`hocus:(scale-105 text-yellowD)`);
+const StyledButton = styled.button(tw`hocus:(scale-105 text-yellowD) pb-5`);
 
 const PredictDiv = styled.div(
-  tw`inline-block mr-5 py-3 px-4 bg-brownD rounded-2xl text-white`
+  tw`inline-block my-5 mr-5 py-3 px-4 bg-brownD rounded-2xl text-white`
 );
 
 const FlexDiv = styled.div(tw`flex flex-col`);
-
-const SkipButtonDiv = styled.div`
-  height: 36px;
-  width: 36px;
-`;
-
-const StyledText = styled.h1(
-  tw`font-bold`,
-  css`
-    font-family: "insungitCutelivelyjisu";
-    font-size: 24px;
-  `
-);

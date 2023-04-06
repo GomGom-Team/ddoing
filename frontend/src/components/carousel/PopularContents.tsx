@@ -44,24 +44,22 @@ function PopularContents({ topVideoList }: PopularContentsType) {
           {topVideoList?.map((item: any, index: number) => {
             return (
               <SliderItems key={index}>
-                <FrameThumbnail>
-                  <SliderItemsWrapper
-                    onClick={() => {
-                      navigate(`/video/${item.id}`);
-                      // if (!user.id) {
-                      //   navigate("/login");
-                      // } else {
-                      //   navigate(`/video/${item.id}`);
-                      // }
-                    }}
-                  >
-                    <img
-                      src={`https://img.youtube.com/vi/${item.pathUrl}/maxresdefault.jpg`}
-                    />
-                    <ThumbNailTitle>{item.title}</ThumbNailTitle>
-                    <ThumbNailDescription></ThumbNailDescription>
-                  </SliderItemsWrapper>
-                </FrameThumbnail>
+                <SliderItemsWrapper
+                  onClick={() => {
+                    navigate(`/video/${item.id}`);
+                    // if (!user.id) {
+                    //   navigate("/login");
+                    // } else {
+                    //   navigate(`/video/${item.id}`);
+                    // }
+                  }}
+                >
+                  <img
+                    src={`https://img.youtube.com/vi/${item.pathUrl}/maxresdefault.jpg`}
+                  />
+                  <ThumbNailTitle>{item.title}</ThumbNailTitle>
+                  <ThumbNailDescription></ThumbNailDescription>
+                </SliderItemsWrapper>
               </SliderItems>
             );
           })}
@@ -76,21 +74,26 @@ export default PopularContents;
 const CustomedSection = styled.div(tw`flex justify-center w-full items-center`);
 
 const SectionWrapper = styled.div(
-  tw`flex justify-center w-full py-20 items-center`
+  tw`flex justify-center w-full py-10 items-center`
 );
 
 const SliderItems = styled.li(tw`w-96 p-5`);
 
 const SliderItemsWrapper = styled.button(tw`border rounded-lg p-5 h-full`);
 
-const FrameThumbnail = styled.div(
-  tw`flex justify-center items-center`,
+// const FrameThumbnail = styled.div(
+//   tw`flex justify-center items-center`,
+//   css`
+//     border: 40px solid;
+//     border-image: url("/assets/border/Border3.png") 50 64;
+//   `
+// );
+
+const ThumbNailTitle = styled.h2(
+  tw`mt-2 text-2xl font-bold text-gray-700`,
   css`
-    border: 40px solid;
-    border-image: url("/assets/border/Border3.png") 50 64;
+    font-family: "ONE-Mobile-Title";
   `
 );
-
-const ThumbNailTitle = styled.h2(tw`mt-2 text-2xl font-bold text-gray-700`);
 
 const ThumbNailDescription = styled.p(tw`truncate mt-2 text-gray-500`);
