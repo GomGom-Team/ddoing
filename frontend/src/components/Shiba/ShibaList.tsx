@@ -15,20 +15,18 @@ const ShibaList = () => {
     <AllWrapDiv>
       {myList.map((item: any, index: number) => {
         return (
-          <>
-            <OneWrapBtn
-              onClick={() => {
-                setOpenShibaModal((prev) => !prev);
-                setNowLevel(item.level);
-                setNowName(item.name);
-              }}
-            >
-              <LevelDiv>{item.level}</LevelDiv>
-              <ShibaImg
-                src={`../../../ec2/model/Shiba_${item.name}_${item.level}/Shiba_${item.name}_${item.level}.png`}
-              />
-            </OneWrapBtn>
-          </>
+          <OneWrapBtn
+            onClick={() => {
+              setOpenShibaModal((prev) => !prev);
+              setNowLevel(item.level);
+              setNowName(item.name);
+            }}
+          >
+            <LevelDiv>{item.level}</LevelDiv>
+            <ShibaImg
+              src={`../../../ec2/model/Shiba_${item.name}_${item.level}/Shiba_${item.name}_${item.level}.png`}
+            />
+          </OneWrapBtn>
         );
       })}
       {openShibaModal && (
@@ -47,31 +45,40 @@ export default ShibaList;
 
 const AllWrapDiv = styled.div`
   display: flex;
-  width: 80vw;
+  width: 90vw;
   height: 50vh;
   flex-wrap: wrap;
 `;
 
 const OneWrapBtn = styled.button`
   display: flex;
+  position: relative;
   width: 20vw;
   /* height: 18vh; */
   margin: 10px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 1vw;
+  box-shadow: 4px 8px 8px hsl(0deg 0% 0% / 0.25);
 `;
 
 const ShibaImg = styled.img`
-  border-radius: 10px;
+  border-radius: 1vw;
+  width: 20vw;
 `;
 
 const LevelDiv = styled.div`
-  position: relative;
+  position: absolute;
   display: flex;
-  left: 30px;
-  top: 10px;
+  left: 1vw;
+  top: 1vw;
   height: 25px;
   padding: 5px;
-  text-align: center;
+  text-align: left;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  z-index: 999;
+  font-size: 25px;
+  /* background-color: white; */
 `;

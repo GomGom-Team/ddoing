@@ -169,6 +169,8 @@ const PlayerScript = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
   console.log("isOnResult", isOnResult);
   console.log("retry", retry);
 
+  console.log("script!!!!!!!!!", script);
+
   return (
     <AllWrapDiv>
       <PlayerDiv ref={playerWrap}>
@@ -209,7 +211,10 @@ const PlayerScript = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
           <HideThingDiv>
             {myAct} : {nowMy} / {test?.length}
           </HideThingDiv>
-          <AudioAnalyser {...audioProps}>
+          <AudioAnalyser
+            style={{ position: "absolute", right: "0px" }}
+            {...audioProps}
+          >
             <RecordStartWrapdiv className="btn-box">
               {status === "" && (
                 <RecordStartAll>
@@ -233,126 +238,135 @@ const PlayerScript = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
             </RecordStartWrapdiv>
           </AudioAnalyser>
           {status === "inactive" && myScore >= 20 && isOnResult && (
-            <RecordStartAll>
+            <RecordStartWrapdiv className="btn-box">
               {myScore >= 20 && myScore <= 40 && (
-                <>
+                <RecordOnAll>
                   <RecordResDiv>Good!</RecordResDiv>
                   <ResultImg src="/assets/img/Good.png"></ResultImg>
-                </>
+                  <RecordEndBtn
+                    onClick={() => {
+                      setPlaying(!playing);
+                      controlAudio("");
+                    }}
+                  >
+                    닫기
+                  </RecordEndBtn>
+                </RecordOnAll>
               )}
               {myScore >= 41 && myScore <= 75 && (
-                <>
+                <RecordOnAll>
                   <RecordResDiv>Great!</RecordResDiv>
                   <ResultImg src="/assets/img/Great.png"></ResultImg>
-                </>
+                  <RecordEndBtn
+                    onClick={() => {
+                      setPlaying(!playing);
+                      controlAudio("");
+                    }}
+                  >
+                    닫기
+                  </RecordEndBtn>
+                </RecordOnAll>
               )}
               {myScore >= 76 && myScore <= 100 && (
-                <>
+                <RecordOnAll>
                   <RecordResDiv>Excellent!</RecordResDiv>
                   <ResultImg src="/assets/img/Excellent.png"></ResultImg>
-                </>
+                  <RecordEndBtn
+                    onClick={() => {
+                      setPlaying(!playing);
+                      controlAudio("");
+                    }}
+                  >
+                    닫기
+                  </RecordEndBtn>
+                </RecordOnAll>
               )}
-              <RecordEndBtn
-                onClick={() => {
-                  setPlaying(!playing);
-                  controlAudio("");
-                }}
-              >
-                닫기
-              </RecordEndBtn>
-            </RecordStartAll>
+            </RecordStartWrapdiv>
           )}
           {status === "inactive" && isOnResult === false && retry === false && (
-            <RecordStartAll>
-              <LoadingImg src="/assets/img/Loading.gif" />
-            </RecordStartAll>
+            <RecordStartWrapdiv className="btn-box">
+              <RecordOnAll>
+                <LoadingImg src="/assets/img/Loading.gif" />
+              </RecordOnAll>
+            </RecordStartWrapdiv>
           )}
           {status === "inactive" && retry && (
-            <RecordStartAll>
-              <RecordResDiv>앗, 제대로 못들었어요😥</RecordResDiv>
-              <RecordEndBtn
-                onClick={() => {
-                  setRetry(false);
-                  setStatus("");
-                }}
-              >
-                다시하기
-              </RecordEndBtn>
-            </RecordStartAll>
+            <RecordStartWrapdiv className="btn-box">
+              <RecordOnAll>
+                <RecordResDiv>앗, 제대로 못들었어요😥</RecordResDiv>
+                <RecordEndBtn
+                  onClick={() => {
+                    setRetry(false);
+                    setStatus("");
+                  }}
+                >
+                  다시하기
+                </RecordEndBtn>
+              </RecordOnAll>
+            </RecordStartWrapdiv>
           )}
-          {/* <div>my Score is {myScore}</div> */}
-          <div>
-            {/* <ul>
-              {list.map((value: number, index: number) => (
-                <li key={index}>{value}</li>
-              ))}
-            </ul> */}
-            <div></div>
-          </div>
         </AllWrapperDiv>
       )}
       {list?.length === test?.length &&
         playedSeconds > video?.data?.runningTime && (
-          <>
-            <AllWrapperDiv>
-              {avg >= 20 && avg <= 40 && (
-                <RecordStartAll>
-                  <RealEndAll>
-                    <RealResDiv>Good Job</RealResDiv>
-                    <StarImg src="/assets/img/Star1.gif" />
+          <AllWrapperDiv>
+            {avg >= 20 && avg <= 40 && (
+              <RecordOnAll>
+                <RealEndAll>
+                  <RealResDiv>Good Job</RealResDiv>
+                  <StarImg src="/assets/img/Star1.gif" />
 
-                    <RealImg src="/assets/img/Good_Finish.png"></RealImg>
+                  <RealImg src="/assets/img/Good_Finish.png"></RealImg>
 
-                    <RealEndBtn
-                      onClick={() => {
-                        navigate(`/videolist`);
-                        resultSubmit();
-                      }}
-                    >
-                      닫기
-                    </RealEndBtn>
-                  </RealEndAll>
-                </RecordStartAll>
-              )}
-              {avg >= 41 && avg <= 75 && (
-                <RecordStartAll>
-                  <RealEndAll>
-                    <RealResDiv>Great Job</RealResDiv>
-                    <StarImg src="/assets/img/Star2.gif" />
+                  <RealEndBtn
+                    onClick={() => {
+                      navigate(`/videolist`);
+                      resultSubmit();
+                    }}
+                  >
+                    닫기
+                  </RealEndBtn>
+                </RealEndAll>
+              </RecordOnAll>
+            )}
+            {avg >= 41 && avg <= 75 && (
+              <RecordOnAll>
+                <RealEndAll>
+                  <RealResDiv>Great Job</RealResDiv>
+                  <StarImg src="/assets/img/Star2.gif" />
 
-                    <RealImg src="/assets/img/Great_Finish.png"></RealImg>
+                  <RealImg src="/assets/img/Great_Finish.png"></RealImg>
 
-                    <RealEndBtn
-                      onClick={() => {
-                        navigate(`/videolist`);
-                        resultSubmit();
-                      }}
-                    >
-                      닫기
-                    </RealEndBtn>
-                  </RealEndAll>
-                </RecordStartAll>
-              )}
-              {avg >= 76 && avg <= 100 && (
-                <RecordStartAll>
-                  <RealEndAll>
-                    <RealResDiv>Excellent Job</RealResDiv>
-                    <StarImg src="/assets/img/Star3.gif" />
-                    <RealImg src="/assets/img/Excellent_Finish.png"></RealImg>
+                  <RealEndBtn
+                    onClick={() => {
+                      navigate(`/videolist`);
+                      resultSubmit();
+                    }}
+                  >
+                    닫기
+                  </RealEndBtn>
+                </RealEndAll>
+              </RecordOnAll>
+            )}
+            {avg >= 76 && avg <= 100 && (
+              <RecordOnAll>
+                <RealEndAll>
+                  <RealResDiv>Excellent Job</RealResDiv>
+                  <StarImg src="/assets/img/Star3.gif" />
+                  <RealImg src="/assets/img/Excellent_Finish.png"></RealImg>
 
-                    <RealEndBtn
-                      onClick={() => {
-                        navigate(`/videolist`);
-                        resultSubmit();
-                      }}
-                    >
-                      닫기
-                    </RealEndBtn>
-                  </RealEndAll>
-                </RecordStartAll>
-              )}
-            </AllWrapperDiv>
-          </>
+                  <RealEndBtn
+                    onClick={() => {
+                      navigate(`/videolist`);
+                      resultSubmit();
+                    }}
+                  >
+                    닫기
+                  </RealEndBtn>
+                </RealEndAll>
+              </RecordOnAll>
+            )}
+          </AllWrapperDiv>
         )}
       <ClipboardImg src="/assets/img/Clipboard.png" />
       <ScriptAllDiv>
@@ -397,6 +411,11 @@ interface MyProps {
   isMyRole?: boolean;
 }
 
+const MyCanvas = styled.div`
+  width: 0px;
+  height: 0px;
+  visibility: hidden;
+`;
 const ClipboardImg = styled.img`
   display: flex;
   position: absolute;
@@ -408,16 +427,16 @@ const ClipboardImg = styled.img`
 const LoadingImg = styled.img`
   position: absolute;
   width: 10vw;
-  left: 45vw;
-  top: 23vw;
+  left: 43.5vw;
+  top: 20vw;
   z-index: 999;
 `;
 
 const StarImg = styled.img`
   position: absolute;
-  width: 20vw;
-  left: 40vw;
-  top: 20vw;
+  width: 15vw;
+  left: 42.5vw;
+  top: 17vw;
   z-index: 999;
 `;
 
@@ -425,7 +444,7 @@ const HideThingDiv = styled.div`
   position: absolute;
   top: 0px;
   left: 0px;
-  width: 17.5vw;
+  width: 20vw;
   padding: 5px;
   font-family: "PyeongChangPeace-Bold";
   font-size: 2vw;
@@ -454,7 +473,7 @@ const RealImg = styled.img(
     position: absolute;
     width: 10vw;
     left: 45vw;
-    top: 28.5vw;
+    top: 25vw;
   `
 );
 
@@ -470,7 +489,7 @@ const MicImg = styled.img`
 const RecordEndBtn = styled.button`
   width: 10vw;
   position: absolute;
-  top: 35vw;
+  top: 30vw;
   left: 45vw;
   text-align: center;
   font-family: "PyeongChangPeace-Light";
@@ -483,7 +502,7 @@ const RecordEndBtn = styled.button`
 const RealEndBtn = styled.button`
   width: 10vw;
   position: absolute;
-  top: 40vw;
+  top: 35vw;
   left: 45vw;
   text-align: center;
   font-family: "PyeongChangPeace-Light";
@@ -509,13 +528,14 @@ const RecordResDiv = styled.div`
   /* top: 0px; */
   /* left: 44vw; */
   /* margin-top: 10vw; */
-  margin-bottom: 45vh;
+  /* margin-bottom: 10vh; */
+  margin-top: 10vw;
   font-family: "ONE-Mobile-POP";
   font-size: 4vw;
 `;
 
 const RealResDiv = styled.div`
-  margin-bottom: 45vh;
+  margin-bottom: 40vh;
   font-family: "ONE-Mobile-POP";
   font-size: 4vw;
   color: black;
@@ -530,7 +550,7 @@ const NowScriptDiv = styled.div`
 
 const RecordStartBtn = styled.button`
   /* background-color: #fff125; */
-  margin-top: 15vw;
+  margin-top: 5vw;
   width: 7.5vw;
   height: 7.5vw;
   border-radius: 100%;
@@ -544,7 +564,7 @@ const RecordStartBtn = styled.button`
 `;
 
 const RecordStopBtn = styled.button`
-  margin-top: 15vw;
+  margin-top: 5vw;
   width: 7.5vw;
   height: 7.5vw;
   border-radius: 100%;
@@ -553,10 +573,6 @@ const RecordStopBtn = styled.button`
   position: absolute;
   align-items: center;
   justify-content: center;
-`;
-const MyCanvas = styled.div`
-  display: flex;
-  background-color: blue;
 `;
 
 const RecordStartAll = styled.div`
@@ -567,13 +583,22 @@ const RecordStartAll = styled.div`
   height: 100vh;
 `;
 
+const RecordOnAll = styled.div`
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh - 54px;
+`;
+
 const RealEndAll = styled.div`
   display: grid;
   justify-content: center;
   align-items: center;
   text-align: center;
-  height: 75vh;
-  width: 50vw;
+  margin-top: 15vh;
+  height: 70vh;
+  width: 30vw;
   background-color: #fbf8cc;
 `;
 
@@ -659,7 +684,7 @@ const ScriptDiv = styled.ol`
 
 const AllWrapperDiv = styled.div`
   width: 100vw;
-  height: 100%;
+  height: 100vh;
   position: absolute;
   align-items: center;
   justify-content: center;

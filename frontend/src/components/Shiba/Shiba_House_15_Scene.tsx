@@ -225,7 +225,7 @@ export function Shiba_House_15(props: JSX.IntrinsicElements["group"]) {
     "/ec2/model/Shiba_House_15/scene.gltf"
   ) as GLTFResult;
   return (
-    <group {...props} dispose={null} scale={0.1}>
+    <group {...props} dispose={null} scale={0.05}>
       <group rotation={[-Math.PI / 2, 0, 0]} scale={0.48}>
         <group rotation={[Math.PI / 2, 0, 0]}>
           <group position={[4, 0, -4]}>

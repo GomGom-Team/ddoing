@@ -38,21 +38,24 @@ export function Shiba_Basic_1(props: JSX.IntrinsicElements["group"]) {
     "/ec2/model/Shiba_Basic_1/scene.gltf"
   ) as GLTFResult;
   return (
-    <group {...props} dispose={null} scale={0.1}>
+    <group {...props} dispose={null} scale={0.1} castShadow receiveShadow>
       <mesh
         geometry={nodes.Group18985_default_0.geometry}
         material={materials["default"]}
         rotation={[-Math.PI / 2, 0, 0]}
+        receiveShadow
       />
       <mesh
         geometry={nodes.Box002_default_0.geometry}
         material={materials["default"]}
         rotation={[-Math.PI / 2, 0, 0]}
+        receiveShadow
       />
       <mesh
         geometry={nodes.Object001_default_0.geometry}
         material={materials["default"]}
         rotation={[-Math.PI / 2, 0, 0]}
+        receiveShadow
       />
       <Controls />
     </group>
