@@ -24,6 +24,7 @@ function PopularContents({ topVideoList }: PopularContentsType) {
   const navigate = useNavigate();
 
   const user = useAppSelector((state) => state.user.userData);
+  const isLogin = useAppSelector((state) => state.user.userData.isLoggedIn);
   const settings = {
     dots: false,
     infinite: true,
@@ -46,18 +47,18 @@ function PopularContents({ topVideoList }: PopularContentsType) {
               <SliderItems key={index}>
                 <SliderItemsWrapper
                   onClick={() => {
-                    navigate(`/video/${item.id}`);
-                    // if (!user.id) {
-                    //   navigate("/login");
-                    // } else {
-                    //   navigate(`/video/${item.id}`);
-                    // }
+                    // navigate(`/video/${item.id}`);
+                    if (!isLogin) {
+                      navigate("/login");
+                    } else {
+                      navigate(`/video/${item.id}`);
+                    }
                   }}
                 >
                   <img
                     src={`https://img.youtube.com/vi/${item.pathUrl}/maxresdefault.jpg`}
                   />
-                  <ThumbNailTitle>{item.title}</ThumbNailTitle>
+                  <ThumbNailTitle>{item.title.split(" - ")[1]}</ThumbNailTitle>
                   <ThumbNailDescription></ThumbNailDescription>
                 </SliderItemsWrapper>
               </SliderItems>

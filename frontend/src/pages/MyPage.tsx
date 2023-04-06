@@ -37,12 +37,12 @@ const MyPage = () => {
     {
       name: "EXP",
       value: exp === null ? 0 : Math.round(exp / 2),
-      color: "#eb4d4b",
+      color: "#FFD761",
     },
     {
       name: "Blueberries",
       value: exp === null ? 100 : 100 - Math.round(exp / 2),
-      color: "#22a6b3",
+      color: "#d6d6d6",
     },
   ];
   const navigate = useNavigate();
@@ -53,6 +53,8 @@ const MyPage = () => {
     }
   }, []);
 
+  console.log(users);
+
   return (
     <ContaineDiv>
       {/* Header */}
@@ -62,7 +64,9 @@ const MyPage = () => {
         <ProfileDiv>
           <ProfileWrapper>
             <Profile>
-              <CustomedImage src={`assets/img/ddio${level}.png`} />
+              <CustomedImage
+                src={`assets/img/shiba/Shiba_${users.profile}.png`}
+              />
               <ProfileName>{users.nickName} 님</ProfileName>
             </Profile>
             <LevelArea>

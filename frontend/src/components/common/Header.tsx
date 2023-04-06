@@ -12,6 +12,7 @@ const Header = () => {
   // State
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user.userData);
   const isLogin = useAppSelector((state) => state.user.userData.isLoggedIn);
   const profile = useAppSelector((state) => state.user.userData.profile);
   const nickName = useAppSelector((state) => state.user.userData.nickName);
@@ -69,8 +70,9 @@ const Header = () => {
                   aria-expanded={open ? "true" : undefined}
                   onClick={handleClick}
                 >
-                  <ProfileNickName>{nickName}</ProfileNickName>
-                  <ProfileImg src={`/assets/img/ddio0.png`}></ProfileImg>
+                  <ProfileImg
+                    src={`/assets/img/shiba/Shiba_${user.profile}.png`}
+                  ></ProfileImg>
                 </Button>
               ) : (
                 <div>

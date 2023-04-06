@@ -34,12 +34,14 @@ const ShibaModal = ({ open, setOpen, name, level }: any) => {
 
   const changeShiba = () => {
     console.log(user.id, profile);
-    dispatch(changeUserAction({ id: user.id, profile: profile }));
+    dispatch(changeUserAction({ id: user.id, profile: profile })).then(() => {
+      onCloseModal();
+    });
   };
   const onCloseModal = () => {
     setOpen((prev: boolean) => !prev);
   };
-  // console.log(open, name, level);
+  console.log(user);
 
   useEffect(() => {
     if (level === 1) setBgColor("#cfb893");

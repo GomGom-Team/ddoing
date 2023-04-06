@@ -350,6 +350,9 @@ const VideoListPage = () => {
                       <img src="/assets/img/EmptyStar.png" />
                     </VideoScoreDiv>
                   )}
+                  <VideoBigTitleDiv>
+                    {item.title.split("(")[0]}
+                  </VideoBigTitleDiv>
                   <VideoAllRoleDiv>
                     {item.roles.map((item: any, index: number) => {
                       return (
@@ -457,6 +460,15 @@ const ListWrapperDiv = styled.div`
   padding: 7.5vw 10vw 7.5vw 10vw;
   flex-wrap: wrap;
   justify-content: left;
+`;
+
+const VideoBigTitleDiv = styled.div`
+  position: absolute;
+  top: 1.3vw;
+  left: 2vw;
+  font-family: "ONE-Mobile-POP";
+  font-size: 1vw;
+  color: white;
 `;
 
 const SearchWrapperDiv = styled.div`

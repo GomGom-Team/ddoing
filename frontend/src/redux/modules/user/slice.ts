@@ -123,13 +123,13 @@ const userSlice = createSlice({
         state.getMe.loading = false;
         state.getMe.data = payload;
         state.getMe.error = null;
-
         state.userData.id = payload.id;
         state.userData.email = payload.email;
         state.userData.name = payload.name;
         state.userData.nickName = payload.nickName;
         state.userData.level = payload.level;
         state.userData.exp = payload.exp;
+        state.userData.profile = payload.profile;
         state.userData.isLoggedIn = true;
       })
       .addCase(setUserWithTokenAction.rejected, (state, { payload }) => {

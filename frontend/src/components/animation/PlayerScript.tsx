@@ -374,23 +374,31 @@ const PlayerScript = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
           {script?.data?.map((item: any, index: number) => {
             return (
               <ScriptDiv key={index}>
-                <StyledDiv
-                  isMyRole={myAct === item.role}
-                  isNowScript={
-                    playedSeconds > item.startTime &&
-                    playedSeconds < item.endTime + 1
-                  }
-                >
-                  <RoleDiv>
-                    <RoleNowDiv isMyRole={myAct === item.role}>
-                      <RoleImg src={`/assets/img/${item.role}.png`} />
-                    </RoleNowDiv>
-                  </RoleDiv>
-                  <ScriptWrapDiv>
-                    <EngDiv>{item.engSentence}</EngDiv>
-                    <KoDiv>{item.koSentence}</KoDiv>
-                  </ScriptWrapDiv>
-                </StyledDiv>
+                {item.engSentence === "a" ? (
+                  <PrepareDiv>
+                    스크립트
+                    <br />
+                    준비중입니다.
+                  </PrepareDiv>
+                ) : (
+                  <StyledDiv
+                    isMyRole={myAct === item.role}
+                    isNowScript={
+                      playedSeconds > item.startTime &&
+                      playedSeconds < item.endTime + 1
+                    }
+                  >
+                    <RoleDiv>
+                      <RoleNowDiv isMyRole={myAct === item.role}>
+                        <RoleImg src={`/assets/img/${item.role}.png`} />
+                      </RoleNowDiv>
+                    </RoleDiv>
+                    <ScriptWrapDiv>
+                      <EngDiv>{item.engSentence}</EngDiv>
+                      <KoDiv>{item.koSentence}</KoDiv>
+                    </ScriptWrapDiv>
+                  </StyledDiv>
+                )}
               </ScriptDiv>
             );
           })}
@@ -424,6 +432,19 @@ const ClipboardImg = styled.img`
   top: 5.2vw;
 `;
 
+const PrepareDiv = styled.div`
+  display: flex;
+  position: absolute;
+  width: 30vw;
+  height: 68vh;
+  top: 22.5vh;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 3vw;
+  font-family: "PyeongChangPeace-Bold";
+  box-shadow: 4px 8px 8px hsl(0deg 0% 0% / 0.25);
+`;
 const LoadingImg = styled.img`
   position: absolute;
   width: 10vw;
