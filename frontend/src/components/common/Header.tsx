@@ -14,6 +14,7 @@ const Header = () => {
   const dispatch = useAppDispatch();
   const isLogin = useAppSelector((state) => state.user.userData.isLoggedIn);
   const profile = useAppSelector((state) => state.user.userData.profile);
+  const nickName = useAppSelector((state) => state.user.userData.nickName);
   const [loginCheck, setLoginCheck] = useState<boolean>(isLogin);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -23,7 +24,7 @@ const Header = () => {
     dispatch(logoutAction());
     setLoginCheck(false);
     setAnchorEl(null);
-    navigate("/");
+    navigate("/main");
   };
 
   // 프로필, 로그아웃
@@ -48,7 +49,7 @@ const Header = () => {
       <CustomedNav>
         <NavWrapper>
           <NavWrapperContents>
-            <LogoBtn onClick={() => navigate("/")}>
+            <LogoBtn onClick={() => navigate("/main")}>
               <MainLogo src={logo}></MainLogo>
             </LogoBtn>
             <NavigateContents>
@@ -68,6 +69,7 @@ const Header = () => {
                   aria-expanded={open ? "true" : undefined}
                   onClick={handleClick}
                 >
+                  <ProfileNickName>{nickName}</ProfileNickName>
                   <ProfileImg src={`/assets/img/ddio0.png`}></ProfileImg>
                 </Button>
               ) : (
@@ -91,7 +93,7 @@ const Header = () => {
                 }}
               >
                 <MenuItem sx={ButtonStyle} onClick={goMyPage}>
-                  My Page
+                  Profile
                 </MenuItem>
                 <MenuItem sx={ButtonStyle} onClick={onLogout}>
                   Logout
@@ -161,5 +163,9 @@ const ProfileImg = styled.img`
 const ButtonStyle = {
   fontFamily: "insungitCutelivelyjisu",
 };
+
+const ProfileNickName = styled.div`
+  font-family: "insungitCutelivelyjisu";
+`;
 
 export default Header;
