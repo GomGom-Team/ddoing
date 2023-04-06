@@ -56,10 +56,9 @@ const MyPage = () => {
   return (
     <ContaineDiv>
       {/* Header */}
+      <Header />
+      <DummyDiv></DummyDiv>
       <FontStyle>
-        <Header />
-        <DummyDiv></DummyDiv>
-        <DummyDiv2 />
         <ProfileDiv>
           <ProfileWrapper>
             <Profile>
@@ -86,33 +85,41 @@ const MyPage = () => {
 
 export default MyPage;
 // style
-const DummyDiv = styled.div(tw`h-16`);
-const DummyDiv2 = styled.div(tw`h-12`);
+const DummyDiv = styled.div(tw`h-20`);
 
 //프로필사진
 // tw`h-52 object-cover rounded-md bg-slate-500`,
-const ContaineDiv = styled.div`
-  width: 100%;
-  height: 100%;
-`;
+const ContaineDiv = styled.div(
+  tw``,
+  css`
+    width: 100%;
+    height: 100%;
+  `
+);
 
 const ProfileDiv = styled.div(
-  tw`flex items-center h-2/6 content-between`,
+  tw`flex items-center content-between border border-black`,
   css`
-    width: 100vw;
+    width: 100%;
+    height: 30%;
   `
 );
 
 const ProfileWrapper = styled.div(
-  tw`flex`,
+  tw`flex border border-red-500`,
   css`
-    height: 40vh;
+    height: 100%;
+    width: 100%;
   `
 );
 
-const BoxContentDiv = styled.div`
-  height: 60vh - 6rem;
-`;
+const BoxContentDiv = styled.div(
+  tw`border border-blue-500`,
+  css`
+    height: 70%;
+    width: 100%;
+  `
+);
 
 const CustomedImage = styled.img`
   width: 10rem;
@@ -123,9 +130,9 @@ const CustomedImage = styled.img`
 `;
 
 const Profile = styled.div(
-  tw`flex flex-col items-center rounded-sm`,
+  tw`flex flex-col items-center rounded-sm border border-green-500`,
   css`
-    width: 30vw;
+    width: 30%;
   `
 );
 
@@ -137,22 +144,28 @@ const ProfileName = styled.span`
 
 const TabStyle = {
   display: "flex",
-  height: "20rem",
+  height: "100%",
+  width: "100%",
 };
 
 // level 글자
 const LevelStyle = styled.div`
   display: "flex";
-  /* width: 40rem; */
-  padding-left: 100px;
   font-size: 50px;
 `;
 
 // level 영역
-const LevelArea = styled.div`
-  width: 70vw;
-`;
-
-const FontStyle = styled.div`
-  font-family: "insungitCutelivelyjisu";
-`;
+const LevelArea = styled.div(
+  tw`flex flex-col border border-yellow-500`,
+  css`
+    width: 100%;
+    height: 100%;
+  `
+);
+const FontStyle = styled.div(
+  tw``,
+  css`
+    font-family: "insungitCutelivelyjisu";
+    height: 100%;
+  `
+);
