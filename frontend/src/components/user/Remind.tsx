@@ -124,10 +124,9 @@ export default Remind;
 
 const AllWrapDiv = styled.div`
   display: flex;
-  justify-content: center;
-  items-align: center;
-  width: 50rem;
-  height: 20rem;
+  width: 80vw;
+  height: 50vh;
+  flex-wrap: wrap;
 `;
 
 const AniWrapDiv = styled.div`
@@ -165,7 +164,6 @@ const DrawingWrapperTitle = styled.p(tw`mt-12`);
 
 const boxStyle = {
   position: "relative",
-  left: "20rem",
   transform: "translateX(-50%)",
   fontFamily: "insungitCutelivelyjisu",
   width: "20rem",

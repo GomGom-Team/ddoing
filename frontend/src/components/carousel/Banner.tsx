@@ -10,6 +10,7 @@ import { NewContent, Animation, Drawing } from "./index";
 function Banner() {
   const settings = {
     dots: true,
+    arrows: false,
     infinite: true,
     speed: 1000,
     slidesToShow: 1,
