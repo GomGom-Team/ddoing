@@ -19,6 +19,7 @@ const DrawingLanding = ({ toggleDrawer, anchor }: landingProps) => {
   return (
     <StyledDiv>
       <AllDiv>
+      <Background src={"/assets/img/drawing_landing.png"}/>
         <StyledBox>
           <FlexDiv>
             <StyledButton onClick={toggleDrawer(anchor, true)}>
@@ -40,12 +41,15 @@ const StyledDiv = styled.div(
   // `
 );
 
+const Background = styled.img(
+  tw`object-cover`
+)
+
 const StyledBox = styled.div(tw`flex`);
 const AllDiv = styled.div`
   /* position:absolute, */
   width: 90vw;
   height: 95vh;
-  background-image: url("/assets/img/drawing_landing.png");
   background-repeat: no-repeat;
   background-size: cover;
   padding-top: 5em;

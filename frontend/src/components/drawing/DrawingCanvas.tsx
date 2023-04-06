@@ -251,7 +251,7 @@ const StyledDiv = styled.div(tw`flex`);
 const StyledButton = styled.button(tw`hocus:(scale-105 text-yellowD) pb-5`);
 
 const PredictDiv = styled.div(
-  tw`inline-block my-5 mr-5 py-3 px-4 bg-brownD rounded-2xl text-white`
+  tw`inline-block my-5 mr-5 py-3 px-4 bg-brownD rounded-2xl text-white text-3xl`
 );
 
 const FlexDiv = styled.div(tw`flex flex-col`);
