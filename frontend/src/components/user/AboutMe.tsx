@@ -163,13 +163,13 @@ const boxStyle = {
     marginTop: "15px",
     fontFamily: "insungitCutelivelyjisu",
     textAlign: "center",
+    // alignItems: "center",
   },
 };
 
 // 내정보 스타일
 const boxStyle2 = {
   position: "relative",
-  left: "20rem",
   transform: "translateX(-50%)",
   fontFamily: "insungitCutelivelyjisu",
 };

@@ -99,6 +99,8 @@ const MainPage = () => {
 
       {/* Footer  */}
       {/* <Footer /> */}
+      <DummyDiv></DummyDiv>
+      <DummyDiv></DummyDiv>
     </AllWrapDiv>
   );
 };

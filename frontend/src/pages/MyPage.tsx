@@ -98,7 +98,7 @@ const ContaineDiv = styled.div(
 );
 
 const ProfileDiv = styled.div(
-  tw`flex items-center content-between border border-black`,
+  tw`flex items-center content-between `,
   css`
     width: 100%;
     height: 30%;
@@ -106,7 +106,7 @@ const ProfileDiv = styled.div(
 );
 
 const ProfileWrapper = styled.div(
-  tw`flex border border-red-500`,
+  tw`flex`,
   css`
     height: 100%;
     width: 100%;
@@ -114,7 +114,7 @@ const ProfileWrapper = styled.div(
 );
 
 const BoxContentDiv = styled.div(
-  tw`border border-blue-500`,
+  tw``,
   css`
     height: 70%;
     width: 100%;
@@ -130,9 +130,9 @@ const CustomedImage = styled.img`
 `;
 
 const Profile = styled.div(
-  tw`flex flex-col items-center rounded-sm border border-green-500`,
+  tw`flex flex-col items-center rounded-sm`,
   css`
-    width: 30%;
+    width: 20%;
   `
 );
 
@@ -146,17 +146,19 @@ const TabStyle = {
   display: "flex",
   height: "100%",
   width: "100%",
+  flexDirection: "column",
 };
 
 // level 글자
 const LevelStyle = styled.div`
   display: "flex";
+  text-align: center;
   font-size: 50px;
 `;
 
 // level 영역
 const LevelArea = styled.div(
-  tw`flex flex-col border border-yellow-500`,
+  tw`flex flex-col`,
   css`
     width: 100%;
     height: 100%;

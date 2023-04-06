@@ -55,8 +55,10 @@ export default function VerticalTabs() {
         flexGrow: 1,
         bgcolor: "background.paper",
         display: "flex",
+        alignItems: "center",
+        // justifyContent: "space-between",
         // height: "70%",
-        // width: "100%",
+        // width: "100vh",
       }}
     >
       <Tabs
@@ -67,18 +69,18 @@ export default function VerticalTabs() {
         aria-label="Vertical tabs example"
         sx={TabsStyle}
       >
-        <StyledTab label="내 정보 보기" {...a11yProps(0)} />
+        <StyledTab label="복습 하기" {...a11yProps(0)} />
         <StyledTab label="시바 도감" {...a11yProps(1)} />
-        <StyledTab label="복습 하기" {...a11yProps(2)} />
+        <StyledTab label="내 정보 보기" {...a11yProps(2)} />
       </Tabs>
       <TabPanel value={value} index={0}>
-        <AboutMe></AboutMe>
+        <Remind />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <ShibaList></ShibaList>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <Remind />
+        <AboutMe></AboutMe>
       </TabPanel>
     </Box>
   );
@@ -86,6 +88,9 @@ export default function VerticalTabs() {
 
 const StyledTab = styled(Tab)<TabProps>(({ theme }) => ({
   fontFamily: "insungitCutelivelyjisu",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
   // backgroundColor: "#FFD761",
 }));
 
