@@ -133,32 +133,40 @@ const AniWrapDiv = styled.div`
 
 const AniDiv = styled.div`
   display: grid;
+  font-size: 1.5em;
+  padding-bottom: 1em;
 `;
 
-const AniListDiv = styled.div`
-  display: flex;
-`;
+const AniListDiv = styled.div(tw`flex items-center justify-center`);
 
 const DrawWrapDiv = styled.div`
   display: flex;
 `;
 
-const RecentVideoDiv = styled.div(tw`w-72`);
+const RecentVideoDiv = styled.div(
+  tw`w-72 flex items-center justify-center flex-col`
+);
 
-const RecentVideo = styled.img(tw`h-36 w-56 object-cover border-4 m-5`);
+const RecentVideo = styled.img(tw`h-36 w-48 object-cover border-4 p-5`);
 const RecentVideoTitle = styled.p(
-  tw`truncate mt-2 text-gray-500 text-center m-5`
+  tw`truncate mt-2 text-gray-500 text-center p-5`
 );
 
 const RecentDrawingDiv = styled.div(tw`w-72 flex justify-center items-center`);
 
 const NullImg = styled.div(
-  tw`flex justify-center items-center h-36 w-48 object-cover bg-slate-500 border-4 m-5`
+  tw`flex justify-center items-center h-36 w-48 object-cover bg-slate-500 border-4 p-5`
 );
 
-const RecentDraw = styled.img(tw`h-36 w-48 object-cover border-4 m-5`);
+const RecentDraw = styled.img(tw`h-36 w-48 object-cover border-4 p-5`);
 
-const DrawingWrapperTitle = styled.p(tw`mt-12`);
+const DrawingWrapperTitle = styled.p(
+  tw`pt-12`,
+  css`
+    font-size: 1.5em;
+    padding-bottom: 1em;
+  `
+);
 
 const boxStyle = {
   position: "relative",
