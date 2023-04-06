@@ -73,7 +73,9 @@ const MyPage = () => {
             <LevelArea>
               <LevelStyle>Level {users.level}</LevelStyle>
               <div id="root"></div>
-              <MultiColorProgressBar readings={readings} />
+              <Paddingdiv>
+                <MultiColorProgressBar readings={readings} />
+              </Paddingdiv>
               {/* <CustomedBar /> */}
             </LevelArea>
           </ProfileWrapper>
@@ -122,7 +124,7 @@ const ProfileWrapper = styled.div(
 const BoxContentDiv = styled.div(
   tw``,
   css`
-    height: 70%;
+    height: 65vh;
     width: 100%;
   `
 );
@@ -180,3 +182,7 @@ const FontStyle = styled.div(
     height: 100%;
   `
 );
+
+const Paddingdiv = styled.div`
+  padding-top: 35px;
+`
