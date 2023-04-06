@@ -106,6 +106,8 @@ const TabsStyle = {
   "& .MuiTab-root.Mui-selected": {
     color: "#FBF8CC",
   },
-  height: "30rem",
-  width: "15rem",
+  height: "30.5rem",
+  width: "7rem",
+  alignItems: "center",
+  flexDirection: "row",
 };

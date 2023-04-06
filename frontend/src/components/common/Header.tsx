@@ -91,7 +91,7 @@ const Header = () => {
                 }}
               >
                 <MenuItem sx={ButtonStyle} onClick={goMyPage}>
-                  Profile
+                  My Page
                 </MenuItem>
                 <MenuItem sx={ButtonStyle} onClick={onLogout}>
                   Logout
