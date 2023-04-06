@@ -139,6 +139,7 @@ public class DrawingServiceImpl implements DrawingService {
     // 그림 평가 점수 저장
     @Override
     public boolean createDrawingScore(DrawingScoreRequestDTO drawingScoreRequestDTO){
+        System.out.println("================="+(drawingScoreRequestDTO.getUserId()));
 
         DrawingScoreEntity drawingScoreEntity = DrawingScoreEntity.builder()
                 .userEntity(userRepository.findById(drawingScoreRequestDTO.getUserId()).orElseThrow())
@@ -203,9 +204,11 @@ public class DrawingServiceImpl implements DrawingService {
 
         for(UserDrawingEntity userDrawingEntity : userDrawingEntityList){
             WordEntity wordEntity = wordRepository.findById(userDrawingEntity.getWordId()).orElseThrow();
+            UserEntity userEntity = userRepository.findById(userDrawingEntity.getUserId()).orElseThrow();
             // userId, drawingPath, percentage, word, mean
             UserDrawingResponseDTO userDrawingResponseDTO = UserDrawingResponseDTO.builder()
                     .userId(userDrawingEntity.getUserId())
+                    .nickName(userEntity.getNickName())
                     .drawingPath(userDrawingEntity.getDrawingPath())
                     .percentage(userDrawingEntity.getPercentage())
                     .word(wordEntity.getWord())

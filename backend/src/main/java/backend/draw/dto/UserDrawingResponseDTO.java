@@ -12,8 +12,10 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UserDrawingResponseDTO {
     private String userId;
+    private String nickName;
     private String drawingPath;
     private Float percentage;
     private String word;
     private String mean;
+
 }
