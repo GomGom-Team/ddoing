@@ -75,7 +75,7 @@ const DrawingCanvas = ({
     if (context) {
       context.strokeStyle = "black"; // 선 색깔
       context.lineJoin = "round"; // 선 끄트머리(?)
-      context.lineWidth = 10; // 선 굵기
+      context.lineWidth = 15; // 선 굵기
 
       context.beginPath();
       context.moveTo(originalMousePosition.x, originalMousePosition.y);
