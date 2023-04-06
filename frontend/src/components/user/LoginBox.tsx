@@ -32,7 +32,7 @@ const LoginBox = () => {
       })
     ).then(() => {
       console.log(users.id);
-      navigate("/");
+      navigate("/main");
     });
   };
 
