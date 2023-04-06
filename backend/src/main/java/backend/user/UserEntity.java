@@ -70,6 +70,7 @@ public class UserEntity extends BaseEntity {
                 .nickName(this.nickName)
                 .level(this.level)
                 .exp(this.exp)
+                .profile(this.profile)
                 .build();
         return user;
     }
