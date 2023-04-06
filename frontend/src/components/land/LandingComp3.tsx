@@ -55,7 +55,7 @@ const LandingComp3 = () => {
           <ContentScript>
             <StyledDescription>영어 단어를 해석하고</StyledDescription>
             <StyledDescription>
-              제한시간 안에 알맞게 그림을 그려서
+              제한시간 안에 알맞게 그림을 그리면
             </StyledDescription>
             <StyledDescription>
               또잉이 그림을 해석해서 정답을 맞춥니다
@@ -93,7 +93,7 @@ const StyledTitle = styled.h2(
 );
 
 const StyledDescription = styled.h2(
-  tw`text-2xl text-gray-700`,
+  tw`text-4xl text-gray-700`,
   css`
     width: "10px";
     font-family: "ONE-Mobile-Regular";
