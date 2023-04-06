@@ -60,63 +60,59 @@ const Remind = () => {
   }, []);
 
   return (
-    <Box component="div" sx={boxStyle}>
-      <AllWrapDiv>
-        <Container isOverflowed>
-          <AniWrapDiv>
-            <AniDiv>최근 공부한 영상 조회</AniDiv>
-            <AniListDiv>
-              {remindVideoList &&
-                remindVideoList.map((item: any, index: number) => {
-                  return (
-                    <div key={index}>
-                      <RecentVideoDiv
-                        onClick={() => navigate(`/video/${item.id}`)}
-                      >
-                        {item.pathUrl && (
-                          <RecentVideo
-                            src={`https://img.youtube.com/vi/${item.pathUrl}/0.jpg`}
-                            alt=""
-                          />
-                        )}
-                        {!item.pathUrl && <NullImg></NullImg>}
-                        {item.title && (
-                          <RecentVideoTitle>{item.title}</RecentVideoTitle>
-                        )}
-                        {!item.title && <div></div>}
-                        <div></div>
-                      </RecentVideoDiv>
-                    </div>
-                  );
-                })}
-            </AniListDiv>
-          </AniWrapDiv>
-          <div>
-            <DrawingWrapperTitle>내가 그린 그림</DrawingWrapperTitle>
-            <DrawWrapDiv>
-              {drawingList &&
-                drawingList.map((item: any, index: number) => {
-                  return (
-                    <RecentDrawingDiv key={index}>
-                      {item.drawingPath && (
-                        <RecentDraw
-                          src={`https://j8a103.p.ssafy.io/assets/img_backend/${item.drawingPath}`}
-                          width={200}
-                          height={200}
+    <AllWrapDiv>
+      <Container isOverflowed>
+        <AniWrapDiv>
+          <AniDiv>최근 공부한 영상 조회</AniDiv>
+          <AniListDiv>
+            {remindVideoList &&
+              remindVideoList.map((item: any, index: number) => {
+                return (
+                  <div key={index}>
+                    <RecentVideoDiv
+                      onClick={() => navigate(`/video/${item.id}`)}
+                    >
+                      {item.pathUrl && (
+                        <RecentVideo
+                          src={`https://img.youtube.com/vi/${item.pathUrl}/0.jpg`}
                           alt=""
                         />
                       )}
-                      {!item.drawingPath && (
-                        <NullImg>아직 그림이 없어요</NullImg>
+                      {!item.pathUrl && <NullImg></NullImg>}
+                      {item.title && (
+                        <RecentVideoTitle>{item.title}</RecentVideoTitle>
                       )}
-                    </RecentDrawingDiv>
-                  );
-                })}
-            </DrawWrapDiv>
-          </div>
-        </Container>
-      </AllWrapDiv>
-    </Box>
+                      {!item.title && <div></div>}
+                      <div></div>
+                    </RecentVideoDiv>
+                  </div>
+                );
+              })}
+          </AniListDiv>
+        </AniWrapDiv>
+        <div>
+          <DrawingWrapperTitle>내가 그린 그림</DrawingWrapperTitle>
+          <DrawWrapDiv>
+            {drawingList &&
+              drawingList.map((item: any, index: number) => {
+                return (
+                  <RecentDrawingDiv key={index}>
+                    {item.drawingPath && (
+                      <RecentDraw
+                        src={`https://j8a103.p.ssafy.io/assets/img_backend/${item.drawingPath}`}
+                        width={200}
+                        height={200}
+                        alt=""
+                      />
+                    )}
+                    {!item.drawingPath && <NullImg>아직 그림이 없어요</NullImg>}
+                  </RecentDrawingDiv>
+                );
+              })}
+          </DrawWrapDiv>
+        </div>
+      </Container>
+    </AllWrapDiv>
   );
 };
 
@@ -124,9 +120,11 @@ export default Remind;
 
 const AllWrapDiv = styled.div`
   display: flex;
-  width: 80vw;
-  height: 50vh;
+  width: 90vw;
+  height: 62vh;
   flex-wrap: wrap;
+  /* padding-top: 2rem; */
+  padding-left: 20rem;
 `;
 
 const AniWrapDiv = styled.div`
