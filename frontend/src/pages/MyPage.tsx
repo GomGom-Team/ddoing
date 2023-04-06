@@ -62,6 +62,7 @@ const MyPage = () => {
       <DummyDiv></DummyDiv>
       <FontStyle>
         <ProfileDiv>
+        <DummyDiv2></DummyDiv2>
           <ProfileWrapper>
             <Profile>
               <CustomedImage
@@ -90,6 +91,7 @@ const MyPage = () => {
 export default MyPage;
 // style
 const DummyDiv = styled.div(tw`h-20`);
+const DummyDiv2 = styled.div(tw`h-56`);
 
 //프로필사진
 // tw`h-52 object-cover rounded-md bg-slate-500`,
@@ -140,11 +142,14 @@ const Profile = styled.div(
   `
 );
 
-const ProfileName = styled.span`
-  display: block;
-  text-align: center;
-  border-radius: 70%;
-`;
+const ProfileName = styled.span(
+  tw`text-3xl pt-10`,
+  css`
+    display: block;
+    text-align: center;
+    border-radius: 70%;
+  `
+);
 
 const TabStyle = {
   display: "flex",
@@ -162,7 +167,7 @@ const LevelStyle = styled.div`
 
 // level 영역
 const LevelArea = styled.div(
-  tw`flex flex-col`,
+  tw`flex flex-col pt-12`,
   css`
     width: 100%;
     height: 100%;
