@@ -23,14 +23,18 @@ const LandingPage = () => {
   return (
     <div>
       <ExtraBox style={{ textAlign: "center" }}>
-        <FloatLogo src={abc_img} style={{ width: "200px" }} />
+        <FloatLogo
+          src={abc_img}
+          style={{ width: "200px" }}
+          onClick={() => navigate("/main")}
+        />
         <LandingComp5 />
         <LandingComp2 />
         <LandingComp1 />
         <LandingComp3 />
         <LandingComp4 />
         <Float>
-          <StyledButton onClick={() => navigate("/login")}>START</StyledButton>
+          <StyledButton onClick={() => navigate("/main")}>START</StyledButton>
         </Float>
       </ExtraBox>
     </div>
@@ -76,6 +80,7 @@ const Float = styled.div`
   /* margin-left: 50vw;
   margin-right: 50vw; */
   text-align: center;
+  z-index: 999;
   /* width: 120px; */
 `;
 
@@ -85,5 +90,6 @@ const FloatLogo = styled.img`
   height: "3rem";
   left: 1em;
   top: 1em;
+  z-index: 999;
   /* width: 120px; */
 `;

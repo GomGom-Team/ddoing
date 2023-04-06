@@ -169,9 +169,10 @@ const boxStyle = {
 
 // 내정보 스타일
 const boxStyle2 = {
-  position: "relative",
+  // display: "flex",
   transform: "translateX(-50%)",
   fontFamily: "insungitCutelivelyjisu",
+  marginLeft: "45em",
 };
 
 // 탈퇴 버튼 스타일

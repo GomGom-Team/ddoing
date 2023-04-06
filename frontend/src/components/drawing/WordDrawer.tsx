@@ -56,7 +56,7 @@ const ResultPage = ({
     return (
       <StyledDrawer>
         <StyledWrapper>
-          <ExitButton onClick={() => navigate("/")}>X</ExitButton>
+          <ExitButton onClick={() => navigate("/main")}>X</ExitButton>
           <ResultDiv>
             <ResultHead> 잘 그리셨어요! </ResultHead>
 

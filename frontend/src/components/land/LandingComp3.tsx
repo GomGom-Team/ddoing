@@ -1,58 +1,92 @@
-import React from "react";
+import React, { useEffect } from "react";
 import tw, { css, styled, theme } from "twin.macro";
 import { styled as muistyled } from "@mui/material/styles";
 import Button, { ButtonProps } from "@mui/material/Button";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
-import abc_img from "/assets/img/LANDING2.png";
+import drawing1 from "/assets/img/drawing1.png";
+import drawing2 from "/assets/img/drawing2.png";
+import drawing3 from "/assets/img/drawing3.png";
+import drawing4 from "/assets/img/drawing4.png";
+import AOS from "aos";
 
 const LandingComp3 = () => {
+  useEffect(() => {
+    AOS.init();
+  });
+
   return (
-    <Background>
-      <TitleDescriptionWrapper
-        data-aos="fade-up"
-        data-aos-delay="400"
-        data-aos-duration="800"
-      >
-        {/* <ImgWrapper> */}
-        <CustomedImage src={abc_img}></CustomedImage>
-        {/* </ImgWrapper> */}
+    <Background style={{ textAlign: "center" }}>
+      <TitleDescriptionWrapper data-aos="fade-up">
+        <ImgWrapper>
+          <CustomedImage
+            data-aos="fade-up"
+            data-aos-delay="300"
+            data-aos-duration="1500"
+            src={drawing4}
+            style={{ width: "500px", top: "10vh", left: "10vw", zIndex: 2 }}
+          ></CustomedImage>
+          <CustomedImage
+            data-aos="fade-up"
+            data-aos-delay="500"
+            data-aos-duration="1500"
+            src={drawing2}
+            style={{ width: "500px", top: "20vh", left: "25vw", zIndex: 3 }}
+          ></CustomedImage>
+          <CustomedImage
+            data-aos="fade-up"
+            data-aos-delay="1000"
+            data-aos-duration="1500"
+            src={drawing3}
+            style={{ width: "500px", top: "30vh", left: "15vw", zIndex: 4 }}
+          ></CustomedImage>
+          <CustomedImage
+            data-aos="fade-up"
+            data-aos-delay="1500"
+            data-aos-duration="1500"
+            src={drawing1}
+            style={{ width: "500px", top: "45vh", left: "20vw", zIndex: 5 }}
+          ></CustomedImage>
+        </ImgWrapper>
+        <Content>
+          <StyledTitle>
+            주어진 영어단어를 보고<br></br> 그림을 그려보세요
+          </StyledTitle>
+          <ContentScript>
+            <StyledDescription>영어 단어를 해석하고</StyledDescription>
+            <StyledDescription>
+              제한시간 안에 알맞게 그림을 그려서
+            </StyledDescription>
+            <StyledDescription>
+              또잉이 그림을 해석해서 정답을 맞춥니다
+            </StyledDescription>
+          </ContentScript>
+        </Content>
       </TitleDescriptionWrapper>
     </Background>
   );
 };
 export default LandingComp3;
 
-const BoxStyle = styled.div`
-  width: 40%;
-  height: 30%;
-`;
-
 const Background = styled.div`
-  /* background: #5bb83f; */
-  /* padding: 25vh; */
+  background: #9fddff;
+  /* padding: 15vh 15vh 0px 15vh; */
+  z-index: 0;
   height: 100vh;
 `;
 
-const BackgroundDiv = styled.div(
-  tw`flex bg-yellowD w-full h-96 justify-between`
-);
-
-const TitleDescriptionWrapper = styled.div(
-  tw`justify-evenly pl-48`,
-  css`
-    /* margin-top: 30em; */
-    padding-top: 10em;
-    padding-right: 5em;
-    display: flex;
-  `
-);
+const TitleDescriptionWrapper = styled.div`
+  top: 10em;
+  padding-top: 10vh;
+  margin-bottom: 30em;
+  display: flex;
+`;
 
 const StyledTitle = styled.h2(
   tw`mt-2 text-4xl font-bold text-gray-700`,
   css`
     font-family: "One-Mobile-POP";
-    padding-top: 15px;
+    padding-top: 3em;
     padding-bottom: 20px;
     margin-top: 20px;
   `
@@ -61,27 +95,54 @@ const StyledTitle = styled.h2(
 const StyledDescription = styled.h2(
   tw`text-2xl text-gray-700`,
   css`
+    width: "10px";
     font-family: "ONE-Mobile-Regular";
   `
 );
 
-// const ImgWrapper = styled.div(tw`flex justify-center items-center pr-48`);
+const ImgWrapper = styled.div`
+  position: relative;
+  width: 500px;
+`;
 
 const CustomedImage = styled.img(
   tw`object-cover rounded-md`,
   css`
-    height: 50rem;
+    position: absolute;
+    top: 15em;
+    left: 15em;
+    width: 500px;
   `
 );
 
 const Content = styled.div`
-  padding-right: 10vw;
+  padding-left: 10vw;
+  padding-top: 20vh;
+  margin-left: 25em;
 `;
 
 const IconStyle = {
-  marginTop: "23vh",
-  marginLeft: "2vw",
-  right: "50%",
+  // marginTop: "23vh",
+  // marginLeft: "0.7em",
+  // right: "50px",
+  // textAlign: "center",
   fontSize: "70px",
   color: "#005112",
 };
+
+const ContentScript = styled.div`
+  /* width: 400px; */
+`;
+
+const Bounce = styled.div(
+  tw`animate-bounce`,
+  css`
+    position: "absolute";
+    /* left: 43%; */
+    /* right: 50%; */
+    /* top: 80%; */
+    bottom: 10em;
+    /* margin-right: 50%; */
+    text-align: center;
+  `
+);
