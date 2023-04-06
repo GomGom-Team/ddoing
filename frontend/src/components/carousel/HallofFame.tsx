@@ -177,8 +177,8 @@ const NameTag = styled.div(
   css`
     height: 100%;
     border-radius: 10px;
-    font-family: "PyeongChangPeace-Bold";
-    font-size: 1vw;
+    font-family: "insungitCutelivelyjisu";
+    font-size: 1.5vw;
     padding: 5px 13px 5px 10px;
   `
 );

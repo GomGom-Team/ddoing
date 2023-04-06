@@ -68,7 +68,7 @@ const StyledDescription = styled.h2(
 const ImgWrapper = styled.div(tw`flex justify-center items-center pr-48`);
 
 const CustomedImage = styled.img(
-  tw`h-64 object-cover rounded-md bg-slate-500`,
+  tw`h-64 rounded-md bg-none`,
   css`
     width: 30rem;
   `
