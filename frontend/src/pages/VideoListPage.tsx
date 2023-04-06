@@ -209,6 +209,9 @@ const VideoListPage = () => {
   };
 
   useEffect(() => {
+    if (!user.id) {
+      navigate("/login");
+    }
     api();
   }, []);
 

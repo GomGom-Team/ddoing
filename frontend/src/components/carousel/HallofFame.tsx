@@ -13,6 +13,7 @@ interface DrawingListType {
   percentage: number;
   word: string;
   mean: string;
+  nickName: string;
 }
 
 interface HallofFameProps {
@@ -45,7 +46,7 @@ function HallofFame({ bestDrawing }: HallofFameProps) {
                 <SliderItems key={index}>
                   <SliderItemsWrapper>
                     <NicknameDiv>
-                      <NameTag>{item.userId}</NameTag>
+                      <NameTag>{item.nickName}</NameTag>
                     </NicknameDiv>
                     <CustomedFigure>
                       <FrameThumbnail>
