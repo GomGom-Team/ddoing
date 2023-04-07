@@ -85,7 +85,7 @@ const StyledTitle = styled.h2(
     font-family: "One-Mobile-POP";
     padding-top: 3em;
     padding-bottom: 20px;
-    /* margin-top: 20px; */
+    margin-top: 20px;
   `
 );
 
