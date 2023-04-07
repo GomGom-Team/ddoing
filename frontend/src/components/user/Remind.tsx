@@ -5,6 +5,7 @@ import tw, { css, styled, theme } from "twin.macro";
 import { Box } from "@mui/material";
 import { Container } from "../common/index";
 import axios from "axios";
+import ImageNotSupportedIcon from "@mui/icons-material/ImageNotSupported";
 
 interface DrawingListType {
   userId: string;
@@ -80,7 +81,9 @@ const Remind = () => {
                       )}
                       {!item.pathUrl && <NullImg></NullImg>}
                       {item.title && (
-                        <RecentVideoTitle>{item.title}</RecentVideoTitle>
+                        <RecentVideoTitle>
+                          {item.title.split(" - ")[1]}
+                        </RecentVideoTitle>
                       )}
                       {!item.title && <div></div>}
                       <div></div>
