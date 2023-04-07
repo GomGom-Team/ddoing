@@ -69,4 +69,5 @@ public class DrawingController {
         List<UserDrawingResponseDTO> result = drawingService.selectUserRecentDrawing(id);
         return ResponseEntity.ok(result);
     }
+
 }
