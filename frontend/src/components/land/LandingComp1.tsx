@@ -89,7 +89,7 @@ const StyledTitle = styled.h2(
 );
 
 const StyledDescription = styled.h2(
-  tw`text-4xl text-gray-700`,
+  tw`text-3xl text-gray-700`,
   css`
     width: "10px";
     font-family: "ONE-Mobile-Regular";
@@ -114,7 +114,7 @@ const CustomedImage = styled.img(
 const Content = styled.div`
   padding-left: 10vw;
   padding-top: 20vh;
-  margin-left: 5em;
+  /* margin-left: 5em; */
 `;
 
 const IconStyle = {
