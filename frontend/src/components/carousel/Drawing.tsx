@@ -26,7 +26,7 @@ const Drawing = () => {
           <br />
           <StyledDescription>지금 바로 하러 가볼까요?</StyledDescription>
         </div>
-        <Button variant="primary" onClick={() => navigate("drawing")}>
+        <Button variant="primary" onClick={() => navigate("/drawing")}>
           Go
         </Button>
       </TitleDescriptionWrapper>

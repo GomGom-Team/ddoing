@@ -114,7 +114,7 @@ const CustomedImage = styled.img(
 const Content = styled.div`
   padding-left: 10vw;
   padding-top: 20vh;
-  margin-left: 5em;
+  /* margin-left: 5em; */
 `;
 
 const IconStyle = {

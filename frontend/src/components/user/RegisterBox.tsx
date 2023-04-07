@@ -129,6 +129,7 @@ const RegisterBox = () => {
           name: name,
           level: 1,
           exp: 0,
+          profile: "Basic_1",
         })
       ).then(() => {
         navigate("/login");
