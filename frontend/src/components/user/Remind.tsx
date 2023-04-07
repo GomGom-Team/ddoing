@@ -123,11 +123,12 @@ export default Remind;
 
 const AllWrapDiv = styled.div`
   display: flex;
-  width: 90vw;
-  height: 47vh;
+  width: 100vw;
+  height: 50vh;
   flex-wrap: wrap;
+  /* padding-bottom: 10vh; */
   /* padding-top: 2rem; */
-  padding-left: 20rem;
+  margin-left: 20vw;
 `;
 
 const AniWrapDiv = styled.div`
@@ -136,7 +137,7 @@ const AniWrapDiv = styled.div`
 
 const AniDiv = styled.div`
   display: grid;
-  font-size: 1.5em;
+  font-size: 2vw;
   padding-bottom: 1em;
 `;
 
@@ -144,29 +145,42 @@ const AniListDiv = styled.div(tw`flex items-center justify-center`);
 
 const DrawWrapDiv = styled.div`
   display: flex;
+  padding-bottom: 13vh;
 `;
 
 const RecentVideoDiv = styled.div(
-  tw`w-72 flex items-center justify-center flex-col`
+  tw`w-72 flex items-center justify-center flex-col`,
+  css`
+    margin-right: 2vw;
+  `
 );
 
-const RecentVideo = styled.img(tw`h-36 w-48 object-cover border-4 p-5`);
+const RecentVideo = styled.img(tw`h-48 w-96 object-cover border-4 p-5`);
 const RecentVideoTitle = styled.p(
-  tw`truncate mt-2 text-gray-500 text-center p-5`
+  tw`truncate mt-2 text-center p-5`,
+  css`
+    font-family: "ONE-Mobile-Title";
+    font-size: 1.25vw;
+  `
 );
 
-const RecentDrawingDiv = styled.div(tw`w-72 flex justify-center items-center`);
+const RecentDrawingDiv = styled.div(
+  tw`w-72 flex justify-center items-center`,
+  css`
+    margin-right: 2vw;
+  `
+);
 
 const NullImg = styled.div(
   tw`flex justify-center items-center h-36 w-48 object-cover bg-slate-500 border-4 p-5`
 );
 
-const RecentDraw = styled.img(tw`h-36 w-48 object-cover border-4 p-5`);
+const RecentDraw = styled.img(tw`h-48 w-96 object-cover border-4 p-5`);
 
 const DrawingWrapperTitle = styled.p(
   tw`pt-12`,
   css`
-    font-size: 1.5em;
+    font-size: 2vw;
     padding-bottom: 1em;
   `
 );
