@@ -19,7 +19,7 @@ const initialState: UserStateType = {
     email: "",
     level: 1,
     exp: 0,
-    profile: "",
+    profile: "Basic_1",
     isLoggedIn: false,
   },
   signin: { loading: false, data: null, error: null },
