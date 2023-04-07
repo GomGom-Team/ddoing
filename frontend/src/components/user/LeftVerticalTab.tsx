@@ -91,11 +91,16 @@ const StyledTab = styled(Tab)<TabProps>(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  width: "16.5vw",
+  fontSize: "1.25vw",
+  paddingTop: "2vw",
+  // paddingBottom: "1vw",
   // backgroundColor: "#FFD761",
 }));
 
 const TabsStyle = {
   borderRight: 1,
+  position: "fixed",
   borderColor: "divider",
   fontFamily: "insungitCutelivelyjisu",
   backgroundColor: "#FFD761",
@@ -106,8 +111,12 @@ const TabsStyle = {
   "& .MuiTab-root.Mui-selected": {
     color: "#FBF8CC",
   },
-  height: "30rem",
-  width: "7rem",
-  alignItems: "center",
+  // marginBottom: "15vw",
+  height: "100%",
+  width: "16.5vw",
+  alignItems: "top",
+  justifyContents: "right",
   flexDirection: "row",
+  zIndex: "999",
+  top: "38vh",
 };

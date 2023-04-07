@@ -62,7 +62,7 @@ const MyPage = () => {
       <DummyDiv></DummyDiv>
       <FontStyle>
         <ProfileDiv>
-        <DummyDiv2></DummyDiv2>
+          <DummyDiv2></DummyDiv2>
           <ProfileWrapper>
             <Profile>
               <CustomedImage
@@ -109,14 +109,14 @@ const ProfileDiv = styled.div(
   tw`flex items-center content-between `,
   css`
     width: 100%;
-    height: 30%;
+    height: 32.6vh;
   `
 );
 
 const ProfileWrapper = styled.div(
   tw`flex`,
   css`
-    height: 100%;
+    height: 25vh;
     width: 100%;
   `
 );
@@ -124,7 +124,7 @@ const ProfileWrapper = styled.div(
 const BoxContentDiv = styled.div(
   tw``,
   css`
-    height: 65vh;
+    /* height: 50vh; */
     width: 100%;
   `
 );
@@ -145,11 +145,12 @@ const Profile = styled.div(
 );
 
 const ProfileName = styled.span(
-  tw`text-3xl pt-10`,
+  tw`text-3xl`,
   css`
     display: block;
     text-align: center;
     border-radius: 70%;
+    margin-top: 1vw;
   `
 );
 
@@ -169,7 +170,7 @@ const LevelStyle = styled.div`
 
 // level 영역
 const LevelArea = styled.div(
-  tw`flex flex-col pt-12`,
+  tw`flex flex-col`,
   css`
     width: 100%;
     height: 100%;
@@ -180,9 +181,10 @@ const FontStyle = styled.div(
   css`
     font-family: "insungitCutelivelyjisu";
     height: 100%;
+    position: relative;
   `
 );
 
 const Paddingdiv = styled.div`
-  padding-top: 35px;
-`
+  /* padding-top: 35px; */
+`;

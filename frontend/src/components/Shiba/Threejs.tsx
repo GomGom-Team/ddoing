@@ -39,6 +39,7 @@ function ThreeScene({ name, level }: any) {
     if (level === 14) setBgColor("#641010");
     if (level === 15) setBgColor("#ffffff");
   }, []);
+
   return (
     <Canvas
       shadows
