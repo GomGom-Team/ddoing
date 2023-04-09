@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import tw, { css, styled, theme } from "twin.macro";
+import { useState } from "react";
+import { styled } from "twin.macro";
 import myList from "./Shiba.json";
 import ShibaModal from "./ShibaModal";
 import { useAppSelector } from "../../redux/configStore.hooks";
@@ -7,13 +7,11 @@ import { Container } from "../common";
 
 const ShibaList = () => {
   const user = useAppSelector((state) => state.user.userData);
+
   const [openShibaModal, setOpenShibaModal] = useState<boolean>(false);
   const [nowName, setNowName] = useState<string>("");
   const [nowLevel, setNowLevel] = useState<number>(0);
 
-  const onClickShiba = () => {
-    setOpenShibaModal((prev) => !prev);
-  };
   return (
     <AllWrapDiv>
       <Container isOverflowed={true}>
@@ -65,8 +63,6 @@ const AllWrapDiv = styled.div`
   margin-left: 14.5vw;
   margin-top: 1vw;
   padding-left: 2.5vw;
-  /* margin-top: 4vw; */
-  /* padding-bottom: 3vw; */
 `;
 
 const OneWrapBtn = styled.button`
@@ -74,29 +70,12 @@ const OneWrapBtn = styled.button`
   position: relative;
   width: 18vw;
   height: 21vh;
-  /* margin: 1vw; */
   align-items: center;
   justify-content: center;
   text-align: center;
   border-radius: 1vw;
-  /* box-shadow: 4px 8px 8px hsl(0deg 0% 0% / 0.25); */
   z-index: 1;
 `;
-
-// const BadgeImg = styled.img`
-//   position: absolute;
-//   display: flex;
-//   left: 0.6vw;
-//   top: 0.5vw;
-//   height: 45px;
-//   padding: 5px;
-//   text-align: left;
-//   justify-content: center;
-//   align-items: center;
-//   z-index: 998;
-//   font-size: 25px;
-//   /* background-color: white; */
-// `;
 
 const OneWrapDiv = styled.div`
   display: flex;
@@ -108,7 +87,6 @@ const OneWrapDiv = styled.div`
   justify-content: center;
   text-align: center;
   border-radius: 1vw;
-  /* box-shadow: 4px 8px 8px hsl(0deg 0% 0% / 0.25); */
   z-index: 1;
 `;
 
@@ -120,7 +98,6 @@ const LockImg = styled.img`
 `;
 
 const NoDiv = styled.div`
-  /* display: flex; */
   position: absolute;
   width: 18vw;
   height: 21vh;
@@ -131,12 +108,9 @@ const NoDiv = styled.div`
   text-align: center;
   background-color: #00000089;
   z-index: 999;
-  /* border-radius: 1vw; */
-  /* box-shadow: 4px 8px 8px hsl(0deg 0% 0% / 0.25); */
 `;
 
 const ShibaImg = styled.img`
-  /* height: 50vw; */
   border-radius: 1vw;
   width: 25vw;
   height: 21vh;
@@ -144,7 +118,6 @@ const ShibaImg = styled.img`
   &:hover {
     box-shadow: -2px -2px 5px #fff;
   }
-  /* width: 100%; */
 `;
 
 const LevelDiv = styled.div`
@@ -159,5 +132,4 @@ const LevelDiv = styled.div`
   align-items: center;
   z-index: 999;
   font-size: 25px;
-  /* background-color: white; */
 `;

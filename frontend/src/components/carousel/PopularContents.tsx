@@ -74,13 +74,16 @@ export default PopularContents;
 
 const CustomedSection = styled.div(tw`flex justify-center w-full items-center`);
 
-const SectionWrapper = styled.div(
-  tw`flex justify-center w-full py-10 items-center`
-);
+const SectionWrapper = styled.div(tw`flex justify-center w-full items-center`);
 
 const SliderItems = styled.li(tw`w-96 p-5`);
 
-const SliderItemsWrapper = styled.button(tw`border rounded-lg p-5 h-full`);
+const SliderItemsWrapper = styled.button(
+  tw`border rounded-lg h-full`,
+  css`
+    padding: 1vw;
+  `
+);
 
 // const FrameThumbnail = styled.div(
 //   tw`flex justify-center items-center`,

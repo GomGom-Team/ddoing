@@ -39,7 +39,7 @@ const Remind = () => {
     axios
       .get(`https://j8a103.p.ssafy.io/api/drawing/myRecent/${user.id}`)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setDrawingList(res.data);
       })
       .catch((err) => console.log(err));
@@ -49,7 +49,7 @@ const Remind = () => {
     axios
       .get(`https://j8a103.p.ssafy.io/api/animations/myStudy/${user.id}`)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setRemindVideoList(res.data);
       })
       .catch((err) => console.log(err));

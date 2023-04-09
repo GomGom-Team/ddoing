@@ -85,6 +85,7 @@ const Header = () => {
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
+                disableScrollLock={true}
                 anchorOrigin={{
                   vertical: "top",
                   horizontal: "left",
@@ -110,7 +111,12 @@ const Header = () => {
 };
 
 // style
-const StickyHeader = styled.header(tw`fixed top-0 z-10 w-full`);
+const StickyHeader = styled.header(
+  tw`fixed top-0 w-full`,
+  css`
+    z-index: 999;
+  `
+);
 
 const CustomedNav = styled.nav(
   tw`
@@ -119,42 +125,61 @@ const CustomedNav = styled.nav(
     backdrop-blur-xl
     bg-opacity-30
     border-gray-200
-    h-20
+    // h-20
   `,
   css`
     font-family: "insungitCutelivelyjisu";
-    /* height: 65px; */
+    height: 100%;
   `
 );
 
 const NavWrapper = styled.div(tw`ml-0 mr-0 px-6`);
 
 const NavWrapperContents = styled.div(
-  tw`flex items-center justify-between h-20`
-);
-
-const MainLogo = styled.img`
-  height: 3rem;
-`;
-
-const LogoBtn = styled.button`
-  height: 3rem;
-`;
-
-const NavigateContents = styled.div(tw`flex space-x-4 text-xl text-gray-900`);
-
-const Profile = styled.div(tw`text-2xl`);
-
-const StyledButton = styled.button(
-  tw`px-5 h-20`,
+  tw`flex items-center`,
   css`
-    size: "5rem";
+    justify-content: space-between;
+    height: 3vw;
   `
 );
 
+const MainLogo = styled.img`
+  height: 2.25vw;
+`;
+
+const LogoBtn = styled.button`
+  height: 2.25vw;
+`;
+
+const NavigateContents = styled.div(
+  tw`flex text-xl text-gray-900`,
+  css`
+    /* width: 20.7vw; */
+    /* position: absolute; */
+    left: 38vw;
+  `
+);
+
+const Profile = styled.div(
+  tw`text-2xl`,
+  css`
+    /* position: absolute; */
+    margin-right: 1vw;
+  `
+);
+
+const StyledButton = styled.button`
+  /* size: 10vw; */
+  margin-left: 1vw;
+  margin-right: 1vw;
+  font-size: 1vw;
+  padding-right: 1vw;
+  padding-left: 1vw;
+  height: 2.25vw;
+`;
 const ProfileImg = styled.img`
-  width: 3rem;
-  height: 3rem;
+  width: 2.25vw;
+  height: 2.25vw;
   display: block;
   float: left;
   margin-left: 5%;

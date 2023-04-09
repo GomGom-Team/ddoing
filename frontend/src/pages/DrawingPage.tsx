@@ -178,7 +178,7 @@ const DrawingPage = () => {
 
   useEffect(() => {
     wordListHandler();
-    console.log(Object.keys(predictList.results));
+    // console.log(Object.keys(predictList.results));
   }, []);
 
   // isDone
@@ -187,10 +187,10 @@ const DrawingPage = () => {
   const isDoneHandler = () => {
     if (isDone === false) {
       setIsDone(true);
-      console.log("게임 끝");
+      // console.log("게임 끝");
     } else {
       setIsDone(false);
-      console.log("게임 초기화");
+      // console.log("게임 초기화");
     }
   };
 
@@ -233,7 +233,7 @@ const DrawingPage = () => {
     if (index < 5) {
       //이얍
       setIndex((index) => index + 1);
-      setTimeout(() => console.log("몇스테이지?", index), 1000);
+      // setTimeout(() => console.log("몇스테이지?", index), 1000);
     } else {
       setIsDone(true);
     }
@@ -367,7 +367,7 @@ const DrawingPage = () => {
           config
         )
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
         })
         .catch((err) => console.log("이미지 업로드 에러", err));
     }
@@ -383,10 +383,10 @@ const DrawingPage = () => {
       ) {
         return;
       }
-      console.log("toggle");
+      // console.log("toggle");
       modalHandleClose();
       const val = { [anchor]: open };
-      console.log(val);
+      // console.log(val);
       setState(val);
     };
 
@@ -395,7 +395,7 @@ const DrawingPage = () => {
   const axiosInstance = axios.create();
   axiosInstance.interceptors.request.use(
     (config) => {
-      console.log("경험치 요청");
+      // console.log("경험치 요청");
       return config;
     },
     (err) => {
@@ -404,7 +404,7 @@ const DrawingPage = () => {
   );
   axiosInstance.interceptors.response.use(
     (config) => {
-      console.log("경험치 반영 완료");
+      // console.log("경험치 반영 완료");
       return config;
     },
     (err) => {
@@ -422,7 +422,7 @@ const DrawingPage = () => {
     axiosInstance
       .post("https://j8a103.p.ssafy.io/api/drawing/score", payload)
       .then((res) => {
-        console.log("경험치 요청 성공 후 데이터", res.data);
+        // console.log("경험치 요청 성공 후 데이터", res.data);
       })
       .catch((err) => console.log("경험치 에러", err));
   };
@@ -431,7 +431,7 @@ const DrawingPage = () => {
 
   useDidMountEffect(() => {
     if (isDone) {
-      console.log("내가 문제 맞춘 갯수", answerCount);
+      // console.log("내가 문제 맞춘 갯수", answerCount);
       levelUP();
     }
   }, [isDone]);

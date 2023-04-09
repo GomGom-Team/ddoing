@@ -105,7 +105,7 @@ const DrawingCanvas = ({
           drawLine(mousePosition, newMousePosition);
           setMousePosition(newMousePosition);
         }
-        console.log("sdd", mousePosition);
+        // console.log("sdd", mousePosition);
       }
     },
     [isPainting, mousePosition]
@@ -178,19 +178,19 @@ const DrawingCanvas = ({
           config
         )
         .then((res) => {
-          console.log("여기가 프로미스", res.data.results);
+          // console.log("여기가 프로미스", res.data.results);
           setPredictList(res.data);
-          console.log(index);
+          // console.log(index);
         })
-        .catch((err) => console.log("먀노ㅓ야ㅓㅁ냐어ㅑ", err));
+        .catch((err) => console.log(err));
     }
   };
 
   const axiosInstance = axios.create();
   axiosInstance.interceptors.request.use(
     (config) => {
-      console.log("request", config);
-      console.log("predict", predict);
+      // console.log("request", config);
+      // console.log("predict", predict);
       setPredict("...");
       return config;
     },

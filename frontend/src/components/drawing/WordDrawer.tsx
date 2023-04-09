@@ -38,16 +38,16 @@ const ResultPage = ({
   restartHandler,
 }: ResultPageProps) => {
   React.useEffect(() => {
-    console.log("mounted", isDone);
+    // console.log("mounted", isDone);
   }, []);
 
   React.useEffect(() => {
-    console.log("updated", isDone);
+    // console.log("updated", isDone);
   }, [isDone]);
 
   const reStart = () => {
     restartHandler();
-    console.log("재시작");
+    // console.log("재시작");
   };
 
   const navigate = useNavigate();
