@@ -702,6 +702,7 @@ const VideoDiv = styled.div`
 
 const ScriptDiv = styled.ol`
   display: flex;
+  width: 30vw;
   padding: 5px;
   background-color: #ffffff;
   border-radius: 5%;
@@ -724,8 +725,8 @@ const RoleImg = styled.img`
   display: grid;
   align-items: center;
   justify-content: center;
-  width: 70px;
-  height: 70px;
+  width: 4vw;
+  height: 4vw;
   object-fit: cover;
 `;
 
@@ -738,8 +739,8 @@ const RoleNowDiv = styled.div(({ isMyRole }: MyProps) => [
         border: 3px outset rgba(156, 122, 219, 0.67);
       `,
   css`
-    width: 70px;
-    height: 70px;
+    width: 4vw;
+    height: 4vw;
     display: grid;
     border-radius: 100%;
     overflow: hidden;

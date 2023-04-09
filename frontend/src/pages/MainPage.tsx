@@ -104,7 +104,12 @@ const MainPage = () => {
 };
 
 // style
-const DummyDiv = styled.div(tw`h-20 w-full`);
+const DummyDiv = styled.div(
+  tw`w-full`,
+  css`
+    height: 3vw;
+  `
+);
 
 const CarouselTitle1 = styled.div(
   tw`flex items-center justify-center text-5xl`,

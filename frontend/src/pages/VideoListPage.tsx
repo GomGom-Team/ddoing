@@ -385,11 +385,13 @@ const VideoListPage = () => {
                     key={index}
                     onClick={() => navigate(`/video/${item.id}`)}
                   >
-                    <VideoDiv>
-                      <VideoImg
-                        src={`https://img.youtube.com/vi/${item.pathUrl}/maxresdefault.jpg`}
-                      />
-                    </VideoDiv>
+                    <>
+                      <VideoDiv>
+                        <VideoImg
+                          src={`https://img.youtube.com/vi/${item.pathUrl}/maxresdefault.jpg`}
+                        />
+                      </VideoDiv>
+                    </>
                     <VideoTitleDiv>{item.title.split(" - ")[1]}</VideoTitleDiv>
                     <VideoTimeDiv>
                       {(item.runningTime - (item.runningTime % 60)) / 60} :{" "}
@@ -426,6 +428,9 @@ const VideoListPage = () => {
                         <img src="/assets/img/EmptyStar.png" />
                       </VideoScoreDiv>
                     )}
+                    <VideoBigTitleDiv>
+                      {item.title.split("(")[0]}
+                    </VideoBigTitleDiv>
                     <VideoAllRoleDiv>
                       {item.roles.map((item: any, index: number) => {
                         return (
@@ -450,6 +455,7 @@ export default VideoListPage;
 const AllWrapperDiv = styled.div`
   display: flex;
   align-items: center;
+  width: 100%;
 `;
 
 const DoneDiv = styled.div`
@@ -624,6 +630,9 @@ const SelectDiv = styled.div`
 const AllDiv = styled.div`
   display: grid;
   margin-top: 6vw;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
 `;
 
 const EachBtn = styled.button`
@@ -664,9 +673,9 @@ const VideoTitleDiv = styled.div`
 const VideoTimeDiv = styled.div`
   display: flex;
   position: absolute;
-  top: 12.2vw;
-  right: 1.6vw;
-  padding: 5px 1vh 5px 1vh;
+  top: 12.5vw;
+  right: 2vw;
+  /* padding: 5px 1vh 5px 1vh; */
   /* background-color: white; */
   /* border: 1px solid; */
   border-radius: 5px;

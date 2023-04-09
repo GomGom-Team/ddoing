@@ -57,7 +57,7 @@ export default ShibaList;
 const AllWrapDiv = styled.div`
   display: flex;
   width: 84vw;
-  height: 52vh;
+  height: 58vh;
   flex-wrap: wrap;
   overflow-y: auto;
   margin-left: 14.5vw;
@@ -69,7 +69,7 @@ const OneWrapBtn = styled.button`
   display: flex;
   position: relative;
   width: 18vw;
-  height: 21vh;
+  /* height: 21vh; */
   align-items: center;
   justify-content: center;
   text-align: center;
@@ -81,7 +81,7 @@ const OneWrapDiv = styled.div`
   display: flex;
   position: relative;
   width: 18vw;
-  height: 21vh;
+  /* height: 21vh; */
   margin: 1vw;
   align-items: center;
   justify-content: center;
@@ -100,7 +100,7 @@ const LockImg = styled.img`
 const NoDiv = styled.div`
   position: absolute;
   width: 18vw;
-  height: 21vh;
+  height: 100%;
   margin: 10px;
   border-radius: 1vw;
   align-items: center;
@@ -113,7 +113,7 @@ const NoDiv = styled.div`
 const ShibaImg = styled.img`
   border-radius: 1vw;
   width: 25vw;
-  height: 21vh;
+  /* height: 21vh; */
   box-shadow: 4px 8px 8px hsl(0deg 0% 0% / 0.25);
   &:hover {
     box-shadow: -2px -2px 5px #fff;
