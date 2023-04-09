@@ -24,7 +24,7 @@ const AboutMe = () => {
     setOpenNickNameModal((prev) => !prev);
   };
   const onDeleteUser = () => {
-    console.log(user.id);
+    // console.log(user.id);
     dispatch(deleteUserAction(user.id)).then(() =>
       navigate("/", { replace: true })
     );

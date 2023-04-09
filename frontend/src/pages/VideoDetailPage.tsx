@@ -7,22 +7,26 @@ import { animationGetAction } from "../redux/modules/animation";
 import { Header } from "../components/common";
 
 const VideoDetailPage = () => {
-  var idx = "";
   const dispatch = useAppDispatch();
+  const location = useLocation();
+
+  // User 정보
+  const user = useAppSelector((state) => state.user.userData);
+  // Video 정보
+  const video = useAppSelector((state) => state.animation.getAnimation);
+
+  var idx = "";
   const [act, setAct] = useState("");
   const [isOpen, setIsOpen] = useState(true);
   const [isStart, setIsStart] = useState(false);
   const [videoIdx, setVideoIdx] = useState(0);
-  const location = useLocation();
-  const user = useAppSelector((state) => state.user.userData);
 
+  // selectAct : 역할 선택
   const selectAct = (role: string) => {
     setAct(role);
   };
-  const close = () => {
-    setIsOpen(!isOpen);
-  };
 
+  // 로딩시 현재 주소에서 videoIdx 추출하기
   useEffect(() => {
     var path = location.pathname;
     var parse = path.split("/");
@@ -30,20 +34,19 @@ const VideoDetailPage = () => {
     setVideoIdx(Number(idx));
   }, []);
 
+  // videoIdx가 변경되면, 해당 animation을 가져오기
   useEffect(() => {
     if (videoIdx > 0) {
-      console.log("HelloHello " + videoIdx);
       dispatch(animationGetAction({ userId: user.id, animationId: videoIdx }));
     }
   }, [videoIdx]);
-
-  const video = useAppSelector((state) => state.animation.getAnimation);
 
   return (
     <AllDiv>
       <Header />
       <TVImg src="/assets/img/TV.png" />
       <WrapperDiv>
+        {/* 역할 선택 div가 열려있는 상태라면 */}
         {isOpen === true ? (
           <MyActDiv>
             <ChoiceDiv>Choose character</ChoiceDiv>
@@ -57,9 +60,11 @@ const VideoDetailPage = () => {
                     key={idx}
                   >
                     <ActDiv>
-                      <ActChoiceDiv>
-                        <ActChoiceImg src={`/assets/img/${role}.png`} />
-                      </ActChoiceDiv>
+                      <ActChoiceWrap>
+                        <ActChoiceDiv>
+                          <ActChoiceImg src={`/assets/img/${role}.png`} />
+                        </ActChoiceDiv>
+                      </ActChoiceWrap>
                       <ActChoiceName>{role}</ActChoiceName>
                     </ActDiv>
                   </ActChoiceBtn>
@@ -71,6 +76,7 @@ const VideoDetailPage = () => {
           <MyActDiv2></MyActDiv2>
         )}
         <VideoDiv>
+          {/* 역할 선택 외의 다른 정보는 PlayerScript에서 */}
           <PlayerScript
             myAct={act}
             isVideoStart={isStart}
@@ -105,6 +111,13 @@ const TVImg = styled.img`
   z-index: 0;
 `;
 
+const ActChoiceWrap = styled.div`
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+`;
+
 const MyActDiv2 = styled.div`
   position: absolute;
   display: grid;
@@ -121,7 +134,8 @@ const ChoiceDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 5vh;
+  font-size: 3vw;
+  margin-top: 2.5vw;
 `;
 
 const ActDiv = styled.div`
@@ -136,11 +150,13 @@ const ActDiv = styled.div`
 `;
 
 const ActChoiceDiv = styled.div`
-  width: 120px;
-  height: 120px;
+  width: 5vw;
+  height: 5vw;
   display: grid;
   border-radius: 100%;
   overflow: hidden;
+  margin-left: auto;
+  margin-right: auto;
   border: 3px outset rgba(156, 122, 219, 0.67);
   align-items: center;
   justify-content: center;
@@ -151,24 +167,23 @@ const ActChoiceName = styled.div`
   display: grid;
   align-items: center;
   justify-content: center;
+  font-size: 1.5vw;
 `;
 const ActChoiceImg = styled.img`
   display: grid;
-  width: 120px;
-  height: 120px;
+  width: 5vw;
+  height: 5vw;
   object-fit: cover;
 `;
 
 const ActChoiceBtn = styled.button`
   display: grid;
-  padding-left: 10px;
-  padding-right: 10px;
+  margin-left: 0.75vw;
+  margin-right: 0.75vw;
   align-items: center;
   justify-content: center;
   text-align: center;
-  width: 100%;
   font-family: "PyeongChangPeace-Bold";
-  font-size: 30px;
   padding: 5px;
   :hover {
     color: aquamarine;
@@ -177,9 +192,9 @@ const ActChoiceBtn = styled.button`
 
 const BtnWrapperDiv = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-bottom: 50px;
+  margin-left: 2vw;
+  margin-right: 2vw;
+  padding-bottom: 2.5vw;
   align-items: center;
   justify-content: center;
 `;
@@ -187,33 +202,16 @@ const BtnWrapperDiv = styled.div`
 const VideoDiv = styled.div`
   display: grid;
   width: 100vw;
-  /* height: 100vh; */
 `;
 
 const WrapperDiv = styled.div`
   display: flex;
   width: 100vw;
   height: 100vh;
-  /* padding-top: 200px; */
-  /* align-items: center; */
-  /* justify-content: center; */
 `;
 
 const AllDiv = styled.div`
   width: 100vw;
   height: 100vh;
   background-image: url("/assets/img/SKY.jpg");
-  /* background: linear-gradient(-45deg, #fbf8cc, #fdf579, #fff125, #ffd761); */
-  /* animation: gradient 15s ease infinite; */
-  /* @keyframes gradient {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  } */
 `;

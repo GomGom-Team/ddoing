@@ -31,7 +31,7 @@ const LoginBox = () => {
         password: pw,
       })
     ).then(() => {
-      console.log(users.id);
+      // console.log(users.id);
       navigate("/main");
     });
   };

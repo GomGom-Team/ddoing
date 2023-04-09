@@ -53,7 +53,7 @@ const MyPage = () => {
     }
   }, []);
 
-  console.log(users);
+  // console.log(users);
 
   return (
     <ContaineDiv>

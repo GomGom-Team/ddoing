@@ -14,10 +14,14 @@ import { changeUserAction } from "../../redux/modules/user";
 import { useAppDispatch, useAppSelector } from "../../redux/configStore.hooks";
 
 const ShibaModal = ({ open, setOpen, name, level }: any) => {
-  const user = useAppSelector((state) => state.user.userData);
-  const [bgColor, setBgColor] = useState("white");
-  const [profile, setProfile] = useState<string>("Basic_1");
   const dispatch = useAppDispatch();
+  // User 정보
+  const user = useAppSelector((state) => state.user.userData);
+  // bgColor : 기본값 white
+  const [bgColor, setBgColor] = useState("white");
+  // profile : 기본값 Basic_!
+  const [profile, setProfile] = useState<string>("Basic_1");
+
   const style = {
     position: "absolute" as "absolute",
     top: "50%",
@@ -26,23 +30,23 @@ const ShibaModal = ({ open, setOpen, name, level }: any) => {
     width: "50vw",
     height: "75vh",
     bgcolor: bgColor,
-    // border: "4px solid #9A7946",
-    // boxShadow: 24,
     p: 2,
     borderRadius: 10,
   };
 
+  // 시바견 바꾸기
   const changeShiba = () => {
-    console.log(user.id, profile);
     dispatch(changeUserAction({ id: user.id, profile: profile })).then(() => {
       onCloseModal();
     });
   };
+
+  // Modal 닫기
   const onCloseModal = () => {
     setOpen((prev: boolean) => !prev);
   };
-  console.log(user);
 
+  // 각각에 맞게 설정
   useEffect(() => {
     if (level === 1) setBgColor("#cfb893");
     if (level === 2) setBgColor("#c5c5c5");
@@ -62,7 +66,6 @@ const ShibaModal = ({ open, setOpen, name, level }: any) => {
     setProfile(name + "_" + String(level));
   }, []);
 
-  console.log("profile", profile);
   return (
     <BasicModal open={open} setOpen={setOpen}>
       <Box component="div" sx={style}>

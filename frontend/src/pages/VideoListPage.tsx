@@ -1,16 +1,9 @@
-import React, { useMemo, useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../redux/configStore.hooks";
-import tw, { css, styled, theme } from "twin.macro";
+import { useAppSelector } from "../redux/configStore.hooks";
+import { styled } from "twin.macro";
 import { keyframes } from "styled-components";
-import {
-  animationListGetAction,
-  animationSearchGetAction,
-  animationStarGetAction,
-  animationDoneGetAction,
-} from "../redux/modules/animation";
 import { Header } from "../components/common";
-import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import axios from "axios";
 
 interface VideoListType {
@@ -23,38 +16,47 @@ interface VideoListType {
 }
 
 const VideoListPage = () => {
-  const dispatch = useAppDispatch();
+  // Navigate
   const navigate = useNavigate();
-  const [inputData, setInputData] = useState("");
-  const starList = ["선택", 1, 2, 3];
-  const [selectedStar, setSelectedStar] = useState(0);
-  const [selectedDone, setSelectedDone] = useState(-1);
+  // User 데이터 불러오기
   const user = useAppSelector((state) => state.user.userData);
+  // inpuyData - 현재 입력값을 담아줌
+  const [inputData, setInputData] = useState("");
+  // Test Array - 재 요구하는 요청의 리스트를 담아줌
   const [testArray, setTestArray] = useState<any>(null);
-  // 새로운 것들
-  // 별 3개 리스트
+  // 3Star Animation List
   const [myStar3List, setMyStar3List] = useState<VideoListType[] | null>(null);
+  // 2Star Animation List
   const [myStar2List, setMyStar2List] = useState<VideoListType[] | null>(null);
+  // 1Star Animation List
   const [myStar1List, setMyStar1List] = useState<VideoListType[] | null>(null);
+  // Done Animation List
   const [myDoneList, setMyDoneList] = useState<VideoListType[] | null>(null);
+  // Not Done Animation List
   const [myNotDoneList, setMyNotDoneList] = useState<VideoListType[] | null>(
     null
   );
+  // Search Animation List
   const [mySearchList, setMySearchList] = useState<VideoListType[] | null>(
     null
   );
-
+  // All Animation List
   const [videoList, setVideoList] = useState<VideoListType[] | null>(null);
+
+  // 현재 입력중인 값을 inputData에 업데이트
   const changeInputData = (e: any) => {
     setInputData(e.target.value);
   };
 
+  // 검색 시 enter를 눌렀을 때, searchListHandler 실행
   const handleKeyPress = (e: any) => {
     if (e.key === "Enter" && inputData !== "") {
       searchListHandeler();
     }
   };
 
+  // handleClick : status에 따라 testArray에 해당 리스트를 넣어줌
+  // list가 null인 경우, 빈 배열 반환
   const handleClick = (status: string) => {
     if (status === "Star3") {
       if (myStar3List !== null) {
@@ -93,27 +95,14 @@ const VideoListPage = () => {
         setTestArray([]);
       }
     }
-    console.log("now status is ", status);
   };
 
-  useEffect(() => {
-    setTestArray(testArray);
-  }, [testArray]);
-
-  useEffect(() => {
-    setTestArray(mySearchList);
-  }, [mySearchList]);
-
-  console.log("test", testArray);
-
-  // const videoList = useAppSelector((state) => state.animation.getAnimationList);
-
-  console.log("videoList!!!!!!", videoList);
+  // GET 3Star Animation List
   const star3ListHandler = async () => {
     await axios
       .get(`https://j8a103.p.ssafy.io/api/animations/filter/star/${user.id}/3`)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setMyStar3List(res.data);
       })
       .catch((err) => {
@@ -121,11 +110,12 @@ const VideoListPage = () => {
       });
   };
 
+  // GET 2Star Animation List
   const star2ListHandler = async () => {
     await axios
       .get(`https://j8a103.p.ssafy.io/api/animations/filter/star/${user.id}/2`)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setMyStar2List(res.data);
       })
       .catch((err) => {
@@ -133,11 +123,12 @@ const VideoListPage = () => {
       });
   };
 
+  // GET 1Star Animation List
   const star1ListHandler = async () => {
     await axios
       .get(`https://j8a103.p.ssafy.io/api/animations/filter/star/${user.id}/1`)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setMyStar1List(res.data);
       })
       .catch((err) => {
@@ -145,14 +136,12 @@ const VideoListPage = () => {
       });
   };
 
+  // GET Done Animation List
   const doneListHandeler = async () => {
     await axios
       .get(`https://j8a103.p.ssafy.io/api/animations/filter/${user.id}/1`)
       .then((res) => {
-        console.log(
-          `https://j8a103.p.ssafy.io/api/animations/filter/${user.id}/1`
-        );
-        console.log(res.data);
+        // console.log(res.data);
         setMyDoneList(res.data);
       })
       .catch((err) => {
@@ -160,11 +149,12 @@ const VideoListPage = () => {
       });
   };
 
+  // GET Not Done Animation List
   const notDoneListHandeler = async () => {
     await axios
       .get(`https://j8a103.p.ssafy.io/api/animations/filter/${user.id}/0`)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setMyNotDoneList(res.data);
       })
       .catch((err) => {
@@ -172,13 +162,14 @@ const VideoListPage = () => {
       });
   };
 
+  // GET Search Animation List
   const searchListHandeler = async () => {
     await axios
       .get(
         `https://j8a103.p.ssafy.io/api/animations/search/${inputData}/${user.id}`
       )
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setMySearchList(res.data);
       })
       .catch((err) => {
@@ -186,11 +177,12 @@ const VideoListPage = () => {
       });
   };
 
+  // GET All Animation List
   const videoListHandeler = async () => {
     await axios
       .get(`https://j8a103.p.ssafy.io/api/animations/${user.id}`)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setVideoList(res.data);
       })
       .catch((err) => {
@@ -198,6 +190,7 @@ const VideoListPage = () => {
       });
   };
 
+  // api : 모든 Handeler 실행
   const api = async () => {
     videoListHandeler();
     star1ListHandler();
@@ -208,12 +201,25 @@ const VideoListPage = () => {
     searchListHandeler();
   };
 
+  // 페이지 로딩시 실행
   useEffect(() => {
+    // 미로그인 상태일 때, 로그인 페이지로 이동
     if (!user.id) {
       navigate("/login");
     }
+    // 전체 Handeler 실행
     api();
   }, []);
+
+  // testArray가 변경될 경우, testArray에 값을 넣어줌
+  useEffect(() => {
+    setTestArray(testArray);
+  }, [testArray]);
+
+  // mySearchList가 변경될 경우, testArray에 mySearchList를 넣어줌
+  useEffect(() => {
+    setTestArray(mySearchList);
+  }, [mySearchList]);
 
   return (
     <AllWrapperDiv>
@@ -221,9 +227,9 @@ const VideoListPage = () => {
       <AllDiv>
         <SelectDiv>
           <StarDiv>
+            {/* 별 3개 클릭시 */}
             <StarBtn
               onClick={() => {
-                setSelectedStar(3);
                 handleClick("Star3");
               }}
             >
@@ -233,9 +239,9 @@ const VideoListPage = () => {
                 <img src="/assets/img/Star.png" />
               </StarImg>
             </StarBtn>
+            {/* 별 2개 클릭시 */}
             <StarBtn
               onClick={() => {
-                setSelectedStar(2);
                 handleClick("Star2");
               }}
             >
@@ -244,9 +250,9 @@ const VideoListPage = () => {
                 <img src="/assets/img/Star.png" />
               </StarImg>
             </StarBtn>
+            {/* 별 1개 클릭시 */}
             <StarBtn
               onClick={() => {
-                setSelectedStar(1);
                 handleClick("Star1");
               }}
             >
@@ -256,6 +262,7 @@ const VideoListPage = () => {
             </StarBtn>
           </StarDiv>
           <DoneSelectDiv>
+            {/* All 클릭시 */}
             <AllSelectBtn
               onClick={() => {
                 handleClick("All");
@@ -263,9 +270,9 @@ const VideoListPage = () => {
             >
               <NotDoneDiv>All</NotDoneDiv>
             </AllSelectBtn>
+            {/* Done 클릭시 */}
             <DoneBtn
               onClick={() => {
-                setSelectedDone(1);
                 handleClick("Done");
               }}
             >
@@ -274,9 +281,9 @@ const VideoListPage = () => {
                 <DoneDiv>Done</DoneDiv>
               </DoneImg>
             </DoneBtn>
+            {/* Not Done 클릭시 */}
             <NotDoneBtn
               onClick={() => {
-                setSelectedDone(0);
                 handleClick("NotDone");
               }}
             >
@@ -286,6 +293,7 @@ const VideoListPage = () => {
               </NotDoneImg>
             </NotDoneBtn>
           </DoneSelectDiv>
+          {/* 검색시 */}
           <SearchDiv onClick={() => handleClick("Search")}>
             <SearchInput
               placeholder="검색하기"
@@ -299,9 +307,9 @@ const VideoListPage = () => {
             </SearchIconBtn>
           </SearchDiv>
         </SelectDiv>
-
         {testArray === null ? (
           <ListWrapperDiv>
+            {/* 아무 버튼도 클릭하지 않았을 경우 */}
             {videoList?.map((item: any, index: number) => {
               return (
                 <EachBtn
@@ -322,6 +330,7 @@ const VideoListPage = () => {
                       ? item.runningTime % 60
                       : "0" + (item.runningTime % 60)}
                   </VideoTimeDiv>
+                  {/* 별 개수 표시 */}
                   {item.bestScore >= 20 && item.bestScore <= 40 && (
                     <VideoScoreDiv>
                       <img src="/assets/img/EmptyStar.png" />
@@ -368,6 +377,7 @@ const VideoListPage = () => {
           </ListWrapperDiv>
         ) : (
           <ListWrapperDiv>
+            {/* 특정 버튼을 클릭하여 그에 맞는 리스트가 testArray에 들어있다면 */}
             {testArray &&
               testArray?.map((item: any, index: number) => {
                 return (
@@ -387,6 +397,7 @@ const VideoListPage = () => {
                         ? item.runningTime % 60
                         : "0" + (item.runningTime % 60)}
                     </VideoTimeDiv>
+                    {/* 별 개수 표시 */}
                     {item.bestScore >= 20 && item.bestScore <= 40 && (
                       <VideoScoreDiv>
                         <img src="/assets/img/EmptyStar.png" />
@@ -438,6 +449,7 @@ export default VideoListPage;
 
 const AllWrapperDiv = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 const DoneDiv = styled.div`
@@ -456,10 +468,9 @@ const NotDoneDiv = styled.div`
 
 const ListWrapperDiv = styled.div`
   display: flex;
-  width: 100vw;
   padding: 7.5vw 10vw 7.5vw 10vw;
   flex-wrap: wrap;
-  justify-content: left;
+  justify-content: center;
 `;
 
 const VideoBigTitleDiv = styled.div`
@@ -567,7 +578,7 @@ const NotDoneBtn = styled.button`
 
 const VideoImg = styled.img`
   border-radius: 1vw;
-  width: 22.8vw;
+  width: 22.5vw;
 `;
 
 const DoneImg = styled.image`
@@ -637,7 +648,7 @@ const EachBtn = styled.button`
 `;
 
 const VideoDiv = styled.div`
-  width: 24.8vw;
+  /* width: 25vw; */
   border-radius: 1vw;
 `;
 
@@ -680,6 +691,7 @@ const VideoAllRoleDiv = styled.div`
   position: absolute;
   top: 17vw;
   left: 1.3vw;
+  flex-wrap: wrap;
 `;
 
 const gradient = keyframes`
@@ -696,11 +708,9 @@ const gradient = keyframes`
 
 const VideoRoleWrapDiv = styled.div`
   display: flex;
-  height: 100%;
+  /* height: 100%; */
   border-radius: 10px;
   margin-right: 5px;
-  font-family: "CookieRun-Bold";
-  font-size: 0.75vw;
   box-shadow: 4px 8px 8px hsl(0deg 0% 0% / 0.25);
   background: linear-gradient(-45deg, #fbf8cc, #fdf579, #fff125, #ffd761);
   animation: ${gradient} 15s ease infinite;
@@ -715,4 +725,6 @@ const VideoRoleWrapDiv = styled.div`
 
 const VideoRoleDiv = styled.div`
   display: flex;
+  font-family: "CookieRun-Bold";
+  font-size: 0.75vw;
 `;

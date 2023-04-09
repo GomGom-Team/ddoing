@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { ContactShadows, Float } from "@react-three/drei";
+import { useState, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import {
   Shiba_Basic_1,
@@ -70,7 +69,6 @@ function ThreeScene({ name, level }: any) {
 }
 
 function Threejs({ name, level }: any) {
-  console.log(name, level);
   return (
     <div>
       <ThreeScene name={name} level={level} />

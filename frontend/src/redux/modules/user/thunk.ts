@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { SigninType } from "../../../../types/user/signinType";
 import { SignupType } from "../../../../types/user/signupType";
-import { UserType } from "../../../../types/user/userType";
 import { getToken, setToken, removeToken } from "./token";
 import { UpdateUserType } from "../../../../types/user/updateUserType";
 import { axiosInitializer } from "../../util/https";
@@ -100,7 +99,7 @@ export const setUserWithTokenAction: any = createAsyncThunk(
           Authorization: "Baerer " + getToken(),
         },
       });
-      console.log(getToken());
+      // console.log(getToken());
       return data;
     } catch (e) {
       // 토큰 refresh

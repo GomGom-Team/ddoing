@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from "react";
-import tw, { css, styled, theme } from "twin.macro";
-import { useAppDispatch, useAppSelector } from "../redux/configStore.hooks";
+import { useState, useEffect } from "react";
+import tw, { css, styled } from "twin.macro";
 import {
   HallofFame,
   Banner,
   PopularContents,
 } from "../components/carousel/index";
-import { Container, Header, Footer } from "../components/common/index";
-import { animationTop6GetAction } from "../redux/modules/animation";
+import { Header } from "../components/common/index";
 import axios from "axios";
 import Loading from "../components/common/Loading";
 
@@ -42,11 +40,11 @@ const MainPage = () => {
     await axios
       .get(`https://j8a103.p.ssafy.io/api/drawing/gallery`)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setBestDrawing(res.data);
       })
       .catch((err) => {
-        console.log("제에에에에에발", err);
+        console.log(err);
       });
   };
 
@@ -54,11 +52,11 @@ const MainPage = () => {
     await axios
       .get(`https://j8a103.p.ssafy.io/api/animations/top6`)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setTopVideoList(res.data);
       })
       .catch((err) => {
-        console.log("제에에에에에발", err);
+        console.log(err);
       });
   };
 
@@ -93,7 +91,7 @@ const MainPage = () => {
       {topVideoList && <PopularContents topVideoList={topVideoList} />}
 
       {/* 명예의 전당 */}
-      <CarouselTitle2>🖼 명예의 전당 🖼</CarouselTitle2>
+      <CarouselTitle2>🎨 명예의 전당 🎨</CarouselTitle2>
       {bestDrawing && <HallofFame bestDrawing={bestDrawing} />}
       {/* <HallofFame></HallofFame> */}
 
@@ -109,9 +107,11 @@ const MainPage = () => {
 const DummyDiv = styled.div(tw`h-20 w-full`);
 
 const CarouselTitle1 = styled.div(
-  tw`flex items-center justify-center text-5xl pt-32 pb-10`,
+  tw`flex items-center justify-center text-5xl`,
   css`
     font-family: "PyeongChangPeace-Bold";
+    padding-top: 3.5vw;
+    padding-bottom: 2.5vw;
   `
 );
 const CarouselTitle2 = styled.div(
