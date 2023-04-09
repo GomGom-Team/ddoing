@@ -183,7 +183,7 @@ const ProfileImg = styled.img`
   display: block;
   float: left;
   margin-left: 5%;
-  margin-top: 4%;
+  /* margin-top: 4%; */
   border-radius: 70%;
 `;
 
