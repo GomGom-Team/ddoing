@@ -42,8 +42,8 @@ const PlayerScript = ({ myAct, isVideoStart, videoIdx }: InfoProps) => {
   const player = React.useRef<ReactPlayer | null>(null);
 
   const [playing, setPlaying] = useState(false);
-  const [width, setWidth] = useState("44.8vw");
-  const [height, setHeight] = useState("25.2vw");
+  const [width, setWidth] = useState("42.8vw");
+  const [height, setHeight] = useState("24vw");
   const [pip, setPip] = useState(false);
   const [volume, setVolumn] = useState(1);
   const [muted, setMuted] = useState(false);
@@ -445,9 +445,9 @@ const MyCanvas = styled.div`
 const ClipboardImg = styled.img`
   display: flex;
   position: absolute;
-  width: 34.5vw;
-  right: 3vw;
-  top: 5.2vw;
+  width: 33vw;
+  right: 5vw;
+  top: 4.5vw;
 `;
 
 const PrepareDiv = styled.div`
@@ -664,11 +664,11 @@ const StyledDiv = styled.div(({ isMyRole, isNowScript }: LiProps) => [
 
 const ScriptAllDiv = styled.div`
   display: grid;
-  height: 35.3vw;
-  width: 31vw;
+  height: 33vw;
+  width: 30vw;
   margin-top: 1.3vw;
   border-radius: 1.5%;
-  margin-left: 13vw;
+  margin-left: 14.7vw;
   overflow-y: auto;
   background-color: white;
   z-index: 2;
@@ -702,7 +702,7 @@ const VideoDiv = styled.div`
 
 const ScriptDiv = styled.ol`
   display: flex;
-  width: 30vw;
+  width: 29vw;
   padding: 5px;
   background-color: #ffffff;
   border-radius: 5%;
@@ -748,6 +748,6 @@ const RoleNowDiv = styled.div(({ isMyRole }: MyProps) => [
 ]);
 
 const PlayerDiv = styled.div`
-  margin-left: 6.4vw;
-  margin-top: 2.8vw;
+  margin-left: 6vw;
+  margin-top: 2vw;
 `;

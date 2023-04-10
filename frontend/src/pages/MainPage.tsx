@@ -82,23 +82,25 @@ const MainPage = () => {
     <AllWrapDiv>
       {/* Header */}
       <Header />
-      <DummyDiv></DummyDiv>
+      <MyWrapDiv>
+        <DummyDiv></DummyDiv>
 
-      {/* Banner */}
-      <Banner></Banner>
-      {/* // Popular Contents */}
-      <CarouselTitle1>✨ 인기 컨텐츠 ✨</CarouselTitle1>
-      {topVideoList && <PopularContents topVideoList={topVideoList} />}
+        {/* Banner */}
+        <Banner></Banner>
+        {/* // Popular Contents */}
+        <CarouselTitle1>✨ 인기 컨텐츠 ✨</CarouselTitle1>
+        {topVideoList && <PopularContents topVideoList={topVideoList} />}
 
-      {/* 명예의 전당 */}
-      <CarouselTitle2>🎨 명예의 전당 🎨</CarouselTitle2>
-      {bestDrawing && <HallofFame bestDrawing={bestDrawing} />}
-      {/* <HallofFame></HallofFame> */}
+        {/* 명예의 전당 */}
+        <CarouselTitle2>🎨 명예의 전당 🎨</CarouselTitle2>
+        {bestDrawing && <HallofFame bestDrawing={bestDrawing} />}
+        {/* <HallofFame></HallofFame> */}
 
-      {/* Footer  */}
-      {/* <Footer /> */}
-      <DummyDiv></DummyDiv>
-      <DummyDiv></DummyDiv>
+        {/* Footer  */}
+        {/* <Footer /> */}
+        <DummyDiv></DummyDiv>
+        <DummyDiv></DummyDiv>
+      </MyWrapDiv>
     </AllWrapDiv>
   );
 };
@@ -107,7 +109,7 @@ const MainPage = () => {
 const DummyDiv = styled.div(
   tw`w-full`,
   css`
-    height: 3vw;
+    height: 3.5vw;
   `
 );
 
@@ -125,6 +127,12 @@ const CarouselTitle2 = styled.div(
     font-family: "PyeongChangPeace-Bold";
   `
 );
+
+const MyWrapDiv = styled.div`
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
 
 const AllWrapDiv = styled.div`
   width: 100%;

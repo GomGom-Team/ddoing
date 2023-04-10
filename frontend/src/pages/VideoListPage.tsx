@@ -476,7 +476,7 @@ const ListWrapperDiv = styled.div`
   display: flex;
   padding: 7.5vw 10vw 7.5vw 10vw;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: left;
 `;
 
 const VideoBigTitleDiv = styled.div`
@@ -735,5 +735,5 @@ const VideoRoleWrapDiv = styled.div`
 const VideoRoleDiv = styled.div`
   display: flex;
   font-family: "CookieRun-Bold";
-  font-size: 0.75vw;
+  font-size: 0.65vw;
 `;

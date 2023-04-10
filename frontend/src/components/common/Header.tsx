@@ -75,9 +75,7 @@ const Header = () => {
                   ></ProfileImg>
                 </Button>
               ) : (
-                <div>
-                  <button onClick={() => navigate("/login")}>Login</button>
-                </div>
+                <LoginBtn onClick={() => navigate("/login")}>Login</LoginBtn>
               )}
               <Menu
                 id="demo-positioned-menu"
@@ -139,7 +137,7 @@ const NavWrapperContents = styled.div(
   tw`flex items-center`,
   css`
     justify-content: space-between;
-    height: 3vw;
+    height: 3.5vw;
   `
 );
 
@@ -149,6 +147,11 @@ const MainLogo = styled.img`
 
 const LogoBtn = styled.button`
   height: 2.25vw;
+`;
+
+const LoginBtn = styled.button`
+  font-family: "insungitCutelivelyjisu";
+  font-size: 1.5vw;
 `;
 
 const NavigateContents = styled.div(
@@ -172,7 +175,7 @@ const StyledButton = styled.button`
   /* size: 10vw; */
   margin-left: 1vw;
   margin-right: 1vw;
-  font-size: 1vw;
+  font-size: 1.5vw;
   padding-right: 1vw;
   padding-left: 1vw;
   height: 2.25vw;
@@ -189,6 +192,7 @@ const ProfileImg = styled.img`
 
 const ButtonStyle = {
   fontFamily: "insungitCutelivelyjisu",
+  // fontSize: "1.5vw",
 };
 
 const ProfileNickName = styled.div`
