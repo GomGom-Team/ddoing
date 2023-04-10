@@ -123,7 +123,7 @@ export default Remind;
 
 const AllWrapDiv = styled.div`
   display: flex;
-  width: 100vw;
+  width: 80vw;
   height: 50vh;
   flex-wrap: wrap;
   /* padding-bottom: 10vh; */

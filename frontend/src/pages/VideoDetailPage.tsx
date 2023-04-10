@@ -93,10 +93,10 @@ export default VideoDetailPage;
 const MyActDiv = styled.div`
   position: absolute;
   display: grid;
-  width: 44.8vw;
-  height: 25.2vw;
-  left: 6.4vw;
-  margin-top: 12.8vw;
+  width: 42.8vw;
+  height: 24vw;
+  left: 6vw;
+  margin-top: 12vw;
   z-index: 999;
   background-color: rgba(0, 0, 0, 0.8);
   font-family: "insungitCutelivelyjisu";
@@ -106,8 +106,8 @@ const MyActDiv = styled.div`
 
 const TVImg = styled.img`
   position: absolute;
-  top: 4.5vw;
-  width: 63vw;
+  top: 4vw;
+  width: 60vw;
   z-index: 0;
 `;
 
