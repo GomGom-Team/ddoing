@@ -1,0 +1,148 @@
+@font-face {
+  font-family: "insungitCutelivelyjisu";
+  src: url("./insungit-Cutelively-jisu-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "CookieRun-Regular";
+  src: url("./CookieRun_Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "CookieRun-Black";
+  src: url("./CookieRun_Black.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "CookieRun-Bold";
+  src: url("./CookieRun_Bold.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "PyeongChangPeace-Bold";
+  src: url("./PyeongChangPeace-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "PyeongChangPeace-Light";
+  src: url("./PyeongChangPeace-Light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ONE-Mobile-POP";
+  src: url("./ONE-Mobile-POP-OTF.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ONE-Mobile-Light";
+  src: url("./ONE-Mobile-OTF-Light.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ONE-Mobile-Regular";
+  src: url("./ONE-Mobile-OTF-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ONE-Mobile-Bold";
+  src: url("./ONE-Mobile-OTF-Bold.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ONE-Mobile-Title";
+  src: url("./ONE-Mobile-Title-OTF.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Pretendard-Black";
+  font-display: fallback;
+  src: url("./Pretendard-Black.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Pretendard-Bold";
+  font-display: fallback;
+  src: url("./Pretendard-Bold.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Pretendard-ExtraBold";
+  font-display: fallback;
+  src: url("./Pretendard-ExtraBold.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Pretendard-ExtraLight";
+  font-display: fallback;
+  src: url("./Pretendard-ExtraLight.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Pretendard-Light";
+  font-display: fallback;
+  src: url("./Pretendard-Light.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Pretendard-Medium";
+  font-display: fallback;
+  src: url("./Pretendard-Medium.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Pretendard-Regular";
+  font-display: fallback;
+  src: url("./Pretendard-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Pretendard-SemiBold";
+  font-display: fallback;
+  src: url("./Pretendard-SemiBold.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Pretendard-ExtraLight";
+  font-display: fallback;
+  src: url("./Pretendard-ExtraLight.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
