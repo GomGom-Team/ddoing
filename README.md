@@ -114,7 +114,7 @@
 | 윤민주 | <a href="https://github.com/ymj3539"><img src="https://github.com/ymj3539.png" width="100"></a> | BE / CI/CD | <ul><li><b>✨ 프로젝트 자동 배포 환경 구축</b></li><li>Drawing 기능 API 구현</li><li>발음 평가 오픈 API 활용</li></ul>  |
 | 조수정 | <a href="https://github.com/suz-dev"><img src="https://github.com/suz-dev.png" width="100"></a> | BE | <ul><li><b>✨ BE 팀장 & DBA</b></li><li>Animation 기능 API 설계 및 구현<li>Drawing 기능 File Upload 구현 |
 | 조승희 | <a href="https://github.com/Choseungheee"><img src="https://github.com/Choseungheee.png" width="100"></a> | FE / BE | <ul><li><b>✨ JWT 로그인 백/프론트 구현</b></li><li>와이어프레임 설계</li><li>User관련 CRUD 프론트 및 백 API 작성</li><li>화면 및 로고 디자인</li></ul> |
-| 최윤지 | <a href="https://github.com/yunjichoi9151"><img src="https://github.com/yunjichoi9151.png" width="100"></a> | FE | <ul><li><b>✨ FE 팀장</b></li><li>와이어프레임 설계</li><li>Animation 관련 Page & 기능 담당(음성 녹음)</li><li>Three.js를 활용한 3D model 렌더링</li></ul> |
+| 최윤지 | <a href="https://github.com/yunjichoi9151"><img src="https://github.com/yunjichoi9151.png" width="100"></a> | FE | <ul><li><b>✨ FE 팀장</b></li><li>와이어프레임 설계</li><li>Animation 관련 Page & 기능 담당(발음 평가)</li><li>Three.js를 활용한 3D model 렌더링</li></ul> |
 
 ## ⚙ 기술 스택
 
